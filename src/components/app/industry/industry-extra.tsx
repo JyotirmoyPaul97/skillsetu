@@ -8,7 +8,8 @@ import {
 import { useRouter } from "@/lib/router";
 import { useIndustry, useIndustryStore, IndustryService, DEMO_COMPANY, DEMO_INDUSTRY_USER, DEMO_CANDIDATES } from "@/lib/industry";
 import { useCareerStore } from "@/lib/career";
-import { ALL_ROLES, SKILL_NAMES } from "@/lib/intelligence/role-config";
+import { ALL_ROLES } from "@/lib/intelligence/role-config";
+import { SKILL_NAMES } from "@/lib/intelligence/demo-data";
 import type { Candidate, FeedbackCategory } from "@/lib/industry/industry-model";
 import {
   DashHeader, Modal, Drawer, DemoBadge, CalcBadge, EmptyState, Field, SsStat,

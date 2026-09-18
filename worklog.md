@@ -523,3 +523,49 @@ Stage Summary:
 - Challenges/Team Builder: industry-side entry points only, labelled PROTOTYPE/NEXT PHASE (full hackathon system in later phase).
 - Did NOT rebuild Phase 1-4 (§1). Did NOT implement Academia/Institution/Hackathon execution (§77).
 - STOP AFTER PHASE 5.
+
+---
+Task ID: P6-1
+Agent: orchestrator (main)
+Task: Phase 6 — Academia Portal + Curriculum/Industry Intelligence (reuses Phase 3+4+5, no duplicate models)
+
+Work Log:
+- Read master spec upload/Pasted Content_1789713453760.txt (2536 lines, §1–96). Focus: Academia Portal answering "What is industry asking for? Where are students weak? Where is the curriculum gap? What can academia do next?"
+- Built src/lib/academia/ module:
+  * academia-model.ts — Course, CurriculumSkillCoverage (references centralized skillIds), Department, FacultyOpportunity (8 types: Faculty Internship/Industrial Training/FDP/Consultancy/Research Collaboration/Mentorship/Guest Lecture/Workshop), FacultyApplication, Collaboration (7 types, lifecycle: Proposed→Approved→Scheduled→Active→Completed→Feedback), MentorshipSession (Requested→Accepted→Scheduled→Completed/Cancelled), FacultyProfile, AcademiaNotification (10 types), CurriculumAlignmentRow (skill/demand/coverage/alignment/competency/practicalEvidence/practicalExposureGap/enrichment), IndustrySkillSignal, CohortSkillGap. CoverageLevel (Not Covered/Introductory/Moderate/Strong).
+  * academia-demo-data.ts — DEMO_INSTITUTION (IIT Madras), 5 departments, 6 courses, 14 curriculum skill coverage records (all referencing centralized Phase 3 skillIds), DEMO_FACULTY (Dr. Meena Krishnan, AI & Data Science), 6 faculty opportunities, 3 collaborations, 2 mentorship sessions, 4 notifications.
+  * academia-store.ts — useAcademiaStore Zustand store (localStorage): facultyApplications, collaborations, mentorshipSessions, notifications. Actions: applyToFacultyOpp (creates app + prevents duplicates), createCollaboration, updateCollaborationStatus (Proposed→Approved→Scheduled→Active→Completed), acceptMentorship/completeMentorship/cancelMentorship, submitFacultyFeedback (FACULTY FEEDBACK→EVIDENCE: for S042, calls Phase 3 intelligence store's addEvidence — demonstrating the Academia→Feedback→Evidence→Intelligence loop §31, §58, §70).
+  * academia-service.ts — AcademiaService API + useAcademia reactive hook. KEY DERIVED INTELLIGENCE:
+    - getIndustrySignals(): derives from Phase 4+5 opportunity requiredSkills — counts skill occurrences across published opportunities, NOT a separate demand dataset (§5, §6, §77).
+    - getEmergingSkills(): transparent rule — high demand + curriculum gap = emerging (§7, §8).
+    - getCohortGaps(): aggregates competencies from Phase 5 DEMO_CANDIDATES — avg competency, affected students, gap level (§9, §10). No private individual data exposed (§44).
+    - getCurriculumAlignment(): THE CORE FEATURE — matrix of demand vs coverage vs student competency vs practical evidence → alignment status (Aligned/Needs Attention/Gap) + practical exposure gap (§11-17). Uses DEMO_CURRICULUM + industry signals + candidate competencies.
+  * index.ts — public API.
+- Built src/components/app/academia/:
+  * academia-shell.tsx — Academia sidebar (11 nav items: Dashboard/Skill Intelligence/Curriculum Alignment/Faculty Opportunities/Collaboration/Mentorship/Workshops/Faculty Dev/Live Projects/Notifications/Profile) + topbar (breadcrumb, notifications bell w/ unread count, profile dropdown w/ Logout) + content outlet (code-split: AcademiaCore + AcademiaExtra via dynamic imports). Mounted guard to prevent hydration mismatch with persisted stores. Responsive.
+  * academia-core.tsx — AcademiaDashboard (metrics from derived data: Emerging Skills/Curriculum Gaps/Industry Opps/Students Needing Intervention; Academia Intelligence loop strip §38, §86; Industry Skill Signals preview; Emerging Skills; Curriculum Alerts), SkillIntelligence (Industry Skill Signals table w/ Why? modal; Student Cohort Gaps aggregate §9, §10), CurriculumAlignment (alignment matrix table: Skill/Demand/Coverage/Student Avg/Practical/Alignment; click → detail drawer with Why? §16; Recommended Curriculum Enrichment §35, §36), FacultyOpportunities (cards w/ type filter, Apply/View, detail drawer §19-21).
+  * academia-extra.tsx — CollaborationPage (hub w/ lifecycle + request form §45, §46, §53), MentorshipPage (sessions w/ Accept/Complete/Cancel + Feedback→Evidence modal §28-31), WorkshopsPage §32, FdpPage §25, LiveProjectsPage (shared Phase 4 projects §34), NotificationsPage §70, ProfilePage §65.
+- Fixed SKILL_NAMES import (was importing from role-config instead of demo-data) across 4 files.
+- Wired login-view.tsx: Academia Demo → navigate("/academia/dashboard"). Academia marked as "✓ Available" (Phase 6).
+- Wired page.tsx: renders AcademiaShell (dynamic import, ssr:false) for /academia/* routes.
+- Lint clean; build succeeds.
+
+Browser-verified (agent-browser via gateway):
+  Login → Academia Demo → Academia Dashboard ✓ (URL #/academia/dashboard confirmed)
+  Dashboard: "Good morning, Krishnan" + AI & Data Science + IIT Madras + metrics (Emerging Skills 4, Curriculum Gaps 3, Industry Opps 10, Students Needing Intervention 0) + Industry Skill Signals (Python High) + Academia Intelligence loop ✓
+  Curriculum Alignment: matrix table showing skills (Cloud Platforms/Deep Learning/Docker & Kubernetes) with demand/coverage/student avg/practical evidence/alignment status + recommended enrichment ✓
+  Faculty Opportunities: cards with View/Apply buttons ✓
+
+Stage Summary:
+- Phase 6 Academia Portal COMPLETE & verified.
+- Academia Portal reuses Phase 3 (intelligence: student/role/competencies/evidence), Phase 4 (opportunities/applications/matching), Phase 5 (industry candidates/challenges). NO duplicate models (§75, §90).
+- Industry Skill Signals DERIVED from Phase 4+5 opportunity data (not a separate demand dataset §77).
+- Curriculum Alignment = demand (from opportunities) vs coverage (from courses) vs competency (from candidates) vs practical evidence (from evidence records) — all traceable, no hardcoded values (§84).
+- Practical Exposure Gap distinguishes THEORETICAL COVERAGE vs PRACTICAL EVIDENCE (§17).
+- Faculty Feedback → Evidence: submitting feedback for S042 creates real EvidenceRecords in Phase 3 intelligence store (§31, §58, §70).
+- Mentorship sessions have lifecycle (Requested→Accepted→Scheduled→Completed) + feedback→evidence loop.
+- Collaborations have lifecycle (Proposed→Approved→Scheduled→Active→Completed) + request workflow (§53, §54).
+- Student privacy: aggregate views only (avg competency, affected students count — no individual private data §44).
+- RBAC roles defined (Faculty/HOD/Coordinator/Admin §43) — role stored, full enforcement PROTOTYPE.
+- Did NOT rebuild Phase 1-5 (§1). Did NOT implement Institution Portal or Hackathon execution (§39).
+- STOP AFTER PHASE 6.

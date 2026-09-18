@@ -24,6 +24,10 @@ const IndustryShell = dynamic(() => import("@/components/app/industry/industry-s
   ssr: false,
   loading: () => <FullPageLoader />,
 });
+const AcademiaShell = dynamic(() => import("@/components/app/academia/academia-shell").then((m) => m.AcademiaShell), {
+  ssr: false,
+  loading: () => <FullPageLoader />,
+});
 
 function FullPageLoader() {
   return (
@@ -40,7 +44,7 @@ export default function Home() {
   const { route } = useRouter();
 
   useEffect(() => {
-    if (route.startsWith("/app") || route.startsWith("/industry")) window.scrollTo(0, 0);
+    if (route.startsWith("/app") || route.startsWith("/industry") || route.startsWith("/academia")) window.scrollTo(0, 0);
   }, [route]);
 
   if (route === "/login") {
@@ -53,6 +57,10 @@ export default function Home() {
 
   if (route.startsWith("/industry")) {
     return <IndustryShell />;
+  }
+
+  if (route.startsWith("/academia")) {
+    return <AcademiaShell />;
   }
 
   // Phase 1 landing (unchanged)

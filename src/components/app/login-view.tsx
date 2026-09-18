@@ -26,7 +26,6 @@ export function LoginView() {
 
   const demoLogin = (which: "student" | "industry" | "academia" | "institution") => {
     setLoading(which);
-    // Simulated demo authentication (clearly labelled DEMO LOGIN — no real session).
     setTimeout(() => {
       setLoading(null);
       if (which === "student") {
@@ -34,8 +33,9 @@ export function LoginView() {
         navigate("/app/dashboard");
       } else if (which === "industry") {
         navigate("/industry/dashboard");
+      } else if (which === "academia") {
+        navigate("/academia/dashboard");
       } else {
-        // Academia & Institution arrive in later phases.
         navigate("/");
       }
     }, 600);
@@ -142,7 +142,7 @@ export function LoginView() {
               const Icon = r.icon;
               const active = loading === r.key;
               const disabled = loading !== null;
-              const phase2 = r.key === "student" || r.key === "industry";
+              const phase2 = r.key === "student" || r.key === "industry" || r.key === "academia";
               return (
                 <button
                   key={r.key}
