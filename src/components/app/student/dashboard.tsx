@@ -10,12 +10,13 @@ import {
 import { useRouter } from "@/lib/router";
 import { useStudentState } from "@/lib/student-state";
 import {
-  STUDENT, BEST_MATCH, UPCOMING_HACKATHONS, APPLICATIONS,
+  STUDENT, UPCOMING_HACKATHONS, APPLICATIONS,
 } from "@/lib/student-data";
 import {
   useIntelligence, useIntelligenceDerived, IntelligenceService,
   COMPETENCY_TARGET_THRESHOLD, getRoleConfig, ALL_ROLES,
 } from "@/lib/intelligence";
+import { useCareer, useCareerStore } from "@/lib/career";
 import type { EvidenceRecord, SkillGap } from "@/lib/intelligence";
 import {
   DashHeader, Modal, Drawer, RoleSelector, EvidenceDetailDrawer,
@@ -36,7 +37,6 @@ export function DashboardPage() {
   const [gapDrawer, setGapDrawer] = useState<SkillGap | null>(null);
   const [actionOpen, setActionOpen] = useState(false);
   const [evDrawer, setEvDrawer] = useState<EvidenceRecord | null>(null);
-  const [appliedBest, setAppliedBest] = useState(false);
   const [whatIfOpen, setWhatIfOpen] = useState(false);
 
   return (
@@ -89,8 +89,8 @@ export function DashboardPage() {
             <NextBestActionCard action={nextAction} onView={() => setActionOpen(true)} onStart={() => { completeAction("nba-1"); setActionOpen(true); }} done={useStudentState.getState().completedActions.has("nba-1")} />
           )}
 
-          {/* BEST OPPORTUNITY MATCH — Phase 2 demo data */}
-          <BestMatchCard applied={appliedBest} onApply={() => { apply(BEST_MATCH.id); setAppliedBest(true); }} />
+          {/* BEST OPPORTUNITY MATCH — from career matching engine (calculated) */}
+          <BestMatchCard />
 
           {/* RECENT EVIDENCE — from store */}
           <RecentEvidence evidence={evidence} onOpen={(e) => setEvDrawer(e)} onViewAll={() => navigate("/app/passport/verified")} />
@@ -452,23 +452,37 @@ function CompetencyEditor() {
   );
 }
 
-// ─── Best Opportunity Match (Phase 2 demo) ──────────────────────
-function BestMatchCard({ applied, onApply }: { applied: boolean; onApply: () => void }) {
+// ─── Best Opportunity Match — from career matching engine (calculated) ──
+function BestMatchCard() {
+  const { bestMatch, applications } = useCareer();
+  const { navigate } = useRouter();
+  if (!bestMatch) {
+    return (
+      <section className="rounded-2xl border border-[var(--ss-border)] bg-white p-5 shadow-soft">
+        <div className="flex items-center gap-2"><Briefcase className="h-4 w-4 text-[var(--ss-teal-600)]" /><h2 className="text-sm font-bold text-[var(--ss-ink)]">Best Opportunity Match</h2></div>
+        <p className="mt-3 text-sm text-[var(--ss-muted)]">No matching opportunities yet. Explore Career &amp; Opportunities.</p>
+      </section>
+    );
+  }
+  const { opportunity: opp, match } = bestMatch;
+  const applied = applications.some((a) => a.opportunityId === opp.id && a.status !== "WITHDRAWN");
+  const handleApply = () => { useCareerStore.getState().apply(opp.id); };
   return (
     <section className="rounded-2xl border border-[var(--ss-border)] bg-white p-5 shadow-soft">
       <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-2"><Briefcase className="h-4 w-4 text-[var(--ss-teal-600)]" /><h2 className="text-sm font-bold text-[var(--ss-ink)]">Best Opportunity Match</h2><DemoBadge /></div>
+        <div className="flex items-center gap-2"><Briefcase className="h-4 w-4 text-[var(--ss-teal-600)]" /><h2 className="text-sm font-bold text-[var(--ss-ink)]">Best Opportunity Match</h2><CalcBadge>Calculated</CalcBadge></div>
       </div>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-base font-bold text-[var(--ss-ink)]">{BEST_MATCH.title}</p>
-          <p className="text-[11px] text-[var(--ss-muted)]"><Building2 className="mr-1 inline h-3 w-3" />{BEST_MATCH.company} · <MapPin className="inline h-3 w-3" /> {BEST_MATCH.location}</p>
-          <div className="mt-2 flex flex-wrap gap-1.5">{BEST_MATCH.requiredSkills.map((s) => (<span key={s} className="rounded-full bg-[var(--ss-surface-3)] px-2 py-0.5 text-[10px] font-medium text-[var(--ss-muted)]">{s}</span>))}</div>
+          <p className="text-base font-bold text-[var(--ss-ink)]">{opp.title}</p>
+          <p className="text-[11px] text-[var(--ss-muted)]"><Building2 className="mr-1 inline h-3 w-3" />{opp.company} · <MapPin className="inline h-3 w-3" /> {opp.location}</p>
+          <div className="mt-2 flex flex-wrap gap-1.5">{opp.requiredSkills.slice(0, 4).map((s) => (<span key={s.skillId} className="rounded-full bg-[var(--ss-surface-3)] px-2 py-0.5 text-[10px] font-medium text-[var(--ss-muted)]">{s.skillName}</span>))}</div>
         </div>
-        <MatchBadge score={BEST_MATCH.match} />
+        <MatchBadge score={match.matchScore} />
       </div>
       <div className="mt-4 flex gap-2">
-        <Button variant="navy" size="sm" className="ml-auto gap-1.5" disabled={applied} onClick={onApply}>{applied ? <CheckCircle2 className="h-3.5 w-3.5" /> : null}{applied ? "Applied" : "Apply Now"}</Button>
+        <Button variant="outline" size="sm" onClick={() => navigate("/app/career/recommended")}>View Details</Button>
+        <Button variant="navy" size="sm" className="ml-auto gap-1.5" disabled={applied} onClick={handleApply}>{applied ? <CheckCircle2 className="h-3.5 w-3.5" /> : null}{applied ? "Applied" : "Apply Now"}</Button>
       </div>
       {applied && <p className="mt-2 rounded-lg bg-[var(--ss-teal-50)] px-3 py-1.5 text-[11px] font-medium text-[var(--ss-teal-600)]"><CheckCircle2 className="mr-1 inline h-3 w-3" /> Successfully applied (prototype workflow — no external application created).</p>}
     </section>

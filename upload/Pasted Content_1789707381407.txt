@@ -1,0 +1,2278 @@
+============================================================
+SKILL SETU — PHASE 4
+CAREER & OPPORTUNITY INTELLIGENCE
+============================================================
+
+PHASE 1:
+Design System + Landing Page — COMPLETE
+
+PHASE 2:
+Application Shell + Student Portal — COMPLETE
+
+PHASE 3:
+Skill Intelligence Engine — COMPLETE
+
+NOW IMPLEMENT:
+PHASE 4 — CAREER & OPPORTUNITY INTELLIGENCE
+
+============================================================
+PRIMARY OBJECTIVE
+============================================================
+
+Use the outputs of the existing Phase 3 Skill Intelligence Engine:
+
+- target role
+- skills
+- competency
+- evidence
+- evidence confidence
+- role importance
+- role readiness
+- skill gaps
+- next best action
+
+to power:
+
+JOBS
+INTERNSHIPS
+PROJECTS
+INDUSTRY LEARNING
+
+and:
+
+OPPORTUNITY MATCHING
+MATCH EXPLANATION
+SKILL GAP EXPLANATION
+APPLICATION
+APPLICATION TRACKING
+RECOMMENDATIONS
+
+Core flow:
+
+Student Skill Intelligence
+        ↓
+Opportunity Requirements
+        ↓
+Eligibility
+        ↓
+Skill Alignment
+        ↓
+Evidence Alignment
+        ↓
+Role Alignment
+        ↓
+Gap Analysis
+        ↓
+Opportunity Match
+        ↓
+"Why this match?"
+        ↓
+Apply
+        ↓
+Application Tracking
+        ↓
+Experience
+        ↓
+Feedback
+        ↓
+Evidence
+
+============================================================
+CRITICAL RULE
+============================================================
+
+DO NOT rebuild Phase 1, Phase 2 or Phase 3.
+
+DO NOT modify the core readiness calculation unless required for compatibility.
+
+DO NOT create a second skill engine.
+
+DO NOT create a second student model.
+
+DO NOT create a second competency model.
+
+DO NOT hardcode opportunity match values.
+
+DO NOT use random recommendations.
+
+Reuse the existing Phase 3 services and data.
+
+============================================================
+1. FIRST AUDIT PHASE 3
+============================================================
+
+Before writing code, inspect the existing Phase 3 implementation.
+
+Identify:
+
+- student state
+- skill state
+- role state
+- evidence state
+- competency service
+- readiness service
+- skill-gap service
+- next-best-action service
+- API/service architecture
+- persistence
+- reusable UI components
+
+Determine how Phase 4 should consume them.
+
+Do NOT duplicate them.
+
+============================================================
+2. OPPORTUNITY DATA MODEL
+============================================================
+
+Create or extend the opportunity model.
+
+Supported types:
+
+JOB
+INTERNSHIP
+PROJECT
+APPRENTICESHIP
+
+Opportunity fields:
+
+id
+title
+company
+organizationType
+description
+
+type
+
+location
+mode
+
+duration
+
+compensationType
+compensationAmount
+
+applicationDeadline
+
+startDate
+endDate
+
+requiredSkills
+preferredSkills
+
+requiredSkillLevels
+preferredSkillLevels
+
+targetRoles
+
+eligibilityRules
+
+responsibilities
+
+qualifications
+
+benefits
+
+status
+
+createdAt
+updatedAt
+
+Do not create separate models for Jobs, Internships and Projects unless the existing architecture requires it.
+
+Prefer one shared Opportunity model with a type field.
+
+============================================================
+3. CENTRAL SKILL CONNECTION
+============================================================
+
+Opportunity skills MUST reference the SAME centralized skills used by Phase 3.
+
+Do NOT create strings such as:
+
+"Python skill"
+"ML skill"
+"SQL skill"
+
+inside separate opportunity components.
+
+Use:
+
+skillId
+skillName
+importance
+requiredLevel
+
+This allows:
+
+Student Skill
+→ Opportunity Skill
+
+matching.
+
+============================================================
+4. ROLE CONNECTION
+============================================================
+
+Opportunities may specify:
+
+target roles
+
+Example:
+
+Data Scientist
+ML Engineer
+Software Engineer
+Full Stack Developer
+
+When the student target role matches:
+
+increase role-alignment component of the match explanation.
+
+Do not treat role alignment as the entire match.
+
+============================================================
+5. OPPORTUNITY CREATION — DEMO / INTERNAL
+============================================================
+
+Create a clean opportunity creation workflow for controlled demo data.
+
+Fields:
+
+Title
+Type
+Company
+Location
+Mode
+Description
+Duration
+Compensation
+Deadline
+
+Target Roles
+
+Required Skills
+Preferred Skills
+
+Eligibility
+
+Responsibilities
+Qualifications
+
+Status
+
+Use:
+
+Draft
+Published
+Closed
+Archived
+
+Do not expose this as a public industry backend yet unless that module already exists.
+
+For Phase 4, it can support controlled/demo opportunity creation.
+
+============================================================
+6. OPPORTUNITY TYPES
+============================================================
+
+CAREER & OPPORTUNITIES navigation:
+
+Jobs
+Internships
+Projects
+Industry Learning
+
+============================================================
+7. JOBS PAGE
+============================================================
+
+Create:
+
+Career & Opportunities → Jobs
+
+Show useful cards.
+
+Each card:
+
+Job Title
+Company
+Location
+Mode
+Employment Type
+Compensation where available
+Deadline
+Required Skills
+Target Role
+Match
+
+Buttons:
+
+View Details
+Apply Now
+Save
+
+Do not create empty decorative cards.
+
+============================================================
+8. JOB DETAIL PAGE
+============================================================
+
+Every job should have:
+
+About the Role
+
+Responsibilities
+
+Required Skills
+
+Preferred Skills
+
+Eligibility
+
+Qualifications
+
+Location
+
+Mode
+
+Compensation
+
+Deadline
+
+Target Role
+
+Your Match
+
+Why You Match
+
+Skill Gaps
+
+Evidence Considered
+
+Next Best Action if applicable
+
+Actions:
+
+Apply Now
+Save
+
+============================================================
+9. INTERNSHIPS PAGE
+============================================================
+
+Create:
+
+Career & Opportunities → Internships
+
+Card fields:
+
+Role
+Company
+Location
+Mode
+Duration
+Stipend
+Deadline
+Required Skills
+Target Role
+Match
+
+Buttons:
+
+View
+Apply
+Save
+
+============================================================
+10. PROJECT OPPORTUNITIES
+============================================================
+
+Create:
+
+Career & Opportunities → Projects
+
+This is for industry/project-based opportunities.
+
+Show:
+
+Project Title
+Industry
+Problem
+Description
+Required Skills
+Preferred Skills
+Duration
+Team Size
+Mentor if available
+Deadline
+Target Role
+Match
+
+Actions:
+
+View Details
+Apply
+Save
+
+============================================================
+11. INDUSTRY LEARNING
+============================================================
+
+Create:
+
+Career & Opportunities → Industry Learning
+
+Categories:
+
+Training
+Workshop
+Certification
+Mentorship
+
+Each item:
+
+Title
+Provider
+Type
+Skill
+Target Role
+Duration
+Eligibility
+Deadline
+Status
+
+Buttons:
+
+View
+Enroll / Request where appropriate
+
+============================================================
+12. OPPORTUNITY MATCHING ENGINE
+============================================================
+
+Create or extend:
+
+calculateOpportunityMatch(studentId, opportunityId)
+
+The match MUST use real Phase 3 student intelligence.
+
+Consider:
+
+1. Skill alignment
+2. Skill competency
+3. Evidence availability
+4. Evidence confidence
+5. Target role alignment
+6. Eligibility
+7. Relevant project/experience
+8. Availability where implemented
+
+Do NOT simply compare strings.
+
+============================================================
+13. MATCH SCORING
+============================================================
+
+For this prototype, use a transparent deterministic weighted model.
+
+Suggested conceptual breakdown:
+
+Skill Alignment:
+40%
+
+Role Alignment:
+20%
+
+Evidence Strength:
+15%
+
+Eligibility:
+10%
+
+Experience / Relevant Work:
+10%
+
+Availability:
+5%
+
+If a factor is not available, document how the system handles it.
+
+Do NOT invent values to make a match look high.
+
+If the project architecture already contains a matching formula, reuse it rather than creating another formula.
+
+============================================================
+14. MATCH SCORE OUTPUT
+============================================================
+
+Return:
+
+opportunityId
+studentId
+matchScore
+skillAlignment
+roleAlignment
+evidenceStrength
+eligibility
+experienceAlignment
+availability
+matchedSkills
+partialSkills
+missingSkills
+explanation
+calculatedAt
+
+Example:
+
+Match:
+91%
+
+This number must come from the matching engine.
+
+============================================================
+15. MATCH SCORE MUST BE EXPLAINABLE
+============================================================
+
+Every match must have:
+
+WHY THIS MATCH?
+
+Show:
+
+Skill alignment
+Role alignment
+Evidence
+Eligibility
+Experience
+Gaps
+
+Example:
+
+91% MATCH
+
+Strong matches:
+
+✓ Python
+✓ SQL
+✓ Machine Learning
+
+Role:
+
+✓ Data Scientist
+
+Evidence:
+
+✓ Technical Assessment
+✓ ML Project
+
+Eligibility:
+
+✓ Eligible
+
+Potential gap:
+
+Statistics
+
+============================================================
+16. MATCH BREAKDOWN
+============================================================
+
+Click:
+
+Why this match?
+
+Open a drawer/modal.
+
+Show:
+
+Skill Alignment:
+XX
+
+Role Alignment:
+XX
+
+Evidence Strength:
+XX
+
+Eligibility:
+XX
+
+Experience:
+XX
+
+Availability:
+XX
+
+Final Match:
+XX
+
+Do not expose internal complexity unnecessarily.
+
+Make it understandable to a student.
+
+============================================================
+17. SKILL MATCH DETAIL
+============================================================
+
+For each required skill:
+
+Opportunity requires:
+Machine Learning
+Required Level:
+70
+
+Student:
+43
+
+Status:
+Gap
+
+Another:
+
+Python
+Required:
+70
+
+Student:
+82
+
+Status:
+Strong Match
+
+Another:
+
+SQL
+Required:
+60
+
+Student:
+64
+
+Status:
+Match
+
+Color/status should distinguish:
+
+Strong Match
+Match
+Partial
+Gap
+
+============================================================
+18. EVIDENCE-AWARE MATCHING
+============================================================
+
+A student should not receive the same match explanation whether they have evidence or only self-declared skills.
+
+Example:
+
+Python:
+
+Competency:
+82
+
+Evidence:
+Technical Assessment
+Project
+
+This should be reflected as stronger evidence-backed alignment than an unsubstantiated claim.
+
+Use existing Phase 3 evidence confidence.
+
+Do not create a second evidence-confidence system.
+
+============================================================
+19. TARGET ROLE MATCH
+============================================================
+
+If:
+
+Student Target Role:
+Data Scientist
+
+Opportunity:
+Data Scientist Intern
+
+show:
+
+Role Alignment:
+Strong
+
+If:
+
+Student Target:
+Data Scientist
+
+Opportunity:
+Frontend Developer
+
+role alignment should be lower.
+
+Do not make role mismatch automatically impossible unless eligibility says so.
+
+============================================================
+20. SKILL GAP IN OPPORTUNITY
+============================================================
+
+Every opportunity detail should show:
+
+YOU MATCH
+
+and:
+
+YOU ARE MISSING
+
+Example:
+
+Strong:
+
+Python
+SQL
+
+Partial:
+
+Statistics
+
+Gap:
+
+Cloud
+
+This allows the student to understand what prevents a stronger match.
+
+============================================================
+21. OPPORTUNITY RECOMMENDATIONS
+============================================================
+
+Create:
+
+RECOMMENDED FOR YOU
+
+Recommendations must use:
+
+target role
+skill competency
+evidence
+skill gaps
+eligibility
+opportunity requirements
+
+Do not simply recommend the newest opportunity.
+
+============================================================
+22. RECOMMENDATION EXPLANATION
+============================================================
+
+Example:
+
+RECOMMENDED FOR YOU
+
+Data Science Internship
+
+Why?
+
+✓ Matches your target role
+✓ Strong Python alignment
+✓ Relevant ML evidence
+✓ You meet eligibility
+
+Current gap:
+
+Statistics
+
+This recommendation must be generated from the actual opportunity + student data.
+
+============================================================
+23. BEST OPPORTUNITY MATCH
+============================================================
+
+On Student Dashboard show:
+
+BEST OPPORTUNITY MATCH
+
+Example:
+
+Data Science Intern
+
+91% Match
+
+Company:
+Nova Analytics
+
+Location:
+Pune / Hybrid
+
+Duration:
+6 Months
+
+Compensation:
+Paid
+
+Buttons:
+
+View Details
+Apply Now
+
+"Apply Now" must work.
+
+============================================================
+24. APPLY NOW
+============================================================
+
+Clicking:
+
+Apply Now
+
+must change actual application state.
+
+Initial:
+
+Not Applied
+
+After:
+
+Applied
+
+Store:
+
+applicationId
+studentId
+opportunityId
+status
+appliedAt
+updatedAt
+
+Do not just display a toast.
+
+============================================================
+25. APPLICATION MODEL
+============================================================
+
+Application fields:
+
+id
+studentId
+opportunityId
+status
+
+appliedAt
+updatedAt
+
+optional:
+
+resumeVersion
+coverLetter
+notes
+nextAction
+
+Statuses:
+
+Applied
+Under Review
+Shortlisted
+Interview
+Selected
+Rejected
+Withdrawn
+
+Use uppercase/internal enums if appropriate.
+
+============================================================
+26. APPLICATION TRACKING
+============================================================
+
+Create:
+
+Career & Opportunities → Applications
+
+If existing navigation does not contain Applications, add it under Career & Opportunities.
+
+Show:
+
+Opportunity
+Company
+Applied Date
+Status
+Deadline
+Next Action
+
+Clicking an application:
+
+Application Details
+
+============================================================
+27. APPLICATION TIMELINE
+============================================================
+
+Each application should display a timeline:
+
+Applied
+↓
+Under Review
+↓
+Shortlisted
+↓
+Interview
+↓
+Selected
+
+Only actual completed states should be highlighted.
+
+If status is Rejected:
+
+Applied
+↓
+Under Review
+↓
+Rejected
+
+Do not show future states as completed.
+
+============================================================
+28. APPLICATION STATE CHANGES
+============================================================
+
+For demo purposes, if no industry backend exists:
+
+allow controlled demo status transitions only through an appropriate demo/admin mechanism.
+
+Do NOT let students arbitrarily set themselves to:
+
+Selected
+
+Do NOT create fake successful placement results.
+
+============================================================
+29. SAVE OPPORTUNITY
+============================================================
+
+Student can:
+
+Save
+
+Button changes:
+
+Save
+→
+Saved
+
+Store saved state.
+
+Create:
+
+Saved Opportunities
+
+or expose saved state in Jobs/Internships.
+
+============================================================
+30. FILTERING
+============================================================
+
+Jobs:
+
+Role
+Skill
+Location
+Mode
+Experience
+Compensation
+Deadline
+Match
+
+Internships:
+
+Role
+Skill
+Location
+Mode
+Duration
+Stipend
+Deadline
+Match
+
+Projects:
+
+Domain
+Skill
+Duration
+Team Size
+Deadline
+Match
+
+Industry Learning:
+
+Skill
+Target Role
+Type
+Duration
+
+============================================================
+31. SEARCH
+============================================================
+
+Search by:
+
+Title
+Company
+Skill
+Role
+Domain
+
+Search must operate on actual opportunity records.
+
+============================================================
+32. SORTING
+============================================================
+
+Useful options:
+
+Best Match
+Deadline
+Newest
+Saved
+
+Best Match should use calculated match score.
+
+Do not sort by hardcoded priority.
+
+============================================================
+33. DEADLINE INTELLIGENCE
+============================================================
+
+Display:
+
+Closing Soon
+Open
+Closed
+
+Use actual dates.
+
+Example:
+
+Deadline:
+25 Sept 2026
+
+If current date approaches deadline:
+
+Closing Soon
+
+After deadline:
+
+Closed
+
+Do not rely only on manually typed status.
+
+============================================================
+34. ELIGIBILITY ENGINE
+============================================================
+
+Opportunity can define:
+
+Year
+Branch
+Department
+CGPA
+Required Role
+Required Skill Level
+Location where applicable
+
+Create:
+
+checkOpportunityEligibility(studentId, opportunityId)
+
+Return:
+
+eligible
+reasons
+failedRequirements
+
+============================================================
+35. WHY AM I NOT ELIGIBLE?
+============================================================
+
+If student cannot apply:
+
+Show:
+
+Not Eligible
+
+Why?
+
+Example:
+
+Required Year:
+2nd–4th
+
+Your Year:
+1st
+
+Or:
+
+Required skill:
+Machine Learning ≥ 60
+
+Your competency:
+43
+
+Do not simply hide Apply Now.
+
+============================================================
+36. OPPORTUNITY DETAIL — STUDENT CONTEXT
+============================================================
+
+Do not only show the job description.
+
+Add:
+
+YOUR SKILL FIT
+
+Skill
+Your Level
+Required Level
+Status
+
+Example:
+
+Python:
+82 / 70
+Strong Match
+
+SQL:
+64 / 60
+Match
+
+ML:
+43 / 70
+Gap
+
+============================================================
+37. NEXT BEST ACTION FROM OPPORTUNITY
+============================================================
+
+If an opportunity is attractive but the student has a gap:
+
+Show:
+
+Suggested Next Step
+
+Example:
+
+Improve Machine Learning evidence
+
+or:
+
+Build an ML project
+
+or:
+
+Complete relevant learning
+
+This should connect to Phase 3 Next Best Action.
+
+Do NOT invent a new recommendation engine.
+
+============================================================
+38. OPPORTUNITY → NEXT BEST ACTION
+============================================================
+
+Example:
+
+Opportunity:
+
+Data Science Intern
+
+Match:
+78%
+
+Gap:
+
+Machine Learning
+
+Next Best Action:
+
+Build ML Project
+
+Reason:
+
+This can address the largest relevant skill gap for this opportunity and generate evidence.
+
+This demonstrates the connection:
+
+Gap
+→ Action
+→ Opportunity
+
+============================================================
+39. OPPORTUNITY RECOMMENDATION LOGIC
+============================================================
+
+Consider:
+
+student target role
+student skill gaps
+required opportunity skills
+evidence
+eligibility
+
+Do not recommend opportunities for which the student is completely ineligible.
+
+============================================================
+40. STUDENT PROFILE IN OPPORTUNITY CONTEXT
+============================================================
+
+When opening:
+
+Why this match?
+
+show:
+
+Target Role:
+Data Scientist
+
+Role Readiness:
+61%
+
+Relevant Skills:
+
+Python:
+82
+
+SQL:
+64
+
+ML:
+43
+
+Relevant Evidence:
+
+Assessment
+Project
+
+Gaps:
+
+ML
+Statistics
+
+This makes the recommendation contextual.
+
+============================================================
+41. RESUME CONNECTION
+============================================================
+
+When applying, allow:
+
+Select Resume
+
+Use existing Skill Passport / Resume Builder data.
+
+Do not create a second resume database.
+
+Resume should contain:
+
+Verified Skills
+Projects
+Internships
+Hackathons
+Certifications
+Education
+Achievements
+
+Do not invent experience.
+
+============================================================
+42. TARGET-ROLE RESUME ALIGNMENT
+============================================================
+
+On application preview show:
+
+Resume Alignment:
+
+Example:
+84%
+
+Label:
+
+Resume Alignment Score
+
+This must refer to the selected opportunity or target role.
+
+Do not call it:
+
+Guaranteed ATS Score
+
+Explain what it measures.
+
+============================================================
+43. COVER LETTER — OPTIONAL
+============================================================
+
+Allow a simple:
+
+Generate Draft Cover Note
+
+If AI is available:
+
+AI may draft using actual student/opportunity information.
+
+Do not invent:
+
+experience
+projects
+skills
+achievements
+
+Use only existing student data.
+
+Clearly label generated content as a draft.
+
+============================================================
+44. INDUSTRY LEARNING → GAP
+============================================================
+
+Industry Learning recommendations can consume Phase 3 gaps.
+
+Example:
+
+Student gap:
+
+Machine Learning
+
+Recommended:
+
+Machine Learning Practical Workshop
+
+Why?
+
+Addresses current skill gap.
+
+The learning recommendation should reference the actual skill.
+
+============================================================
+45. LEARNING DETAIL
+============================================================
+
+Show:
+
+Program
+Provider
+Type
+Skill
+Target Role
+Duration
+Eligibility
+Description
+
+Action:
+
+Enroll
+Save
+View
+
+If enrollment is only simulated, label it as demo workflow.
+
+============================================================
+46. PROJECT OPPORTUNITY → EVIDENCE PREPARATION
+============================================================
+
+When student applies to a project:
+
+Show what evidence the project could potentially generate.
+
+Example:
+
+Potential Evidence:
+
+Python
+Machine Learning
+Problem Solving
+
+Label:
+
+Potential / Projected Evidence
+
+Do NOT mark evidence as verified before completion.
+
+============================================================
+47. OPPORTUNITY ACTIVITY
+============================================================
+
+Track:
+
+Viewed
+Saved
+Applied
+Status Changed
+
+Timestamp where useful.
+
+This supports future analytics.
+
+============================================================
+48. NOTIFICATIONS
+============================================================
+
+Generate opportunity notifications for real prototype events:
+
+New Match
+Application Submitted
+Application Status Changed
+Interview Update
+Closing Soon
+Opportunity Recommended
+
+Do not create notifications without triggering events.
+
+============================================================
+49. STUDENT OPPORTUNITY ANALYTICS
+============================================================
+
+Create a small useful dashboard:
+
+Applications
+Saved
+Interviews
+Offers / Selected if actual demo data exists
+Top Skill Gaps in Applications
+
+Do not claim actual employment outcomes.
+
+============================================================
+50. OPPORTUNITY MATCH EXPLANATION — UNIVERSAL COMPONENT
+============================================================
+
+Reuse Phase 3:
+
+WhyThisResult
+
+or create an Opportunity-specific variant using the same pattern.
+
+Show:
+
+Why matched
+What matched
+What is missing
+Evidence
+Role relevance
+Eligibility
+
+============================================================
+51. MATCH CALCULATION EXAMPLE
+============================================================
+
+For demo S042:
+
+Student:
+
+Data Scientist
+
+Python:
+82
+
+SQL:
+64
+
+Statistics:
+51
+
+Machine Learning:
+43
+
+Problem Solving:
+75
+
+Opportunity:
+
+Data Science Intern
+
+Requirements:
+
+Python
+SQL
+Machine Learning
+Statistics
+
+Use deterministic matching.
+
+Do not force the final percentage to 91%.
+
+The UI may display a controlled demo match only if the same underlying calculation produces it.
+
+If the calculation produces a different value:
+
+display the actual calculated value.
+
+============================================================
+52. DEMO OPPORTUNITIES
+============================================================
+
+Create controlled DEMO DATA.
+
+Example:
+
+1.
+Data Science Intern
+Company:
+Nova Analytics
+Location:
+Pune / Hybrid
+
+Required:
+Python
+SQL
+Machine Learning
+Statistics
+
+Target:
+Data Scientist
+
+2.
+ML Engineering Intern
+Company:
+Vertex Labs
+
+Required:
+Python
+Machine Learning
+Deep Learning
+
+Target:
+ML Engineer
+
+3.
+Full Stack Project
+Company:
+TechBridge
+
+Required:
+Frontend
+Backend
+Database
+API Integration
+
+Target:
+Full Stack Developer
+
+Clearly label as:
+
+DEMO DATA
+
+============================================================
+53. DATA CONSISTENCY
+============================================================
+
+The same opportunity record must appear consistently in:
+
+Student dashboard
+Jobs
+Internships
+Projects
+Recommended Opportunities
+Applications
+
+Do not duplicate the opportunity with slightly different data.
+
+============================================================
+54. OPPORTUNITY → APPLICATION → EXPERIENCE
+============================================================
+
+Prepare the architecture for:
+
+Opportunity
+→ Application
+→ Selection
+→ Experience
+→ Feedback
+→ Evidence
+
+Do not implement the complete internship lifecycle yet unless it already exists.
+
+Just ensure the model can support it.
+
+============================================================
+55. INDUSTRY FEEDBACK PREPARATION
+============================================================
+
+Opportunity records should be connectable later to:
+
+Industry Feedback
+
+so that:
+
+Internship
+Project
+Hackathon
+
+can produce:
+
+Feedback
+→ Evidence
+
+Do not build the complete Industry Feedback portal in this phase.
+
+============================================================
+56. MATCH QUALITY
+============================================================
+
+Do not call every recommendation:
+
+Perfect Match
+
+Use:
+
+Strong Match
+Good Match
+Potential Match
+
+based on actual score thresholds.
+
+If using thresholds, document them.
+
+============================================================
+57. NO UNIVERSAL EMPLOYABILITY SCORE
+============================================================
+
+Do not show:
+
+Employability:
+91%
+
+Use:
+
+Opportunity Match:
+91%
+
+and explain what it means.
+
+============================================================
+58. UI DESIGN
+============================================================
+
+Use Phase 1 + Phase 2 design system.
+
+Opportunity pages should be:
+
+clean
+professional
+information-rich
+
+Use:
+
+match badges
+skill chips
+evidence badges
+deadline indicators
+progress
+explanation drawers
+
+Do not copy Naukri or LinkedIn.
+
+============================================================
+59. VISUAL HIERARCHY
+============================================================
+
+Opportunity card priority:
+
+1. Role / Opportunity
+2. Company
+3. Match
+4. Location / Mode
+5. Deadline
+6. Key skills
+7. Actions
+
+Student-specific intelligence should be prominent:
+
+Why Match?
+Skill Gap
+Evidence
+
+============================================================
+60. EMPTY STATES
+============================================================
+
+No Jobs:
+
+"No opportunities match your current filters."
+
+No Applications:
+
+"You have not applied to any opportunities yet."
+
+No Saved:
+
+"Save opportunities to revisit them later."
+
+No Strong Matches:
+
+"Your current skill profile has limited alignment. Review your Skill Gaps and Next Best Action."
+
+============================================================
+61. LOADING STATES
+============================================================
+
+Examples:
+
+Loading opportunities...
+Calculating your match...
+Checking eligibility...
+Preparing application...
+Saving opportunity...
+
+============================================================
+62. ERROR STATES
+============================================================
+
+Handle:
+
+Invalid opportunity
+Deadline passed
+Not eligible
+Already applied
+Application failed
+Network error
+Missing resume
+Missing required data
+
+Provide useful explanations.
+
+============================================================
+63. ACCESS CONTROL
+============================================================
+
+Student can:
+
+view public/allowed opportunities
+save
+apply
+track own applications
+
+Do not expose private company/admin functionality.
+
+============================================================
+64. DEMO / PROTOTYPE STATUS
+============================================================
+
+Clearly distinguish:
+
+CALCULATED
+DEMO DATA
+PROJECTED
+APPLIED
+SAVED
+SUBMITTED
+FUTURE INTEGRATION
+
+Do not claim:
+
+live employer integration
+live ATS integration
+real company API
+real external job feeds
+
+unless actually implemented.
+
+============================================================
+65. FUTURE INTEGRATIONS
+============================================================
+
+Architecture should later support:
+
+ATS
+University placement system
+LMS
+External opportunity providers
+Company career portals
+
+For now:
+
+DEMO DATA
+
+unless a real integration exists.
+
+============================================================
+66. PHASE 3 DEPENDENCIES
+============================================================
+
+Phase 4 must consume:
+
+calculateRoleReadiness()
+calculateSkillGaps()
+getNextBestAction()
+getStudentEvidence()
+getStudentCompetency()
+
+Do not recreate these functions.
+
+============================================================
+67. TESTING — MATCHING
+============================================================
+
+TEST 1:
+
+S042 Data Scientist
+
+Opportunity:
+Data Science Intern
+
+Expected:
+
+Match calculation uses:
+
+Python
+SQL
+Statistics
+ML
+Role
+
+TEST 2:
+
+Change ML competency:
+
+43 → 60
+
+Expected:
+
+Opportunity match changes.
+
+TEST 3:
+
+Change target role:
+
+Data Scientist
+→
+Full Stack Developer
+
+Expected:
+
+Data Science opportunity role alignment changes.
+
+Full Stack opportunities become more relevant.
+
+TEST 4:
+
+Remove Python evidence.
+
+Expected:
+
+Evidence explanation changes.
+
+Match should reflect evidence change if evidence affects the configured formula.
+
+TEST 5:
+
+Make student ineligible.
+
+Expected:
+
+Apply Now disabled or blocked.
+
+WHY NOT ELIGIBLE displayed.
+
+============================================================
+68. TESTING — APPLICATIONS
+============================================================
+
+TEST 6:
+
+Click Apply Now.
+
+Expected:
+
+Application created.
+
+Status:
+Applied
+
+TEST 7:
+
+Click Apply Again.
+
+Expected:
+
+Duplicate application prevented.
+
+TEST 8:
+
+Withdraw.
+
+Expected:
+
+Status:
+Withdrawn
+
+TEST 9:
+
+Refresh.
+
+Expected:
+
+Application remains.
+
+============================================================
+69. TESTING — SAVED
+============================================================
+
+TEST 10:
+
+Click Save.
+
+Expected:
+Saved
+
+Refresh.
+
+Expected:
+Still Saved.
+
+============================================================
+70. TESTING — EXPLAINABILITY
+============================================================
+
+TEST 11:
+
+Click:
+
+Why this match?
+
+Expected:
+
+Actual breakdown appears.
+
+TEST 12:
+
+Click:
+
+Why not eligible?
+
+Expected:
+
+Actual failed requirement appears.
+
+TEST 13:
+
+Click:
+
+Why recommended?
+
+Expected:
+
+Student data + opportunity requirements are shown.
+
+============================================================
+71. TESTING — ROLE CHANGE
+============================================================
+
+TEST 14:
+
+Data Scientist
+
+→
+Full Stack Developer
+
+Expected:
+
+Recommended opportunities change.
+
+Skill relevance changes.
+
+Role explanation changes.
+
+============================================================
+72. TESTING — DEADLINES
+============================================================
+
+TEST 15:
+
+Set deadline in future.
+
+Expected:
+Open
+
+Set deadline close to current date.
+
+Expected:
+Closing Soon
+
+Set deadline in past.
+
+Expected:
+Closed
+
+============================================================
+73. TESTING — SHARED STATE
+============================================================
+
+TEST 16:
+
+Apply to opportunity.
+
+Expected:
+
+Dashboard application count/state changes.
+
+Applications page changes.
+
+Opportunity card changes to:
+
+Applied
+
+Notification generated if notification service exists.
+
+============================================================
+74. TESTING — NO HARD-CODED MATCH
+============================================================
+
+Test:
+
+Modify one student competency.
+
+Expected:
+
+Matching result can change.
+
+If the match remains identical because that skill is irrelevant to the opportunity, that is acceptable.
+
+The important point is:
+
+NO hardcoded match.
+
+============================================================
+75. FINAL STUDENT EXPERIENCE
+============================================================
+
+Student opens:
+
+Career & Opportunities
+
+System should provide:
+
+Recommended
+Jobs
+Internships
+Projects
+Industry Learning
+
+At the top:
+
+YOUR CAREER INTELLIGENCE
+
+Target Role:
+Data Scientist
+
+Role Readiness:
+61%
+
+Top Gap:
+Machine Learning
+
+Next Best Action:
+Build ML Project
+
+Then:
+
+RECOMMENDED OPPORTUNITIES
+
+This is what makes the module SKILL SETU rather than a generic job board.
+
+============================================================
+76. COMPLETE S042 CAREER DEMO
+============================================================
+
+Use:
+
+S042
+
+Target:
+Data Scientist
+
+Skills:
+
+Python 82
+SQL 64
+Statistics 51
+Machine Learning 43
+Problem Solving 75
+
+Readiness:
+
+61%
+
+Flow:
+
+Student Dashboard
+
+→ Best Opportunity Match
+
+→ Data Science Internship
+
+→ Why this match?
+
+→ Match breakdown
+
+→ Skill gaps
+
+→ Evidence considered
+
+→ Apply Now
+
+→ Application created
+
+→ Applications
+
+→ Application timeline
+
+→ Notification
+
+Then:
+
+Next Best Action
+
+→ Build ML Project
+
+This demonstrates:
+
+Skill Intelligence
+→ Opportunity Intelligence
+→ Action
+→ Application
+
+============================================================
+77. DO NOT OVERBUILD
+============================================================
+
+Do NOT implement in this phase:
+
+Full Industry Portal
+Full Academia Portal
+Full Institution Portal
+Full Hackathon system
+Advanced AI Team Builder
+External ATS
+External job APIs
+External coding platforms
+
+Only create the interfaces and models required for Phase 4.
+
+============================================================
+78. AI USAGE
+============================================================
+
+AI can later assist with:
+
+Opportunity description summarization
+Why matched explanation
+Career guidance
+Resume draft
+Cover note draft
+Learning recommendation explanation
+
+Deterministic rules calculate:
+
+Match
+Eligibility
+Skill alignment
+Application status
+Deadline status
+
+Core principle:
+
+RULES CALCULATE.
+AI EXPLAINS & ENRICHES.
+
+============================================================
+79. IMPORTANT PRODUCT DIFFERENTIATOR
+============================================================
+
+Traditional opportunity platform:
+
+JOB
+→
+APPLY
+
+SKILL SETU:
+
+INDUSTRY REQUIREMENT
+→
+STUDENT EVIDENCE
+→
+SKILL INTELLIGENCE
+→
+ROLE READINESS
+→
+SKILL GAP
+→
+OPPORTUNITY MATCH
+→
+WHY MATCHED?
+→
+APPLY
+→
+EXPERIENCE
+→
+FEEDBACK
+→
+NEW EVIDENCE
+
+Make this visible in the product.
+
+============================================================
+80. DEFINITION OF DONE
+============================================================
+
+Phase 4 is COMPLETE only when:
+
+✓ Jobs exist
+✓ Internships exist
+✓ Projects exist
+✓ Industry Learning exists
+✓ Opportunity data model exists
+✓ Opportunities use centralized skills
+✓ Opportunities can map to roles
+✓ Student matching uses Phase 3 intelligence
+✓ Match score is deterministic
+✓ Match explanation works
+✓ Skill-level comparison works
+✓ Eligibility works
+✓ Why Not Eligible works
+✓ Apply Now works
+✓ Duplicate application prevention works
+✓ Application tracking works
+✓ Save works
+✓ Recommended Opportunities work
+✓ Deadline states work
+✓ Notifications work where implemented
+✓ Resume can be associated with application
+✓ Existing Phase 3 readiness remains intact
+✓ Changing student intelligence can affect opportunity matching
+✓ No major matching value is independently hardcoded
+✓ No fake external integration is presented as live
+
+============================================================
+81. FINAL IMPLEMENTATION REPORT
+============================================================
+
+After implementation report:
+
+1. Opportunity model
+2. Application model
+3. Services created
+4. APIs created/modified
+5. Matching formula
+6. Eligibility logic
+7. Recommendation logic
+8. Application lifecycle
+9. UI components created
+10. Demo data
+11. Tests performed
+12. Tests passed
+13. Tests failed
+14. Known limitations
+15. Future integrations
+
+Be completely honest.
+
+STOP AFTER PHASE 4.
+
+============================================================
+END PHASE 4
+============================================================

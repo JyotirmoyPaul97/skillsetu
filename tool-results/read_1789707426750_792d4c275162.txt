@@ -1,0 +1,2002 @@
+     1→============================================================
+     2→SKILL SETU — PHASE 4
+     3→CAREER & OPPORTUNITY INTELLIGENCE
+     4→============================================================
+     5→
+     6→PHASE 1:
+     7→Design System + Landing Page — COMPLETE
+     8→
+     9→PHASE 2:
+    10→Application Shell + Student Portal — COMPLETE
+    11→
+    12→PHASE 3:
+    13→Skill Intelligence Engine — COMPLETE
+    14→
+    15→NOW IMPLEMENT:
+    16→PHASE 4 — CAREER & OPPORTUNITY INTELLIGENCE
+    17→
+    18→============================================================
+    19→PRIMARY OBJECTIVE
+    20→============================================================
+    21→
+    22→Use the outputs of the existing Phase 3 Skill Intelligence Engine:
+    23→
+    24→- target role
+    25→- skills
+    26→- competency
+    27→- evidence
+    28→- evidence confidence
+    29→- role importance
+    30→- role readiness
+    31→- skill gaps
+    32→- next best action
+    33→
+    34→to power:
+    35→
+    36→JOBS
+    37→INTERNSHIPS
+    38→PROJECTS
+    39→INDUSTRY LEARNING
+    40→
+    41→and:
+    42→
+    43→OPPORTUNITY MATCHING
+    44→MATCH EXPLANATION
+    45→SKILL GAP EXPLANATION
+    46→APPLICATION
+    47→APPLICATION TRACKING
+    48→RECOMMENDATIONS
+    49→
+    50→Core flow:
+    51→
+    52→Student Skill Intelligence
+    53→        ↓
+    54→Opportunity Requirements
+    55→        ↓
+    56→Eligibility
+    57→        ↓
+    58→Skill Alignment
+    59→        ↓
+    60→Evidence Alignment
+    61→        ↓
+    62→Role Alignment
+    63→        ↓
+    64→Gap Analysis
+    65→        ↓
+    66→Opportunity Match
+    67→        ↓
+    68→"Why this match?"
+    69→        ↓
+    70→Apply
+    71→        ↓
+    72→Application Tracking
+    73→        ↓
+    74→Experience
+    75→        ↓
+    76→Feedback
+    77→        ↓
+    78→Evidence
+    79→
+    80→============================================================
+    81→CRITICAL RULE
+    82→============================================================
+    83→
+    84→DO NOT rebuild Phase 1, Phase 2 or Phase 3.
+    85→
+    86→DO NOT modify the core readiness calculation unless required for compatibility.
+    87→
+    88→DO NOT create a second skill engine.
+    89→
+    90→DO NOT create a second student model.
+    91→
+    92→DO NOT create a second competency model.
+    93→
+    94→DO NOT hardcode opportunity match values.
+    95→
+    96→DO NOT use random recommendations.
+    97→
+    98→Reuse the existing Phase 3 services and data.
+    99→
+   100→============================================================
+   101→1. FIRST AUDIT PHASE 3
+   102→============================================================
+   103→
+   104→Before writing code, inspect the existing Phase 3 implementation.
+   105→
+   106→Identify:
+   107→
+   108→- student state
+   109→- skill state
+   110→- role state
+   111→- evidence state
+   112→- competency service
+   113→- readiness service
+   114→- skill-gap service
+   115→- next-best-action service
+   116→- API/service architecture
+   117→- persistence
+   118→- reusable UI components
+   119→
+   120→Determine how Phase 4 should consume them.
+   121→
+   122→Do NOT duplicate them.
+   123→
+   124→============================================================
+   125→2. OPPORTUNITY DATA MODEL
+   126→============================================================
+   127→
+   128→Create or extend the opportunity model.
+   129→
+   130→Supported types:
+   131→
+   132→JOB
+   133→INTERNSHIP
+   134→PROJECT
+   135→APPRENTICESHIP
+   136→
+   137→Opportunity fields:
+   138→
+   139→id
+   140→title
+   141→company
+   142→organizationType
+   143→description
+   144→
+   145→type
+   146→
+   147→location
+   148→mode
+   149→
+   150→duration
+   151→
+   152→compensationType
+   153→compensationAmount
+   154→
+   155→applicationDeadline
+   156→
+   157→startDate
+   158→endDate
+   159→
+   160→requiredSkills
+   161→preferredSkills
+   162→
+   163→requiredSkillLevels
+   164→preferredSkillLevels
+   165→
+   166→targetRoles
+   167→
+   168→eligibilityRules
+   169→
+   170→responsibilities
+   171→
+   172→qualifications
+   173→
+   174→benefits
+   175→
+   176→status
+   177→
+   178→createdAt
+   179→updatedAt
+   180→
+   181→Do not create separate models for Jobs, Internships and Projects unless the existing architecture requires it.
+   182→
+   183→Prefer one shared Opportunity model with a type field.
+   184→
+   185→============================================================
+   186→3. CENTRAL SKILL CONNECTION
+   187→============================================================
+   188→
+   189→Opportunity skills MUST reference the SAME centralized skills used by Phase 3.
+   190→
+   191→Do NOT create strings such as:
+   192→
+   193→"Python skill"
+   194→"ML skill"
+   195→"SQL skill"
+   196→
+   197→inside separate opportunity components.
+   198→
+   199→Use:
+   200→
+   201→skillId
+   202→skillName
+   203→importance
+   204→requiredLevel
+   205→
+   206→This allows:
+   207→
+   208→Student Skill
+   209→→ Opportunity Skill
+   210→
+   211→matching.
+   212→
+   213→============================================================
+   214→4. ROLE CONNECTION
+   215→============================================================
+   216→
+   217→Opportunities may specify:
+   218→
+   219→target roles
+   220→
+   221→Example:
+   222→
+   223→Data Scientist
+   224→ML Engineer
+   225→Software Engineer
+   226→Full Stack Developer
+   227→
+   228→When the student target role matches:
+   229→
+   230→increase role-alignment component of the match explanation.
+   231→
+   232→Do not treat role alignment as the entire match.
+   233→
+   234→============================================================
+   235→5. OPPORTUNITY CREATION — DEMO / INTERNAL
+   236→============================================================
+   237→
+   238→Create a clean opportunity creation workflow for controlled demo data.
+   239→
+   240→Fields:
+   241→
+   242→Title
+   243→Type
+   244→Company
+   245→Location
+   246→Mode
+   247→Description
+   248→Duration
+   249→Compensation
+   250→Deadline
+   251→
+   252→Target Roles
+   253→
+   254→Required Skills
+   255→Preferred Skills
+   256→
+   257→Eligibility
+   258→
+   259→Responsibilities
+   260→Qualifications
+   261→
+   262→Status
+   263→
+   264→Use:
+   265→
+   266→Draft
+   267→Published
+   268→Closed
+   269→Archived
+   270→
+   271→Do not expose this as a public industry backend yet unless that module already exists.
+   272→
+   273→For Phase 4, it can support controlled/demo opportunity creation.
+   274→
+   275→============================================================
+   276→6. OPPORTUNITY TYPES
+   277→============================================================
+   278→
+   279→CAREER & OPPORTUNITIES navigation:
+   280→
+   281→Jobs
+   282→Internships
+   283→Projects
+   284→Industry Learning
+   285→
+   286→============================================================
+   287→7. JOBS PAGE
+   288→============================================================
+   289→
+   290→Create:
+   291→
+   292→Career & Opportunities → Jobs
+   293→
+   294→Show useful cards.
+   295→
+   296→Each card:
+   297→
+   298→Job Title
+   299→Company
+   300→Location
+   301→Mode
+   302→Employment Type
+   303→Compensation where available
+   304→Deadline
+   305→Required Skills
+   306→Target Role
+   307→Match
+   308→
+   309→Buttons:
+   310→
+   311→View Details
+   312→Apply Now
+   313→Save
+   314→
+   315→Do not create empty decorative cards.
+   316→
+   317→============================================================
+   318→8. JOB DETAIL PAGE
+   319→============================================================
+   320→
+   321→Every job should have:
+   322→
+   323→About the Role
+   324→
+   325→Responsibilities
+   326→
+   327→Required Skills
+   328→
+   329→Preferred Skills
+   330→
+   331→Eligibility
+   332→
+   333→Qualifications
+   334→
+   335→Location
+   336→
+   337→Mode
+   338→
+   339→Compensation
+   340→
+   341→Deadline
+   342→
+   343→Target Role
+   344→
+   345→Your Match
+   346→
+   347→Why You Match
+   348→
+   349→Skill Gaps
+   350→
+   351→Evidence Considered
+   352→
+   353→Next Best Action if applicable
+   354→
+   355→Actions:
+   356→
+   357→Apply Now
+   358→Save
+   359→
+   360→============================================================
+   361→9. INTERNSHIPS PAGE
+   362→============================================================
+   363→
+   364→Create:
+   365→
+   366→Career & Opportunities → Internships
+   367→
+   368→Card fields:
+   369→
+   370→Role
+   371→Company
+   372→Location
+   373→Mode
+   374→Duration
+   375→Stipend
+   376→Deadline
+   377→Required Skills
+   378→Target Role
+   379→Match
+   380→
+   381→Buttons:
+   382→
+   383→View
+   384→Apply
+   385→Save
+   386→
+   387→============================================================
+   388→10. PROJECT OPPORTUNITIES
+   389→============================================================
+   390→
+   391→Create:
+   392→
+   393→Career & Opportunities → Projects
+   394→
+   395→This is for industry/project-based opportunities.
+   396→
+   397→Show:
+   398→
+   399→Project Title
+   400→Industry
+   401→Problem
+   402→Description
+   403→Required Skills
+   404→Preferred Skills
+   405→Duration
+   406→Team Size
+   407→Mentor if available
+   408→Deadline
+   409→Target Role
+   410→Match
+   411→
+   412→Actions:
+   413→
+   414→View Details
+   415→Apply
+   416→Save
+   417→
+   418→============================================================
+   419→11. INDUSTRY LEARNING
+   420→============================================================
+   421→
+   422→Create:
+   423→
+   424→Career & Opportunities → Industry Learning
+   425→
+   426→Categories:
+   427→
+   428→Training
+   429→Workshop
+   430→Certification
+   431→Mentorship
+   432→
+   433→Each item:
+   434→
+   435→Title
+   436→Provider
+   437→Type
+   438→Skill
+   439→Target Role
+   440→Duration
+   441→Eligibility
+   442→Deadline
+   443→Status
+   444→
+   445→Buttons:
+   446→
+   447→View
+   448→Enroll / Request where appropriate
+   449→
+   450→============================================================
+   451→12. OPPORTUNITY MATCHING ENGINE
+   452→============================================================
+   453→
+   454→Create or extend:
+   455→
+   456→calculateOpportunityMatch(studentId, opportunityId)
+   457→
+   458→The match MUST use real Phase 3 student intelligence.
+   459→
+   460→Consider:
+   461→
+   462→1. Skill alignment
+   463→2. Skill competency
+   464→3. Evidence availability
+   465→4. Evidence confidence
+   466→5. Target role alignment
+   467→6. Eligibility
+   468→7. Relevant project/experience
+   469→8. Availability where implemented
+   470→
+   471→Do NOT simply compare strings.
+   472→
+   473→============================================================
+   474→13. MATCH SCORING
+   475→============================================================
+   476→
+   477→For this prototype, use a transparent deterministic weighted model.
+   478→
+   479→Suggested conceptual breakdown:
+   480→
+   481→Skill Alignment:
+   482→40%
+   483→
+   484→Role Alignment:
+   485→20%
+   486→
+   487→Evidence Strength:
+   488→15%
+   489→
+   490→Eligibility:
+   491→10%
+   492→
+   493→Experience / Relevant Work:
+   494→10%
+   495→
+   496→Availability:
+   497→5%
+   498→
+   499→If a factor is not available, document how the system handles it.
+   500→
+   501→Do NOT invent values to make a match look high.
+   502→
+   503→If the project architecture already contains a matching formula, reuse it rather than creating another formula.
+   504→
+   505→============================================================
+   506→14. MATCH SCORE OUTPUT
+   507→============================================================
+   508→
+   509→Return:
+   510→
+   511→opportunityId
+   512→studentId
+   513→matchScore
+   514→skillAlignment
+   515→roleAlignment
+   516→evidenceStrength
+   517→eligibility
+   518→experienceAlignment
+   519→availability
+   520→matchedSkills
+   521→partialSkills
+   522→missingSkills
+   523→explanation
+   524→calculatedAt
+   525→
+   526→Example:
+   527→
+   528→Match:
+   529→91%
+   530→
+   531→This number must come from the matching engine.
+   532→
+   533→============================================================
+   534→15. MATCH SCORE MUST BE EXPLAINABLE
+   535→============================================================
+   536→
+   537→Every match must have:
+   538→
+   539→WHY THIS MATCH?
+   540→
+   541→Show:
+   542→
+   543→Skill alignment
+   544→Role alignment
+   545→Evidence
+   546→Eligibility
+   547→Experience
+   548→Gaps
+   549→
+   550→Example:
+   551→
+   552→91% MATCH
+   553→
+   554→Strong matches:
+   555→
+   556→✓ Python
+   557→✓ SQL
+   558→✓ Machine Learning
+   559→
+   560→Role:
+   561→
+   562→✓ Data Scientist
+   563→
+   564→Evidence:
+   565→
+   566→✓ Technical Assessment
+   567→✓ ML Project
+   568→
+   569→Eligibility:
+   570→
+   571→✓ Eligible
+   572→
+   573→Potential gap:
+   574→
+   575→Statistics
+   576→
+   577→============================================================
+   578→16. MATCH BREAKDOWN
+   579→============================================================
+   580→
+   581→Click:
+   582→
+   583→Why this match?
+   584→
+   585→Open a drawer/modal.
+   586→
+   587→Show:
+   588→
+   589→Skill Alignment:
+   590→XX
+   591→
+   592→Role Alignment:
+   593→XX
+   594→
+   595→Evidence Strength:
+   596→XX
+   597→
+   598→Eligibility:
+   599→XX
+   600→
+   601→Experience:
+   602→XX
+   603→
+   604→Availability:
+   605→XX
+   606→
+   607→Final Match:
+   608→XX
+   609→
+   610→Do not expose internal complexity unnecessarily.
+   611→
+   612→Make it understandable to a student.
+   613→
+   614→============================================================
+   615→17. SKILL MATCH DETAIL
+   616→============================================================
+   617→
+   618→For each required skill:
+   619→
+   620→Opportunity requires:
+   621→Machine Learning
+   622→Required Level:
+   623→70
+   624→
+   625→Student:
+   626→43
+   627→
+   628→Status:
+   629→Gap
+   630→
+   631→Another:
+   632→
+   633→Python
+   634→Required:
+   635→70
+   636→
+   637→Student:
+   638→82
+   639→
+   640→Status:
+   641→Strong Match
+   642→
+   643→Another:
+   644→
+   645→SQL
+   646→Required:
+   647→60
+   648→
+   649→Student:
+   650→64
+   651→
+   652→Status:
+   653→Match
+   654→
+   655→Color/status should distinguish:
+   656→
+   657→Strong Match
+   658→Match
+   659→Partial
+   660→Gap
+   661→
+   662→============================================================
+   663→18. EVIDENCE-AWARE MATCHING
+   664→============================================================
+   665→
+   666→A student should not receive the same match explanation whether they have evidence or only self-declared skills.
+   667→
+   668→Example:
+   669→
+   670→Python:
+   671→
+   672→Competency:
+   673→82
+   674→
+   675→Evidence:
+   676→Technical Assessment
+   677→Project
+   678→
+   679→This should be reflected as stronger evidence-backed alignment than an unsubstantiated claim.
+   680→
+   681→Use existing Phase 3 evidence confidence.
+   682→
+   683→Do not create a second evidence-confidence system.
+   684→
+   685→============================================================
+   686→19. TARGET ROLE MATCH
+   687→============================================================
+   688→
+   689→If:
+   690→
+   691→Student Target Role:
+   692→Data Scientist
+   693→
+   694→Opportunity:
+   695→Data Scientist Intern
+   696→
+   697→show:
+   698→
+   699→Role Alignment:
+   700→Strong
+   701→
+   702→If:
+   703→
+   704→Student Target:
+   705→Data Scientist
+   706→
+   707→Opportunity:
+   708→Frontend Developer
+   709→
+   710→role alignment should be lower.
+   711→
+   712→Do not make role mismatch automatically impossible unless eligibility says so.
+   713→
+   714→============================================================
+   715→20. SKILL GAP IN OPPORTUNITY
+   716→============================================================
+   717→
+   718→Every opportunity detail should show:
+   719→
+   720→YOU MATCH
+   721→
+   722→and:
+   723→
+   724→YOU ARE MISSING
+   725→
+   726→Example:
+   727→
+   728→Strong:
+   729→
+   730→Python
+   731→SQL
+   732→
+   733→Partial:
+   734→
+   735→Statistics
+   736→
+   737→Gap:
+   738→
+   739→Cloud
+   740→
+   741→This allows the student to understand what prevents a stronger match.
+   742→
+   743→============================================================
+   744→21. OPPORTUNITY RECOMMENDATIONS
+   745→============================================================
+   746→
+   747→Create:
+   748→
+   749→RECOMMENDED FOR YOU
+   750→
+   751→Recommendations must use:
+   752→
+   753→target role
+   754→skill competency
+   755→evidence
+   756→skill gaps
+   757→eligibility
+   758→opportunity requirements
+   759→
+   760→Do not simply recommend the newest opportunity.
+   761→
+   762→============================================================
+   763→22. RECOMMENDATION EXPLANATION
+   764→============================================================
+   765→
+   766→Example:
+   767→
+   768→RECOMMENDED FOR YOU
+   769→
+   770→Data Science Internship
+   771→
+   772→Why?
+   773→
+   774→✓ Matches your target role
+   775→✓ Strong Python alignment
+   776→✓ Relevant ML evidence
+   777→✓ You meet eligibility
+   778→
+   779→Current gap:
+   780→
+   781→Statistics
+   782→
+   783→This recommendation must be generated from the actual opportunity + student data.
+   784→
+   785→============================================================
+   786→23. BEST OPPORTUNITY MATCH
+   787→============================================================
+   788→
+   789→On Student Dashboard show:
+   790→
+   791→BEST OPPORTUNITY MATCH
+   792→
+   793→Example:
+   794→
+   795→Data Science Intern
+   796→
+   797→91% Match
+   798→
+   799→Company:
+   800→Nova Analytics
+   801→
+   802→Location:
+   803→Pune / Hybrid
+   804→
+   805→Duration:
+   806→6 Months
+   807→
+   808→Compensation:
+   809→Paid
+   810→
+   811→Buttons:
+   812→
+   813→View Details
+   814→Apply Now
+   815→
+   816→"Apply Now" must work.
+   817→
+   818→============================================================
+   819→24. APPLY NOW
+   820→============================================================
+   821→
+   822→Clicking:
+   823→
+   824→Apply Now
+   825→
+   826→must change actual application state.
+   827→
+   828→Initial:
+   829→
+   830→Not Applied
+   831→
+   832→After:
+   833→
+   834→Applied
+   835→
+   836→Store:
+   837→
+   838→applicationId
+   839→studentId
+   840→opportunityId
+   841→status
+   842→appliedAt
+   843→updatedAt
+   844→
+   845→Do not just display a toast.
+   846→
+   847→============================================================
+   848→25. APPLICATION MODEL
+   849→============================================================
+   850→
+   851→Application fields:
+   852→
+   853→id
+   854→studentId
+   855→opportunityId
+   856→status
+   857→
+   858→appliedAt
+   859→updatedAt
+   860→
+   861→optional:
+   862→
+   863→resumeVersion
+   864→coverLetter
+   865→notes
+   866→nextAction
+   867→
+   868→Statuses:
+   869→
+   870→Applied
+   871→Under Review
+   872→Shortlisted
+   873→Interview
+   874→Selected
+   875→Rejected
+   876→Withdrawn
+   877→
+   878→Use uppercase/internal enums if appropriate.
+   879→
+   880→============================================================
+   881→26. APPLICATION TRACKING
+   882→============================================================
+   883→
+   884→Create:
+   885→
+   886→Career & Opportunities → Applications
+   887→
+   888→If existing navigation does not contain Applications, add it under Career & Opportunities.
+   889→
+   890→Show:
+   891→
+   892→Opportunity
+   893→Company
+   894→Applied Date
+   895→Status
+   896→Deadline
+   897→Next Action
+   898→
+   899→Clicking an application:
+   900→
+   901→Application Details
+   902→
+   903→============================================================
+   904→27. APPLICATION TIMELINE
+   905→============================================================
+   906→
+   907→Each application should display a timeline:
+   908→
+   909→Applied
+   910→↓
+   911→Under Review
+   912→↓
+   913→Shortlisted
+   914→↓
+   915→Interview
+   916→↓
+   917→Selected
+   918→
+   919→Only actual completed states should be highlighted.
+   920→
+   921→If status is Rejected:
+   922→
+   923→Applied
+   924→↓
+   925→Under Review
+   926→↓
+   927→Rejected
+   928→
+   929→Do not show future states as completed.
+   930→
+   931→============================================================
+   932→28. APPLICATION STATE CHANGES
+   933→============================================================
+   934→
+   935→For demo purposes, if no industry backend exists:
+   936→
+   937→allow controlled demo status transitions only through an appropriate demo/admin mechanism.
+   938→
+   939→Do NOT let students arbitrarily set themselves to:
+   940→
+   941→Selected
+   942→
+   943→Do NOT create fake successful placement results.
+   944→
+   945→============================================================
+   946→29. SAVE OPPORTUNITY
+   947→============================================================
+   948→
+   949→Student can:
+   950→
+   951→Save
+   952→
+   953→Button changes:
+   954→
+   955→Save
+   956→→
+   957→Saved
+   958→
+   959→Store saved state.
+   960→
+   961→Create:
+   962→
+   963→Saved Opportunities
+   964→
+   965→or expose saved state in Jobs/Internships.
+   966→
+   967→============================================================
+   968→30. FILTERING
+   969→============================================================
+   970→
+   971→Jobs:
+   972→
+   973→Role
+   974→Skill
+   975→Location
+   976→Mode
+   977→Experience
+   978→Compensation
+   979→Deadline
+   980→Match
+   981→
+   982→Internships:
+   983→
+   984→Role
+   985→Skill
+   986→Location
+   987→Mode
+   988→Duration
+   989→Stipend
+   990→Deadline
+   991→Match
+   992→
+   993→Projects:
+   994→
+   995→Domain
+   996→Skill
+   997→Duration
+   998→Team Size
+   999→Deadline
+  1000→Match
+  1001→
+  1002→Industry Learning:
+  1003→
+  1004→Skill
+  1005→Target Role
+  1006→Type
+  1007→Duration
+  1008→
+  1009→============================================================
+  1010→31. SEARCH
+  1011→============================================================
+  1012→
+  1013→Search by:
+  1014→
+  1015→Title
+  1016→Company
+  1017→Skill
+  1018→Role
+  1019→Domain
+  1020→
+  1021→Search must operate on actual opportunity records.
+  1022→
+  1023→============================================================
+  1024→32. SORTING
+  1025→============================================================
+  1026→
+  1027→Useful options:
+  1028→
+  1029→Best Match
+  1030→Deadline
+  1031→Newest
+  1032→Saved
+  1033→
+  1034→Best Match should use calculated match score.
+  1035→
+  1036→Do not sort by hardcoded priority.
+  1037→
+  1038→============================================================
+  1039→33. DEADLINE INTELLIGENCE
+  1040→============================================================
+  1041→
+  1042→Display:
+  1043→
+  1044→Closing Soon
+  1045→Open
+  1046→Closed
+  1047→
+  1048→Use actual dates.
+  1049→
+  1050→Example:
+  1051→
+  1052→Deadline:
+  1053→25 Sept 2026
+  1054→
+  1055→If current date approaches deadline:
+  1056→
+  1057→Closing Soon
+  1058→
+  1059→After deadline:
+  1060→
+  1061→Closed
+  1062→
+  1063→Do not rely only on manually typed status.
+  1064→
+  1065→============================================================
+  1066→34. ELIGIBILITY ENGINE
+  1067→============================================================
+  1068→
+  1069→Opportunity can define:
+  1070→
+  1071→Year
+  1072→Branch
+  1073→Department
+  1074→CGPA
+  1075→Required Role
+  1076→Required Skill Level
+  1077→Location where applicable
+  1078→
+  1079→Create:
+  1080→
+  1081→checkOpportunityEligibility(studentId, opportunityId)
+  1082→
+  1083→Return:
+  1084→
+  1085→eligible
+  1086→reasons
+  1087→failedRequirements
+  1088→
+  1089→============================================================
+  1090→35. WHY AM I NOT ELIGIBLE?
+  1091→============================================================
+  1092→
+  1093→If student cannot apply:
+  1094→
+  1095→Show:
+  1096→
+  1097→Not Eligible
+  1098→
+  1099→Why?
+  1100→
+  1101→Example:
+  1102→
+  1103→Required Year:
+  1104→2nd–4th
+  1105→
+  1106→Your Year:
+  1107→1st
+  1108→
+  1109→Or:
+  1110→
+  1111→Required skill:
+  1112→Machine Learning ≥ 60
+  1113→
+  1114→Your competency:
+  1115→43
+  1116→
+  1117→Do not simply hide Apply Now.
+  1118→
+  1119→============================================================
+  1120→36. OPPORTUNITY DETAIL — STUDENT CONTEXT
+  1121→============================================================
+  1122→
+  1123→Do not only show the job description.
+  1124→
+  1125→Add:
+  1126→
+  1127→YOUR SKILL FIT
+  1128→
+  1129→Skill
+  1130→Your Level
+  1131→Required Level
+  1132→Status
+  1133→
+  1134→Example:
+  1135→
+  1136→Python:
+  1137→82 / 70
+  1138→Strong Match
+  1139→
+  1140→SQL:
+  1141→64 / 60
+  1142→Match
+  1143→
+  1144→ML:
+  1145→43 / 70
+  1146→Gap
+  1147→
+  1148→============================================================
+  1149→37. NEXT BEST ACTION FROM OPPORTUNITY
+  1150→============================================================
+  1151→
+  1152→If an opportunity is attractive but the student has a gap:
+  1153→
+  1154→Show:
+  1155→
+  1156→Suggested Next Step
+  1157→
+  1158→Example:
+  1159→
+  1160→Improve Machine Learning evidence
+  1161→
+  1162→or:
+  1163→
+  1164→Build an ML project
+  1165→
+  1166→or:
+  1167→
+  1168→Complete relevant learning
+  1169→
+  1170→This should connect to Phase 3 Next Best Action.
+  1171→
+  1172→Do NOT invent a new recommendation engine.
+  1173→
+  1174→============================================================
+  1175→38. OPPORTUNITY → NEXT BEST ACTION
+  1176→============================================================
+  1177→
+  1178→Example:
+  1179→
+  1180→Opportunity:
+  1181→
+  1182→Data Science Intern
+  1183→
+  1184→Match:
+  1185→78%
+  1186→
+  1187→Gap:
+  1188→
+  1189→Machine Learning
+  1190→
+  1191→Next Best Action:
+  1192→
+  1193→Build ML Project
+  1194→
+  1195→Reason:
+  1196→
+  1197→This can address the largest relevant skill gap for this opportunity and generate evidence.
+  1198→
+  1199→This demonstrates the connection:
+  1200→
+  1201→Gap
+  1202→→ Action
+  1203→→ Opportunity
+  1204→
+  1205→============================================================
+  1206→39. OPPORTUNITY RECOMMENDATION LOGIC
+  1207→============================================================
+  1208→
+  1209→Consider:
+  1210→
+  1211→student target role
+  1212→student skill gaps
+  1213→required opportunity skills
+  1214→evidence
+  1215→eligibility
+  1216→
+  1217→Do not recommend opportunities for which the student is completely ineligible.
+  1218→
+  1219→============================================================
+  1220→40. STUDENT PROFILE IN OPPORTUNITY CONTEXT
+  1221→============================================================
+  1222→
+  1223→When opening:
+  1224→
+  1225→Why this match?
+  1226→
+  1227→show:
+  1228→
+  1229→Target Role:
+  1230→Data Scientist
+  1231→
+  1232→Role Readiness:
+  1233→61%
+  1234→
+  1235→Relevant Skills:
+  1236→
+  1237→Python:
+  1238→82
+  1239→
+  1240→SQL:
+  1241→64
+  1242→
+  1243→ML:
+  1244→43
+  1245→
+  1246→Relevant Evidence:
+  1247→
+  1248→Assessment
+  1249→Project
+  1250→
+  1251→Gaps:
+  1252→
+  1253→ML
+  1254→Statistics
+  1255→
+  1256→This makes the recommendation contextual.
+  1257→
+  1258→============================================================
+  1259→41. RESUME CONNECTION
+  1260→============================================================
+  1261→
+  1262→When applying, allow:
+  1263→
+  1264→Select Resume
+  1265→
+  1266→Use existing Skill Passport / Resume Builder data.
+  1267→
+  1268→Do not create a second resume database.
+  1269→
+  1270→Resume should contain:
+  1271→
+  1272→Verified Skills
+  1273→Projects
+  1274→Internships
+  1275→Hackathons
+  1276→Certifications
+  1277→Education
+  1278→Achievements
+  1279→
+  1280→Do not invent experience.
+  1281→
+  1282→============================================================
+  1283→42. TARGET-ROLE RESUME ALIGNMENT
+  1284→============================================================
+  1285→
+  1286→On application preview show:
+  1287→
+  1288→Resume Alignment:
+  1289→
+  1290→Example:
+  1291→84%
+  1292→
+  1293→Label:
+  1294→
+  1295→Resume Alignment Score
+  1296→
+  1297→This must refer to the selected opportunity or target role.
+  1298→
+  1299→Do not call it:
+  1300→
+  1301→Guaranteed ATS Score
+  1302→
+  1303→Explain what it measures.
+  1304→
+  1305→============================================================
+  1306→43. COVER LETTER — OPTIONAL
+  1307→============================================================
+  1308→
+  1309→Allow a simple:
+  1310→
+  1311→Generate Draft Cover Note
+  1312→
+  1313→If AI is available:
+  1314→
+  1315→AI may draft using actual student/opportunity information.
+  1316→
+  1317→Do not invent:
+  1318→
+  1319→experience
+  1320→projects
+  1321→skills
+  1322→achievements
+  1323→
+  1324→Use only existing student data.
+  1325→
+  1326→Clearly label generated content as a draft.
+  1327→
+  1328→============================================================
+  1329→44. INDUSTRY LEARNING → GAP
+  1330→============================================================
+  1331→
+  1332→Industry Learning recommendations can consume Phase 3 gaps.
+  1333→
+  1334→Example:
+  1335→
+  1336→Student gap:
+  1337→
+  1338→Machine Learning
+  1339→
+  1340→Recommended:
+  1341→
+  1342→Machine Learning Practical Workshop
+  1343→
+  1344→Why?
+  1345→
+  1346→Addresses current skill gap.
+  1347→
+  1348→The learning recommendation should reference the actual skill.
+  1349→
+  1350→============================================================
+  1351→45. LEARNING DETAIL
+  1352→============================================================
+  1353→
+  1354→Show:
+  1355→
+  1356→Program
+  1357→Provider
+  1358→Type
+  1359→Skill
+  1360→Target Role
+  1361→Duration
+  1362→Eligibility
+  1363→Description
+  1364→
+  1365→Action:
+  1366→
+  1367→Enroll
+  1368→Save
+  1369→View
+  1370→
+  1371→If enrollment is only simulated, label it as demo workflow.
+  1372→
+  1373→============================================================
+  1374→46. PROJECT OPPORTUNITY → EVIDENCE PREPARATION
+  1375→============================================================
+  1376→
+  1377→When student applies to a project:
+  1378→
+  1379→Show what evidence the project could potentially generate.
+  1380→
+  1381→Example:
+  1382→
+  1383→Potential Evidence:
+  1384→
+  1385→Python
+  1386→Machine Learning
+  1387→Problem Solving
+  1388→
+  1389→Label:
+  1390→
+  1391→Potential / Projected Evidence
+  1392→
+  1393→Do NOT mark evidence as verified before completion.
+  1394→
+  1395→============================================================
+  1396→47. OPPORTUNITY ACTIVITY
+  1397→============================================================
+  1398→
+  1399→Track:
+  1400→
+  1401→Viewed
+  1402→Saved
+  1403→Applied
+  1404→Status Changed
+  1405→
+  1406→Timestamp where useful.
+  1407→
+  1408→This supports future analytics.
+  1409→
+  1410→============================================================
+  1411→48. NOTIFICATIONS
+  1412→============================================================
+  1413→
+  1414→Generate opportunity notifications for real prototype events:
+  1415→
+  1416→New Match
+  1417→Application Submitted
+  1418→Application Status Changed
+  1419→Interview Update
+  1420→Closing Soon
+  1421→Opportunity Recommended
+  1422→
+  1423→Do not create notifications without triggering events.
+  1424→
+  1425→============================================================
+  1426→49. STUDENT OPPORTUNITY ANALYTICS
+  1427→============================================================
+  1428→
+  1429→Create a small useful dashboard:
+  1430→
+  1431→Applications
+  1432→Saved
+  1433→Interviews
+  1434→Offers / Selected if actual demo data exists
+  1435→Top Skill Gaps in Applications
+  1436→
+  1437→Do not claim actual employment outcomes.
+  1438→
+  1439→============================================================
+  1440→50. OPPORTUNITY MATCH EXPLANATION — UNIVERSAL COMPONENT
+  1441→============================================================
+  1442→
+  1443→Reuse Phase 3:
+  1444→
+  1445→WhyThisResult
+  1446→
+  1447→or create an Opportunity-specific variant using the same pattern.
+  1448→
+  1449→Show:
+  1450→
+  1451→Why matched
+  1452→What matched
+  1453→What is missing
+  1454→Evidence
+  1455→Role relevance
+  1456→Eligibility
+  1457→
+  1458→============================================================
+  1459→51. MATCH CALCULATION EXAMPLE
+  1460→============================================================
+  1461→
+  1462→For demo S042:
+  1463→
+  1464→Student:
+  1465→
+  1466→Data Scientist
+  1467→
+  1468→Python:
+  1469→82
+  1470→
+  1471→SQL:
+  1472→64
+  1473→
+  1474→Statistics:
+  1475→51
+  1476→
+  1477→Machine Learning:
+  1478→43
+  1479→
+  1480→Problem Solving:
+  1481→75
+  1482→
+  1483→Opportunity:
+  1484→
+  1485→Data Science Intern
+  1486→
+  1487→Requirements:
+  1488→
+  1489→Python
+  1490→SQL
+  1491→Machine Learning
+  1492→Statistics
+  1493→
+  1494→Use deterministic matching.
+  1495→
+  1496→Do not force the final percentage to 91%.
+  1497→
+  1498→The UI may display a controlled demo match only if the same underlying calculation produces it.
+  1499→
+  1500→If the calculation produces a different value:
+  1501→
+  1502→display the actual calculated value.
+  1503→
+  1504→============================================================
+  1505→52. DEMO OPPORTUNITIES
+  1506→============================================================
+  1507→
+  1508→Create controlled DEMO DATA.
+  1509→
+  1510→Example:
+  1511→
+  1512→1.
+  1513→Data Science Intern
+  1514→Company:
+  1515→Nova Analytics
+  1516→Location:
+  1517→Pune / Hybrid
+  1518→
+  1519→Required:
+  1520→Python
+  1521→SQL
+  1522→Machine Learning
+  1523→Statistics
+  1524→
+  1525→Target:
+  1526→Data Scientist
+  1527→
+  1528→2.
+  1529→ML Engineering Intern
+  1530→Company:
+  1531→Vertex Labs
+  1532→
+  1533→Required:
+  1534→Python
+  1535→Machine Learning
+  1536→Deep Learning
+  1537→
+  1538→Target:
+  1539→ML Engineer
+  1540→
+  1541→3.
+  1542→Full Stack Project
+  1543→Company:
+  1544→TechBridge
+  1545→
+  1546→Required:
+  1547→Frontend
+  1548→Backend
+  1549→Database
+  1550→API Integration
+  1551→
+  1552→Target:
+  1553→Full Stack Developer
+  1554→
+  1555→Clearly label as:
+  1556→
+  1557→DEMO DATA
+  1558→
+  1559→============================================================
+  1560→53. DATA CONSISTENCY
+  1561→============================================================
+  1562→
+  1563→The same opportunity record must appear consistently in:
+  1564→
+  1565→Student dashboard
+  1566→Jobs
+  1567→Internships
+  1568→Projects
+  1569→Recommended Opportunities
+  1570→Applications
+  1571→
+  1572→Do not duplicate the opportunity with slightly different data.
+  1573→
+  1574→============================================================
+  1575→54. OPPORTUNITY → APPLICATION → EXPERIENCE
+  1576→============================================================
+  1577→
+  1578→Prepare the architecture for:
+  1579→
+  1580→Opportunity
+  1581→→ Application
+  1582→→ Selection
+  1583→→ Experience
+  1584→→ Feedback
+  1585→→ Evidence
+  1586→
+  1587→Do not implement the complete internship lifecycle yet unless it already exists.
+  1588→
+  1589→Just ensure the model can support it.
+  1590→
+  1591→============================================================
+  1592→55. INDUSTRY FEEDBACK PREPARATION
+  1593→============================================================
+  1594→
+  1595→Opportunity records should be connectable later to:
+  1596→
+  1597→Industry Feedback
+  1598→
+  1599→so that:
+  1600→
+  1601→Internship
+  1602→Project
+  1603→Hackathon
+  1604→
+  1605→can produce:
+  1606→
+  1607→Feedback
+  1608→→ Evidence
+  1609→
+  1610→Do not build the complete Industry Feedback portal in this phase.
+  1611→
+  1612→============================================================
+  1613→56. MATCH QUALITY
+  1614→============================================================
+  1615→
+  1616→Do not call every recommendation:
+  1617→
+  1618→Perfect Match
+  1619→
+  1620→Use:
+  1621→
+  1622→Strong Match
+  1623→Good Match
+  1624→Potential Match
+  1625→
+  1626→based on actual score thresholds.
+  1627→
+  1628→If using thresholds, document them.
+  1629→
+  1630→============================================================
+  1631→57. NO UNIVERSAL EMPLOYABILITY SCORE
+  1632→============================================================
+  1633→
+  1634→Do not show:
+  1635→
+  1636→Employability:
+  1637→91%
+  1638→
+  1639→Use:
+  1640→
+  1641→Opportunity Match:
+  1642→91%
+  1643→
+  1644→and explain what it means.
+  1645→
+  1646→============================================================
+  1647→58. UI DESIGN
+  1648→============================================================
+  1649→
+  1650→Use Phase 1 + Phase 2 design system.
+  1651→
+  1652→Opportunity pages should be:
+  1653→
+  1654→clean
+  1655→professional
+  1656→information-rich
+  1657→
+  1658→Use:
+  1659→
+  1660→match badges
+  1661→skill chips
+  1662→evidence badges
+  1663→deadline indicators
+  1664→progress
+  1665→explanation drawers
+  1666→
+  1667→Do not copy Naukri or LinkedIn.
+  1668→
+  1669→============================================================
+  1670→59. VISUAL HIERARCHY
+  1671→============================================================
+  1672→
+  1673→Opportunity card priority:
+  1674→
+  1675→1. Role / Opportunity
+  1676→2. Company
+  1677→3. Match
+  1678→4. Location / Mode
+  1679→5. Deadline
+  1680→6. Key skills
+  1681→7. Actions
+  1682→
+  1683→Student-specific intelligence should be prominent:
+  1684→
+  1685→Why Match?
+  1686→Skill Gap
+  1687→Evidence
+  1688→
+  1689→============================================================
+  1690→60. EMPTY STATES
+  1691→============================================================
+  1692→
+  1693→No Jobs:
+  1694→
+  1695→"No opportunities match your current filters."
+  1696→
+  1697→No Applications:
+  1698→
+  1699→"You have not applied to any opportunities yet."
+  1700→
+  1701→No Saved:
+  1702→
+  1703→"Save opportunities to revisit them later."
+  1704→
+  1705→No Strong Matches:
+  1706→
+  1707→"Your current skill profile has limited alignment. Review your Skill Gaps and Next Best Action."
+  1708→
+  1709→============================================================
+  1710→61. LOADING STATES
+  1711→============================================================
+  1712→
+  1713→Examples:
+  1714→
+  1715→Loading opportunities...
+  1716→Calculating your match...
+  1717→Checking eligibility...
+  1718→Preparing application...
+  1719→Saving opportunity...
+  1720→
+  1721→============================================================
+  1722→62. ERROR STATES
+  1723→============================================================
+  1724→
+  1725→Handle:
+  1726→
+  1727→Invalid opportunity
+  1728→Deadline passed
+  1729→Not eligible
+  1730→Already applied
+  1731→Application failed
+  1732→Network error
+  1733→Missing resume
+  1734→Missing required data
+  1735→
+  1736→Provide useful explanations.
+  1737→
+  1738→============================================================
+  1739→63. ACCESS CONTROL
+  1740→============================================================
+  1741→
+  1742→Student can:
+  1743→
+  1744→view public/allowed opportunities
+  1745→save
+  1746→apply
+  1747→track own applications
+  1748→
+  1749→Do not expose private company/admin functionality.
+  1750→
+  1751→============================================================
+  1752→64. DEMO / PROTOTYPE STATUS
+  1753→============================================================
+  1754→
+  1755→Clearly distinguish:
+  1756→
+  1757→CALCULATED
+  1758→DEMO DATA
+  1759→PROJECTED
+  1760→APPLIED
+  1761→SAVED
+  1762→SUBMITTED
+  1763→FUTURE INTEGRATION
+  1764→
+  1765→Do not claim:
+  1766→
+  1767→live employer integration
+  1768→live ATS integration
+  1769→real company API
+  1770→real external job feeds
+  1771→
+  1772→unless actually implemented.
+  1773→
+  1774→============================================================
+  1775→65. FUTURE INTEGRATIONS
+  1776→============================================================
+  1777→
+  1778→Architecture should later support:
+  1779→
+  1780→ATS
+  1781→University placement system
+  1782→LMS
+  1783→External opportunity providers
+  1784→Company career portals
+  1785→
+  1786→For now:
+  1787→
+  1788→DEMO DATA
+  1789→
+  1790→unless a real integration exists.
+  1791→
+  1792→============================================================
+  1793→66. PHASE 3 DEPENDENCIES
+  1794→============================================================
+  1795→
+  1796→Phase 4 must consume:
+  1797→
+  1798→calculateRoleReadiness()
+  1799→calculateSkillGaps()
+  1800→getNextBestAction()
+  1801→getStudentEvidence()
+  1802→getStudentCompetency()
+  1803→
+  1804→Do not recreate these functions.
+  1805→
+  1806→============================================================
+  1807→67. TESTING — MATCHING
+  1808→============================================================
+  1809→
+  1810→TEST 1:
+  1811→
+  1812→S042 Data Scientist
+  1813→
+  1814→Opportunity:
+  1815→Data Science Intern
+  1816→
+  1817→Expected:
+  1818→
+  1819→Match calculation uses:
+  1820→
+  1821→Python
+  1822→SQL
+  1823→Statistics
+  1824→ML
+  1825→Role
+  1826→
+  1827→TEST 2:
+  1828→
+  1829→Change ML competency:
+  1830→
+  1831→43 → 60
+  1832→
+  1833→Expected:
+  1834→
+  1835→Opportunity match changes.
+  1836→
+  1837→TEST 3:
+  1838→
+  1839→Change target role:
+  1840→
+  1841→Data Scientist
+  1842→→
+  1843→Full Stack Developer
+  1844→
+  1845→Expected:
+  1846→
+  1847→Data Science opportunity role alignment changes.
+  1848→
+  1849→Full Stack opportunities become more relevant.
+  1850→
+  1851→TEST 4:
+  1852→
+  1853→Remove Python evidence.
+  1854→
+  1855→Expected:
+  1856→
+  1857→Evidence explanation changes.
+  1858→
+  1859→Match should reflect evidence change if evidence affects the configured formula.
+  1860→
+  1861→TEST 5:
+  1862→
+  1863→Make student ineligible.
+  1864→
+  1865→Expected:
+  1866→
+  1867→Apply Now disabled or blocked.
+  1868→
+  1869→WHY NOT ELIGIBLE displayed.
+  1870→
+  1871→============================================================
+  1872→68. TESTING — APPLICATIONS
+  1873→============================================================
+  1874→
+  1875→TEST 6:
+  1876→
+  1877→Click Apply Now.
+  1878→
+  1879→Expected:
+  1880→
+  1881→Application created.
+  1882→
+  1883→Status:
+  1884→Applied
+  1885→
+  1886→TEST 7:
+  1887→
+  1888→Click Apply Again.
+  1889→
+  1890→Expected:
+  1891→
+  1892→Duplicate application prevented.
+  1893→
+  1894→TEST 8:
+  1895→
+  1896→Withdraw.
+  1897→
+  1898→Expected:
+  1899→
+  1900→Status:
+  1901→Withdrawn
+  1902→
+  1903→TEST 9:
+  1904→
+  1905→Refresh.
+  1906→
+  1907→Expected:
+  1908→
+  1909→Application remains.
+  1910→
+  1911→============================================================
+  1912→69. TESTING — SAVED
+  1913→============================================================
+  1914→
+  1915→TEST 10:
+  1916→
+  1917→Click Save.
+  1918→
+  1919→Expected:
+  1920→Saved
+  1921→
+  1922→Refresh.
+  1923→
+  1924→Expected:
+  1925→Still Saved.
+  1926→
+  1927→============================================================
+  1928→70. TESTING — EXPLAINABILITY
+  1929→============================================================
+  1930→
+  1931→TEST 11:
+  1932→
+  1933→Click:
+  1934→
+  1935→Why this match?
+  1936→
+  1937→Expected:
+  1938→
+  1939→Actual breakdown appears.
+  1940→
+  1941→TEST 12:
+  1942→
+  1943→Click:
+  1944→
+  1945→Why not eligible?
+  1946→
+  1947→Expected:
+  1948→
+  1949→Actual failed requirement appears.
+  1950→
+  1951→TEST 13:
+  1952→
+  1953→Click:
+  1954→
+  1955→Why recommended?
+  1956→
+  1957→Expected:
+  1958→
+  1959→Student data + opportunity requirements are shown.
+  1960→
+  1961→============================================================
+  1962→71. TESTING — ROLE CHANGE
+  1963→============================================================
+  1964→
+  1965→TEST 14:
+  1966→
+  1967→Data Scientist
+  1968→
+  1969→→
+  1970→Full Stack Developer
+  1971→
+  1972→Expected:
+  1973→
+  1974→Recommended opportunities change.
+  1975→
+  1976→Skill relevance changes.
+  1977→
+  1978→Role explanation changes.
+  1979→
+  1980→============================================================
+  1981→72. TESTING — DEADLINES
+  1982→============================================================
+  1983→
+  1984→TEST 15:
+  1985→
+  1986→Set deadline in future.
+  1987→
+  1988→Expected:
+  1989→Open
+  1990→
+  1991→Set deadline close to current date.
+  1992→
+  1993→Expected:
+  1994→Closing Soon
+  1995→
+  1996→Set deadline in past.
+  1997→
+  1998→Expected:
+  1999→Closed
+  2000→
+
+[showing lines 1-2000 of 2278; use offset=2001 with limit to continue reading]

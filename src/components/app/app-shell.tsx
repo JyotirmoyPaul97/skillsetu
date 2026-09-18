@@ -8,7 +8,7 @@ import {
   Briefcase, GraduationCap, FolderKanban, BookOpen, Trophy, Search, Send,
   BadgeCheck, CheckCircle2, FolderGit, Award, Building2, FileText, Bell,
   ChevronDown, ChevronRight, Menu, X, LogOut, Settings, HelpCircle, User,
-  PanelLeftClose, PanelLeft, Command, Bug,
+  PanelLeftClose, PanelLeft, Command, Bug, Sparkles,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRouter, appSection } from "@/lib/router";
@@ -58,10 +58,12 @@ const NAV: (NavLeaf | NavGroup)[] = [
   },
   {
     label: "Career & Opportunities", icon: Briefcase, children: [
+      { label: "Recommended", route: "/app/career/recommended", icon: Sparkles },
       { label: "Jobs", route: "/app/career/jobs", icon: Briefcase },
       { label: "Internships", route: "/app/career/internships", icon: GraduationCap },
       { label: "Projects", route: "/app/career/projects", icon: FolderKanban },
       { label: "Industry Learning", route: "/app/career/learning", icon: BookOpen },
+      { label: "Applications", route: "/app/career/applications", icon: FileText },
     ],
   },
   {
@@ -93,7 +95,7 @@ const BREADCRUMBS: Record<string, string> = {
   "skills": "My Skills", "career": "Career & Opportunities", "hackathons": "Hackathons & Teams", "passport": "Skill Passport",
   notifications: "Notifications", profile: "My Profile", debug: "Debug",
   technical: "Technical", soft: "Soft Skills", aptitude: "Aptitude", gap: "Skill Gap",
-  jobs: "Jobs", internships: "Internships", projects: "Projects", learning: "Industry Learning",
+  jobs: "Jobs", internships: "Internships", projects: "Projects", learning: "Industry Learning", recommended: "Recommended", applications: "Applications",
   discover: "Discover", mine: "My Hackathons", teams: "My Teams", submissions: "Submissions", mentorship: "Mentorship",
   verified: "Verified Skills", certifications: "Certifications", resume: "Resume",
 };
