@@ -396,3 +396,48 @@ Stage Summary:
 - Lint clean; dev server stable with --webpack + heap cap + code-splitting.
 - Known limitation: dev server is memory-heavy in this 4GB container (Turbopack OOMs); mitigated via webpack + heap cap. No backend this phase (per spec §45) — all data is controlled DEMO DATA labelled with DemoBadge.
 - STOP AFTER PHASE 2 — Industry/Academia/Institution portals + backends + full Hackathon engine deferred to subsequent phases.
+
+---
+Task ID: P3-1
+Agent: orchestrator (main)
+Task: Phase 3 — Real Skill Intelligence Engine (calculation-driven, no hardcoded numbers)
+
+Work Log:
+- Read master spec upload/Pasted Content_1789705407640.txt (2058 lines, §1–63). Focus: make the Student Skill Intelligence System genuinely functional with a real calculation engine.
+- Built src/lib/intelligence/ module (the core intelligence layer):
+  * role-config.ts — ROLE_READINESS_CONFIG with all 12 roles (Data Scientist, ML Engineer, Software Engineer, Full Stack Developer, Cybersecurity Analyst, DevOps Engineer, Cloud Architect, Embedded Systems Engineer, Mechanical Design Engineer, Power Systems Engineer, Structural Engineer, VLSI Design Engineer), each with skillId/skillName/weight (0–1) summing to 1.0. validateRoleWeights(). COMPETENCY_TARGET_THRESHOLD=70 (labelled configured prototype threshold, NOT industry standard).
+  * types.ts — Student, Competency, EvidenceRecord, AssessmentResult, SkillGap, ReadinessResult (with skillBreakdown), NextAction, ReadinessHistoryEntry, WhatIfProjection. EvidenceStatus (Submitted/Pending Evaluation/Evaluated/Verified — Submitted≠Evaluated≠Verified). ConfidenceLevel (Limited/Moderate/Higher/Strong/None).
+  * demo-data.ts — DEMO_STUDENT (S042, AI & Data Science, Data Scientist), DEMO_ROLE_PROFILES (role-specific competency profiles; DS exact: Python 82/SQL 64/Statistics 51/ML 43/Problem Solving 75 → 60.70%; Full Stack exact: Frontend 85/Backend 72/Database 68/API 60/Problem Solving 78 → 74.00%), INITIAL_EVIDENCE (6 timestamped records with mixed Submitted/Evaluated statuses), INITIAL_ASSESSMENT_RESULTS, INITIAL_READINESS_HISTORY (labelled demo).
+  * engine.ts — PURE DETERMINISTIC functions (RULES CALCULATE, not LLM): calculateRoleReadiness (Σ competency×weight ÷ Σweights, raw kept + display rounded), calculateSkillGaps (target 70, priority by gap×importance×confidence factor; High/Medium/Low labels match spec §23), getNextBestAction (deterministic rules: High gap + no project → Build Project; etc.), calculateEvidenceConfidence (transparent policy: Assessment→Limited, +project→Moderate, +evaluated project→Higher, +feedback→Strong), projectWhatIf (simulation, not stored), validateScore/validateWeight, getReadinessExplanation. Full error handling (unknown role/skill, invalid score).
+  * store.ts — centralized Zustand store (SINGLE SOURCE OF TRUTH) with localStorage persistence (key skillsetu-intelligence-v1, labelled PROTOTYPE persistence). State: student, roleId, competencies, evidence, assessmentResults, readinessHistory. Actions: setRole (loads role demo profile + recalculates), setCompetency (override → triggers recalculation across UI per §34), resetCompetenciesForRole, addEvidence (recomputes confidence), updateEvidenceStatus (Submitted→Evaluated etc., recomputes confidence), resetAll.
+  * service.ts — IntelligenceService API (§39): getStudentSkills, getStudentEvidence, getStudentCompetency, calculateRoleReadiness, calculateSkillGaps, getNextBestAction, getReadinessExplanation, getSkillExplanation, projectWhatIf. useIntelligenceDerived() React hook — reactively recomputes readiness+gaps+nextAction from the store; any competency/evidence/role change triggers recalculation across the whole UI.
+  * index.ts — public API re-exports.
+- Refactored src/components/app/student/dashboard.tsx — now reads from useIntelligenceDerived() (NO hardcoded 61): ReadinessCard shows calculated readiness.displayValue + raw value + "Why is my readiness X%?" button → ReadinessCalcDrawer with live breakdown table (skill × competency × weight% = contribution, total raw, displayed rounded). Critical Skill Gaps from calculateSkillGaps (ML High/Statistics Medium/SQL Medium per §23). Next Best Action from getNextBestAction ("Build an End-to-End ML Project" per §27). CompetencyEditor (live sliders — change ML 43→60, readiness recalculates instantly across the portal per §34). WhatIfModal (What-If preview, labelled Projected/What-If, doesn't store per §35). Recent Evidence from store. Role card + RoleSelector (uses ROLE_READINESS_CONFIG 12 roles).
+- Updated student-parts.tsx RoleSelector — uses ALL_ROLES from intelligence engine + useIntelligence.setRole (loads role profile, recalculates). 12 roles with weight chips.
+- Built src/components/app/student/skill-detail.tsx — full skill detail page (§32): Overview (competency, evidence confidence, role importance, contribution, last updated, evidence count, skill bar vs target), Why this score? (traceable explanation), Evidence (list → EvidenceDetailDrawer), Role relevance, Skill Gap (from calculateSkillGaps), Next Action, Competency & Evidence History (§37 — evidence ≠ competency improvement), Edit competency modal (live recalc). Route #/app/skills/:skillId.
+- Built src/components/app/student/debug.tsx — developer-only Intelligence Diagnostics view (§50): central state, calculated readiness + weight validation, role skills/weights/competencies/contributions/gaps table, all-role weight validation grid, next action, prototype-persistence note. "Test: ML 43→60" button.
+- Updated src/components/app/app-shell.tsx — added SkillDetailPage + DebugPage dynamic imports; content outlet handles /app/skills/:skillId (vs technical/soft/aptitude/gap) and /app/debug; added Debug nav item + breadcrumb.
+
+Engine self-test (bun run) — ALL PASS:
+  TEST 1 (§13): S042 Data Scientist = 60.70 raw / 61 display ✓
+  TEST 3 (§19): Full Stack Developer = 74.00 raw / 74 display ✓
+  TEST 2 (§34): ML 43→60 → readiness 65.80 (live recalc) ✓
+  TEST 9 (§23): gaps ML=High, Statistics=Medium, SQL=Medium ✓
+  TEST 10 (§27): NBA "Build an End-to-End Machine Learning Project" / Build Project / High ✓
+  Role weights: all 12 roles sum to 100% ✓
+Browser-verified (agent-browser via gateway):
+  Dashboard: "Good morning, S042" + ROLE READINESS 61% (Calculated) + Top Gap ML ✓
+  Why modal: breakdown table Python 82×25%=20.50 … total 60.70% displayed 61% ✓
+  Debug view: S042, readiness 61% raw 60.70%, 5 breakdown rows, 6 evidence records ✓
+
+Stage Summary:
+- Phase 3 intelligence engine COMPLETE & verified. Real calculation (not hardcoded).
+- Single source of truth: src/lib/intelligence/ — all components read from useIntelligenceDerived(). No duplicated S042 data.
+- Rules calculate (readiness/competency/gap/priority/NBA); deterministic & traceable. No LLM for numerical values (§43).
+- Live recalculation: change any competency → readiness, gaps, next action, explanation update everywhere (§34).
+- Role switching recalculates from the new role's config + profile (DS 61% ↔ Full Stack 74%).
+- What-If preview labelled Projected/What-If (doesn't store). Evidence statuses distinct (Submitted≠Evaluated≠Verified). Evidence confidence transparent prototype policy (not scientifically validated). Target threshold 70 labelled "configured prototype threshold".
+- Prototype persistence via localStorage (clearly labelled). Error handling for unknown role/skill/invalid scores. Weight validation (all 12 roles sum to 100%).
+- Lint clean; build succeeds; dev server running.
+- Did NOT rebuild Phase 1/2 or implement Industry/Academia/Institution/Hackathons (per spec §60).
+- STOP AFTER PHASE 3.

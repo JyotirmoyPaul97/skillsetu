@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { SsBadge, SsStat } from "@/components/ui/ss";
 import { ROLES, type EvidenceRow, type Verification, type AppStatus } from "@/lib/student-data";
 import { useStudentState } from "@/lib/student-state";
+import { ALL_ROLES, useIntelligence, getRoleConfig } from "@/lib/intelligence";
 import { useRouter } from "@/lib/router";
 import { Button } from "@/components/ui/button";
 
@@ -316,19 +317,20 @@ export function EvidenceDetailDrawer({ evidence, open, onClose }: { evidence: Ev
   );
 }
 
-// ─── Role selector (spec §8, §24) ───────────────────────────────
+// ─── Role selector (spec §8, §24) — uses intelligence engine role config ──
 export function RoleSelector({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { currentRole, setRole } = useStudentState();
+  const { roleId, setRole } = useIntelligence();
+  const { setRole: setLegacyRole } = useStudentState();
   const { navigate } = useRouter();
   return (
-    <Modal open={open} onClose={onClose} title="Select Target Role" subtitle="Drives your role readiness & gap analysis (frontend config)" size="lg">
+    <Modal open={open} onClose={onClose} title="Select Target Role" subtitle="Switching role recalculates readiness, gaps & next action from the central intelligence state" size="lg">
       <div className="grid gap-2.5 sm:grid-cols-2">
-        {ROLES.map((r) => {
-          const active = r.name === currentRole;
+        {ALL_ROLES.map((r) => {
+          const active = r.roleId === roleId;
           return (
             <button
-              key={r.name}
-              onClick={() => { setRole(r.name); onClose(); }}
+              key={r.roleId}
+              onClick={() => { setRole(r.roleId); setLegacyRole(r.roleName); onClose(); navigate("/app/dashboard"); }}
               className={cn(
                 "flex items-start gap-2.5 rounded-xl border p-3 text-left transition-all",
                 active ? "border-[var(--ss-blue-600)] bg-[var(--ss-blue-50)] ring-1 ring-[var(--ss-blue-600)]/30" : "border-[var(--ss-border)] hover:border-[var(--ss-faint)] hover:bg-[var(--ss-surface-2)]",
@@ -338,11 +340,10 @@ export function RoleSelector({ open, onClose }: { open: boolean; onClose: () => 
                 {active && <Check className="h-3 w-3" />}
               </span>
               <div className="min-w-0">
-                <p className="text-sm font-bold text-[var(--ss-ink)]">{r.name}</p>
-                <p className="mt-0.5 text-[11px] leading-tight text-[var(--ss-muted)]">{r.description}</p>
+                <p className="text-sm font-bold text-[var(--ss-ink)]">{r.roleName}</p>
                 <div className="mt-2 flex flex-wrap gap-1">
-                  {r.keySkills.slice(0, 3).map((s) => (
-                    <span key={s} className="rounded-full bg-[var(--ss-surface-3)] px-1.5 py-0.5 text-[9px] font-medium text-[var(--ss-muted)]">{s}</span>
+                  {r.skills.slice(0, 3).map((s) => (
+                    <span key={s.skillId} className="rounded-full bg-[var(--ss-surface-3)] px-1.5 py-0.5 text-[9px] font-medium text-[var(--ss-muted)]">{s.skillName} {Math.round(s.weight * 100)}%</span>
                   ))}
                 </div>
               </div>

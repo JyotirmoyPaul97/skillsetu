@@ -1,0 +1,2002 @@
+     1→     1→============================================================
+     2→     2→SKILL SETU — PHASE 3
+     3→     3→REAL SKILL INTELLIGENCE ENGINE
+     4→     4→============================================================
+     5→     5→
+     6→     6→PHASE 1:
+     7→     7→Design System + Landing Page — COMPLETE
+     8→     8→
+     9→     9→PHASE 2:
+    10→    10→Application Shell + Student Portal — COMPLETE
+    11→    11→
+    12→    12→NOW IMPLEMENT:
+    13→    13→PHASE 3 — SKILL INTELLIGENCE ENGINE
+    14→    14→
+    15→    15→============================================================
+    16→    16→MOST IMPORTANT INSTRUCTION
+    17→    17→============================================================
+    18→    18→
+    19→    19→Do NOT rebuild the application.
+    20→    20→
+    21→    21→Do NOT redesign the Phase 1 landing page.
+    22→    22→
+    23→    23→Do NOT redesign the Phase 2 application shell.
+    24→    24→
+    25→    25→Do NOT implement Hackathons yet.
+    26→    26→
+    27→    27→Do NOT implement the Industry portal yet.
+    28→    28→
+    29→    29→Do NOT implement Academia yet.
+    30→    30→
+    31→    31→Do NOT implement Institution analytics yet.
+    32→    32→
+    33→    33→Do NOT implement external API integrations yet.
+    34→    34→
+    35→    35→Focus ONLY on making the STUDENT SKILL INTELLIGENCE SYSTEM genuinely functional.
+    36→    36→
+    37→    37→This phase must create the core intelligence layer that future modules will consume.
+    38→    38→
+    39→    39→============================================================
+    40→    40→CORE OBJECTIVE
+    41→    41→============================================================
+    42→    42→
+    43→    43→Convert:
+    44→    44→
+    45→    45→STUDENT DATA
+    46→    46→+
+    47→    47→ASSESSMENT
+    48→    48→+
+    49→    49→ROLE REQUIREMENTS
+    50→    50→+
+    51→    51→EVIDENCE
+    52→    52→
+    53→    53→into:
+    54→    54→
+    55→    55→COMPETENCY
+    56→    56→+
+    57→    57→EVIDENCE CONFIDENCE
+    58→    58→+
+    59→    59→ROLE READINESS
+    60→    60→+
+    61→    61→SKILL GAP
+    62→    62→+
+    63→    63→NEXT BEST ACTION
+    64→    64→+
+    65→    65→EXPLAINABLE RESULTS
+    66→    66→
+    67→    67→Core flow:
+    68→    68→
+    69→    69→Target Role
+    70→    70→→ Assessment
+    71→    71→→ Competency
+    72→    72→→ Evidence
+    73→    73→→ Role Readiness
+    74→    74→→ Skill Gap
+    75→    75→→ Next Best Action
+    76→    76→
+    77→    77→Everything must be traceable.
+    78→    78→
+    79→    79→============================================================
+    80→    80→1. INSPECT PHASE 2 BEFORE CHANGING CODE
+    81→    81→============================================================
+    82→    82→
+    83→    83→First inspect the existing Phase 2 implementation.
+    84→    84→
+    85→    85→Identify:
+    86→    86→
+    87→    87→- student data store
+    88→    88→- demo user
+    89→    89→- routing
+    90→    90→- skill pages
+    91→    91→- assessment pages
+    92→    92→- readiness card
+    93→    93→- skill-gap components
+    94→    94→- evidence components
+    95→    95→- state management
+    96→    96→- persistence
+    97→    97→- reusable components
+    98→    98→- existing API/backend if present
+    99→    99→
+   100→   100→Reuse existing components.
+   101→   101→
+   102→   102→Do not duplicate:
+   103→   103→
+   104→   104→Student
+   105→   105→Skill
+   106→   106→Role
+   107→   107→Assessment
+   108→   108→Evidence
+   109→   109→
+   110→   110→models unnecessarily.
+   111→   111→
+   112→   112→============================================================
+   113→   113→2. CENTRAL INTELLIGENCE DATA MODEL
+   114→   114→============================================================
+   115→   115→
+   116→   116→Create ONE centralized source of truth for:
+   117→   117→
+   118→   118→students
+   119→   119→roles
+   120→   120→skills
+   121→   121→roleSkills
+   122→   122→competencies
+   123→   123→evidence
+   124→   124→assessmentResults
+   125→   125→skillGaps
+   126→   126→readinessResults
+   127→   127→recommendations
+   128→   128→
+   129→   129→The frontend must NOT contain separate copies of the same student data in multiple pages.
+   130→   130→
+   131→   131→The same S042 object should feed:
+   132→   132→
+   133→   133→Dashboard
+   134→   134→My Skills
+   135→   135→Assessment Result
+   136→   136→Skill Gap
+   137→   137→Readiness
+   138→   138→Evidence
+   139→   139→Next Best Action
+   140→   140→
+   141→   141→============================================================
+   142→   142→3. ROLE CONFIGURATION ENGINE
+   143→   143→============================================================
+   144→   144→
+   145→   145→Create a centralized ROLE_READINESS_CONFIG.
+   146→   146→
+   147→   147→Do NOT define role skills independently inside components.
+   148→   148→
+   149→   149→Supported roles:
+   150→   150→
+   151→   151→Data Scientist
+   152→   152→ML Engineer
+   153→   153→Software Engineer
+   154→   154→Full Stack Developer
+   155→   155→Cybersecurity Analyst
+   156→   156→DevOps Engineer
+   157→   157→Cloud Architect
+   158→   158→Embedded Systems Engineer
+   159→   159→Mechanical Design Engineer
+   160→   160→Power Systems Engineer
+   161→   161→Structural Engineer
+   162→   162→VLSI Design Engineer
+   163→   163→
+   164→   164→Each role must contain:
+   165→   165→
+   166→   166→roleId
+   167→   167→roleName
+   168→   168→skills
+   169→   169→importanceWeights
+   170→   170→
+   171→   171→Weights must total 100%.
+   172→   172→
+   173→   173→============================================================
+   174→   174→4. ROLE CONFIGURATIONS
+   175→   175→============================================================
+   176→   176→
+   177→   177→Use the following controlled role configurations.
+   178→   178→
+   179→   179→------------------------------------------
+   180→   180→DATA SCIENTIST
+   181→   181→------------------------------------------
+   182→   182→
+   183→   183→Python — 25%
+   184→   184→SQL — 15%
+   185→   185→Statistics — 20%
+   186→   186→Machine Learning — 30%
+   187→   187→Problem Solving — 10%
+   188→   188→
+   189→   189→------------------------------------------
+   190→   190→ML ENGINEER
+   191→   191→------------------------------------------
+   192→   192→
+   193→   193→Python — 20%
+   194→   194→Machine Learning — 30%
+   195→   195→Deep Learning — 25%
+   196→   196→Mathematics & Statistics — 15%
+   197→   197→Problem Solving — 10%
+   198→   198→
+   199→   199→------------------------------------------
+   200→   200→SOFTWARE ENGINEER
+   201→   201→------------------------------------------
+   202→   202→
+   203→   203→Programming — 30%
+   204→   204→Data Structures & Algorithms — 25%
+   205→   205→Database Management — 15%
+   206→   206→Software Engineering — 20%
+   207→   207→Problem Solving — 10%
+   208→   208→
+   209→   209→------------------------------------------
+   210→   210→FULL STACK DEVELOPER
+   211→   211→------------------------------------------
+   212→   212→
+   213→   213→Frontend Development — 20%
+   214→   214→Backend Development — 20%
+   215→   215→Database Management — 15%
+   216→   216→API Integration — 15%
+   217→   217→Problem Solving — 30%
+   218→   218→
+   219→   219→The supplied source specifies the Full Stack calculation as 74.00%, not 73%. :contentReference[oaicite:3]{index=3}
+   220→   220→
+   221→   221→------------------------------------------
+   222→   222→CYBERSECURITY ANALYST
+   223→   223→------------------------------------------
+   224→   224→
+   225→   225→Network Security — 25%
+   226→   226→Cybersecurity Fundamentals — 25%
+   227→   227→Threat Analysis — 20%
+   228→   228→Linux — 15%
+   229→   229→Problem Solving — 15%
+   230→   230→
+   231→   231→------------------------------------------
+   232→   232→DEVOPS ENGINEER
+   233→   233→------------------------------------------
+   234→   234→
+   235→   235→Linux — 20%
+   236→   236→CI/CD — 25%
+   237→   237→Cloud Platforms — 20%
+   238→   238→Docker & Kubernetes — 25%
+   239→   239→Scripting — 10%
+   240→   240→
+   241→   241→------------------------------------------
+   242→   242→CLOUD ARCHITECT
+   243→   243→------------------------------------------
+   244→   244→
+   245→   245→Cloud Platforms — 30%
+   246→   246→Cloud Architecture — 30%
+   247→   247→Networking — 15%
+   248→   248→Security — 15%
+   249→   249→System Design — 10%
+   250→   250→
+   251→   251→------------------------------------------
+   252→   252→EMBEDDED SYSTEMS ENGINEER
+   253→   253→------------------------------------------
+   254→   254→
+   255→   255→C/C++ Programming — 25%
+   256→   256→Microcontrollers — 25%
+   257→   257→Embedded Systems — 25%
+   258→   258→Electronics Fundamentals — 15%
+   259→   259→Problem Solving — 10%
+   260→   260→
+   261→   261→The supplied source gives the corresponding example readiness as 63.00%. :contentReference[oaicite:4]{index=4}
+   262→   262→
+   263→   263→------------------------------------------
+   264→   264→MECHANICAL DESIGN ENGINEER
+   265→   265→------------------------------------------
+   266→   266→
+   267→   267→CAD / 3D Modelling — 30%
+   268→   268→Engineering Drawing — 20%
+   269→   269→Material & Manufacturing — 20%
+   270→   270→Mechanical Analysis — 20%
+   271→   271→Problem Solving — 10%
+   272→   272→
+   273→   273→------------------------------------------
+   274→   274→POWER SYSTEMS ENGINEER
+   275→   275→------------------------------------------
+   276→   276→
+   277→   277→Power Systems — 30%
+   278→   278→Electrical Machines — 20%
+   279→   279→Power Electronics — 20%
+   280→   280→Electrical Protection — 15%
+   281→   281→Circuit Analysis — 15%
+   282→   282→
+   283→   283→------------------------------------------
+   284→   284→STRUCTURAL ENGINEER
+   285→   285→------------------------------------------
+   286→   286→
+   287→   287→Structural Analysis — 30%
+   288→   288→Structural Design — 25%
+   289→   289→Engineering Mechanics — 20%
+   290→   290→AutoCAD / Structural Software — 15%
+   291→   291→Problem Solving — 10%
+   292→   292→
+   293→   293→------------------------------------------
+   294→   294→VLSI DESIGN ENGINEER
+   295→   295→------------------------------------------
+   296→   296→
+   297→   297→Digital Electronics — 20%
+   298→   298→Verilog / HDL — 25%
+   299→   299→VLSI Design — 30%
+   300→   300→CMOS / Semiconductor Fundamentals — 15%
+   301→   301→Problem Solving — 10%
+   302→   302→
+   303→   303→============================================================
+   304→   304→5. COMPETENCY MODEL
+   305→   305→============================================================
+   306→   306→
+   307→   307→Every student skill must have:
+   308→   308→
+   309→   309→skillId
+   310→   310→skillName
+   311→   311→competencyScore
+   312→   312→evidenceConfidence
+   313→   313→lastUpdated
+   314→   314→evidenceCount
+   315→   315→
+   316→   316→Score range:
+   317→   317→
+   318→   318→0–100
+   319→   319→
+   320→   320→Competency means:
+   321→   321→
+   322→   322→"What the system currently estimates the student can demonstrate."
+   323→   323→
+   324→   324→Evidence Confidence means:
+   325→   325→
+   326→   326→"How strongly the currently available evidence supports the competency estimate."
+   327→   327→
+   328→   328→These are NOT the same thing.
+   329→   329→
+   330→   330→Example:
+   331→   331→
+   332→   332→Machine Learning
+   333→   333→
+   334→   334→Competency:
+   335→   335→43 / 100
+   336→   336→
+   337→   337→Evidence Confidence:
+   338→   338→Limited / 58%
+   339→   339→
+   340→   340→Do not present Evidence Confidence as scientifically validated.
+   341→   341→
+   342→   342→For this prototype it is a transparent supporting metric.
+   343→   343→
+   344→   344→============================================================
+   345→   345→6. DEMO STUDENT S042
+   346→   346→============================================================
+   347→   347→
+   348→   348→Use this existing demo student:
+   349→   349→
+   350→   350→Student ID:
+   351→   351→S042
+   352→   352→
+   353→   353→Branch:
+   354→   354→AI & Data Science
+   355→   355→
+   356→   356→Target Role:
+   357→   357→Data Scientist
+   358→   358→
+   359→   359→Initial competencies:
+   360→   360→
+   361→   361→Python — 82
+   362→   362→SQL — 64
+   363→   363→Statistics — 51
+   364→   364→Machine Learning — 43
+   365→   365→Problem Solving — 75
+   366→   366→
+   367→   367→Do not hardcode "61%" independently inside the UI.
+   368→   368→
+   369→   369→The readiness engine must calculate it.
+   370→   370→
+   371→   371→============================================================
+   372→   372→7. ASSESSMENT RESULT MODEL
+   373→   373→============================================================
+   374→   374→
+   375→   375→Assessment should produce skill-level results.
+   376→   376→
+   377→   377→Each assessment result should contain:
+   378→   378→
+   379→   379→studentId
+   380→   380→roleId
+   381→   381→skillId
+   382→   382→score
+   383→   383→assessmentId
+   384→   384→attemptId
+   385→   385→completedAt
+   386→   386→
+   387→   387→Possible assessment categories:
+   388→   388→
+   389→   389→Aptitude
+   390→   390→Technical
+   391→   391→Coding / Practical
+   392→   392→Behavioural where appropriate
+   393→   393→
+   394→   394→For this phase:
+   395→   395→
+   396→   396→focus on assessment → skill competency.
+   397→   397→
+   398→   398→Do not implement complicated secure code execution unless it already exists.
+   399→   399→
+   400→   400→============================================================
+   401→   401→8. ASSESSMENT → COMPETENCY
+   402→   402→============================================================
+   403→   403→
+   404→   404→When assessment is completed:
+   405→   405→
+   406→   406→Assessment Score
+   407→   407→→ Skill Competency
+   408→   408→→ Evidence Record
+   409→   409→
+   410→   410→Example:
+   411→   411→
+   412→   412→Technical Assessment
+   413→   413→
+   414→   414→Machine Learning:
+   415→   415→43
+   416→   416→
+   417→   417→Create corresponding evidence:
+   418→   418→
+   419→   419→Source:
+   420→   420→Technical Assessment
+   421→   421→
+   422→   422→Status:
+   423→   423→Evaluated
+   424→   424→
+   425→   425→Date:
+   426→   426→actual timestamp
+   427→   427→
+   428→   428→The resulting competency must be stored in the centralized skill intelligence state.
+   429→   429→
+   430→   430→============================================================
+   431→   431→9. EVIDENCE MODEL
+   432→   432→============================================================
+   433→   433→
+   434→   434→Every evidence record must contain:
+   435→   435→
+   436→   436→evidenceId
+   437→   437→studentId
+   438→   438→skillId
+   439→   439→sourceType
+   440→   440→sourceTitle
+   441→   441→score if applicable
+   442→   442→status
+   443→   443→verificationStatus
+   444→   444→createdAt
+   445→   445→updatedAt
+   446→   446→
+   447→   447→Supported source types:
+   448→   448→
+   449→   449→Assessment
+   450→   450→Coding / Practical
+   451→   451→Project
+   452→   452→Git Repository
+   453→   453→Certification
+   454→   454→Internship
+   455→   455→Hackathon
+   456→   456→Faculty Feedback
+   457→   457→Industry Feedback
+   458→   458→Mentor Feedback
+   459→   459→
+   460→   460→Do NOT implement Hackathon generation in this phase.
+   461→   461→
+   462→   462→The model should simply be ready to accept future evidence.
+   463→   463→
+   464→   464→============================================================
+   465→   465→10. EVIDENCE STATUS
+   466→   466→============================================================
+   467→   467→
+   468→   468→Use:
+   469→   469→
+   470→   470→Submitted
+   471→   471→Pending Evaluation
+   472→   472→Evaluated
+   473→   473→Verified
+   474→   474→
+   475→   475→IMPORTANT:
+   476→   476→
+   477→   477→Submitted ≠ Evaluated
+   478→   478→Evaluated ≠ Verified
+   479→   479→
+   480→   480→Do not automatically mark everything verified.
+   481→   481→
+   482→   482→============================================================
+   483→   483→11. EVIDENCE TIMELINE
+   484→   484→============================================================
+   485→   485→
+   486→   486→Create real timestamped evidence events.
+   487→   487→
+   488→   488→Example:
+   489→   489→
+   490→   490→15 Sept 2026
+   491→   491→Technical Assessment
+   492→   492→Machine Learning
+   493→   493→Score: 43
+   494→   494→Status: Evaluated
+   495→   495→
+   496→   496→17 Sept 2026
+   497→   497→Practice Activity
+   498→   498→Machine Learning
+   499→   499→Status: Submitted
+   500→   500→
+   501→   501→Every event should show:
+   502→   502→
+   503→   503→Date
+   504→   504→Time
+   505→   505→Skill
+   506→   506→Source
+   507→   507→Score where applicable
+   508→   508→Status
+   509→   509→
+   510→   510→Filters:
+   511→   511→
+   512→   512→Today
+   513→   513→This Week
+   514→   514→This Month
+   515→   515→All
+   516→   516→
+   517→   517→Newest first.
+   518→   518→
+   519→   519→============================================================
+   520→   520→12. ROLE READINESS ENGINE
+   521→   521→============================================================
+   522→   522→
+   523→   523→Create a reusable deterministic function:
+   524→   524→
+   525→   525→calculateRoleReadiness(studentId, roleId)
+   526→   526→
+   527→   527→Formula:
+   528→   528→
+   529→   529→Role Readiness =
+   530→   530→SUM(studentCompetency × roleImportance)
+   531→   531→/
+   532→   532→SUM(roleImportance)
+   533→   533→
+   534→   534→If weights total 100%:
+   535→   535→
+   536→   536→Role Readiness =
+   537→   537→SUM(studentCompetency × weight)
+   538→   538→
+   539→   539→============================================================
+   540→   540→13. DATA SCIENTIST EXAMPLE
+   541→   541→============================================================
+   542→   542→
+   543→   543→Use:
+   544→   544→
+   545→   545→Python:
+   546→   546→82 × 0.25 = 20.50
+   547→   547→
+   548→   548→SQL:
+   549→   549→64 × 0.15 = 9.60
+   550→   550→
+   551→   551→Statistics:
+   552→   552→51 × 0.20 = 10.20
+   553→   553→
+   554→   554→Machine Learning:
+   555→   555→43 × 0.30 = 12.90
+   556→   556→
+   557→   557→Problem Solving:
+   558→   558→75 × 0.10 = 7.50
+   559→   559→
+   560→   560→Total:
+   561→   561→
+   562→   562→60.70%
+   563→   563→
+   564→   564→Displayed:
+   565→   565→
+   566→   566→61%
+   567→   567→
+   568→   568→The supplied Role Readiness source confirms this exact calculation. :contentReference[oaicite:5]{index=5}
+   569→   569→
+   570→   570→============================================================
+   571→   571→14. READINESS RESULT OBJECT
+   572→   572→============================================================
+   573→   573→
+   574→   574→Return a structured result containing:
+   575→   575→
+   576→   576→studentId
+   577→   577→roleId
+   578→   578→roleName
+   579→   579→value
+   580→   580→displayValue
+   581→   581→calculatedAt
+   582→   582→
+   583→   583→skillBreakdown:
+   584→   584→
+   585→   585→skill
+   586→   586→competency
+   587→   587→importance
+   588→   588→contribution
+   589→   589→
+   590→   590→evidenceIds
+   591→   591→
+   592→   592→explanation
+   593→   593→
+   594→   594→Example:
+   595→   595→
+   596→   596→{
+   597→   597→  role: "Data Scientist",
+   598→   598→  value: 60.70,
+   599→   599→  displayValue: 61,
+   600→   600→  calculatedAt: timestamp,
+   601→   601→  skillBreakdown: [...]
+   602→   602→}
+   603→   603→
+   604→   604→============================================================
+   605→   605→15. NO CONTRADICTORY VALUES
+   606→   606→============================================================
+   607→   607→
+   608→   608→This is mandatory.
+   609→   609→
+   610→   610→Never show:
+   611→   611→
+   612→   612→Calculated:
+   613→   613→9
+   614→   614→
+   615→   615→Displayed:
+   616→   616→76.6
+   617→   617→
+   618→   618→Never manually override a calculated readiness value.
+   619→   619→
+   620→   620→Round only for display.
+   621→   621→
+   622→   622→Keep raw value internally.
+   623→   623→
+   624→   624→Example:
+   625→   625→
+   626→   626→raw:
+   627→   627→60.70
+   628→   628→
+   629→   629→display:
+   630→   630→61%
+   631→   631→
+   632→   632→============================================================
+   633→   633→16. READINESS CARD
+   634→   634→============================================================
+   635→   635→
+   636→   636→Student Dashboard:
+   637→   637→
+   638→   638→ROLE READINESS
+   639→   639→
+   640→   640→61%
+   641→   641→
+   642→   642→Data Scientist
+   643→   643→
+   644→   644→Status:
+   645→   645→Calculated
+   646→   646→
+   647→   647→Button:
+   648→   648→
+   649→   649→Why is my readiness 61%?
+   650→   650→
+   651→   651→Clicking opens:
+   652→   652→
+   653→   653→Readiness Explanation
+   654→   654→
+   655→   655→============================================================
+   656→   656→17. READINESS EXPLANATION UI
+   657→   657→============================================================
+   658→   658→
+   659→   659→Show:
+   660→   660→
+   661→   661→Role:
+   662→   662→Data Scientist
+   663→   663→
+   664→   664→Readiness:
+   665→   665→60.70%
+   666→   666→
+   667→   667→Displayed:
+   668→   668→61%
+   669→   669→
+   670→   670→Calculation:
+   671→   671→
+   672→   672→Python
+   673→   673→82 × 25%
+   674→   674→20.50
+   675→   675→
+   676→   676→SQL
+   677→   677→64 × 15%
+   678→   678→9.60
+   679→   679→
+   680→   680→Statistics
+   681→   681→51 × 20%
+   682→   682→10.20
+   683→   683→
+   684→   684→Machine Learning
+   685→   685→43 × 30%
+   686→   686→12.90
+   687→   687→
+   688→   688→Problem Solving
+   689→   689→75 × 10%
+   690→   690→7.50
+   691→   691→
+   692→   692→Total:
+   693→   693→60.70%
+   694→   694→
+   695→   695→Last calculated:
+   696→   696→timestamp
+   697→   697→
+   698→   698→Evidence considered:
+   699→   699→list
+   700→   700→
+   701→   701→============================================================
+   702→   702→18. ROLE SWITCHING
+   703→   703→============================================================
+   704→   704→
+   705→   705→When the student changes target role:
+   706→   706→
+   707→   707→Example:
+   708→   708→
+   709→   709→Data Scientist
+   710→   710→→
+   711→   711→Full Stack Developer
+   712→   712→
+   713→   713→The following MUST change:
+   714→   714→
+   715→   715→Role
+   716→   716→Skill list
+   717→   717→Importance weights
+   718→   718→Competency mapping
+   719→   719→Readiness
+   720→   720→Skill gaps
+   721→   721→Next Best Action context
+   722→   722→
+   723→   723→Do not use the Data Scientist skill list for Full Stack.
+   724→   724→
+   725→   725→============================================================
+   726→   726→19. ROLE SWITCH TEST
+   727→   727→============================================================
+   728→   728→
+   729→   729→Test:
+   730→   730→
+   731→   731→S042
+   732→   732→Target:
+   733→   733→Data Scientist
+   734→   734→
+   735→   735→Readiness:
+   736→   736→61%
+   737→   737→
+   738→   738→Then change role:
+   739→   739→
+   740→   740→Full Stack Developer
+   741→   741→
+   742→   742→Use:
+   743→   743→
+   744→   744→Frontend:
+   745→   745→85
+   746→   746→Backend:
+   747→   747→72
+   748→   748→Database:
+   749→   749→68
+   750→   750→API:
+   751→   751→60
+   752→   752→Problem Solving:
+   753→   753→78
+   754→   754→
+   755→   755→Calculate:
+   756→   756→
+   757→   757→85 × 20% = 17.00
+   758→   758→
+   759→   759→72 × 20% = 14.40
+   760→   760→
+   761→   761→68 × 15% = 10.20
+   762→   762→
+   763→   763→60 × 15% = 9.00
+   764→   764→
+   765→   765→78 × 30% = 23.40
+   766→   766→
+   767→   767→Total:
+   768→   768→
+   769→   769→74.00%
+   770→   770→
+   771→   771→Display:
+   772→   772→
+   773→   773→74%
+   774→   774→
+   775→   775→This is a controlled demonstration dataset.
+   776→   776→
+   777→   777→============================================================
+   778→   778→20. SKILL GAP ENGINE
+   779→   779→============================================================
+   780→   780→
+   781→   781→Create:
+   782→   782→
+   783→   783→calculateSkillGaps(studentId, roleId)
+   784→   784→
+   785→   785→A gap should be determined from:
+   786→   786→
+   787→   787→current competency
+   788→   788→+
+   789→   789→role importance
+   790→   790→+
+   791→   791→configured target threshold if available
+   792→   792→
+   793→   793→For this prototype use a transparent threshold policy.
+   794→   794→
+   795→   795→Example:
+   796→   796→
+   797→   797→Target competency threshold:
+   798→   798→70
+   799→   799→
+   800→   800→Machine Learning:
+   801→   801→43
+   802→   802→
+   803→   803→Gap:
+   804→   804→27
+   805→   805→
+   806→   806→Role importance:
+   807→   807→30%
+   808→   808→
+   809→   809→Priority:
+   810→   810→High
+   811→   811→
+   812→   812→Do not claim the threshold is an external industry standard.
+   813→   813→
+   814→   814→Clearly label it:
+   815→   815→
+   816→   816→Configured prototype threshold
+   817→   817→
+   818→   818→============================================================
+   819→   819→21. SKILL GAP RESULT
+   820→   820→============================================================
+   821→   821→
+   822→   822→Each gap should include:
+   823→   823→
+   824→   824→skill
+   825→   825→currentScore
+   826→   826→targetScore
+   827→   827→gap
+   828→   828→roleImportance
+   829→   829→priority
+   830→   830→evidenceConfidence
+   831→   831→reason
+   832→   832→
+   833→   833→Example:
+   834→   834→
+   835→   835→Machine Learning
+   836→   836→
+   837→   837→Current:
+   838→   838→43
+   839→   839→
+   840→   840→Target:
+   841→   841→70
+   842→   842→
+   843→   843→Gap:
+   844→   844→27
+   845→   845→
+   846→   846→Importance:
+   847→   847→30%
+   848→   848→
+   849→   849→Priority:
+   850→   850→High
+   851→   851→
+   852→   852→Reason:
+   853→   853→
+   854→   854→High role importance combined with a significant competency gap.
+   855→   855→
+   856→   856→============================================================
+   857→   857→22. GAP PRIORITIZATION
+   858→   858→============================================================
+   859→   859→
+   860→   860→Do not simply sort by lowest score.
+   861→   861→
+   862→   862→Prioritize using:
+   863→   863→
+   864→   864→gap severity
+   865→   865→+
+   866→   866→role importance
+   867→   867→+
+   868→   868→evidence confidence
+   869→   869→
+   870→   870→This means a skill with:
+   871→   871→
+   872→   872→lower score
+   873→   873→+
+   874→   874→higher importance
+   875→   875→
+   876→   876→may rank above a slightly lower-priority skill.
+   877→   877→
+   878→   878→Keep the logic deterministic.
+   879→   879→
+   880→   880→============================================================
+   881→   881→23. CRITICAL SKILL GAPS UI
+   882→   882→============================================================
+   883→   883→
+   884→   884→Dashboard:
+   885→   885→
+   886→   886→CRITICAL SKILL GAPS
+   887→   887→
+   888→   888→Machine Learning
+   889→   889→43 / 100
+   890→   890→High
+   891→   891→
+   892→   892→Statistics
+   893→   893→51 / 100
+   894→   894→Medium
+   895→   895→
+   896→   896→SQL
+   897→   897→64 / 100
+   898→   898→Medium
+   899→   899→
+   900→   900→Each card:
+   901→   901→
+   902→   902→View Gap
+   903→   903→
+   904→   904→============================================================
+   905→   905→24. WHY IS THIS A GAP?
+   906→   906→============================================================
+   907→   907→
+   908→   908→Opening a gap must show:
+   909→   909→
+   910→   910→Skill
+   911→   911→Current Competency
+   912→   912→Configured Target
+   913→   913→Gap
+   914→   914→Role Importance
+   915→   915→Priority
+   916→   916→Evidence Confidence
+   917→   917→
+   918→   918→Explanation:
+   919→   919→
+   920→   920→"Machine Learning is a high-importance skill for your selected Data Scientist role and your current competency is below the configured target threshold."
+   921→   921→
+   922→   922→Avoid unsupported claims.
+   923→   923→
+   924→   924→============================================================
+   925→   925→25. NEXT BEST ACTION ENGINE
+   926→   926→============================================================
+   927→   927→
+   928→   928→Create:
+   929→   929→
+   930→   930→getNextBestAction(studentId, roleId)
+   931→   931→
+   932→   932→Possible actions:
+   933→   933→
+   934→   934→Practice Skill
+   935→   935→Build Project
+   936→   936→Join Hackathon
+   937→   937→Complete Learning
+   938→   938→Seek Mentor
+   939→   939→Complete Certification
+   940→   940→Apply for Internship
+   941→   941→Apply for Job
+   942→   942→Retake Assessment
+   943→   943→
+   944→   944→For this phase:
+   945→   945→
+   946→   946→implement a deterministic rules-based recommendation.
+   947→   947→
+   948→   948→Do NOT use an LLM for the numerical ranking.
+   949→   949→
+   950→   950→============================================================
+   951→   951→26. ACTION PRIORITY
+   952→   952→============================================================
+   953→   953→
+   954→   954→Rank possible actions using:
+   955→   955→
+   956→   956→1. Skill gap severity
+   957→   957→2. Role importance
+   958→   958→3. Evidence generation potential
+   959→   959→4. Current evidence confidence
+   960→   960→5. Practical relevance
+   961→   961→
+   962→   962→Return:
+   963→   963→
+   964→   964→action
+   965→   965→skill
+   966→   966→priority
+   967→   967→reason
+   968→   968→projectedImpact
+   969→   969→
+   970→   970→============================================================
+   971→   971→27. EXAMPLE NEXT BEST ACTION
+   972→   972→============================================================
+   973→   973→
+   974→   974→For S042:
+   975→   975→
+   976→   976→Next Best Action:
+   977→   977→
+   978→   978→Build an End-to-End Machine Learning Project
+   979→   979→
+   980→   980→Skill:
+   981→   981→
+   982→   982→Machine Learning
+   983→   983→
+   984→   984→Why:
+   985→   985→
+   986→   986→✓ High-impact skill gap
+   987→   987→✓ Relevant to Data Scientist role
+   988→   988→✓ Generates project evidence
+   989→   989→✓ Can later be evaluated
+   990→   990→
+   991→   991→Projected Impact:
+   992→   992→
+   993→   993→High
+   994→   994→
+   995→   995→IMPORTANT:
+   996→   996→
+   997→   997→Do NOT say:
+   998→   998→
+   999→   999→"This will increase your readiness by 8%."
+  1000→  1000→
+  1001→  1001→Do NOT predict an exact score increase.
+  1002→  1002→
+  1003→  1003→============================================================
+  1004→  1004→28. NEXT ACTION EXPLANATION
+  1005→  1005→============================================================
+  1006→  1006→
+  1007→  1007→Click:
+  1008→  1008→
+  1009→  1009→Why this action?
+  1010→  1010→
+  1011→  1011→Show:
+  1012→  1012→
+  1013→  1013→Skill gap
+  1014→  1014→Role importance
+  1015→  1015→Current competency
+  1016→  1016→Evidence situation
+  1017→  1017→Reason recommendation
+  1018→  1018→
+  1019→  1019→Example:
+  1020→  1020→
+  1021→  1021→Machine Learning
+  1022→  1022→Current:
+  1023→  1023→43
+  1024→  1024→
+  1025→  1025→Role Importance:
+  1026→  1026→30%
+  1027→  1027→
+  1028→  1028→Evidence:
+  1029→  1029→Limited
+  1030→  1030→
+  1031→  1031→Therefore:
+  1032→  1032→
+  1033→  1033→Building a project is recommended because it can address the gap and generate new evidence.
+  1034→  1034→
+  1035→  1035→============================================================
+  1036→  1036→29. UNIVERSAL WHY COMPONENT
+  1037→  1037→============================================================
+  1038→  1038→
+  1039→  1039→Create reusable:
+  1040→  1040→
+  1041→  1041→WhyThisResult
+  1042→  1042→
+  1043→  1043→Use for:
+  1044→  1044→
+  1045→  1045→Readiness
+  1046→  1046→Skill
+  1047→  1047→Evidence
+  1048→  1048→Gap
+  1049→  1049→Next Best Action
+  1050→  1050→
+  1051→  1051→Do NOT create separate explanation logic for every page.
+  1052→  1052→
+  1053→  1053→============================================================
+  1054→  1054→30. EVIDENCE → COMPETENCY RELATIONSHIP
+  1055→  1055→============================================================
+  1056→  1056→
+  1057→  1057→For every skill show:
+  1058→  1058→
+  1059→  1059→Current Competency
+  1060→  1060→Evidence Confidence
+  1061→  1061→Evidence Count
+  1062→  1062→Last Updated
+  1063→  1063→
+  1064→  1064→Example:
+  1065→  1065→
+  1066→  1066→Machine Learning
+  1067→  1067→
+  1068→  1068→Competency:
+  1069→  1069→43
+  1070→  1070→
+  1071→  1071→Evidence Confidence:
+  1072→  1072→58%
+  1073→  1073→
+  1074→  1074→Evidence:
+  1075→  1075→1
+  1076→  1076→
+  1077→  1077→Last Updated:
+  1078→  1078→15 Sept 2026
+  1079→  1079→
+  1080→  1080→============================================================
+  1081→  1081→31. EVIDENCE CONFIDENCE
+  1082→  1082→============================================================
+  1083→  1083→
+  1084→  1084→For this prototype implement a transparent simple rule.
+  1085→  1085→
+  1086→  1086→Example conceptual policy:
+  1087→  1087→
+  1088→  1088→Assessment only:
+  1089→  1089→Limited confidence
+  1090→  1090→
+  1091→  1091→Assessment + project:
+  1092→  1092→Moderate confidence
+  1093→  1093→
+  1094→  1094→Assessment + evaluated project:
+  1095→  1095→Higher confidence
+  1096→  1096→
+  1097→  1097→Assessment + evaluated project + industry/faculty feedback:
+  1098→  1098→Strong confidence
+  1099→  1099→
+  1100→  1100→IMPORTANT:
+  1101→  1101→
+  1102→  1102→This is a prototype confidence policy.
+  1103→  1103→
+  1104→  1104→Label appropriately.
+  1105→  1105→
+  1106→  1106→Do not call it scientifically validated.
+  1107→  1107→
+  1108→  1108→============================================================
+  1109→  1109→32. STUDENT SKILL DETAIL PAGE
+  1110→  1110→============================================================
+  1111→  1111→
+  1112→  1112→Create a complete skill detail page.
+  1113→  1113→
+  1114→  1114→Header:
+  1115→  1115→
+  1116→  1116→Machine Learning
+  1117→  1117→
+  1118→  1118→Competency:
+  1119→  1119→43 / 100
+  1120→  1120→
+  1121→  1121→Evidence Confidence:
+  1122→  1122→58%
+  1123→  1123→
+  1124→  1124→Role Importance:
+  1125→  1125→30%
+  1126→  1126→
+  1127→  1127→Contribution:
+  1128→  1128→12.90
+  1129→  1129→
+  1130→  1130→Last Updated:
+  1131→  1131→15 Sept 2026
+  1132→  1132→
+  1133→  1133→Sections:
+  1134→  1134→
+  1135→  1135→Overview
+  1136→  1136→Why this score?
+  1137→  1137→Evidence
+  1138→  1138→Role relevance
+  1139→  1139→Skill Gap
+  1140→  1140→Next Action
+  1141→  1141→
+  1142→  1142→============================================================
+  1143→  1143→33. EVIDENCE DRAWER
+  1144→  1144→============================================================
+  1145→  1145→
+  1146→  1146→Click:
+  1147→  1147→
+  1148→  1148→View Evidence
+  1149→  1149→
+  1150→  1150→Open drawer.
+  1151→  1151→
+  1152→  1152→Show:
+  1153→  1153→
+  1154→  1154→Evidence title
+  1155→  1155→Skill
+  1156→  1156→Source
+  1157→  1157→Date
+  1158→  1158→Time
+  1159→  1159→Score
+  1160→  1160→Status
+  1161→  1161→Verification
+  1162→  1162→Description
+  1163→  1163→
+  1164→  1164→Example:
+  1165→  1165→
+  1166→  1166→Technical Assessment
+  1167→  1167→
+  1168→  1168→Machine Learning
+  1169→  1169→
+  1170→  1170→Score:
+  1171→  1171→43
+  1172→  1172→
+  1173→  1173→Date:
+  1174→  1174→15 Sept 2026
+  1175→  1175→
+  1176→  1176→Status:
+  1177→  1177→Evaluated
+  1178→  1178→
+  1179→  1179→============================================================
+  1180→  1180→34. LIVE STATE UPDATES
+  1181→  1181→============================================================
+  1182→  1182→
+  1183→  1183→This phase must demonstrate that the intelligence engine is not visual-only.
+  1184→  1184→
+  1185→  1185→Example:
+  1186→  1186→
+  1187→  1187→Initial:
+  1188→  1188→
+  1189→  1189→ML:
+  1190→  1190→43
+  1191→  1191→
+  1192→  1192→Readiness:
+  1193→  1193→61%
+  1194→  1194→
+  1195→  1195→Then change ML competency:
+  1196→  1196→
+  1197→  1197→43 → 60
+  1198→  1198→
+  1199→  1199→The system must automatically recalculate readiness.
+  1200→  1200→
+  1201→  1201→The dashboard must update.
+  1202→  1202→
+  1203→  1203→The readiness explanation must update.
+  1204→  1204→
+  1205→  1205→Skill Gap must update.
+  1206→  1206→
+  1207→  1207→Next Best Action must be reconsidered.
+  1208→  1208→
+  1209→  1209→Do NOT require manually editing multiple screens.
+  1210→  1210→
+  1211→  1211→============================================================
+  1212→  1212→35. WHAT-IF PREVIEW
+  1213→  1213→============================================================
+  1214→  1214→
+  1215→  1215→Optional but recommended:
+  1216→  1216→
+  1217→  1217→Add:
+  1218→  1218→
+  1219→  1219→"What If?"
+  1220→  1220→
+  1221→  1221→User selects:
+  1222→  1222→
+  1223→  1223→Machine Learning
+  1224→  1224→New score:
+  1225→  1225→60
+  1226→  1226→
+  1227→  1227→Show:
+  1228→  1228→
+  1229→  1229→Current Readiness:
+  1230→  1230→61%
+  1231→  1231→
+  1232→  1232→Projected Readiness:
+  1233→  1233→calculated value
+  1234→  1234→
+  1235→  1235→IMPORTANT:
+  1236→  1236→
+  1237→  1237→This is a simulation.
+  1238→  1238→
+  1239→  1239→Label:
+  1240→  1240→
+  1241→  1241→Projected / What-If
+  1242→  1242→
+  1243→  1243→Do not store it as actual competency.
+  1244→  1244→
+  1245→  1245→Do not change real student evidence.
+  1246→  1246→
+  1247→  1247→============================================================
+  1248→  1248→36. READINESS HISTORY
+  1249→  1249→============================================================
+  1250→  1250→
+  1251→  1251→Create:
+  1252→  1252→
+  1253→  1253→Readiness History
+  1254→  1254→
+  1255→  1255→Show:
+  1256→  1256→
+  1257→  1257→Date
+  1258→  1258→Role
+  1259→  1259→Readiness
+  1260→  1260→
+  1261→  1261→Example:
+  1262→  1262→
+  1263→  1263→15 Sept
+  1264→  1264→Data Scientist
+  1265→  1265→61%
+  1266→  1266→
+  1267→  1267→17 Sept
+  1268→  1268→Data Scientist
+  1269→  1269→[calculated]
+  1270→  1270→
+  1271→  1271→Do not generate fake historical values.
+  1272→  1272→
+  1273→  1273→Only show controlled demo history where explicitly marked as demo data.
+  1274→  1274→
+  1275→  1275→============================================================
+  1276→  1276→37. COMPETENCY HISTORY
+  1277→  1277→============================================================
+  1278→  1278→
+  1279→  1279→For a selected skill:
+  1280→  1280→
+  1281→  1281→Machine Learning
+  1282→  1282→
+  1283→  1283→Show:
+  1284→  1284→
+  1285→  1285→Date
+  1286→  1286→Source
+  1287→  1287→Score
+  1288→  1288→
+  1289→  1289→Example:
+  1290→  1290→
+  1291→  1291→15 Sept:
+  1292→  1292→Assessment
+  1293→  1293→43
+  1294→  1294→
+  1295→  1295→17 Sept:
+  1296→  1296→Practice
+  1297→  1297→Submitted
+  1298→  1298→
+  1299→  1299→Do not treat every activity as competency improvement.
+  1300→  1300→
+  1301→  1301→Evidence and competency are separate.
+  1302→  1302→
+  1303→  1303→============================================================
+  1304→  1304→38. DASHBOARD INTELLIGENCE SUMMARY
+  1305→  1305→============================================================
+  1306→  1306→
+  1307→  1307→Dashboard should calculate:
+  1308→  1308→
+  1309→  1309→Current Role
+  1310→  1310→Role Readiness
+  1311→  1311→Top Skill Gap
+  1312→  1312→Next Best Action
+  1313→  1313→Evidence Count
+  1314→  1314→Last Updated
+  1315→  1315→
+  1316→  1316→Avoid hardcoded values.
+  1317→  1317→
+  1318→  1318→============================================================
+  1319→  1319→39. INTELLIGENCE ENGINE API
+  1320→  1320→============================================================
+  1321→  1321→
+  1322→  1322→If backend exists:
+  1323→  1323→
+  1324→  1324→Create reusable service/API methods:
+  1325→  1325→
+  1326→  1326→getStudentSkills(studentId)
+  1327→  1327→
+  1328→  1328→getStudentEvidence(studentId)
+  1329→  1329→
+  1330→  1330→getStudentCompetency(studentId)
+  1331→  1331→
+  1332→  1332→calculateRoleReadiness(studentId, roleId)
+  1333→  1333→
+  1334→  1334→calculateSkillGaps(studentId, roleId)
+  1335→  1335→
+  1336→  1336→getNextBestAction(studentId, roleId)
+  1337→  1337→
+  1338→  1338→getReadinessExplanation(studentId, roleId)
+  1339→  1339→
+  1340→  1340→getSkillExplanation(studentId, skillId)
+  1341→  1341→
+  1342→  1342→Do NOT duplicate these calculations in frontend components.
+  1343→  1343→
+  1344→  1344→============================================================
+  1345→  1345→40. FRONTEND STATE
+  1346→  1346→============================================================
+  1347→  1347→
+  1348→  1348→If backend is not yet available:
+  1349→  1349→
+  1350→  1350→Use one centralized state/store.
+  1351→  1351→
+  1352→  1352→Do NOT duplicate S042 data across components.
+  1353→  1353→
+  1354→  1354→All components must read from:
+  1355→  1355→
+  1356→  1356→studentState
+  1357→  1357→
+  1358→  1358→or equivalent centralized structure.
+  1359→  1359→
+  1360→  1360→============================================================
+  1361→  1361→41. PERSISTENCE
+  1362→  1362→============================================================
+  1363→  1363→
+  1364→  1364→If the project already has database persistence:
+  1365→  1365→
+  1366→  1366→Use it.
+  1367→  1367→
+  1368→  1368→If not:
+  1369→  1369→
+  1370→  1370→Use a clean local prototype store for this phase.
+  1371→  1371→
+  1372→  1372→Do not pretend local state is production persistence.
+  1373→  1373→
+  1374→  1374→Clearly label:
+  1375→  1375→
+  1376→  1376→Prototype persistence
+  1377→  1377→
+  1378→  1378→where applicable.
+  1379→  1379→
+  1380→  1380→============================================================
+  1381→  1381→42. CALCULATION TRANSPARENCY
+  1382→  1382→============================================================
+  1383→  1383→
+  1384→  1384→Every readiness result must expose:
+  1385→  1385→
+  1386→  1386→Input competency
+  1387→  1387→Weight
+  1388→  1388→Contribution
+  1389→  1389→Total
+  1390→  1390→
+  1391→  1391→Every gap result must expose:
+  1392→  1392→
+  1393→  1393→Current
+  1394→  1394→Target
+  1395→  1395→Gap
+  1396→  1396→Importance
+  1397→  1397→Priority
+  1398→  1398→
+  1399→  1399→Every action result must expose:
+  1400→  1400→
+  1401→  1401→Gap
+  1402→  1402→Reason
+  1403→  1403→Role relevance
+  1404→  1404→Evidence value
+  1405→  1405→
+  1406→  1406→============================================================
+  1407→  1407→43. RULES VS AI
+  1408→  1408→============================================================
+  1409→  1409→
+  1410→  1410→THIS IS CRITICAL.
+  1411→  1411→
+  1412→  1412→RULES CALCULATE.
+  1413→  1413→AI EXPLAINS & ENRICHES.
+  1414→  1414→
+  1415→  1415→Rules must calculate:
+  1416→  1416→
+  1417→  1417→Readiness
+  1418→  1418→Competency
+  1419→  1419→Skill Gap
+  1420→  1420→Priority
+  1421→  1421→Basic recommendation
+  1422→  1422→
+  1423→  1423→AI may later explain these results in natural language.
+  1424→  1424→
+  1425→  1425→Do NOT make an LLM responsible for numerical readiness.
+  1426→  1426→
+  1427→  1427→For this phase, it is acceptable to use deterministic explanations.
+  1428→  1428→
+  1429→  1429→============================================================
+  1430→  1430→44. DATA INTEGRITY
+  1431→  1431→============================================================
+  1432→  1432→
+  1433→  1433→No major metric should be hardcoded independently.
+  1434→  1434→
+  1435→  1435→Do not have:
+  1436→  1436→
+  1437→  1437→Dashboard:
+  1438→  1438→61
+  1439→  1439→
+  1440→  1440→Skill page:
+  1441→  1441→60
+  1442→  1442→
+  1443→  1443→Readiness modal:
+  1444→  1444→60.7
+  1445→  1445→
+  1446→  1446→unless all originate from the same calculation.
+  1447→  1447→
+  1448→  1448→Use one source of truth.
+  1449→  1449→
+  1450→  1450→============================================================
+  1451→  1451→45. ERROR HANDLING
+  1452→  1452→============================================================
+  1453→  1453→
+  1454→  1454→Handle:
+  1455→  1455→
+  1456→  1456→Unknown student
+  1457→  1457→Unknown skill
+  1458→  1458→Unknown role
+  1459→  1459→Missing competency
+  1460→  1460→Missing weight
+  1461→  1461→Invalid score
+  1462→  1462→Invalid role configuration
+  1463→  1463→
+  1464→  1464→Do not crash the whole dashboard.
+  1465→  1465→
+  1466→  1466→Show useful messages.
+  1467→  1467→
+  1468→  1468→============================================================
+  1469→  1469→46. LOADING STATES
+  1470→  1470→============================================================
+  1471→  1471→
+  1472→  1472→Where async behavior exists:
+  1473→  1473→
+  1474→  1474→Calculating readiness...
+  1475→  1475→Loading evidence...
+  1476→  1476→Calculating skill gaps...
+  1477→  1477→
+  1478→  1478→Then:
+  1479→  1479→
+  1480→  1480→Calculated
+  1481→  1481→Updated
+  1482→  1482→
+  1483→  1483→============================================================
+  1484→  1484→47. DATA VALIDATION
+  1485→  1485→============================================================
+  1486→  1486→
+  1487→  1487→Validate:
+  1488→  1488→
+  1489→  1489→Score:
+  1490→  1490→0–100
+  1491→  1491→
+  1492→  1492→Weight:
+  1493→  1493→0–1
+  1494→  1494→
+  1495→  1495→Role weights:
+  1496→  1496→sum to 1
+  1497→  1497→
+  1498→  1498→Role:
+  1499→  1499→must exist
+  1500→  1500→
+  1501→  1501→Skill:
+  1502→  1502→must exist
+  1503→  1503→
+  1504→  1504→============================================================
+  1505→  1505→48. TEST CASES
+  1506→  1506→============================================================
+  1507→  1507→
+  1508→  1508→TEST 1:
+  1509→  1509→
+  1510→  1510→S042 Data Scientist.
+  1511→  1511→
+  1512→  1512→Expected:
+  1513→  1513→
+  1514→  1514→60.70%
+  1515→  1515→Display:
+  1516→  1516→61%
+  1517→  1517→
+  1518→  1518→TEST 2:
+  1519→  1519→
+  1520→  1520→Change Machine Learning from 43 → 60.
+  1521→  1521→
+  1522→  1522→Expected:
+  1523→  1523→
+  1524→  1524→Readiness changes automatically.
+  1525→  1525→
+  1526→  1526→TEST 3:
+  1527→  1527→
+  1528→  1528→Change role:
+  1529→  1529→
+  1530→  1530→Data Scientist → Full Stack Developer.
+  1531→  1531→
+  1532→  1532→Expected:
+  1533→  1533→
+  1534→  1534→Skill configuration changes.
+  1535→  1535→
+  1536→  1536→Expected:
+  1537→  1537→
+  1538→  1538→Readiness becomes:
+  1539→  1539→
+  1540→  1540→74.00%
+  1541→  1541→
+  1542→  1542→TEST 4:
+  1543→  1543→
+  1544→  1544→Click readiness explanation.
+  1545→  1545→
+  1546→  1546→Expected:
+  1547→  1547→
+  1548→  1548→Actual calculation visible.
+  1549→  1549→
+  1550→  1550→TEST 5:
+  1551→  1551→
+  1552→  1552→Click Machine Learning.
+  1553→  1553→
+  1554→  1554→Expected:
+  1555→  1555→
+  1556→  1556→Skill detail opens.
+  1557→  1557→
+  1558→  1558→TEST 6:
+  1559→  1559→
+  1560→  1560→Click Evidence.
+  1561→  1561→
+  1562→  1562→Expected:
+  1563→  1563→
+  1564→  1564→Evidence drawer opens.
+  1565→  1565→
+  1566→  1566→TEST 7:
+  1567→  1567→
+  1568→  1568→Add evidence.
+  1569→  1569→
+  1570→  1570→Expected:
+  1571→  1571→
+  1572→  1572→Evidence count changes.
+  1573→  1573→
+  1574→  1574→Timeline changes.
+  1575→  1575→
+  1576→  1576→TEST 8:
+  1577→  1577→
+  1578→  1578→Change evidence state:
+  1579→  1579→
+  1580→  1580→Submitted → Evaluated.
+  1581→  1581→
+  1582→  1582→Expected:
+  1583→  1583→
+  1584→  1584→Status changes everywhere using that evidence.
+  1585→  1585→
+  1586→  1586→TEST 9:
+  1587→  1587→
+  1588→  1588→Change competency.
+  1589→  1589→
+  1590→  1590→Expected:
+  1591→  1591→
+  1592→  1592→Skill Gap changes.
+  1593→  1593→
+  1594→  1594→TEST 10:
+  1595→  1595→
+  1596→  1596→Change competency significantly upward.
+  1597→  1597→
+  1598→  1598→Expected:
+  1599→  1599→
+  1600→  1600→Next Best Action may change.
+  1601→  1601→
+  1602→  1602→TEST 11:
+  1603→  1603→
+  1604→  1604→Refresh page.
+  1605→  1605→
+  1606→  1606→Expected:
+  1607→  1607→
+  1608→  1608→Data persists according to the chosen prototype persistence mechanism.
+  1609→  1609→
+  1610→  1610→TEST 12:
+  1611→  1611→
+  1612→  1612→Invalid role.
+  1613→  1613→
+  1614→  1614→Expected:
+  1615→  1615→
+  1616→  1616→Graceful error.
+  1617→  1617→
+  1618→  1618→TEST 13:
+  1619→  1619→
+  1620→  1620→Role configuration weights do not total 100%.
+  1621→  1621→
+  1622→  1622→Expected:
+  1623→  1623→
+  1624→  1624→Validation error.
+  1625→  1625→
+  1626→  1626→============================================================
+  1627→  1627→49. TEST THE EXACT S042 FLOW
+  1628→  1628→============================================================
+  1629→  1629→
+  1630→  1630→The following must be possible:
+  1631→  1631→
+  1632→  1632→Login:
+  1633→  1633→
+  1634→  1634→S042
+  1635→  1635→
+  1636→  1636→Target:
+  1637→  1637→
+  1638→  1638→Data Scientist
+  1639→  1639→
+  1640→  1640→Show:
+  1641→  1641→
+  1642→  1642→Python:
+  1643→  1643→82
+  1644→  1644→
+  1645→  1645→SQL:
+  1646→  1646→64
+  1647→  1647→
+  1648→  1648→Statistics:
+  1649→  1649→51
+  1650→  1650→
+  1651→  1651→Machine Learning:
+  1652→  1652→43
+  1653→  1653→
+  1654→  1654→Problem Solving:
+  1655→  1655→75
+  1656→  1656→
+  1657→  1657→Readiness:
+  1658→  1658→
+  1659→  1659→60.70%
+  1660→  1660→→
+  1661→  1661→61%
+  1662→  1662→
+  1663→  1663→Click:
+  1664→  1664→
+  1665→  1665→Why?
+  1666→  1666→
+  1667→  1667→See exact calculation.
+  1668→  1668→
+  1669→  1669→Click:
+  1670→  1670→
+  1671→  1671→Machine Learning.
+  1672→  1672→
+  1673→  1673→See:
+  1674→  1674→
+  1675→  1675→43
+  1676→  1676→30%
+  1677→  1677→Evidence
+  1678→  1678→Evidence Confidence
+  1679→  1679→
+  1680→  1680→Click:
+  1681→  1681→
+  1682→  1682→Critical Gap.
+  1683→  1683→
+  1684→  1684→See:
+  1685→  1685→
+  1686→  1686→High Priority
+  1687→  1687→
+  1688→  1688→Click:
+  1689→  1689→
+  1690→  1690→Next Best Action.
+  1691→  1691→
+  1692→  1692→See:
+  1693→  1693→
+  1694→  1694→Build ML Project
+  1695→  1695→
+  1696→  1696→Change ML score:
+  1697→  1697→
+  1698→  1698→43 → 60
+  1699→  1699→
+  1700→  1700→Observe:
+  1701→  1701→
+  1702→  1702→Readiness changes
+  1703→  1703→Gap changes
+  1704→  1704→Explanation changes
+  1705→  1705→
+  1706→  1706→This must happen through the same intelligence state.
+  1707→  1707→
+  1708→  1708→============================================================
+  1709→  1709→50. DEBUG VIEW
+  1710→  1710→============================================================
+  1711→  1711→
+  1712→  1712→Create a developer-only intelligence diagnostics view if appropriate.
+  1713→  1713→
+  1714→  1714→Display:
+  1715→  1715→
+  1716→  1716→Current student
+  1717→  1717→Current role
+  1718→  1718→Skills
+  1719→  1719→Weights
+  1720→  1720→Competencies
+  1721→  1721→Readiness
+  1722→  1722→Gaps
+  1723→  1723→Next Action
+  1724→  1724→Evidence count
+  1725→  1725→Last calculated
+  1726→  1726→
+  1727→  1727→This is for debugging/demo reliability.
+  1728→  1728→
+  1729→  1729→Do not expose to normal Student users unless appropriate.
+  1730→  1730→
+  1731→  1731→============================================================
+  1732→  1732→51. VISUAL REQUIREMENTS
+  1733→  1733→============================================================
+  1734→  1734→
+  1735→  1735→Maintain Phase 1 + Phase 2 design system.
+  1736→  1736→
+  1737→  1737→Do not introduce another design language.
+  1738→  1738→
+  1739→  1739→Skill intelligence should visually communicate:
+  1740→  1740→
+  1741→  1741→Competency
+  1742→  1742→Evidence
+  1743→  1743→Importance
+  1744→  1744→Gap
+  1745→  1745→Action
+  1746→  1746→
+  1747→  1747→Use:
+  1748→  1748→
+  1749→  1749→progress bars
+  1750→  1750→radial indicators where appropriate
+  1751→  1751→small charts
+  1752→  1752→chips
+  1753→  1753→timelines
+  1754→  1754→drawers
+  1755→  1755→modal explanations
+  1756→  1756→status badges
+  1757→  1757→
+  1758→  1758→Avoid:
+  1759→  1759→
+  1760→  1760→huge unnecessary gauges
+  1761→  1761→too many charts
+  1762→  1762→dashboard clutter
+  1763→  1763→
+  1764→  1764→============================================================
+  1765→  1765→52. TERMINOLOGY
+  1766→  1766→============================================================
+  1767→  1767→
+  1768→  1768→Use these terms consistently:
+  1769→  1769→
+  1770→  1770→Skill Competency
+  1771→  1771→Evidence Confidence
+  1772→  1772→Role Importance
+  1773→  1773→Weighted Contribution
+  1774→  1774→Role Readiness
+  1775→  1775→Critical Skill Gap
+  1776→  1776→Next Best Action
+  1777→  1777→Evidence
+  1778→  1778→Evidence Status
+  1779→  1779→Last Updated
+  1780→  1780→Why this result?
+  1781→  1781→
+  1782→  1782→Do NOT randomly alternate:
+  1783→  1783→
+  1784→  1784→Skill Score
+  1785→  1785→Readiness Score
+  1786→  1786→Employability Score
+  1787→  1787→Career Score
+  1788→  1788→
+  1789→  1789→unless specifically defined.
+  1790→  1790→
+  1791→  1791→============================================================
+  1792→  1792→53. DO NOT CALL READINESS "EMPLOYABILITY"
+  1793→  1793→============================================================
+  1794→  1794→
+  1795→  1795→Use:
+  1796→  1796→
+  1797→  1797→Role Readiness
+  1798→  1798→
+  1799→  1799→Do NOT claim:
+  1800→  1800→
+  1801→  1801→Employability = 61%
+  1802→  1802→
+  1803→  1803→The metric is a configured role-readiness indicator based on the available skill data.
+  1804→  1804→
+  1805→  1805→============================================================
+  1806→  1806→54. DO NOT CLAIM PREDICTIVE AI
+  1807→  1807→============================================================
+  1808→  1808→
+  1809→  1809→Do not say:
+  1810→  1810→
+  1811→  1811→"AI predicts your future career success."
+  1812→  1812→
+  1813→  1813→Use:
+  1814→  1814→
+  1815→  1815→"SKILL SETU analyses available evidence against configured role requirements."
+  1816→  1816→
+  1817→  1817→============================================================
+  1818→  1818→55. DEMO DATA LABELING
+  1819→  1819→============================================================
+  1820→  1820→
+  1821→  1821→Where appropriate show:
+  1822→  1822→
+  1823→  1823→DEMO DATA
+  1824→  1824→
+  1825→  1825→Example:
+  1826→  1826→
+  1827→  1827→S042
+  1828→  1828→AI & Data Science
+  1829→  1829→
+  1830→  1830→Role Readiness:
+  1831→  1831→61%
+  1832→  1832→
+  1833→  1833→This is controlled demonstration data.
+  1834→  1834→
+  1835→  1835→============================================================
+  1836→  1836→56. NO FAKE EVIDENCE
+  1837→  1837→============================================================
+  1838→  1838→
+  1839→  1839→Do not create:
+  1840→  1840→
+  1841→  1841→fake certificates
+  1842→  1842→fake industry feedback
+  1843→  1843→fake internship results
+  1844→  1844→fake GitHub verification
+  1845→  1845→fake coding platform activity
+  1846→  1846→
+  1847→  1847→You may create controlled DEMO DATA only where explicitly labeled.
+  1848→  1848→
+  1849→  1849→============================================================
+  1850→  1850→57. FUTURE-READY ARCHITECTURE
+  1851→  1851→============================================================
+  1852→  1852→
+  1853→  1853→The intelligence engine should be structured so future modules can use:
+  1854→  1854→
+  1855→  1855→Opportunity Matching
+  1856→  1856→Hackathon Team Matching
+  1857→  1857→Industry Feedback
+  1858→  1858→Academia Analytics
+  1859→  1859→Institution Analytics
+  1860→  1860→Skill Passport
+  1861→  1861→
+  1862→  1862→DO NOT implement those modules now.
+  1863→  1863→
+  1864→  1864→Just expose reusable intelligence functions/services.
+  1865→  1865→
+  1866→  1866→============================================================
+  1867→  1867→58. FUTURE EVIDENCE SOURCES
+  1868→  1868→============================================================
+  1869→  1869→
+  1870→  1870→Design the evidence model so future records can come from:
+  1871→  1871→
+  1872→  1872→Assessment
+  1873→  1873→Project
+  1874→  1874→Hackathon
+  1875→  1875→Internship
+  1876→  1876→Industry Feedback
+  1877→  1877→Faculty Feedback
+  1878→  1878→Certification
+  1879→  1879→Coding Platforms
+  1880→  1880→
+  1881→  1881→Do not build external integrations in this phase.
+  1882→  1882→
+  1883→  1883→============================================================
+  1884→  1884→59. ACCEPTANCE CRITERIA
+  1885→  1885→============================================================
+  1886→  1886→
+  1887→  1887→Phase 3 is COMPLETE only when:
+  1888→  1888→
+  1889→  1889→✓ Role configurations are centralized
+  1890→  1890→✓ All 12 roles exist
+  1891→  1891→✓ Skills are role-specific
+  1892→  1892→✓ Student competency exists
+  1893→  1893→✓ Evidence exists
+  1894→  1894→✓ Evidence has timestamps
+  1895→  1895→✓ Evidence status exists
+  1896→  1896→✓ Role readiness is calculated
+  1897→  1897→✓ Calculation is reproducible
+  1898→  1898→✓ Raw and display values are consistent
+  1899→  1899→✓ Role switching changes the model
+  1900→  1900→✓ Skill gaps are calculated
+  1901→  1901→✓ Gap priority is explainable
+  1902→  1902→✓ Next Best Action is rule-based
+  1903→  1903→✓ Readiness explanation works
+  1904→  1904→✓ Skill explanation works
+  1905→  1905→✓ Evidence drawer works
+  1906→  1906→✓ Centralized state works
+  1907→  1907→✓ Changing one competency updates dependent intelligence
+  1908→  1908→✓ No major score is duplicated independently
+  1909→  1909→✓ Demo S042 journey works
+  1910→  1910→✓ Tests pass
+  1911→  1911→✓ No existing Phase 1/2 functionality is broken
+  1912→  1912→
+  1913→  1913→============================================================
+  1914→  1914→60. DO NOT IMPLEMENT IN THIS PHASE
+  1915→  1915→============================================================
+  1916→  1916→
+  1917→  1917→DO NOT build:
+  1918→  1918→
+  1919→  1919→Industry Portal
+  1920→  1920→Academia Portal
+  1921→  1921→Institution Portal
+  1922→  1922→Hackathon system
+  1923→  1923→Advanced AI Team Matching
+  1924→  1924→Job matching engine
+  1925→  1925→External coding APIs
+  1926→  1926→External LMS integrations
+  1927→  1927→University ERP
+  1928→  1928→Production authentication
+  1929→  1929→Production ML training
+  1930→  1930→Complex predictive models
+  1931→  1931→
+  1932→  1932→These belong to later phases.
+  1933→  1933→
+  1934→  1934→============================================================
+  1935→  1935→61. FINAL DEMO EXPERIENCE
+  1936→  1936→============================================================
+  1937→  1937→
+  1938→  1938→The evaluator should be able to see:
+  1939→  1939→
+  1940→  1940→S042
+  1941→  1941→
+  1942→  1942→Target Role:
+  1943→  1943→Data Scientist
+  1944→  1944→
+  1945→  1945→↓
+  1946→  1946→Assessment
+  1947→  1947→
+  1948→  1948→↓
+  1949→  1949→Skill Competency
+  1950→  1950→
+  1951→  1951→Python 82
+  1952→  1952→SQL 64
+  1953→  1953→Statistics 51
+  1954→  1954→ML 43
+  1955→  1955→Problem Solving 75
+  1956→  1956→
+  1957→  1957→↓
+  1958→  1958→Role Readiness
+  1959→  1959→
+  1960→  1960→60.70%
+  1961→  1961→→
+  1962→  1962→61%
+  1963→  1963→
+  1964→  1964→↓
+  1965→  1965→WHY?
+  1966→  1966→
+  1967→  1967→Actual weighted calculation
+  1968→  1968→
+  1969→  1969→↓
+  1970→  1970→Critical Gap
+  1971→  1971→
+  1972→  1972→Machine Learning
+  1973→  1973→
+  1974→  1974→↓
+  1975→  1975→WHY?
+  1976→  1976→
+  1977→  1977→High importance + significant competency gap
+  1978→  1978→
+  1979→  1979→↓
+  1980→  1980→Next Best Action
+  1981→  1981→
+  1982→  1982→Build ML Project
+  1983→  1983→
+  1984→  1984→↓
+  1985→  1985→Change ML competency:
+  1986→  1986→
+  1987→  1987→43 → 60
+  1988→  1988→
+  1989→  1989→↓
+  1990→  1990→System recalculates
+  1991→  1991→
+  1992→  1992→Readiness changes
+  1993→  1993→Gap changes
+  1994→  1994→Explanation changes
+  1995→  1995→
+  1996→  1996→This proves that SKILL SETU has an actual intelligence layer rather than static dashboard numbers.
+  1997→  1997→
+  1998→  1998→============================================================
+  1999→  1999→62. FINAL PRODUCT PRINCIPLE
+  2000→  2000→============================================================
+
+[showing lines 1-2000 of 2002; use offset=2001 with limit to continue reading]

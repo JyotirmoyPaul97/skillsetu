@@ -8,7 +8,7 @@ import {
   Briefcase, GraduationCap, FolderKanban, BookOpen, Trophy, Search, Send,
   BadgeCheck, CheckCircle2, FolderGit, Award, Building2, FileText, Bell,
   ChevronDown, ChevronRight, Menu, X, LogOut, Settings, HelpCircle, User,
-  PanelLeftClose, PanelLeft, Command,
+  PanelLeftClose, PanelLeft, Command, Bug,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRouter, appSection } from "@/lib/router";
@@ -33,6 +33,8 @@ const PassportPage = dynamic(() => import("./student/passport").then((m) => m.Pa
 const HackathonsPage = dynamic(() => import("./student/hackathons").then((m) => m.HackathonsPage), { ssr: false, loading: PageLoader });
 const NotificationsPage = dynamic(() => import("./student/misc").then((m) => m.NotificationsPage), { ssr: false, loading: PageLoader });
 const ProfilePage = dynamic(() => import("./student/misc").then((m) => m.ProfilePage), { ssr: false, loading: PageLoader });
+const SkillDetailPage = dynamic(() => import("./student/skill-detail").then((m) => m.SkillDetailPage), { ssr: false, loading: PageLoader });
+const DebugPage = dynamic(() => import("./student/debug").then((m) => m.DebugPage), { ssr: false, loading: PageLoader });
 
 // ─── Nav configuration (spec §3) ────────────────────────────────
 interface NavLeaf { label: string; route: string; icon: LucideIcon }
@@ -82,13 +84,14 @@ const NAV: (NavLeaf | NavGroup)[] = [
     ],
   },
   { label: "Notifications", route: "/app/notifications", icon: Bell },
+  { label: "Debug", route: "/app/debug", icon: Bug },
 ];
 
 // Breadcrumb labels for the top bar
 const BREADCRUMBS: Record<string, string> = {
   dashboard: "Dashboard", assessment: "Assessment",
   "skills": "My Skills", "career": "Career & Opportunities", "hackathons": "Hackathons & Teams", "passport": "Skill Passport",
-  notifications: "Notifications", profile: "My Profile",
+  notifications: "Notifications", profile: "My Profile", debug: "Debug",
   technical: "Technical", soft: "Soft Skills", aptitude: "Aptitude", gap: "Skill Gap",
   jobs: "Jobs", internships: "Internships", projects: "Projects", learning: "Industry Learning",
   discover: "Discover", mine: "My Hackathons", teams: "My Teams", submissions: "Submissions", mentorship: "Mentorship",
@@ -143,13 +146,19 @@ function ContentOutlet({ seg }: { seg: string[] }) {
           switch (section) {
             case undefined:
             case "dashboard": return <DashboardPage />;
-            case "skills": return <MySkillsPage section={(sub as any) || "technical"} />;
+            case "skills":
+              // /app/skills/technical|soft|aptitude|gap → MySkillsPage; /app/skills/:skillId → SkillDetailPage
+              if (sub === "technical" || sub === "soft" || sub === "aptitude" || sub === "gap" || !sub) {
+                return <MySkillsPage section={(sub as any) || "technical"} />;
+              }
+              return <SkillDetailPage skillId={sub} />;
             case "assessment": return <AssessmentPage />;
             case "career": return <CareerPage section={(sub as any) || "jobs"} />;
             case "hackathons": return <HackathonsPage section={(sub as any) || "discover"} />;
             case "passport": return <PassportPage tab={(sub as any) || "verified"} />;
             case "notifications": return <NotificationsPage />;
             case "profile": return <ProfilePage />;
+            case "debug": return <DebugPage />;
             default: return <DashboardPage />;
           }
         })()}
