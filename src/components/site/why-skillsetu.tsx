@@ -5,7 +5,7 @@ import { ShieldCheck, Target, TrendingUp, Sparkles, ArrowRight } from "lucide-re
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SsEyebrow, SsSectionHeading, SsCard } from "@/components/ui/ss";
-import { usePhase1 } from "@/lib/phase1-store";
+import { useRouter } from "@/lib/router";
 
 interface Feature {
   title: string;
@@ -43,7 +43,7 @@ const FEATURES: Feature[] = [
 ];
 
 export function WhySkillSetu() {
-  const { openGate } = usePhase1();
+  const { navigate } = useRouter();
   return (
     <section
       id="about"
@@ -93,7 +93,7 @@ export function WhySkillSetu() {
             Build Skills. Create Evidence. Find Opportunity.
           </p>
           <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button variant="navy" size="lg" className="h-11 gap-2 px-6" onClick={() => openGate("get-started")}>
+            <Button variant="navy" size="lg" className="h-11 gap-2 px-6" onClick={() => navigate("/login")}>
               <Sparkles className="h-4 w-4" />
               Get Started
               <ArrowRight className="h-4 w-4" />

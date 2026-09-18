@@ -6,15 +6,14 @@ import {
 } from "lucide-react";
 import { PORTALS, type PortalTheme } from "./theme";
 import { SsEyebrow, SsSectionHeading, SsBadge } from "@/components/ui/ss";
-import { usePhase1 } from "@/lib/phase1-store";
+import { useRouter } from "@/lib/router";
 import { cn } from "@/lib/utils";
 
 const ICON = { student: GraduationCap, industry: Factory, academia: BookOpen, institution: Building2 } as const;
 
 function PortalCard({ theme, idx }: { theme: PortalTheme; idx: number }) {
-  const { openGate } = usePhase1();
+  const { navigate } = useRouter();
   const Icon = ICON[theme.key];
-  const gate = `portal-${theme.key}` as "portal-student" | "portal-industry" | "portal-academia" | "portal-institution";
 
   return (
     <motion.article
@@ -59,7 +58,7 @@ function PortalCard({ theme, idx }: { theme: PortalTheme; idx: number }) {
       {/* enter CTA */}
       <div className="flex-1" />
       <button
-        onClick={() => openGate(gate)}
+        onClick={() => navigate("/login")}
         className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
         style={{ color: theme.accent }}
       >

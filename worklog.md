@@ -216,3 +216,183 @@ Stage Summary:
   * src/lib/phase1-store.ts (NEW — gate + mobileNav state)
   * src/components/site/{header,hero,skill-layer,portals,closed-loop,why-skillsetu,footer}.tsx (rebuilt per master spec §3–7)
 - STOP after Phase 1 — dashboards/auth/app-shell deferred to Phase 2
+
+---
+Task ID: P2-F
+Agent: orchestrator (main)
+Task: Phase 2 foundation — centralized S042 demo store, mutable state, hash router, shared parts, login view, dashboard
+
+Work Log:
+- Read master spec upload/Pasted Content_1789697085921.txt — Phase 2 = app shell + Student Portal frontend (spec §1–47). No dashboards for Industry/Academia/Institution; no backend this phase.
+- Built src/lib/student-data.ts — SINGLE SOURCE OF TRUTH for S042 (spec §44): STUDENT (S042, AI & Data Science, Data Scientist), READINESS (displayed 61 / calculated 60.70 / breakdown table / lastCalculated 17 Sept 2026), TECHNICAL_SKILLS (Python 82, SQL 64, Statistics 51, ML 43, Problem Solving 75), SOFT_SKILLS (7 skills), APTITUDE (4 categories), GAPS (3 with why+suggestions), NEXT_BEST_ACTION, BEST_MATCH (Data Science Intern @ Nova Analytics, 91%), JOBS/INTERNSHIPS/PROJECTS/INDUSTRY_LEARNING arrays, APPLICATIONS (timeline), EVIDENCE (6 rows, statuses Submitted/Evaluated, verification Pending), UPCOMING_HACKATHONS + COMPLETED_HACKATHONS, PASSPORT_PROJECTS/CERTIFICATIONS/INTERNSHIPS, NOTIFICATIONS (6 types), ROLES (12), ASSESSMENTS (3). Helpers: findSkill/findGap/findOpp.
+- Built src/lib/student-state.ts (Zustand): mutable overlay — currentRole (setRole), applied Set (apply), saved Set (toggleSave), assessmentProgress (start/completeAssessment), joinedTeams (joinTeam), githubLinks (saveGithub), completedActions (completeAction), readNotifications (markRead/markAllRead). Frontend-only, no backend (spec §39).
+- Built src/lib/router.ts (hash router): useRouter store (route + navigate + back), appSection() parser, isAppRoute(). Whole app on single `/` Next.js route via URL hash (#/login, #/app/dashboard, etc.) per project constraint.
+- Built src/components/app/student-parts.tsx — shared sub-components reusing Phase 1 design (ss.tsx primitives + master tokens): DashHeader, DemoBadge, CalcBadge, MatchBadge, PriorityBadge, ConfidenceBadge, EvidenceStatusBadge, VerificationBadge, EmptyState, Modal (motion), Drawer (right slide-in), EvidenceDetailDrawer (spec §15), RoleSelector (spec §8/24), ApplicationTimeline (spec §17), Field, SsStat re-export.
+- Built src/components/app/login-view.tsx (spec §4): email/password + Login + Forgot Password + Remember Me + DEMO LOGIN (4 roles). Student Demo → /app/dashboard. Clearly labelled DEMO LOGIN — no real session. Other roles note "later phase".
+- Built src/components/app/student/dashboard.tsx (spec §5–17): header "Good morning, S042" + branch + DemoBadge; top stats (Readiness 61%, Target Role, Top Gap ML, Evidence count); ROLE READINESS navy card with ring + View Calculation → drawer (breakdown table Python 82×25%=20.50 … total 60.70% displayed 61%); CRITICAL SKILL GAPS (3 cards + View Gap → drawer with why/suggestions); NEXT BEST ACTION (prominent, View Action + Start → modal with why/projected-impact/steps, Start→Started state); BEST OPPORTUNITY MATCH (Nova Analytics 91%, Apply Now→Applied+success msg, Why Match?→modal with alignment/potential-gap/evidence-considered); RECENT EVIDENCE (list, click→EvidenceDetailDrawer, View All Evidence→/app/passport/verified); TARGET ROLE card + Change Role→RoleSelector; MY APPLICATIONS timeline; UPCOMING HACKATHONS (3 cards View+Find Team→joined state). All stateful via useStudentState. Demo data labelled with DemoBadge.
+
+Stage Summary:
+- Phase 2 foundation + dashboard DONE. Pattern reference established (dashboard.tsx) for subagents to match style.
+- Foundation files: student-data.ts, student-state.ts, router.ts, student-parts.tsx, login-view.tsx, dashboard.tsx
+- Demo logins: Student Demo → Student Portal (Phase 2). Other roles → later phases.
+- Single source of truth in student-data.ts; all components must import from it (no copy-paste).
+- Next: dispatch parallel subagents for career/passport/learning/hackathons+misc pages, then build AppShell + wire page.tsx + landing CTAs.
+
+---
+Task ID: P2-HackMisc
+Agent: full-stack-developer (hackathons + notifications + profile)
+Task: Build hackathons.tsx + misc.tsx
+
+Work Log:
+- Read all mandatory context: worklog.md (full), src/lib/student-data.ts, src/lib/student-state.ts, src/lib/router.ts, src/components/app/student-parts.tsx, src/components/app/student/dashboard.tsx (pattern reference), src/components/ui/ss.tsx, src/components/ui/button.tsx, src/app/globals.css.
+- Built src/components/app/student/hackathons.tsx — HackathonsPage({section}) with 5-section switcher (Discover/My Hackathons/My Teams/Submissions/Mentorship) using useRouter().navigate to /app/hackathons/<section>. Discover: UPCOMING_HACKATHONS as SsCard lift grid (1/2/3 cols responsive) with name/domain/MatchBadge/team+deadline meta/required-skill pills and View (opens Modal) + Find Team (→ joinTeam → teal "Joined" + CheckCircle2). My Hackathons: joined upcoming + COMPLETED_HACKATHONS with status badges (teal Completed / blue Joined); empty-state safety net with Discover CTA. My Teams: joined teams with avatar stack + team meta + Open Chat/View Brief; EmptyState "No Team Yet" with Find a Team CTA. Submissions: 2 inline demo rows (Waste-Predict v2 Evaluated, Civic Grievance Mapper Submitted) in single bordered card with EvidenceStatusBadge + chevron. Mentorship: 2 inline demo mentor cards (Dr. Meena Krishnan Scheduled, Ankit Verma Pending) with teal Calendar avatar, status SsBadge (blue/teal/orange), conditional Join Session / Confirm Slot / View Notes. HackathonDetailModal with domain/team/deadline/match grid + skill pills + Sparkles info callout + Close/Find Team footer.
+- Built src/components/app/student/misc.tsx — NotificationsPage + ProfilePage. NotificationsPage: DashHeader "Notifications" with live unread count + Mark all as read (markAllRead) button. Filter tabs (All/Skill Gaps/Opportunities/Hackathons/Applications). NOTIF_META maps each of 6 notification types → unique lucide icon (AlertTriangle/Briefcase/Trophy/ClipboardList/Award/CalendarClock) + tone (orange/blue/teal) + filter group. Unread items get navy left border + blue dot + bold title; click → markRead. Read items dimmed with check icon. ProfilePage: navy gradient header strip with avatar color accent (radial-gradient in STUDENT.avatarColor #0D9488) + initials squircle (AS) + name/ID/branch/year/college + ProfileRing (78% SVG ring). Personal Information card with 6 fields. Target Role card with Edit Role button → RoleSelector modal (reactively updates currentRole + key-skills pills). Profile Completion card with gradient progress bar (teal→blue) + 3-step checklist (Personal Info done / Skills done / Evidence pending).
+- Reused Phase 1 design system EXACTLY: navy/blue/teal/orange palette only (no violet/rose/amber/indigo); SsCard tone="soft"/"lift"; shadow-soft; rounded-2xl; DemoBadge on every demo section; EmptyState on Teams/Mine/Notifications; framer-motion subtle entry transitions.
+- Stateful (spec §39): Find Team→Joined (joinTeam + reactive Set lookup); mark notifications read (markRead/markAllRead); role change via RoleSelector (setRole via useStudentState).
+- TypeScript strict — explicit NotifTone/NotifGroup/FilterId/MentorStatus types; no `any` casts; "use client"; responsive (1/2/3-col grid, scroll-slim switcher on mobile).
+- NO backend/fetch. All data from student-data.ts; mutations via useStudentState only.
+- Lint: my two files clean (npx eslint on both → 0 errors). NOTE: pre-existing 1 lint error in passport.tsx (set-state-in-effect at line 503) is from another agent's file — not my scope.
+
+Stage Summary:
+- Two files delivered exactly per export contract: HackathonsPage({section}) in hackathons.tsx; NotificationsPage + ProfilePage in misc.tsx.
+- All 5 hackathon sections functional with stateful Join flow; NotificationsPage has filter + read/unread state; ProfilePage has reactive role editing + profile completion meter + avatar-accent navy header strip.
+- Style matches dashboard.tsx pattern (DashHeader + DemoBadge + SsCard sections + EmptyState + Modal). Ready for AppShell to import.
+- Files: src/components/app/student/hackathons.tsx (NEW), src/components/app/student/misc.tsx (NEW), /agent-ctx/P2-HackMisc-fullstack-developer.md (work record).
+
+---
+Task ID: P2-Career
+Agent: full-stack-developer (career pages)
+Task: Build career.tsx (Jobs/Internships/Projects/Industry Learning + detail modals + Why Match)
+
+Work Log:
+- Read all 9 mandatory context files (worklog, student-data, student-state, router, student-parts, dashboard, ss, button, globals.css).
+- Created src/components/app/student/career.tsx (~600 lines, "use client") with single export CareerPage({ section }: { section: "jobs" | "internships" | "projects" | "learning" }).
+- Layout: DashHeader (per-section accent) + 4-tab section switcher (grid 2-col mobile / 4-col sm+) calling navigate("/app/career/<section>") with aria-current; conditional render of JobsGrid/InternshipsGrid/ProjectsGrid/LearningGrid.
+- JobsGrid (§25): teal Briefcase cards, MatchBadge, MapPin/Wallet/Clock meta, required-skills pills, View Details (modal) + Save (bookmark fill toggle via toggleSave) + Apply Now (navy, disabled+CheckCircle2+success msg via apply), "Why Match?" link.
+- InternshipsGrid (§27): blue GraduationCap cards, same button pattern with Duration/Stipend meta.
+- ProjectsGrid (§28): orange FolderKanban cards, line-clamped Problem, Team/Mentor meta, View Project (ProjectDetailModal) + Why Match? (ghost).
+- LearningGrid (§29): navy BookOpen cards, category filter chips (All/Training/Workshop/Certification/Mentorship) with useMemo, LearningStatusBadge (palette-strict: slate/teal/blue/orange), View + Enroll (local enrolled Set toggles to teal disabled Enrolled).
+- OppDetailModal (§26 Job Details, reused for Internships): About/Responsibilities list/Required skills (blue pills)/Preferred skills (if present)/Eligibility/Location-Mode-Duration-Compensation-Deadline-Type grid/Your Match card (MatchBadge+whyMatch checklist+potentialGap orange+Evidence considered pills)/footer Save+Close+Apply.
+- ProjectDetailModal: About/Problem (orange block)/Required skills (orange)/team-mentor-meta/Your match/Close+Express Interest.
+- LearningDetailModal: About/Provider-Type-Duration-Mode-Skill-TargetRole-Compensation-Deadline grid/Your match/Close+Enroll Now.
+- WhyMatchModal (§12–13): DemoBadge + alignment checklist (whyMatch, teal checks) + Potential gap block (potentialGap, orange) + Evidence considered pills (evidenceConsidered) + guidance note.
+- Helpers: SectionLabel (10px uppercase eyebrow + optional Lucide icon), LearningStatusBadge (palette-strict map).
+- Demo data labelled via DemoBadge near every MatchBadge and at top of every modal; "prototype workflow — no external application created" success messages clarify frontend-only mutation.
+- Empty states via EmptyState (Search icon) — defensive check per grid + learning filter empty case.
+- Animations: framer-motion motion.div per card initial opacity:0/y:12 → opacity:1/y:0, staggered by i*0.04.
+- Responsive: cards grid-cols-1 sm:grid-cols-2 lg:grid-cols-3; section switcher grid-cols-2 sm:grid-cols-4; modals max-w-md/lg.
+- Palette: strict master tokens (--ss-navy-900/blue-600/teal-600/orange-600 + slate neutrals). No violet/rose/amber/indigo.
+- Reused student-parts.tsx (DashHeader, Modal, EmptyState, DemoBadge, MatchBadge, Field), dashboard.tsx patterns (BestMatchCard apply→disabled+success, WhyMatchModal checklist+gap+evidence), button variants only (navy/blue/teal/orange/outline/ghost), lucide-react icons.
+- Ran `bun run lint` — clean (0 errors). Dev server recompiles cleanly per dev.log.
+
+Stage Summary:
+- File created: src/components/app/student/career.tsx (single file, ~600 lines, "use client").
+- Export: CareerPage({ section }: { section: "jobs" | "internships" | "projects" | "learning" }).
+- Behaviors: 4 list views + 3 detail modals (Job/Internship shared, Project, Learning) + 1 reusable WhyMatch modal; section switcher (4 tabs, hash router); Learning category filter; stateful Apply/Save/Enroll via useStudentState.apply/toggleSave (+ local enroll Set); demo-data labelled; empty states; framer-motion stagger; responsive grid + 2x2 mobile tabs.
+- Lint clean; dev server compiles cleanly. AppShell integration point: import { CareerPage } from "@/components/app/student/career" and mount with section parsed from appSection(route)[1].
+
+---
+Task ID: P2-Learning
+Agent: full-stack-developer (my skills + assessment)
+Task: Build learning.tsx (My Skills tabs + Assessment + role selection)
+
+Work Log:
+- Read all 8 mandatory context files (worklog, student-data, student-state, router, student-parts, dashboard, ss.tsx, button.tsx, globals.css). Confirmed master palette (navy/blue/teal/orange/white/slate via var(--ss-*)); correct relative import for student-parts is `../student-parts` (matched passport.tsx, NOT dashboard.tsx's stale `./student-parts`).
+- Built MySkillsPage({ section }) with 4-tab switcher (Technical / Soft Skills / Aptitude / Skill Gap). Tabs call navigate("/app/skills/<section>"). Body uses framer-motion keyed on section.
+- TechnicalSkillsTab (spec §19+20): top stats (avg/evidence/below-target/top skill), SkillCardGrid of 5 TECHNICAL_SKILLS (Python 82, SQL 64, Statistics 51, ML 43, Problem Solving 75). Each SkillCard: name, big navy score, evidence count, last updated, ConfidenceBadge, SsSkillBar score-vs-target(80) with dynamic accent (teal≥80/blue≥60/orange<60). Whole card keyboard-accessible (role="button" + tabIndex + Enter/Space) → CompetencyDetailDrawer.
+- SoftSkillsTab (spec §21): orange DEMO DATA banner + DemoBadge "SOFT-SKILL DEMO", same SkillCardGrid for 7 SOFT_SKILLS.
+- AptitudeTab (spec §22): 4 stat tiles + grid of 4 APTITUDE cards (Quantitative 72 / Logical 78 / Verbal 70 / Analytical 75) with EvidenceStatusBadge + SsSkillBar.
+- SkillGapTab (spec §22b): 3 stat tiles + 3 GAPS cards (Machine Learning/Statistics/SQL) with PriorityBadge + score diff + SsSkillBar (orange accent) + ConfidenceBadge + "View Gap" → local GapDetailDrawerLocal (built inline via Drawer+Field primitives per spec; did NOT import dashboard's non-exported GapDetailDrawer). Drawer shows skill/current/target/role-importance/gap/confidence/priority/why/suggestions. EmptyState fallback.
+- CompetencyDetailDrawer (spec §20): Skill, Competency, Evidence Confidence (ConfidenceBadge + count), Role Importance %, Contribution (score×weight, 2-decimal), Last Updated, Evidence Count, SsSkillBar, related EVIDENCE list filtered by skill name (each → EvidenceDetailDrawer), "View Evidence" navy button (disabled if no evidence). Matches ML example exactly: Competency 43, Limited confidence, 30% importance, 12.90 pts, 15 Sept 2026, 1 evidence, View Evidence.
+- AssessmentPage (spec §23+24): DashHeader "Take Skill Assessment", 4 status stat tiles, grid of 3 AssessmentCardView (Aptitude/Technical/Coding-Practical). Each card: icon-tinted header, AssessmentStatusBadge, full description, Duration+Questions tiles, role-focus row, status-driven button (Not started→Start Assessment→role modal→In Progress; In Progress→Continue & Complete→Completed; Completed→View Result). NO empty placeholder cards. Extra "How assessments work" info card with View Skills / Skill Passport cross-links.
+- StartAssessmentRoleModal (spec §24): Modal size=lg listing all 12 ROLES as cards with description + top-3 keySkills chips. Click a role → setRole + startAssessment(pendingId) + close. Also "Keep '<current>' & Start →" ghost button. Phase-2 disclaimer included. Chose to build this inline (spec allows "OR a role-selection modal") because RoleSelector's Apply button always navigates to /app/dashboard which would interrupt the start flow.
+- ResultModal: demo score + percentile per assessment type, evidence-generated field, Close + View Skills buttons.
+- Drawer chain: skill card → CompetencyDetailDrawer → (related evidence) → EvidenceDetailDrawer.
+- All state via useStudentState (currentRole/setRole, assessmentProgress, start/completeAssessment). No backend/fetch. Reads student-data; mutates student-state only.
+- Palette: navy/blue/teal/orange/white/slate only. Animations: subtle framer-motion. Icons: lucide-react. Buttons: SKILL SETU Button variants only.
+- Lint: `bun run lint` → 0 errors. Dev log: clean compile.
+- Wrote work record at /home/z/my-project/agent-ctx/P2-Learning-full-stack-developer.md.
+
+Stage Summary:
+- src/components/app/student/learning.tsx COMPLETE and verified.
+- Exports MySkillsPage({ section }: "technical" | "soft" | "aptitude" | "gap") and AssessmentPage() exactly per AppShell contract.
+- 4 skill tabs implemented with demo data + demo labels + competency detail drawer (Skill / Competency / Evidence Confidence / Role Importance % / Contribution / Last Updated / Evidence Count / SsSkillBar / related evidence list / View Evidence button → EvidenceDetailDrawer).
+- Assessment page: 3 cards (Aptitude/Technical/Coding) with status-driven buttons + role-selection modal listing 12 ROLES (selection updates currentRole via setRole). NO placeholder empty cards.
+- Reuses Phase 1 design system exactly (SsCard/SsStat/SsSkillBar/Button variants/master tokens/Drawer/Modal/EmptyState/Field/EvidenceDetailDrawer from student-parts). Matches dashboard.tsx style.
+- Lint clean, dev server compiles cleanly, responsive verified.
+
+---
+Task ID: P2-Passport
+Agent: full-stack-developer (skill passport)
+Task: Build passport.tsx (6 tabs incl. resume)
+
+Work Log:
+- Read worklog.md (Phase 1 design system + Phase 2 foundation) and all foundation files: src/lib/student-data.ts (single source of truth — PASSPORT_PROJECTS, CERTIFICATIONS, PASSPORT_INTERNSHIPS, COMPLETED_HACKATHONS, TECHNICAL_SKILLS, STUDENT, READINESS, EVIDENCE), src/lib/student-state.ts (useStudentState — githubLinks + saveGithub), src/lib/router.ts (useRouter().navigate), src/components/app/student-parts.tsx (DashHeader, Modal, Drawer, EmptyState, DemoBadge, VerificationBadge, EvidenceStatusBadge, Field, SsStat), src/components/app/student/dashboard.tsx (pattern reference), src/components/ui/ss.tsx (SsCard, SsBadge, SsSkillBar), src/components/ui/button.tsx, src/app/globals.css (tokens).
+- Built src/components/app/student/passport.tsx (982 lines, single file, no backend, "use client", TypeScript strict):
+  * Exported `PassportPage({ tab }: { tab: "verified" | "projects" | "certifications" | "internships" | "hackathons" | "resume" })` per exact contract.
+  * DashHeader titled "Skill Passport" with subtitle "Your evidence-backed skill profile" (icon BookOpen, teal accent, DemoBadge action).
+  * 6-tab switcher (Verified Skills / Projects / Certifications / Internships / Hackathons / Resume) — each button calls navigate(`/app/passport/<tab>`); active tab = navy bg with shadow-soft. Mobile-friendly: flex-wrap + scroll-slim overflow-x-auto.
+  * Overview card (spec §30) shown at top of EVERY tab: Student name+ID (Aarav Sharma / S042), Target Role (Data Scientist), Role Readiness (61% from READINESS.displayed + CalcBadge + last-calculated date), Evidence Count (EVIDENCE.length=6, sub shows TECHNICAL_SKILLS evidence row sum). DemoBadge near values. VerificationBadge "Pending" + note about evidence-not-verified.
+  * Verified Skills tab (spec §30): TECHNICAL_SKILLS rows with score, ConfidenceBadge, derived VerificationBadge (Verified if any EVIDENCE for that skill has verification="Verified", else Pending), evidence count, last-updated; clickable → SkillDetailDrawer (competency SsSkillBar target 80, related EVIDENCE filtered by skill, verification note). Soft-skills summary card below.
+  * Projects tab (spec §31): PASSPORT_PROJECTS cards (name, desc, technology pills, skills pills, date, role, contribution, VerificationBadge). Two buttons per card: View Project (modal with full details) + Add GitHub Link / Edit Links (modal). GithubLinkModal has GitHub Repository URL + Live Demo URL inputs, an explicit note "Adding a GitHub link does not verify the project. Verification requires faculty/industry review." in an orange-tinted callout, Save button calls saveGithub(projectId, github, liveDemo) — after save, card re-renders showing saved links but keeps verification Pending. GithubLinkModal uses key={project?.id} + lazy useState initializers (no useEffect) to satisfy react-hooks/set-state-in-effect lint rule.
+  * Certifications tab (spec §32): CERTIFICATIONS in a table — Certification, Issuer, Date, Credential ID, Status. Distinct CertStatusBadge (Uploaded=neutral slate, Pending Verification=warm slate, Verified=teal) so Uploaded ≠ Verified. Note explains the three statuses.
+  * Internships tab (spec §33): PASSPORT_INTERNSHIPS cards — company, role, duration, skills pills, supervisor feedback as blockquote with blue left-border, VerificationBadge.
+  * Hackathons tab (spec §34): COMPLETED_HACKATHONS — name, domain, deadline, team size, problem, project, team, role, evaluation, evidence status (EvidenceStatusBadge), required skills pills. Explicit note: "This page will later consume the real Hackathon system."
+  * Resume tab (spec §35) — Resume Builder: top control row with target-role inline <select> (reuses useStudentState.currentRole + setRole from ROLES list); Resume Alignment Score card (demo 72%) with explicit "Not an ATS score." note (NEVER "Guaranteed ATS Score") + CalcBadge labelled "Demo"; resume preview with header (name/college/ID/location/target) + sections Summary / Education / Skills / Projects / Internships / Hackathons / Certifications / Achievements — all pulled from student-data.ts (no invented experience). Achievements derived only from COMPLETED_HACKATHONS.evaluation + Verified certifications.
+- Palette honored: navy #0F2547 + blue #2563EB + teal #0D9488 + orange #EA580C + white/slate neutrals via var(--ss-*). NO violet/rose/amber/indigo.
+- Cards: rounded-2xl / SsCard tone="soft"; borders var(--ss-border); shadow-soft.
+- Buttons: Button variants only (navy/outline/ghost).
+- Icons: lucide-react (BookOpen, ShieldCheck, Code2, Award, Briefcase, Trophy, FileText, Sparkles, TrendingUp, GraduationCap, Target, Info, ChevronRight, ExternalLink, GitBranch, Link, Save, CheckCircle2, Calendar, Building2, User, MapPin, Clock).
+- Animations: framer-motion motion + AnimatePresence (tab transition y:8 → 0, opacity fade).
+- Empty states: EmptyState reused for any empty list (Projects/Certifications/Internships/Hackathons).
+- Demo labels: DemoBadge near every demo value (incl. overview card, every section header); CalcBadge for calculated values.
+- Stateful (spec §39): GithubLinkModal saveGithub() → card updates to show saved links; verification remains Pending.
+- TypeScript strict. "use client". Responsive (mobile-first: grids collapse to 1-col, tab bar wraps + scrolls).
+- Ran `bun run lint` — 0 errors, 0 warnings. Dev server compiles cleanly (✓ Compiled in Nms).
+- Wrote agent-ctx/P2-Passport-full-stack-developer.md with full breakdown.
+
+Stage Summary:
+- passport.tsx (6 tabs incl. resume) DONE — single-file export `PassportPage({ tab })` matching the AppShell contract.
+- All 6 master-spec sections (§30–§35) implemented faithfully: overview card, verified skills (clickable → detail drawer), projects (with stateful saveGithub + "links ≠ verified" notes), certifications (distinct Uploaded/Pending/Verified statuses), internships (feedback quote), hackathons (real-system-coming note), resume builder (role select + "Resume Alignment Score / Not an ATS score" + no invented experience).
+- Reuses Phase 1 design system exactly (ss.tsx primitives, Button variants, lucide-react, framer-motion, var(--ss-*) tokens, no off-palette colors).
+- Frontend-only — no backend/fetch. Imports exclusively from student-data.ts, student-state.ts, router.ts, student-parts.tsx, ui/ss.tsx, ui/button.tsx, ui/input.tsx.
+- Lint clean; dev server compiles; ready for AppShell to mount under `/app/passport/<tab>`.
+
+---
+Task ID: P2-D
+Agent: orchestrator (main)
+Task: Phase 2 — Application Shell + Student Portal (app-shell, login, dashboard, router, wiring, integration, verification)
+
+Work Log:
+- Dispatched 4 parallel full-stack-developer subagents (career, passport, learning, hackathons+misc) — all completed with exact export contracts, lint-clean, reusing Phase 1 design system.
+- Fixed student-parts import path bug in dashboard/hackathons/misc (./student-parts → @/components/app/student-parts absolute path).
+- Built src/components/app/app-shell.tsx: collapsible sidebar (expandable nav groups per spec §3 — Dashboard / My Skills[Assessment,Technical,Soft,Aptitude,Skill Gap] / Career[Jobs,Internships,Projects,Industry Learning] / Hackathons[Discover,Mine,Teams,Submissions,Mentorship] / Skill Passport[Verified,Projects,Certifications,Internships,Hackathons,Resume] / Notifications) with active-state highlighting + icons; topbar (breadcrumb derived from route, global search palette filtering skills/jobs/internships/projects/hackathons per spec §37, notifications bell with unread count, profile avatar dropdown [My Profile/Settings/Help/Logout]); responsive (desktop expanded/collapsible sidebar, mobile slide-out drawer); content outlet code-split via next/dynamic (ssr:false) per page.
+- Built src/lib/router.ts: hash-based client router (useRouter store + navigate + appSection parser + isAppRoute) — whole app on single `/` Next.js route per project constraint; routes: /, /login, /app/*.
+- Wired src/app/page.tsx: renders landing (Phase 1, unchanged) | LoginView (dynamic) | AppShell (dynamic) based on hash route. Dynamic imports keep landing bundle light.
+- Wired Phase 1 landing CTAs (header/hero/portals/why-skillsetu) to navigate("/login") — minimal behavioral wiring, NO visual redesign. Removed now-unused phase-gate.tsx + phase1-store.ts.
+- Memory fix: dev server OOM-killed in 4GB container with Turbopack + large Phase 2 files. Switched dev script to `next dev --webpack` + NODE_OPTIONS heap cap (2048) + code-splitting (dynamic imports in page.tsx + app-shell.tsx). Dev server now stable during verification.
+- Lint clean (0 errors).
+- Verified end-to-end via agent-browser through the preview gateway (agent-browser's Chrome can't reach localhost directly in this sandbox; gateway proxies):
+  * Landing (Phase 1 regression) ✓ — hero, nav, workspace bg
+  * Login view ✓ — email/password + 4 Demo Login buttons (Student/Industry/Academia/Institution) + Forgot Password + Remember Me + DEMO LOGIN label
+  * Student Demo click → /app/dashboard ✓ (URL hash confirmed)
+  * Dashboard ✓ — "Good morning, S042" + AI & Data Science + Data Scientist; ROLE READINESS 61% card with ring; TARGET ROLE card; CRITICAL SKILL GAPS (ML 43/100 High, Statistics 51/100 Medium, SQL 64/100 Medium); NEXT BEST ACTION ("Build an End-to-End ML Project", Start button); BEST OPPORTUNITY MATCH (Data Science Intern, Nova Analytics, 91%); RECENT EVIDENCE list; MY APPLICATIONS timeline; UPCOMING HACKATHONS (3 cards). Sidebar with all nav groups + active highlighting.
+  * View Calculation drawer ✓ — breakdown table (Python 82×25%=20.50, SQL 64×15%=9.60, Statistics 51×20%=10.20, ML 43×30%=12.90, Problem Solving 75×10%=7.50, Total 60.70%, Displayed 61%, last calculated 17 Sept 2026)
+  * Apply Now → Applied ✓ (stateful, button changes to "Applied" + success message "Successfully applied (prototype workflow — no external application created)")
+  * Evidence drawer ✓ (clicking "Technical Assessment" row opens "Evidence Details" drawer — eval confirmed)
+  * My Skills → Technical ✓ (Python 82, SQL 64, Statistics 51, ML 43, Problem Solving 75 as cards with score bars vs target 80)
+  * Jobs ✓ (cards: company, location, match %, View Details/Apply/Save buttons)
+  * Skill Passport → Verified Skills ✓ (overview card: S042, Aarav Sharma, Data Scientist, 61% readiness)
+  * Hackathons → Discover ✓ (AI Innovation Challenge etc., match %, Find Team buttons)
+  * Notifications ✓ (Skill Gap Detected, New Opportunity Match, etc. + filters + mark-all-read)
+  * Profile ✓ (S042, AI & Data Science, IIT Madras, 78% completion meter)
+  * Mobile (390px) ✓ — hamburger drawer, stacked single-column content
+
+Stage Summary:
+- Phase 2 COMPLETE: Application Shell + full Student Portal frontend live at / via hash routing.
+- Single source of truth: src/lib/student-data.ts (S042: 61% readiness / 60.70% calculated; Python 82, SQL 64, Statistics 51, ML 43, Problem Solving 75). All components import from it.
+- Stateful behavior via src/lib/student-state.ts (apply/saved/assessment-progress/joined-teams/github-links/completed-actions/role).
+- 4 parallel subagents built career/passport/learning/hackathons+misc reusing Phase 1 design system (navy/blue/teal/orange) exactly.
+- Lint clean; dev server stable with --webpack + heap cap + code-splitting.
+- Known limitation: dev server is memory-heavy in this 4GB container (Turbopack OOMs); mitigated via webpack + heap cap. No backend this phase (per spec §45) — all data is controlled DEMO DATA labelled with DemoBadge.
+- STOP AFTER PHASE 2 — Industry/Academia/Institution portals + backends + full Hackathon engine deferred to subsequent phases.

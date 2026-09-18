@@ -5,7 +5,7 @@ import { Menu, X, Sparkles, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
-import { usePhase1 } from "@/lib/phase1-store";
+import { useRouter } from "@/lib/router";
 
 const NAV_LINKS = [
   { label: "How It Works", href: "#how-it-works" },
@@ -14,8 +14,9 @@ const NAV_LINKS = [
 ];
 
 export function Header() {
-  const { openGate, mobileNav, setMobileNav } = usePhase1();
+  const { navigate } = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileNav, setMobileNav] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -61,14 +62,14 @@ export function Header() {
         <div className="hidden items-center gap-2 md:flex">
           <Button
             variant="ghost"
-            onClick={() => openGate("login")}
+            onClick={() => navigate("/login")}
             className="h-9 px-3 text-sm font-medium text-[var(--ss-ink-soft)] hover:text-[var(--ss-ink)]"
           >
             Login
           </Button>
           <Button
             variant="navy"
-            onClick={() => openGate("get-started")}
+            onClick={() => navigate("/login")}
             className="h-9 gap-1.5 px-4"
           >
             <Sparkles className="h-3.5 w-3.5" />
@@ -111,14 +112,14 @@ export function Header() {
             <div className="mt-2 flex items-center gap-2">
               <Button
                 variant="outline"
-                onClick={() => { setMobileNav(false); openGate("login"); }}
+                onClick={() => { setMobileNav(false); navigate("/login"); }}
                 className="h-9 flex-1 text-sm font-medium"
               >
                 Login
               </Button>
               <Button
                 variant="navy"
-                onClick={() => { setMobileNav(false); openGate("get-started"); }}
+                onClick={() => { setMobileNav(false); navigate("/login"); }}
                 className="h-9 flex-1 gap-1.5"
               >
                 <Sparkles className="h-3.5 w-3.5" />

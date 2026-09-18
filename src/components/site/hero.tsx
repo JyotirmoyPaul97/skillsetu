@@ -4,10 +4,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Sparkles, ArrowRight, Play, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { usePhase1 } from "@/lib/phase1-store";
+import { useRouter } from "@/lib/router";
 
 export function Hero() {
-  const { openGate } = usePhase1();
+  const { navigate } = useRouter();
   return (
     <section
       id="hero"
@@ -85,7 +85,7 @@ export function Hero() {
           <Button
             variant="navy"
             size="lg"
-            onClick={() => openGate("get-started")}
+            onClick={() => navigate("/login")}
             className="h-11 gap-2 px-6"
           >
             Explore the Ecosystem
