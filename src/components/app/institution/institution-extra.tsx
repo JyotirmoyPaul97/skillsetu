@@ -21,6 +21,7 @@ import type { InterventionType, Priority, Intervention } from "@/lib/institution
 import {
   SsDemandBadge, SsPriorityPill, SsCoverageBar, SsPipeline,
   SsWhyModal, SsDataSourceLabel, SsWorkflowBanner,
+  SsEmptyState, SsLoadingState, SsErrorState,
 } from "@/components/ui/ss-intelligence";
 
 export function InstitutionExtra({ section }: { section: string }) {
@@ -159,7 +160,7 @@ function ActionCenterPage() {
 
       {(tab === "Proposed" || tab === "Active" || tab === "Completed") && (
         visibleInterventions.length === 0
-          ? <EmptyState icon={Sparkles} title={`No ${tab.toLowerCase()} interventions`} hint={tab === "Completed" ? "Move interventions through their lifecycle." : "Create interventions from the Recommended tab."} />
+          ? <SsEmptyState tone="institution" icon={Sparkles} title="No intervention has been created for the selected gap." hint={tab === "Completed" ? "Move interventions through their lifecycle to see them here." : "Create interventions from the Recommended tab."} />
           : (
             <div className="space-y-3">
               {visibleInterventions.map((i) => (

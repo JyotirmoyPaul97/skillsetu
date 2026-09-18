@@ -47,6 +47,7 @@ import {
   SsDemandBadge, SsCoverageBar, SsAlignmentChain, SsHeatmap,
   SsAlertPill, SsWhyFactor, SsWhyModal, SsDataSourceLabel,
   SsIntelligenceAssistant, SsMatrixCellDetail, SsWorkflowBanner,
+  SsEmptyState, SsLoadingState, SsErrorState,
 } from "@/components/ui/ss-intelligence";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -488,7 +489,7 @@ function GapCenterpiece({ rows }: { rows: CurriculumAlignmentRow[] }) {
           <SsDataSourceLabel source="curriculum" />
         </div>
         {rows.length === 0 ? (
-          <EmptyState icon={CheckCircle2} title="No alignment gaps" hint="Every demanded skill is currently aligned with student competency." />
+          <SsEmptyState icon={CheckCircle2} tone="academia" title="No current alignment gaps require attention." hint="Every demanded skill is currently aligned with student competency." />
         ) : (
           <div className="overflow-x-auto rounded-lg border border-[var(--ss-border)] bg-white">
             <table className="w-full text-xs">
@@ -1074,6 +1075,9 @@ function CurriculumAlignmentPage() {
     }
   }
 
+  // §78 Error state — when curriculum mapping is missing for the selected skill
+  const selectedSkillMissingCurriculum = effectiveSkillId && !matrix.skillCols.some((s) => s.id === effectiveSkillId);
+
   // Detail panel content for the selected matrix cell
   const cellDetailContent = useMemo(() => {
     if (!cellDetail) return null;
@@ -1125,19 +1129,22 @@ function CurriculumAlignmentPage() {
           </select>
         </div>
         {effectiveSkillId ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-xl border border-[var(--ss-border)] bg-white p-4">
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ss-muted)]">Vertical chain</p>
-              {(() => {
-                const chain = AcademiaAggregator.getAlignmentChain(effectiveSkillId);
-                if (!chain) return <p className="text-sm text-[var(--ss-muted)]">No alignment chain available for this skill.</p>;
-                return <SsAlignmentChain rows={chain} />;
-              })()}
-            </div>
-            <AlignmentChainLegend />
-            <div className="rounded-xl border border-[var(--ss-border)] bg-white p-4">
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ss-muted)]">What this means</p>
-              <p className="text-xs text-[var(--ss-ink-soft)]">
+          selectedSkillMissingCurriculum ? (
+            <SsErrorState variant="missing-curriculum" />
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-xl border border-[var(--ss-border)] bg-white p-4">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ss-muted)]">Vertical chain</p>
+                {(() => {
+                  const chain = AcademiaAggregator.getAlignmentChain(effectiveSkillId);
+                  if (!chain) return <p className="text-sm text-[var(--ss-muted)]">No alignment chain available for this skill.</p>;
+                  return <SsAlignmentChain rows={chain} />;
+                })()}
+              </div>
+              <AlignmentChainLegend />
+              <div className="rounded-xl border border-[var(--ss-border)] bg-white p-4">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--ss-muted)]">What this means</p>
+                <p className="text-xs text-[var(--ss-ink-soft)]">
                 The chain surfaces where the break in alignment happens — between demand and curriculum, between curriculum and competency, or between competency and practical evidence.
               </p>
               <p className="mt-2 text-[11px] text-[var(--ss-muted)]">
@@ -1145,6 +1152,7 @@ function CurriculumAlignmentPage() {
               </p>
             </div>
           </div>
+          )
         ) : (
           <EmptyState icon={BookOpen} title="No skills available" />
         )}

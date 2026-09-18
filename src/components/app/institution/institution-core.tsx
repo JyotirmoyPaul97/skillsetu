@@ -21,6 +21,7 @@ import {
   SsDemandBadge, SsPriorityPill, SsCoverageBar, SsHeatmap, SsAlertPill,
   SsWhyModal, SsDataSourceLabel, SsIntelligenceAssistant,
   SsMatrixCellDetail, SsWorkflowBanner,
+  SsEmptyState, SsLoadingState, SsErrorState,
 } from "@/components/ui/ss-intelligence";
 
 export function InstitutionCore({ section }: { section: string }) {
@@ -278,7 +279,7 @@ function InstitutionDashboard() {
           right={<SsDataSourceLabel source="platform" />}
         />
         {alerts.length === 0 ? (
-          <EmptyState icon={Sparkles} title="No active intelligence alerts" />
+          <SsEmptyState tone="institution" icon={Sparkles} title="No active intelligence alerts" hint="All demand, supply and evidence signals are within acceptable thresholds." />
         ) : (
           <div className="space-y-2">
             {alerts.map((a) => <AlertRow key={a.id} alert={a} />)}
@@ -294,7 +295,7 @@ function InstitutionDashboard() {
           right={<SsDataSourceLabel source="platform" />}
         />
         {nextActions.length === 0 ? (
-          <EmptyState icon={Sparkles} title="No recommended actions" hint="All demand signals are matched by supply." />
+          <SsEmptyState tone="institution" icon={Sparkles} title="No recommended actions" hint="All demand signals are matched by supply — no intervention priority surfaced." />
         ) : (
           <div className="space-y-2">
             {nextActions.map((a) => (

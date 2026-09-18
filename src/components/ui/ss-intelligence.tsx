@@ -622,4 +622,110 @@ export function SsWorkflowBanner({
   );
 }
 
+// ============================================================
+// SsEmptyState — Phase 9 §76 spec-exact empty-state messages per portal
+//   Industry:  "No evidence-backed candidates match the current filters."
+//   Academia:  "No current alignment gaps require attention."
+//   Institution: "No intervention has been created for the selected gap."
+// ============================================================
+export function SsEmptyState({
+  icon: Icon,
+  title,
+  hint,
+  tone = "neutral",
+  className,
+}: {
+  icon?: React.ComponentType<{ className?: string }>;
+  title: string;
+  hint?: string;
+  tone?: "industry" | "academia" | "institution" | "neutral";
+  className?: string;
+}) {
+  const toneColor = {
+    industry: "text-[var(--ss-orange-600)] bg-[var(--ss-orange-50)]",
+    academia: "text-[var(--ss-blue-600)] bg-[var(--ss-blue-50)]",
+    institution: "text-[var(--ss-navy-800)] bg-[var(--ss-surface-3)]",
+    neutral: "text-[var(--ss-muted)] bg-[var(--ss-surface-2)]",
+  }[tone];
+  return (
+    <div className={cn("flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--ss-border)] px-6 py-10 text-center", className)}>
+      {Icon && (
+        <span className={cn("flex h-10 w-10 items-center justify-center rounded-full", toneColor)}>
+          <Icon className="h-5 w-5" />
+        </span>
+      )}
+      <p className="text-sm font-semibold text-[var(--ss-ink-soft)]">{title}</p>
+      {hint && <p className="text-xs text-[var(--ss-muted)]">{hint}</p>}
+    </div>
+  );
+}
+
+// ============================================================
+// SsLoadingState — Phase 9 §77 spec-exact loading messages per portal
+//   Industry:   "Loading talent..." / "Calculating candidate match..." / "Loading evidence..."
+//   Academia:   "Loading industry signals..." / "Calculating alignment..." / "Finding mentors..."
+//   Institution: "Aggregating skills..." / "Calculating demand/supply..." / "Preparing intervention insights..."
+// ============================================================
+export function SsLoadingState({
+  message,
+  tone = "neutral",
+  className,
+}: {
+  message: string;
+  tone?: "industry" | "academia" | "institution" | "neutral";
+  className?: string;
+}) {
+  const spinnerColor = {
+    industry: "border-t-[var(--ss-orange-600)]",
+    academia: "border-t-[var(--ss-blue-600)]",
+    institution: "border-t-[var(--ss-navy-800)]",
+    neutral: "border-t-[var(--ss-muted)]",
+  }[tone];
+  return (
+    <div className={cn("flex flex-col items-center justify-center gap-2 rounded-lg border border-[var(--ss-border)] bg-white px-6 py-8 text-center", className)}>
+      <div className={cn("h-5 w-5 animate-spin rounded-full border-2 border-[var(--ss-border)]", spinnerColor)} />
+      <p className="text-xs font-medium text-[var(--ss-muted)]">{message}</p>
+    </div>
+  );
+}
+
+// ============================================================
+// SsErrorState — Phase 9 §78 spec error-state handling
+//   No data / Unauthorized / Invalid filter / Calculation failure
+//   Missing curriculum mapping / Missing opportunity data / Invalid department
+// ============================================================
+export function SsErrorState({
+  variant = "no-data",
+  title,
+  detail,
+  className,
+}: {
+  variant?: "no-data" | "unauthorized" | "invalid-filter" | "calc-failure" | "missing-curriculum" | "missing-opportunity" | "invalid-department" | "generic";
+  title?: string;
+  detail?: string;
+  className?: string;
+}) {
+  const map = {
+    "no-data":              { icon: AlertCircle,  tone: "text-[var(--ss-muted)]",         defaultTitle: "No data available",          defaultDetail: "There is no platform data to display here yet." },
+    "unauthorized":         { icon: AlertTriangle, tone: "text-red-600",                   defaultTitle: "Unauthorized",              defaultDetail: "You do not have access to view this information." },
+    "invalid-filter":      { icon: AlertCircle,  tone: "text-[var(--ss-orange-600)]",     defaultTitle: "Invalid filter",            defaultDetail: "One or more selected filters are invalid. Adjust and retry." },
+    "calc-failure":        { icon: AlertTriangle, tone: "text-red-600",                   defaultTitle: "Calculation failure",       defaultDetail: "An intelligence calculation could not be completed. Refresh to retry." },
+    "missing-curriculum":   { icon: AlertCircle,  tone: "text-[var(--ss-blue-600)]",      defaultTitle: "Missing curriculum mapping", defaultDetail: "No curriculum coverage data exists for this skill yet." },
+    "missing-opportunity":  { icon: AlertCircle,  tone: "text-[var(--ss-orange-600)]",     defaultTitle: "Missing opportunity data",   defaultDetail: "The selected opportunity could not be found in platform records." },
+    "invalid-department":   { icon: AlertCircle,  tone: "text-[var(--ss-orange-600)]",     defaultTitle: "Invalid department",        defaultDetail: "The selected department does not match any institutional records." },
+    "generic":             { icon: Info,           tone: "text-[var(--ss-muted)]",         defaultTitle: "Something went wrong",      defaultDetail: "An unexpected issue occurred. Please retry." },
+  } as const;
+  const m = map[variant];
+  const Icon = m.icon;
+  return (
+    <div className={cn("flex flex-col items-start gap-2 rounded-lg border border-red-100 bg-red-50/50 px-4 py-3", className)}>
+      <div className="flex items-center gap-2">
+        <Icon className={cn("h-4 w-4 shrink-0", m.tone)} />
+        <p className="text-sm font-semibold text-[var(--ss-ink)]">{title ?? m.defaultTitle}</p>
+      </div>
+      <p className="text-xs text-[var(--ss-muted)]">{detail ?? m.defaultDetail}</p>
+    </div>
+  );
+}
+
 export type { VariantProps };

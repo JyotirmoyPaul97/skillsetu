@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import {
   SsDemandBadge, SsCoverageBar, SsPipeline, SsWorkflowBanner, SsWhyModal,
   SsWhyFactor, SsAlertPill, SsDataSourceLabel, SsIntelligenceAssistant,
+  SsEmptyState, SsLoadingState, SsErrorState,
 } from "@/components/ui/ss-intelligence";
 import { cn } from "@/lib/utils";
 
@@ -358,7 +359,7 @@ function DemandIntelligence() {
           <SsDataSourceLabel source="platform" />
         </div>
         {demandPulse.length === 0 ? (
-          <p className="text-sm text-[var(--ss-muted)]">No demand data yet. Publish an opportunity to populate the pulse.</p>
+          <SsEmptyState tone="industry" icon={Target} title="No demand data yet" hint="Publish an opportunity to populate the demand pulse." />
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {demandPulse.map((d) => (
@@ -680,7 +681,7 @@ function ManageApplicants({ opp, open, onClose }: { opp: Opportunity | null; ope
     <Drawer open={open} onClose={onClose} title={`Applicants — ${opp.title}`} subtitle={`${apps.length} applications · ${opp.type}`}>
       <div className="space-y-3">
         <SsDataSourceLabel source="platform" />
-        {apps.length === 0 ? <p className="text-sm text-[var(--ss-muted)]">No applications yet.</p> : apps.map((a) => {
+        {apps.length === 0 ? <SsEmptyState tone="industry" icon={Users} title="No applications yet" hint="Once students apply, evidence-backed matches will appear here." /> : apps.map((a) => {
           const c = ind.candidates.find((c) => c.studentId === a.studentId);
           const match = ind.candidateMatches[a.studentId]?.[opp.id];
           return (
@@ -765,7 +766,7 @@ function TalentDiscovery() {
       </SsCard>
 
       {filtered.length === 0 ? (
-        <EmptyState icon={Users} title="No candidates match these filters" hint="Try widening your filters." />
+        <SsEmptyState icon={Users} tone="industry" title="No evidence-backed candidates match the current filters." hint="Try widening your filters or lowering the minimum competency." />
       ) : (
         <div className="grid gap-3 md:grid-cols-2">{filtered.map((c) => {
           const best = ind.publishedOpps.map((o) => ({ o, m: ind.candidateMatches[c.studentId]?.[o.id] })).filter((x) => x.m).sort((a, b) => (b.m?.matchScore ?? 0) - (a.m?.matchScore ?? 0))[0];
