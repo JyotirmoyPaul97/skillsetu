@@ -30,7 +30,7 @@ const MySkillsPage = dynamic(() => import("./student/learning").then((m) => m.My
 const AssessmentPage = dynamic(() => import("./student/learning").then((m) => m.AssessmentPage), { ssr: false, loading: PageLoader });
 const CareerPage = dynamic(() => import("./student/career").then((m) => m.CareerPage), { ssr: false, loading: PageLoader });
 const PassportPage = dynamic(() => import("./student/passport").then((m) => m.PassportPage), { ssr: false, loading: PageLoader });
-const HackathonsPage = dynamic(() => import("./student/hackathons").then((m) => m.HackathonsPage), { ssr: false, loading: PageLoader });
+const HackathonsPage = dynamic(() => import("./hackathon/hackathon-page").then((m) => m.HackathonPage), { ssr: false, loading: PageLoader });
 const NotificationsPage = dynamic(() => import("./student/misc").then((m) => m.NotificationsPage), { ssr: false, loading: PageLoader });
 const ProfilePage = dynamic(() => import("./student/misc").then((m) => m.ProfilePage), { ssr: false, loading: PageLoader });
 const SkillDetailPage = dynamic(() => import("./student/skill-detail").then((m) => m.SkillDetailPage), { ssr: false, loading: PageLoader });
@@ -69,6 +69,7 @@ const NAV: (NavLeaf | NavGroup)[] = [
   {
     label: "Hackathons & Teams", icon: Trophy, children: [
       { label: "Discover", route: "/app/hackathons/discover", icon: Search },
+      { label: "Recommended", route: "/app/hackathons/recommended", icon: Sparkles },
       { label: "My Hackathons", route: "/app/hackathons/mine", icon: Trophy },
       { label: "My Teams", route: "/app/hackathons/teams", icon: Users },
       { label: "Submissions", route: "/app/hackathons/submissions", icon: Send },

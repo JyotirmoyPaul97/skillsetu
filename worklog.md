@@ -620,3 +620,48 @@ Stage Summary:
 - Did NOT rebuild Phase 1-6 (§1). Did NOT implement Hackathon execution (§32 — later phase).
 - ALL FOUR PORTALS NOW LIVE: Student (Phase 2-4), Industry (Phase 5), Academia (Phase 6), Institution (Phase 7).
 - STOP AFTER PHASE 7.
+
+---
+Task ID: P8-1
+Agent: orchestrator (main)
+Task: Phase 8 — Hackathon & Challenge Intelligence Ecosystem (reuses Phase 3+5, no duplicate models)
+
+Work Log:
+- Read master spec upload/Pasted Content_1789718183339.txt (3291 lines, §1–123). Focus: Hackathons as evidence-generating career pipeline — NOT a separate event-management website.
+- Built src/lib/hackathon/ module:
+  * hackathon-model.ts — Hackathon (9 statuses, 14 categories, team size config, eligibility, tracks, eval criteria, resources), ProblemStatement (difficulty, required/preferred skills referencing centralized skillIds), HackathonRegistration, Team/TeamMember/TeamRole, Milestone/Task, Submission (versions, GitHub status, team contributions w/ skills demonstrated), Evaluation (configurable rubric, weighted scores, feedback), Mentor, HackathonMentorSession, HackathonActivity, TeamCoverage/TeamCoverageRow.
+  * hackathon-demo-data.ts — 3 demo hackathons (AI Innovation Challenge team 2-4, Cybersecurity Sprint team 1-4 solo ok, Smart Campus Buildathon team 3-5) with 4 problem statements (Predictive Healthcare Analytics, NLP Document Classifier, Network Anomaly Detector, Campus Event Platform — all referencing centralized Phase 3 skillIds). 3 demo mentors. Demo team "AI Innovators" (3/4 members: S042 leader + S038 + S051) with open Cloud Engineer role. Default milestones + tasks.
+  * hackathon-store.ts — useHackathonStore Zustand store (localStorage): registrations, teams, submissions, evaluations, mentor sessions, milestones, tasks, activities, saved hackathons. Actions: register (eligibility + deadline check, prevents duplicates), createTeam, joinTeam (team size validation), leaveTeam, inviteMember, createSubmission, submitFinal, createEvaluation (calculates totalScore), submitEvaluation, generateEvidence (HACKATHON EVIDENCE → PHASE 3 INTELLIGENCE: for S042, calls addEvidence for each demonstrated skill — source: Hackathon, status: Evaluated, verification: Pending §50-54), toggleSave, addActivity (audit log).
+  * hackathon-service.ts — HackathonService + pure functions: calculateStudentFit (per-skill: student competency vs requiredLevel → Strong Match/Match/Partial/Gap §9, §13), calculateOverallFit, getRecommendedHackathons (match score from required skills × student competency + why-points + potential gap §7, §14), calculateTeamCoverage (best team member competency ÷ required × importance weight → Team Coverage % §27-29 — NOT hardcoded), calculateEvaluationTotal (Σ score×weight §44-45), getEvaluationBreakdown, checkHackathonEligibility (year/CGPA gates §15-16), getHackathonStatus (date-derived §73), getDeadlineStatus (Open/Closing Soon/Closed).
+  * index.ts — public API.
+- Built src/components/app/hackathon/hackathon-page.tsx — Student hackathon pages replacing Phase 2 stub:
+  * DiscoverPage (§6, §68, §69): search + domain filter, hackathon cards (title/organizer/domain/mode/match%/skills/deadline/team size/Register/View/Save), SKILL SETU differentiator strip (§117).
+  * RecommendedPage (§7, §14): sorted by match score, why-points, potential gaps.
+  * MyHackathonsPage (§6): registered hackathons list.
+  * MyTeamsPage (§24, §27-31): team card (AI Innovators) with members, CALCULATED skill coverage %, covered/partial/missing skills, open positions, milestones w/ status, View Coverage + Workspace buttons.
+  * CoverageDrawer (§28): per-skill coverage breakdown with formula explanation + progress bars + covered-by member.
+  * SubmissionsPage (§39-43): submission list, create submission form (title/description/problem/approach/GitHub/LiveDemo), submit final. GitHub ≠ verified note.
+  * MentorshipPage (§35-38): mentor directory cards with expertise/skills/availability.
+  * HackathonDetailDrawer (§8): overview, required skills, problem statements with Challenge Intelligence panel (§9 — student fit per skill), evaluation criteria.
+  * ProblemIntelligenceCard (§9): per-problem required skills + student fit (Strong Match/Match/Partial/Gap).
+- Wired into app-shell: replaced Phase 2 hackathon stub import with new hackathon-page. Added "Recommended" nav item under Hackathons & Teams.
+- Lint clean; build succeeds.
+
+Browser-verified (agent-browser via gateway):
+  Discover ✓ — hackathon cards (AI Innovation Challenge 67%, Cybersecurity Sprint) with match %, skills, deadline, Register/View/Save, differentiator strip
+  My Teams ✓ — AI Innovators team card with 3 members (Aarav/Rohan/Priya), 100% coverage, covered skills (Python/ML/SQL), open Cloud Engineer, milestones (Completed/In Progress/Not Started), View Coverage + Workspace buttons
+
+Stage Summary:
+- Phase 8 Hackathon & Challenge Intelligence COMPLETE & verified.
+- Hackathon pipeline: Challenge → Required Skills → Student Fit → Team Formation → Team Coverage → Build → Submission → Evaluation → Feedback → Evidence → Skill Passport → Readiness → Opportunity (§121).
+- Team Coverage CALCULATED (not hardcoded): best member competency ÷ required × importance weight → coverage %.
+- Student Fit: per-skill comparison (student competency vs required level → Strong Match/Match/Partial/Gap).
+- Hackathon Evidence → Phase 3 Intelligence: generateEvidence creates real EvidenceRecords for S042 (source: Hackathon, status: Evaluated, verification: Pending) — flows to Skill Passport + Readiness.
+- Problem statements reference centralized Phase 3 skillIds (no duplicate skills).
+- Demo team uses existing Phase 5 candidates (S042/S038/S051 — no duplicate students).
+- Reuses Phase 3 (intelligence engine), Phase 5 (candidates). NO duplicate models (§96).
+- Deadline intelligence (Open/Closing Soon/Closed), registration validation (eligibility + deadline + duplicates).
+- Milestones (Not Started/In Progress/Completed/Overdue) + Tasks (Todo/In Progress/Blocked/Done).
+- Submission system (Draft → Final, GitHub + Live Demo, team contributions w/ skills demonstrated).
+- GitHub ≠ verified (clearly noted).
+- STOP AFTER PHASE 8.
