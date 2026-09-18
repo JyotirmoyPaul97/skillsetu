@@ -1,0 +1,3291 @@
+============================================================
+SKILL SETU — PHASE 8
+HACKATHON & CHALLENGE INTELLIGENCE ECOSYSTEM
+============================================================
+
+PHASE 1:
+Design System + Landing Page — COMPLETE
+
+PHASE 2:
+Application Shell + Student Portal — COMPLETE
+
+PHASE 3:
+Skill Intelligence Engine — COMPLETE
+
+PHASE 4:
+Career & Opportunity Intelligence — COMPLETE
+
+PHASE 5:
+Industry Portal + Industry Intelligence — COMPLETE
+
+PHASE 6:
+Academia Portal + Curriculum / Industry Intelligence — COMPLETE
+
+PHASE 7:
+Institution Intelligence & Command Center — COMPLETE
+
+NOW IMPLEMENT:
+
+PHASE 8 — HACKATHON & CHALLENGE INTELLIGENCE
+
+============================================================
+CORE OBJECTIVE
+============================================================
+
+Hackathons are NOT a separate event-management website.
+
+Hackathons are an evidence-generating career and skill-intelligence pipeline inside SKILL SETU.
+
+PRIMARY FLOW:
+
+INDUSTRY / INSTITUTION
+        ↓
+CHALLENGE
+        ↓
+PROBLEM STATEMENT
+        ↓
+REQUIRED SKILLS
+        ↓
+STUDENT FIT
+        ↓
+TEAM FORMATION
+        ↓
+TEAM SKILL COVERAGE
+        ↓
+BUILD / MILESTONES
+        ↓
+MENTORSHIP
+        ↓
+SUBMISSION
+        ↓
+EVALUATION
+        ↓
+FEEDBACK
+        ↓
+SKILL EVIDENCE
+        ↓
+SKILL PASSPORT
+        ↓
+ROLE READINESS
+        ↓
+INDUSTRY TALENT DISCOVERY
+        ↓
+INTERNSHIP / PROJECT / INTERVIEW OPPORTUNITY
+
+THIS IS THE MAIN HACKATHON USP.
+
+============================================================
+CRITICAL RULE
+============================================================
+
+Do NOT rebuild the whole application.
+
+Do NOT redesign Phases 1–7 unnecessarily.
+
+Do NOT create a separate Hackathon application.
+
+Do NOT create a separate student database.
+
+Do NOT create a separate skill database.
+
+Do NOT create a separate evidence engine.
+
+Do NOT create a separate readiness engine.
+
+Do NOT create a separate opportunity engine.
+
+Reuse the existing:
+
+Student
+Skill
+Role
+Competency
+Evidence
+Readiness
+Opportunity
+Application
+Notification
+User
+Industry
+Academia
+Institution
+
+models/services where possible.
+
+Hackathons must integrate into the existing SKILL SETU ecosystem.
+
+============================================================
+1. AUDIT BEFORE IMPLEMENTATION
+============================================================
+
+FIRST inspect the current project.
+
+Find:
+
+Hackathon-related routes
+Challenge-related components
+Team components
+Project components
+Submission components
+Mentorship components
+Evaluation components
+Evidence components
+Skill Passport components
+Student profile
+Industry profile
+Institution profile
+Academia profile
+
+Also inspect:
+
+existing Prisma schema
+API architecture
+shared services
+authentication
+RBAC
+state management
+demo data
+tests
+
+Determine what already exists.
+
+Do NOT create duplicate entities when an existing equivalent can be extended.
+
+After the audit, internally plan the implementation.
+
+Then implement the feature in the stages below.
+
+============================================================
+2. HACKATHON ARCHITECTURE
+============================================================
+
+Use the existing SKILL SETU architecture.
+
+Core objects:
+
+Hackathon
+ProblemStatement
+HackathonRequirement
+HackathonRegistration
+
+Team
+TeamMember
+TeamRole
+TeamInvitation
+TeamJoinRequest
+
+Milestone
+Task
+
+Submission
+SubmissionVersion
+
+EvaluationCriterion
+Evaluation
+EvaluationScore
+
+Mentor
+MentorExpertise
+MentorAvailability
+MentorRequest
+MentorSession
+
+HackathonEvidence
+HackathonActivity
+
+Do NOT create these if equivalent existing models already exist.
+
+============================================================
+3. HACKATHON MODEL
+============================================================
+
+Every Hackathon should support:
+
+id
+title
+description
+organizer
+organizerType
+
+domain
+category
+theme
+mode
+location
+
+registrationStart
+registrationDeadline
+
+startDate
+endDate
+
+status
+
+minTeamSize
+maxTeamSize
+soloAllowed
+
+crossCollegeAllowed
+crossYearAllowed
+crossDepartmentAllowed
+
+maxTeamsPerParticipant
+
+eligibilityRules
+
+tracks
+
+evaluationCriteria
+
+resources
+
+createdAt
+updatedAt
+
+============================================================
+4. HACKATHON STATUS
+============================================================
+
+Support:
+
+DRAFT
+PUBLISHED
+REGISTRATION_OPEN
+REGISTRATION_CLOSED
+LIVE
+SUBMISSION_OPEN
+EVALUATION
+COMPLETED
+ARCHIVED
+
+Where appropriate derive state from dates plus explicit lifecycle state.
+
+Do not manually display contradictory states.
+
+============================================================
+5. HACKATHON CATEGORIES
+============================================================
+
+Support categories such as:
+
+AI / ML
+Data Science
+Web Development
+Cybersecurity
+Cloud
+FinTech
+Healthcare
+Education
+Sustainability
+Embedded Systems
+IoT
+Blockchain / Web3
+Social Impact
+Open Innovation
+
+The architecture must remain extensible.
+
+============================================================
+6. HACKATHON DISCOVERY — STUDENT
+============================================================
+
+Student navigation:
+
+Hackathons & Teams
+
+Tabs:
+
+Discover
+Recommended
+My Hackathons
+My Teams
+My Submissions
+Mentorship
+
+Hackathon card must show:
+
+Title
+Organizer
+Domain
+Mode
+Registration Deadline
+Event Dates
+Team Size
+Eligibility
+Required Skills
+Match
+
+Actions:
+
+View Details
+Register
+Find Team
+Save
+
+No decorative/non-functional buttons.
+
+============================================================
+7. HACKATHON RECOMMENDATION
+============================================================
+
+Create:
+
+RECOMMENDED FOR YOU
+
+Use existing Phase 3 intelligence:
+
+target role
+skills
+competency
+evidence
+evidence confidence
+skill gaps
+availability
+
+Also consider:
+
+hackathon required skills
+eligibility
+domain
+
+Example:
+
+AI Innovation Challenge
+
+Why recommended?
+
+✓ Machine Learning aligns with target role
+✓ Python evidence exists
+✓ Student is eligible
+
+Potential gap:
+
+Cloud
+
+DO NOT recommend randomly.
+
+============================================================
+8. HACKATHON DETAILS PAGE
+============================================================
+
+Sections:
+
+Overview
+Problem Statements
+Challenge Skills
+Eligibility
+Team Rules
+Timeline
+Evaluation
+Resources
+Mentors
+
+Show:
+
+Registration deadline
+Event dates
+Team size
+Eligibility
+Required skills
+
+============================================================
+9. CHALLENGE INTELLIGENCE PANEL
+============================================================
+
+Every problem statement must have a prominent:
+
+CHALLENGE INTELLIGENCE
+
+panel.
+
+Show:
+
+Required Skills
+
+Machine Learning — HIGH
+Python — HIGH
+SQL — MEDIUM
+Cloud — MEDIUM
+
+Student Fit
+
+Machine Learning:
+43 ⚠
+
+Python:
+82 ✓
+
+SQL:
+64 ✓
+
+Cloud:
+Limited / no evidence
+
+Then:
+
+Potential Skill Gaps
+
+Recommended Team Capability
+
+This is one of the main SKILL SETU differentiators.
+
+============================================================
+10. PROBLEM STATEMENT MODEL
+============================================================
+
+Each Hackathon can have multiple problem statements.
+
+Fields:
+
+id
+hackathonId
+
+title
+description
+background
+objective
+expectedOutcome
+
+domain
+difficulty
+
+constraints
+
+requiredSkills
+preferredSkills
+
+technologyTags
+
+resources
+
+submissionRequirements
+
+evaluationCriteria
+
+status
+
+============================================================
+11. REQUIRED SKILL MODEL
+============================================================
+
+Every required skill must reference the EXISTING SKILL system.
+
+Each requirement should contain:
+
+skillId
+importance
+requiredLevel
+
+Importance:
+
+CRITICAL
+HIGH
+MEDIUM
+LOW
+
+Required Level:
+
+0–100
+
+Do NOT create hackathon-only skill names.
+
+============================================================
+12. PROBLEM → SKILL MAPPING
+============================================================
+
+Problem statement:
+
+Predictive Healthcare Analytics
+
+Required Skills:
+
+Python
+Machine Learning
+SQL
+Data Visualization
+
+Preferred:
+
+Cloud
+NLP
+
+These connect to centralized SKILL SETU skills.
+
+============================================================
+13. STUDENT FIT
+============================================================
+
+For a selected challenge calculate:
+
+Student competency
+Evidence
+Evidence confidence
+Role relevance
+Required skill level
+Skill gaps
+
+Display:
+
+Strong Match
+Match
+Partial
+Gap
+
+Example:
+
+Python
+82 / 70
+Strong Match
+
+Machine Learning
+43 / 70
+Gap
+
+SQL
+64 / 60
+Match
+
+============================================================
+14. WHY THIS CHALLENGE?
+============================================================
+
+Add:
+
+Why recommended?
+
+Show actual inputs:
+
+Target role
+Relevant skills
+Competency
+Evidence
+Eligibility
+Skill gap
+
+Do not use unexplained AI outputs.
+
+============================================================
+15. ELIGIBILITY ENGINE
+============================================================
+
+Eligibility can include:
+
+Year
+Department
+Branch
+College
+CGPA
+Target role
+Required skill level
+Location where applicable
+
+Implement:
+
+checkHackathonEligibility(studentId, hackathonId)
+
+Return:
+
+eligible
+reasons
+failedRequirements
+
+============================================================
+16. WHY NOT ELIGIBLE?
+============================================================
+
+If ineligible:
+
+show:
+
+Not Eligible
+
+Why?
+
+Example:
+
+Required year:
+2nd–4th
+
+Your year:
+1st
+
+OR:
+
+Required Machine Learning:
+60
+
+Your competency:
+43
+
+Do not merely hide Register.
+
+============================================================
+17. REGISTRATION
+============================================================
+
+Student actions:
+
+Register
+Cancel Registration
+
+Registration must check:
+
+Eligibility
+Deadline
+Duplicate registration
+Team constraints
+
+Store:
+
+registrationId
+studentId
+hackathonId
+status
+registeredAt
+
+============================================================
+18. REGISTRATION STATUS
+============================================================
+
+Statuses:
+
+Registered
+Team Forming
+Team Formed
+Submission Pending
+Submitted
+Completed
+
+Do not show future state as completed.
+
+============================================================
+19. TEAM SIZE — MANDATORY
+============================================================
+
+Team size MUST be configurable per hackathon.
+
+Fields:
+
+minTeamSize
+maxTeamSize
+soloAllowed
+
+Examples:
+
+1–4
+2–4
+3–5
+4–6
+
+NEVER globally hardcode:
+
+2–4
+
+Backend validation is mandatory.
+
+============================================================
+20. TEAM CREATION
+============================================================
+
+Actions:
+
+Create Team
+Join Team
+Invite Member
+Request to Join
+Accept
+Reject
+Leave
+Transfer Leadership where appropriate
+
+Team:
+
+teamId
+hackathonId
+problemStatementId
+name
+leaderId
+createdAt
+status
+
+============================================================
+21. TEAM MEMBER
+============================================================
+
+Each team member:
+
+studentId
+teamRole
+joinedAt
+status
+
+Use EXISTING student records.
+
+Never create fake student records specifically for teams.
+
+============================================================
+22. TEAM ROLES
+============================================================
+
+Team may define open roles:
+
+ML Engineer
+Backend Developer
+Frontend Developer
+UI/UX
+Cloud Engineer
+Researcher
+Product
+
+Each role can contain:
+
+requiredSkills
+preferredSkills
+
+============================================================
+23. TEAM OPEN POSITIONS
+============================================================
+
+Example:
+
+OPEN ROLE:
+
+ML Engineer
+
+Required:
+
+Python
+Machine Learning
+
+Open:
+
+1
+
+Students can see:
+
+Open Positions
+Current Members
+Required Capabilities
+
+============================================================
+24. AI TEAM MATCHING
+============================================================
+
+Create:
+
+FIND TEAM
+
+Use:
+
+student skills
+competency
+evidence confidence
+projects
+target role
+domain
+availability
+required team role
+skill complementarity
+
+Recommendation should NOT be random.
+
+============================================================
+25. TEAM RECOMMENDATION OBJECT
+============================================================
+
+Return:
+
+team
+teamSize
+matchScore
+matchingSkills
+missingSkills
+openRoles
+coverage
+whyRecommended
+
+============================================================
+26. WHY THIS TEAM?
+============================================================
+
+Example:
+
+RECOMMENDED TEAM
+
+AI Innovators
+
+3 / 4
+
+You provide:
+
+✓ Python
+✓ Machine Learning
+✓ NLP
+
+Team provides:
+
+✓ Frontend
+✓ Backend
+✓ UI/UX
+
+Missing:
+
+Cloud Deployment
+
+WHY THIS TEAM?
+
+Your capabilities complement the current team skill coverage.
+
+Do not fabricate team composition.
+
+============================================================
+27. TEAM SKILL COVERAGE ENGINE
+============================================================
+
+Create:
+
+calculateTeamSkillCoverage(teamId)
+
+Required:
+
+Problem Statement Skills
+
+Compare against:
+
+Team members' competencies/evidence.
+
+For each required skill calculate coverage.
+
+Use deterministic logic.
+
+Suggested conceptual calculation:
+
+For each required skill:
+
+best team member competency
+÷
+required competency
+
+Clamp between 0 and 1.
+
+Multiply by skill importance.
+
+Then:
+
+Team Coverage =
+weighted covered capability
+÷
+total required capability
+× 100
+
+Make the exact formula visible in the explanation if needed.
+
+Do not hardcode coverage.
+
+============================================================
+28. TEAM COVERAGE UI
+============================================================
+
+Show:
+
+TEAM SKILL COVERAGE
+
+Python ✓
+Machine Learning ✓
+Backend ✓
+Frontend ✓
+Cloud ⚠
+
+Coverage:
+XX%
+
+Also:
+
+Covered Skills
+Partial Skills
+Missing Skills
+
+Click:
+
+Why is coverage XX%?
+
+Show underlying calculation.
+
+============================================================
+29. LIVE TEAM COVERAGE UPDATE
+============================================================
+
+This is mandatory.
+
+If student joins:
+
+Coverage changes.
+
+If student leaves:
+
+Coverage changes.
+
+If a member changes team role:
+
+coverage can change where relevant.
+
+Do not require manually editing the percentage.
+
+============================================================
+30. TEAM DASHBOARD
+============================================================
+
+Show:
+
+Hackathon
+Problem
+Team Name
+Leader
+Members
+Team Size
+Open Roles
+Skill Coverage
+Missing Skills
+Milestones
+Tasks
+Submission
+Mentor
+Evaluation
+
+============================================================
+31. TEAM WORKSPACE
+============================================================
+
+Sections:
+
+Overview
+Problem
+Team
+Skills
+Roles
+Milestones
+Tasks
+Resources
+Mentor
+Submission
+Evaluation
+Activity
+
+============================================================
+32. HACKATHON MILESTONES
+============================================================
+
+Default examples:
+
+Problem Understanding
+Ideation
+Research
+Architecture
+Prototype
+Testing
+Final Submission
+
+Each milestone:
+
+title
+description
+deadline
+status
+assignedMembers
+deliverable
+
+Statuses:
+
+Not Started
+In Progress
+Completed
+Overdue
+
+============================================================
+33. TEAM TASKS
+============================================================
+
+Each task:
+
+title
+description
+assignedTo
+priority
+deadline
+status
+
+Statuses:
+
+Todo
+In Progress
+Blocked
+Done
+
+Track activity.
+
+============================================================
+34. RESOURCE HUB
+============================================================
+
+Organizer can attach:
+
+Dataset
+API Documentation
+Starter Repository
+Reference
+Template
+Documentation
+Design Assets
+
+Do not expose API secrets.
+
+============================================================
+35. MENTORSHIP
+============================================================
+
+Create:
+
+Mentor Directory
+
+Mentor fields:
+
+Name
+Expertise
+Skills
+Domain
+Availability
+Bio
+
+Categories:
+
+Technical
+AI/ML
+Cloud
+Cybersecurity
+Product
+Domain
+Career
+
+============================================================
+36. MENTOR MATCHING
+============================================================
+
+Match team/student to mentor using:
+
+Problem domain
+Required skills
+Skill gaps
+Mentor expertise
+Availability
+
+Show:
+
+Why this mentor?
+
+Example:
+
+Your team gap:
+Cloud
+
+Mentor expertise:
+Cloud / DevOps
+
+Available:
+Yes
+
+============================================================
+37. MENTOR SESSIONS
+============================================================
+
+Support:
+
+Request
+Accept
+Reject
+Schedule
+Reschedule
+Cancel
+Complete
+Feedback
+
+Session:
+
+Student/team
+Mentor
+Topic
+Skill
+Date
+Time
+Status
+Notes
+
+============================================================
+38. MENTOR FEEDBACK
+============================================================
+
+Mentor can provide:
+
+Strengths
+Weaknesses
+Suggestions
+Skill-specific feedback
+
+This may later create evidence.
+
+Do not automatically verify skills.
+
+============================================================
+39. SUBMISSION SYSTEM
+============================================================
+
+Team submission should support:
+
+Project Title
+Description
+Problem Solved
+Approach
+Architecture
+Technology
+
+GitHub URL
+Live Demo URL
+
+Architecture Diagram
+Demo Video
+Presentation/PDF
+Technical Documentation
+
+Team Contributions
+
+============================================================
+40. SUBMISSION VERSIONS
+============================================================
+
+Support:
+
+Draft
+Version 1
+Version 2
+Final
+
+Record:
+
+version
+submittedAt
+changes
+submittedBy
+
+Only final/official submission should be evaluated unless configured otherwise.
+
+============================================================
+41. GITHUB
+============================================================
+
+Allow:
+
+GitHub repository URL
+
+Validate URL.
+
+Do NOT automatically verify student skills merely because GitHub exists.
+
+Status:
+
+Submitted
+Pending Verification
+Verified
+
+Only use Verified if actual verification exists.
+
+============================================================
+42. LIVE DEMO
+============================================================
+
+Allow:
+
+Live Demo URL
+
+Validate URL.
+
+Do not claim website correctness merely because URL format is valid.
+
+============================================================
+43. TEAM CONTRIBUTIONS
+============================================================
+
+Each member records:
+
+Role
+Contribution
+Technologies
+Modules
+
+Example:
+
+S042
+
+ML Engineer
+
+Contribution:
+
+Model training and evaluation
+
+Skills Demonstrated:
+
+Python
+Machine Learning
+Statistics
+
+This information feeds future evidence.
+
+============================================================
+44. EVALUATION ENGINE
+============================================================
+
+Create configurable rubric.
+
+Default:
+
+Innovation — 20%
+Technical Implementation — 30%
+Problem Solving — 20%
+Feasibility — 10%
+UI/UX — 10%
+Impact — 10%
+
+Weights MUST total:
+
+100%
+
+============================================================
+45. EVALUATION SCORE
+============================================================
+
+Evaluator inputs:
+
+Criterion
+Score 0–100
+Comment
+
+Calculate:
+
+Weighted contribution =
+score × weight
+
+Total =
+sum(weighted contributions)
+
+DO NOT hardcode total.
+
+============================================================
+46. WHY THIS PROJECT SCORE?
+============================================================
+
+Button:
+
+Why this score?
+
+Show:
+
+Innovation
+82 × 20% = 16.40
+
+Technical
+88 × 30% = 26.40
+
+etc.
+
+Total:
+
+calculated result
+
+============================================================
+47. EVALUATOR DASHBOARD
+============================================================
+
+Evaluator sees:
+
+Assigned submissions
+Problem
+Team
+GitHub
+Live Demo
+Architecture
+Team contributions
+
+Actions:
+
+Evaluate
+Save Draft
+Submit Evaluation
+Add Feedback
+
+Filters:
+
+Track
+Problem
+Status
+Evaluation Status
+
+============================================================
+48. EVALUATION STATUS
+============================================================
+
+Statuses:
+
+Not Started
+In Progress
+Submitted
+Reviewed
+
+Do not expose "Winner" automatically.
+
+Organizer controls final outcomes.
+
+============================================================
+49. FEEDBACK
+============================================================
+
+Evaluation feedback:
+
+Technical Strengths
+Technical Weaknesses
+Innovation
+Problem Solving
+Professional Skills
+Recommendations
+
+Connect feedback to:
+
+submission
+team
+students
+skills where applicable
+
+============================================================
+50. HACKATHON EVIDENCE
+============================================================
+
+THIS IS THE MOST IMPORTANT INTEGRATION.
+
+After evaluation, the system can generate structured evidence.
+
+Flow:
+
+Submission
+→ Team Contribution
+→ Evaluator Score
+→ Feedback
+→ Skill Evidence
+
+Possible skills:
+
+Python
+Machine Learning
+Backend
+Frontend
+Cloud
+Database
+Problem Solving
+Communication
+Teamwork
+Leadership
+Presentation
+
+Evidence generation MUST be based on actual project/contribution/evaluation data.
+
+Do not assign unrelated skills.
+
+============================================================
+51. EVIDENCE STATUS
+============================================================
+
+Use:
+
+Submitted
+Evaluated
+Verified
+
+Do not automatically mark every hackathon skill:
+
+Verified
+
+============================================================
+52. HACKATHON EVIDENCE OBJECT
+============================================================
+
+Evidence should contain:
+
+studentId
+hackathonId
+problemStatementId
+teamId
+submissionId
+evaluationId
+skillId
+
+source:
+HACKATHON
+
+score where applicable
+
+description
+status
+verificationStatus
+
+createdAt
+updatedAt
+
+============================================================
+53. HACKATHON → SKILL PASSPORT
+============================================================
+
+When evidence is created:
+
+Student
+→ Skill Passport
+→ Hackathons
+
+Show:
+
+Hackathon
+Problem
+Team
+Role
+Contribution
+Project
+Technologies
+Evaluation
+Feedback
+Evidence Status
+
+The same project must NOT be manually recreated as another portfolio entry.
+
+============================================================
+54. HACKATHON → SKILL INTELLIGENCE
+============================================================
+
+Where the existing Phase 3 evidence policy allows:
+
+Hackathon Evidence
+→ Competency Engine
+→ Role Readiness
+
+DO NOT bypass the existing Phase 3 system.
+
+DO NOT directly overwrite competency from the UI.
+
+Use the existing intelligence services.
+
+============================================================
+55. READINESS CHANGE EXPLANATION
+============================================================
+
+If qualifying evidence changes readiness:
+
+Show:
+
+Why did my readiness change?
+
+Example:
+
+Previous Machine Learning competency:
+43
+
+New Hackathon Evidence:
+Evaluated
+
+Evaluation:
+72
+
+Updated competency:
+calculated
+
+Updated readiness:
+calculated
+
+Use:
+
+Observed / Calculated Change
+
+Do not claim:
+
+"Your hackathon increased employability by X%."
+
+============================================================
+56. PROJECTED VS VERIFIED
+============================================================
+
+Before completion:
+
+Potential Evidence
+Projected Impact
+
+After evaluation:
+
+Evaluated Evidence
+
+After verification:
+
+Verified Evidence
+
+Use these terms consistently.
+
+============================================================
+57. HACKATHON → INDUSTRY TALENT DISCOVERY
+============================================================
+
+Industry must be able to discover high-quality submitted talent.
+
+Candidate context:
+
+Student
+Hackathon
+Problem
+Team
+Role
+Contribution
+Skills
+Evaluation
+Evidence
+Feedback
+
+Actions:
+
+View Candidate
+Shortlist
+Invite to Interview
+Invite to Internship
+Offer Project
+Mentorship
+
+Use existing Industry talent functionality.
+
+Do NOT create a second candidate model.
+
+============================================================
+58. HACKATHON → INDUSTRY OPPORTUNITY
+============================================================
+
+After evaluation:
+
+Industry can initiate:
+
+Interview Invitation
+Internship Invitation
+Project Opportunity
+Mentorship
+
+These should connect to existing:
+
+Opportunity
+Application
+Notification
+
+models.
+
+============================================================
+59. STUDENT NOTIFICATION
+============================================================
+
+Example:
+
+"An industry evaluator reviewed your hackathon project."
+
+"Your project generated new skill evidence."
+
+"An industry organization invited you to an internship."
+
+Notifications must correspond to real events.
+
+============================================================
+60. INSTITUTION HACKATHON PORTAL
+============================================================
+
+Institution navigation:
+
+Campus Events & Hackathons
+
+Functions:
+
+Create Event
+Problem Statements
+Eligibility
+Team Rules
+Participants
+Teams
+Submissions
+Evaluations
+Analytics
+
+Institution should use the same Hackathon records.
+
+============================================================
+61. INSTITUTION EVENT APPROVAL
+============================================================
+
+If appropriate support:
+
+Draft
+Submitted for Approval
+Approved
+Published
+Completed
+
+Do not bypass approval logic if the role requires it.
+
+============================================================
+62. INSTITUTION ANALYTICS
+============================================================
+
+Show:
+
+Participants
+Teams
+Submissions
+Departments
+Years
+Skills Demonstrated
+Top Skill Gaps
+Mentorship
+Evaluations
+Industry Involvement
+Projects Generated
+Evidence Generated
+
+All values must use actual Hackathon records.
+
+============================================================
+63. INDUSTRY HACKATHON PORTAL
+============================================================
+
+Industry navigation:
+
+Challenges & Hackathons
+
+Functions:
+
+Create Challenge
+Problem Statements
+Required Skills
+Eligibility
+Team Rules
+Registrations
+Teams
+Submissions
+Evaluation
+Mentors
+Talent Discovery
+Analytics
+
+============================================================
+64. INDUSTRY CHALLENGE CREATION
+============================================================
+
+Wizard:
+
+Basic Details
+Problem
+Required Skills
+Eligibility
+Team Rules
+Timeline
+Resources
+Evaluation
+Preview
+Publish
+
+============================================================
+65. INDUSTRY TEAM BUILDER
+============================================================
+
+Industry can define:
+
+Required Team Size
+
+Roles:
+
+ML Engineer
+Backend
+Frontend
+UI/UX
+
+Required Skills
+
+Availability
+
+Button:
+
+Build Recommended Team
+
+If full team recommendation is not implemented until later, keep the UI clearly labeled:
+
+PROTOTYPE
+
+Do not generate random candidates.
+
+============================================================
+66. ACADEMIA HACKATHON CONNECTION
+============================================================
+
+Academia can:
+
+Discover Challenges
+Recommend Challenges
+Mentor Teams
+Host Workshops
+Participate as Faculty Mentor
+Participate as Evaluator where assigned
+
+Do not rebuild the existing Academia portal.
+
+Use shared Hackathon data.
+
+============================================================
+67. FACULTY MENTORING
+============================================================
+
+Faculty can see:
+
+Assigned Teams
+Problem
+Student Skills
+Skill Gaps
+Milestones
+Mentor Requests
+
+Faculty can add:
+
+Mentor Feedback
+
+This can contribute to evidence where configured.
+
+============================================================
+68. HACKATHON DISCOVERY FILTERS
+============================================================
+
+Student filters:
+
+Domain
+Skill
+Technology
+Mode
+Location
+Team Size
+Deadline
+Eligibility
+Difficulty
+
+============================================================
+69. SEARCH
+============================================================
+
+Search by:
+
+Hackathon title
+Problem statement
+Skill
+Technology
+Domain
+Organizer
+
+============================================================
+70. SAVED HACKATHONS
+============================================================
+
+Student can:
+
+Save
+
+Saved state must persist in the existing prototype persistence layer.
+
+============================================================
+71. HACKATHON ACTIVITY TIMELINE
+============================================================
+
+Track:
+
+Registered
+Team Created
+Member Joined
+Problem Selected
+Milestone Started
+Milestone Completed
+Mentor Session
+Submission Updated
+Submission Submitted
+Evaluation Started
+Evaluation Submitted
+Feedback Added
+Evidence Created
+Invitation Sent
+
+Every record:
+
+timestamp
+actor
+event
+entity
+
+============================================================
+72. HACKATHON NOTIFICATIONS
+============================================================
+
+Student:
+
+Registration
+Team Invite
+Join Request
+Accepted
+Hackathon Starting
+Milestone Due
+Submission Deadline
+Evaluation
+Feedback
+Evidence
+Industry Invitation
+
+Industry:
+
+New Registration
+Submission
+Evaluation Due
+Mentor Request
+Talent Signal
+
+Institution:
+
+Event Approval
+Participation
+Submission
+Evaluation
+Industry Collaboration
+
+Academia:
+
+Mentor Request
+Workshop
+Challenge
+Faculty Opportunity
+
+============================================================
+73. HACKATHON STATUS / DEADLINE LOGIC
+============================================================
+
+Display:
+
+Registration Open
+Closing Soon
+Registration Closed
+Live
+Submission Open
+Submission Closed
+Evaluation
+Completed
+
+Use actual dates.
+
+============================================================
+74. SECURITY
+============================================================
+
+Implement:
+
+Authentication
+RBAC
+Protected routes
+Protected actions
+Input validation
+URL validation
+File restrictions
+Permission checks
+
+Do not expose:
+
+private student documents
+private application information
+API secrets
+assessment answers
+
+============================================================
+75. FILE UPLOADS
+============================================================
+
+Where supported:
+
+Architecture Diagram
+PDF
+Presentation
+Technical Documentation
+Demo Video reference
+
+Validate:
+
+file type
+file size
+ownership
+permissions
+
+Do not pretend a file is uploaded if persistence failed.
+
+============================================================
+76. UI STATUS
+============================================================
+
+Use:
+
+IMPLEMENTED
+DEMO DATA
+PROTOTYPE
+FUTURE INTEGRATION
+
+Possible future integrations:
+
+GitHub API
+GitLab
+External Hackathon APIs
+University ERP
+LMS
+External ATS
+
+Never claim live integration unless actually implemented.
+
+============================================================
+77. NO UNSTOP / LINKEDIN / NAUKRI CLONE
+============================================================
+
+The UI may use familiar hackathon interaction patterns:
+
+discover
+register
+team formation
+submission
+evaluation
+
+But the product identity must remain:
+
+SKILL SETU
+
+The differentiator must be visible:
+
+Challenge
+→ Skills
+→ Team Intelligence
+→ Evidence
+→ Evaluation
+→ Career Opportunity
+
+============================================================
+78. DESIGN REQUIREMENTS
+============================================================
+
+Use Phase 1–7 design system.
+
+Hackathons should feel:
+
+Energetic
+Collaborative
+Technical
+Career-oriented
+Evidence-driven
+
+Do NOT use:
+
+neon cyberpunk
+gaming-style UI
+generic event website
+copy-pasted Unstop interface
+
+============================================================
+79. HACKATHON HOME HERO
+============================================================
+
+Student Hackathon page title:
+
+HACKATHONS & TEAMS
+
+Subtitle:
+
+Turn real challenges into real skill evidence.
+
+Main intelligence card:
+
+FIND YOUR NEXT CHALLENGE
+
+Show:
+
+Recommended Challenge
+Skill Fit
+Current Gaps
+Team Need
+
+============================================================
+80. STUDENT HACKATHON DASHBOARD
+============================================================
+
+Show:
+
+Recommended Hackathon
+My Active Team
+Team Coverage
+Next Milestone
+Submission Status
+Mentor
+Recent Evaluation
+Hackathon Evidence
+
+============================================================
+81. TEAM COVERAGE CARD
+============================================================
+
+Prominent:
+
+TEAM SKILL COVERAGE
+
+XX%
+
+Covered:
+XX
+
+Partial:
+XX
+
+Missing:
+XX
+
+Button:
+
+View Coverage
+
+============================================================
+82. SUBMISSION STATUS
+============================================================
+
+Show:
+
+Draft
+Progress
+Submission Deadline
+Submitted
+
+Button:
+
+Continue Submission
+
+============================================================
+83. MENTOR CARD
+============================================================
+
+Show:
+
+Mentor
+Expertise
+Next Session
+Feedback
+
+============================================================
+84. EVIDENCE CARD
+============================================================
+
+After evaluation:
+
+NEW EVIDENCE
+
+Machine Learning
+Source:
+Hackathon Evaluation
+
+Status:
+Evaluated
+
+Date:
+timestamp
+
+Button:
+
+View in Skill Passport
+
+============================================================
+85. INDUSTRY TALENT VIEW
+============================================================
+
+After evaluation, Industry candidate profile should show:
+
+Hackathon Evidence
+
+Problem:
+Predictive Healthcare Analytics
+
+Role:
+ML Engineer
+
+Contribution:
+Model Development
+
+Evaluation:
+
+Technical:
+88
+
+Innovation:
+82
+
+Feedback:
+
+...
+
+Do not invent information.
+
+============================================================
+86. HACKATHON ANALYTICS — INDUSTRY
+============================================================
+
+Show:
+
+Challenges
+Registrations
+Teams
+Submissions
+Evaluation Queue
+Skills Observed
+Talent Discovered
+Industry Invitations
+
+============================================================
+87. HACKATHON ANALYTICS — INSTITUTION
+============================================================
+
+Show:
+
+Participants
+Teams
+Departments
+Skills
+Projects
+Industry Challenges
+Mentors
+Evidence
+
+============================================================
+88. EXPLAINABILITY
+============================================================
+
+Every major hackathon result needs:
+
+WHY?
+
+Use:
+
+Why this Hackathon?
+Why this Team?
+Why this Coverage?
+Why this Mentor?
+Why this Score?
+Why this Evidence?
+Why this Candidate?
+
+All explanations must reference actual stored data.
+
+============================================================
+89. AI USAGE
+============================================================
+
+AI may assist with:
+
+Problem statement summarization
+Skill extraction
+Challenge explanation
+Team recommendation explanation
+Mentor recommendation explanation
+Project summary
+Feedback summary
+Candidate summary
+
+Rules calculate:
+
+Eligibility
+Team size
+Team coverage
+Evaluation score
+Deadline state
+Application state
+Evidence status
+
+CORE PRINCIPLE:
+
+RULES CALCULATE.
+AI EXPLAINS & ENRICHES.
+
+============================================================
+90. DEMO DATA
+============================================================
+
+Create controlled demo hackathons.
+
+HACKATHON 1:
+
+AI Innovation Challenge
+
+Team:
+2–4
+
+Required Skills:
+
+Python
+Machine Learning
+SQL
+Cloud
+
+HACKATHON 2:
+
+Cybersecurity Sprint
+
+Team:
+1–4
+
+Required:
+
+Linux
+Cybersecurity
+Network Security
+Problem Solving
+
+HACKATHON 3:
+
+Smart Campus Buildathon
+
+Team:
+3–5
+
+Required:
+
+Frontend
+Backend
+Database
+API
+
+Mark:
+
+DEMO DATA
+
+============================================================
+91. DEMO STUDENT
+============================================================
+
+Use the existing:
+
+S042
+
+AI & Data Science
+
+Target:
+
+Data Scientist
+
+Current competencies:
+
+Python 82
+SQL 64
+Statistics 51
+Machine Learning 43
+Problem Solving 75
+
+Do NOT create a duplicate S042.
+
+============================================================
+92. MAIN DEMO CHALLENGE
+============================================================
+
+Use:
+
+AI Innovation Challenge
+
+Problem:
+
+Predictive Healthcare Analytics
+
+Required:
+
+Python
+Machine Learning
+SQL
+Cloud
+
+S042:
+
+Python:
+82
+
+ML:
+43
+
+SQL:
+64
+
+Cloud:
+Limited
+
+The challenge detail must show:
+
+WHY RECOMMENDED?
+
+Target:
+Data Scientist
+
+Skill relevance:
+High
+
+Gap:
+Machine Learning / Cloud
+
+============================================================
+93. DEMO TEAM
+============================================================
+
+Team:
+
+AI Innovators
+
+3 / 4 members
+
+Existing capabilities:
+
+Frontend
+Backend
+UI/UX
+
+S042 contributes:
+
+Python
+Machine Learning
+NLP
+
+Missing:
+
+Cloud Deployment
+
+Team coverage:
+
+CALCULATED
+
+Do not hardcode 86%.
+
+============================================================
+94. COMPLETE LIVE DEMO
+============================================================
+
+The final demo must support:
+
+S042 Login
+
+↓
+
+Hackathons & Teams
+
+↓
+
+Recommended Challenge
+
+↓
+
+Challenge Intelligence
+
+↓
+
+Required Skills
+
+↓
+
+Student Fit
+
+↓
+
+Register
+
+↓
+
+Find Team
+
+↓
+
+Recommended Team
+
+↓
+
+Why Team?
+
+↓
+
+Join Team
+
+↓
+
+Team Coverage
+
+↓
+
+Workspace
+
+↓
+
+Milestones
+
+↓
+
+Mentor
+
+↓
+
+Submission
+
+↓
+
+GitHub + Live Demo
+
+↓
+
+Industry Evaluation
+
+↓
+
+Feedback
+
+↓
+
+Hackathon Evidence
+
+↓
+
+Skill Passport
+
+↓
+
+Readiness Integration
+
+↓
+
+Industry Talent Discovery
+
+↓
+
+Opportunity Invitation
+
+This is the PRIMARY demo.
+
+============================================================
+95. CROSS-PORTAL DATA TEST
+============================================================
+
+Test:
+
+1.
+Student joins Hackathon.
+
+2.
+Industry sees team/registration.
+
+3.
+Student submits.
+
+4.
+Industry sees submission.
+
+5.
+Industry evaluates.
+
+6.
+Feedback creates evidence.
+
+7.
+Student sees evidence.
+
+8.
+Skill Passport updates.
+
+9.
+Institution sees hackathon participation.
+
+10.
+Academia sees authorized mentoring/collaboration data.
+
+This must happen through SHARED DATA.
+
+============================================================
+96. SHARED DATA REQUIREMENT
+============================================================
+
+Do NOT create:
+
+student copy for hackathon
+skill copy for hackathon
+industry candidate copy
+project copy
+evidence copy
+
+Use one source of truth.
+
+============================================================
+97. DATA CONSISTENCY TEST
+============================================================
+
+Test:
+
+S042 project title changes.
+
+Expected:
+
+Student Skill Passport updates.
+
+Industry candidate profile updates.
+
+Hackathon submission updates.
+
+Institution aggregate updates where relevant.
+
+No manual duplication.
+
+============================================================
+98. TEAM COVERAGE TEST
+============================================================
+
+Test:
+
+Team:
+3 members
+
+Coverage:
+calculated
+
+Add Cloud-skilled member.
+
+Expected:
+
+Cloud changes:
+Missing
+→
+Covered
+
+Coverage increases.
+
+Remove member.
+
+Expected:
+
+Coverage recalculates.
+
+============================================================
+99. EVALUATION TEST
+============================================================
+
+Change:
+
+Technical score:
+
+60 → 90
+
+Expected:
+
+Total evaluation recalculates.
+
+Why this score changes.
+
+No hardcoded total.
+
+============================================================
+100. EVIDENCE TEST
+============================================================
+
+After evaluation:
+
+New evidence appears.
+
+Evidence has:
+
+Skill
+Source
+Date
+Status
+
+============================================================
+101. PASSPORT TEST
+============================================================
+
+After evidence creation:
+
+Skill Passport:
+
+Hackathons
+Projects
+Evidence
+
+must update.
+
+No manual refresh data duplication.
+
+============================================================
+102. READINESS TEST
+============================================================
+
+If evidence qualifies under existing Phase 3 policy:
+
+Competency may update.
+
+Role readiness may update.
+
+If not:
+
+do not force an update.
+
+Display:
+
+Evidence available
+but not yet sufficient for competency recalculation
+
+where appropriate.
+
+============================================================
+103. INDUSTRY OPPORTUNITY TEST
+============================================================
+
+After evaluation:
+
+Industry can:
+
+Invite to Internship
+
+Expected:
+
+Invitation record created.
+
+Student notification created.
+
+Opportunity/application workflow can consume it.
+
+============================================================
+104. RBAC TEST
+============================================================
+
+Student:
+
+Own hackathon/team/submission.
+
+Industry:
+
+Authorized challenge/submission/evaluation/talent.
+
+Academia:
+
+Authorized mentoring/collaboration.
+
+Institution:
+
+Authorized institutional analytics.
+
+Unauthorized access:
+
+Denied.
+
+============================================================
+105. DEADLINE TEST
+============================================================
+
+Before deadline:
+
+Register allowed.
+
+After deadline:
+
+Register blocked.
+
+Submission before deadline:
+
+Allowed.
+
+Submission after deadline:
+
+Blocked unless organizer permits late submission.
+
+============================================================
+106. TEAM SIZE TEST
+============================================================
+
+Hackathon:
+
+2–4
+
+Try:
+
+1:
+Reject
+
+2:
+Allow
+
+3:
+Allow
+
+4:
+Allow
+
+5:
+Reject
+
+Hackathon:
+
+1–4
+
+Try:
+
+1:
+Allow
+
+============================================================
+107. DUPLICATE TESTS
+============================================================
+
+Prevent:
+
+Duplicate registration
+Duplicate team membership
+Duplicate team invite
+Duplicate submission state
+Duplicate evaluation
+Duplicate evidence generation
+
+============================================================
+108. EMPTY STATES
+============================================================
+
+No Hackathons:
+
+"No challenges currently match your filters."
+
+No Team:
+
+"Find a team or create one."
+
+No Submission:
+
+"Your team has not submitted a solution yet."
+
+No Mentor:
+
+"Find a mentor for your team's skill gaps."
+
+No Evidence:
+
+"Evaluation or feedback can generate evidence."
+
+============================================================
+109. ERROR HANDLING
+============================================================
+
+Handle:
+
+Not Eligible
+Registration Closed
+Team Full
+Invalid Team Size
+Duplicate Member
+Submission Closed
+Invalid URL
+Permission Denied
+Evaluation Already Submitted
+Missing Required Skill
+Missing Submission Field
+
+Use human-readable error messages.
+
+============================================================
+110. LOADING STATES
+============================================================
+
+Use:
+
+Finding Hackathons...
+Checking Eligibility...
+Finding Teams...
+Calculating Coverage...
+Saving Team...
+Uploading Submission...
+Submitting...
+Calculating Evaluation...
+Generating Evidence...
+
+============================================================
+111. ACCESSIBILITY
+============================================================
+
+Ensure:
+
+Keyboard navigation
+Readable text
+Accessible buttons
+Focus states
+Contrast
+Mobile usability
+
+============================================================
+112. PERFORMANCE
+============================================================
+
+Avoid:
+
+duplicate API calls
+repeated expensive AI requests
+unnecessary rerenders
+
+Keep calculations in reusable services.
+
+============================================================
+113. ARCHITECTURE SERVICES
+============================================================
+
+Suggested services:
+
+HackathonService
+ProblemStatementService
+HackathonRecommendationService
+RegistrationService
+TeamService
+TeamMatchingService
+TeamCoverageService
+MilestoneService
+SubmissionService
+EvaluationService
+MentorService
+HackathonEvidenceService
+HackathonAnalyticsService
+
+Reuse existing services where equivalent.
+
+============================================================
+114. API STRUCTURE
+============================================================
+
+Adapt to existing project's conventions.
+
+Potential actions:
+
+hackathons
+hackathon-details
+recommended-hackathons
+
+register-hackathon
+create-team
+join-team
+invite-member
+join-request
+
+team-details
+team-coverage
+recommended-teams
+
+milestones
+tasks
+
+submission
+submission-version
+
+evaluate-submission
+evaluation-details
+
+mentors
+mentor-request
+mentor-session
+
+hackathon-evidence
+
+Do not create a conflicting API architecture.
+
+============================================================
+115. AUDIT LOG
+============================================================
+
+Track:
+
+Hackathon created
+Problem created
+Registration
+Team created
+Member added
+Member removed
+Submission created
+Submission submitted
+Evaluation
+Feedback
+Evidence
+Invitation
+
+Store:
+
+actor
+entity
+action
+timestamp
+
+============================================================
+116. FUTURE INTEGRATIONS
+============================================================
+
+Prepare adapters for future:
+
+GitHub API
+GitLab
+External Hackathon APIs
+University ERP
+LMS
+ATS
+
+But do NOT claim integration unless implemented.
+
+Use:
+
+Integration Ready
+
+when appropriate.
+
+============================================================
+117. PRODUCT DIFFERENTIATOR
+============================================================
+
+The Hackathon section must visibly communicate:
+
+TRADITIONAL HACKATHON
+
+Problem
+→ Team
+→ Build
+→ Submit
+→ Winner
+
+SKILL SETU HACKATHON
+
+Problem
+→ Required Skills
+→ Student Intelligence
+→ Team Formation
+→ Skill Coverage
+→ Build
+→ Mentorship
+→ Submission
+→ Evaluation
+→ Evidence
+→ Skill Passport
+→ Role Readiness
+→ Industry Opportunity
+
+Make this visually obvious.
+
+============================================================
+118. PHASE 8 IMPLEMENTATION STRATEGY
+============================================================
+
+Implement internally in this order:
+
+PHASE 8A
+Hackathon / Problem data model
+
+PHASE 8B
+Hackathon discovery + details
+
+PHASE 8C
+Registration + eligibility
+
+PHASE 8D
+Teams + configurable team size
+
+PHASE 8E
+Team roles + coverage
+
+PHASE 8F
+Team recommendation
+
+PHASE 8G
+Workspace + milestones
+
+PHASE 8H
+Mentorship
+
+PHASE 8I
+Submission
+
+PHASE 8J
+Evaluation
+
+PHASE 8K
+Feedback
+
+PHASE 8L
+Hackathon Evidence
+
+PHASE 8M
+Skill Passport integration
+
+PHASE 8N
+Readiness integration
+
+PHASE 8O
+Industry Talent Discovery
+
+PHASE 8P
+Institution / Academia views
+
+PHASE 8Q
+Notifications
+
+PHASE 8R
+Testing and polish
+
+Do not skip directly to UI polish before the data flow works.
+
+============================================================
+119. IMPLEMENTATION SAFETY
+============================================================
+
+After each internal stage:
+
+1.
+Check build.
+
+2.
+Check existing routes.
+
+3.
+Check existing Student portal.
+
+4.
+Check existing Industry portal.
+
+5.
+Check existing Academia portal.
+
+6.
+Check existing Institution portal.
+
+7.
+Run relevant tests.
+
+8.
+Fix errors.
+
+Then continue.
+
+Do not leave broken states from one stage to the next.
+
+============================================================
+120. FINAL ACCEPTANCE CRITERIA
+============================================================
+
+Hackathon integration is COMPLETE only when:
+
+✓ Hackathon discovery works
+✓ Problem statements work
+✓ Required skills work
+✓ Student recommendation works
+✓ Eligibility works
+✓ Registration works
+✓ Team size is configurable
+✓ Team size is enforced
+✓ Create Team works
+✓ Join Team works
+✓ Invite works
+✓ Team roles work
+✓ Team coverage calculates
+✓ Team coverage updates
+✓ Team recommendation works
+✓ Why Team works
+✓ Team workspace works
+✓ Milestones work
+✓ Tasks work
+✓ Mentorship works
+✓ Submission works
+✓ GitHub link works
+✓ Live Demo link works
+✓ Evaluation works
+✓ Evaluation score calculates
+✓ Evaluation explanation works
+✓ Feedback works
+✓ Hackathon evidence works
+✓ Skill Passport updates
+✓ Readiness integration respects Phase 3
+✓ Industry talent discovery sees authorized hackathon evidence
+✓ Opportunity invitation works
+✓ Institution analytics consume same data
+✓ Academia consumes authorized mentorship/collaboration data
+✓ Notifications work
+✓ RBAC works
+✓ Deadline validation works
+✓ Duplicate prevention works
+✓ Explainability works
+✓ No duplicated Student/Skill/Evidence/Opportunity engine
+✓ No fake external integrations
+✓ No fabricated results
+✓ No major dead buttons
+
+============================================================
+121. FINAL JUDGE EXPERIENCE
+============================================================
+
+The evaluator should be able to see:
+
+Industry:
+
+"We have this problem."
+
+↓
+
+SKILL SETU:
+
+"These are the skills required."
+
+↓
+
+Student S042:
+
+"These are the skills I actually demonstrate."
+
+↓
+
+SKILL SETU:
+
+"Here is the skill fit."
+
+↓
+
+Team Builder:
+
+"Here is the complementary team."
+
+↓
+
+SKILL SETU:
+
+"Here is the team's skill coverage and missing capability."
+
+↓
+
+Team:
+
+Builds solution.
+
+↓
+
+Submission:
+
+Evidence is generated.
+
+↓
+
+Industry:
+
+Evaluates.
+
+↓
+
+SKILL SETU:
+
+Feedback becomes structured evidence.
+
+↓
+
+Student:
+
+Skill Passport updates.
+
+↓
+
+Skill Intelligence:
+
+Role readiness can update when evidence qualifies.
+
+↓
+
+Industry:
+
+Can discover the evidence-backed candidate.
+
+↓
+
+Institution:
+
+Sees participation and skill intelligence.
+
+THIS is the proof that SKILL SETU is an ecosystem.
+
+============================================================
+122. FINAL PRODUCT STATEMENT
+============================================================
+
+The Hackathon module must communicate:
+
+"Hackathons in SKILL SETU are not just events. They are evidence-generating career pipelines where challenges define required skills, students form complementary teams, projects are evaluated, and real-world performance becomes structured skill evidence that can strengthen the student's Skill Passport and connect them to future opportunities."
+
+============================================================
+123. FINAL REPORT
+============================================================
+
+After implementation report:
+
+1. Existing Hackathon functionality found
+2. New/modified models
+3. New services
+4. New APIs
+5. Discovery implementation
+6. Registration implementation
+7. Team implementation
+8. Team matching implementation
+9. Coverage calculation
+10. Workspace
+11. Milestones
+12. Mentorship
+13. Submission
+14. Evaluation
+15. Feedback
+16. Evidence
+17. Skill Passport integration
+18. Readiness integration
+19. Industry integration
+20. Academia integration
+21. Institution integration
+22. Notifications
+23. RBAC
+24. Tests performed
+25. Tests passed
+26. Tests failed
+27. Known limitations
+28. DEMO DATA
+29. FUTURE INTEGRATIONS
+
+Be brutally honest.
+
+Do NOT call UI-only functionality "implemented."
+
+============================================================
+FINAL PRINCIPLE
+============================================================
+
+DO NOT BUILD:
+
+"ANOTHER HACKATHON WEBSITE."
+
+BUILD:
+
+A SKILL INTELLIGENCE-DRIVEN HACKATHON PIPELINE.
+
+CHALLENGE
+→ SKILLS
+→ STUDENT FIT
+→ TEAM INTELLIGENCE
+→ BUILD
+→ EVALUATE
+→ EVIDENCE
+→ SKILL PASSPORT
+→ READINESS
+→ OPPORTUNITY
+
+This must be integrated into the existing SKILL SETU ecosystem.
+
+============================================================
+END PHASE 8
+============================================================

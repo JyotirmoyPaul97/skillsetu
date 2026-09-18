@@ -569,3 +569,54 @@ Stage Summary:
 - RBAC roles defined (Faculty/HOD/Coordinator/Admin §43) — role stored, full enforcement PROTOTYPE.
 - Did NOT rebuild Phase 1-5 (§1). Did NOT implement Institution Portal or Hackathon execution (§39).
 - STOP AFTER PHASE 6.
+
+---
+Task ID: P7-1
+Agent: orchestrator (main)
+Task: Phase 7 — Institution Intelligence & Command Center (reuses Phase 3+4+5+6, no duplicate models)
+
+Work Log:
+- Read master spec upload/Pasted Content_1789715628393.txt (2225 lines, §1–83). Focus: Institution Portal as institution-wide intelligence/decision-support system answering "What skills do students demonstrate? What does industry demand? Where are the gaps? Which branches are affected? What interventions should we consider?"
+- Built src/lib/institution/ module:
+  * institution-model.ts — Intervention (10 types: Industry Workshop/Bootcamp/Faculty Mentorship/Project-Based Learning/Hackathon/Certification/Industry Project/Guest Lecture/Curriculum Enrichment/Mentor Program; 7 lifecycle statuses: Recommended→Proposed→Approved→Scheduled→Active→Completed→Evaluated), InstitutionUser (5 RBAC roles: Institution Admin/Academic Administrator/Placement Coordinator/Training & Placement/Department Head), InstitutionAlert (7 types + Priority), InstitutionNotification (9 types), DemandSupplyRow, BranchSkillCell, RoleReadinessAgg, CohortIntervention, ExecutiveSummary.
+  * institution-store.ts — useInstitutionStore Zustand store (localStorage): interventions (w/ lifecycle), alerts, notifications, filters (department/year/role/dateRange). Actions: createIntervention, updateInterventionStatus (Recommended→Proposed→Approved→Scheduled→Active→Completed), setFilter, markAlertRead/NotificationRead. DEMO_USER (Dr. Rajesh Kumar, Institution Admin, IIT Madras).
+  * institution-service.ts — InstitutionService AGGREGATION service + useInstitution reactive hook. KEY DERIVED INTELLIGENCE (all from shared stores — no duplicate models §78):
+    - getDemandSupply(): DERIVES demand from Phase 4 opportunity requiredSkills (count × importance), supply from Phase 5 candidate competencies (avg competency). §10-13.
+    - getBranchSkillMatrix(): aggregates candidates by department × skill → avg competency heatmap cells. §7, §8.
+    - getRoleReadinessAgg(): groups candidates by target role → avg readiness + top gaps + evidence confidence. Uses Phase 3 calculateRoleReadiness. §17.
+    - getCohortInterventions(): determines intervention needs from demand-supply gaps (priority: Critical/High/Medium/Low; suggested action: Workshop/Project/Bootcamp/Certification). §19-21.
+    - getExecutiveSummary(): derives strong/needs-attention/emerging/suggested-actions from demand/supply data. §4.
+    - getEvidencePipeline(): aggregates evidence by status (Submitted/Pending/Evaluated/Verified) + source. §36-38.
+    - getApplicationFunnel(): from Phase 4 career store applications. §30.
+    - getCollaborationInsights(): from Phase 6 academia store collaborations. §28.
+  * index.ts — public API.
+- Built src/components/app/institution/:
+  * institution-shell.tsx — Institution sidebar (12 nav items: Dashboard/Skill Intelligence/Branch Analytics/Placement Insights/Internship Insights/Industry Alignment/Hackathon Analytics/Interventions/Collaborations/Reports/Notifications/Profile) + topbar (breadcrumb, notifications bell w/ unread count, profile dropdown w/ Logout) + content outlet (code-split: InstitutionCore + InstitutionExtra via dynamic imports). Mounted guard for hydration.
+  * institution-core.tsx — InstitutionDashboard (executive summary: strong/needs attention/emerging/suggested actions §4; intelligence flow §72; intelligence alerts §49; metrics: critical gaps/demand signals/active interventions/collaborations), SkillIntelligence (demand vs supply cards w/ Why? §10-13; branch×skill heatmap matrix w/ clickable cells → detail §7-9; role readiness aggregation §17), BranchAnalytics (department cards w/ avg competency + critical gaps; department detail drawer w/ "what should this department do next?" §55, §56).
+  * institution-extra.tsx — PlacementInsights (application funnel from real application states §30, §31), InternshipInsights (internship participation + evidence pipeline §29, §36-38), IndustryAlignment (reused from Phase 6 curriculum alignment — no duplicate §26, §27), HackathonAnalytics (foundation/placeholder — full hackathon system later §32-34), InterventionsPage (recommended + active + completed tabs; create intervention from recommendation; lifecycle transitions; Why? modal §20-25), CollaborationsPage (from Phase 6 academia store — no duplicate §28), ReportsPage (report builder w/ executive summary/demand-supply/funnel/data sources; export labelled PROTOTYPE §41, §74, §75), NotificationsPage §66, ProfilePage §60.
+- Wired login-view.tsx: Institution Demo → navigate("/institution/dashboard"). All 4 portals (Student/Industry/Academia/Institution) marked "✓ Available".
+- Wired page.tsx: InstitutionShell (dynamic import, ssr:false) for /institution/* routes (already had the import + route check from earlier phase).
+- Fixed SKILL_NAMES import in institution-service.ts (was from role-config, should be from demo-data).
+- Lint clean; build succeeds.
+
+Browser-verified (agent-browser via gateway):
+  Institution Dashboard ✓ — "Good morning, Kumar" + IIT Madras + Institution Admin + metrics (2 Critical Gaps, 14 Demand Signals, 0 Active Interventions, 3 Collaborations) + Executive Summary (Strong: Python competency; Needs Attention: ML gap; Emerging: Cloud; Recommended: Industry ML Workshop) + Intelligence Alerts
+  Skill Intelligence ✓ — Demand vs Supply (ML/Cloud/Programming with demand/supply/gap/opp count/student count), Branch×Skill heatmap matrix, Role Readiness aggregation
+  Interventions ✓ — Recommended tab with Industry Workshop (ML, Critical priority) + Bootcamp + Create Intervention buttons + Why? modal
+
+Stage Summary:
+- Phase 7 Institution Portal COMPLETE & verified.
+- Institution Portal AGGREGATES from shared Phase 3 (intelligence: student/role/competencies/evidence/readiness engine), Phase 4 (career: opportunities/applications/matching), Phase 5 (industry: candidates/challenges), Phase 6 (academia: curriculum/collaborations). NO duplicate models (§78 — ONE Skill, ONE Student, ONE Evidence, ONE Opportunity, ONE Role, ONE Readiness, ONE matching engine).
+- Demand-Supply DERIVED from Phase 4 opportunities + Phase 5 candidate competencies (not a separate demand dataset §52).
+- Branch×Skill heatmap matrix aggregates candidates by department × skill.
+- Intervention engine: deterministic rules — gap magnitude + affected students + industry demand + role importance → priority + suggested action. Lifecycle: Recommended→Proposed→Approved→Scheduled→Active→Completed→Evaluated. No causal claims (§25).
+- Curriculum alignment REUSED from Phase 6 (no duplicate engine §27).
+- Collaboration insights REUSED from Phase 6 academia store (no duplicate §28).
+- Application funnel from real Phase 4 application states (no fabricated placement rates §30, §79).
+- Evidence pipeline aggregates from candidate evidence records (Submitted/Pending/Evaluated/Verified §36-38).
+- Executive summary derived from actual demand/supply data (no hardcoded values §4, §79).
+- Why? explanations for demand, supply, gaps, interventions, branch cells — all reference actual platform data.
+- RBAC roles defined (Institution Admin/Academic Administrator/Placement Coordinator/Training & Placement/Department Head §60) — stored, full enforcement PROTOTYPE.
+- Did NOT rebuild Phase 1-6 (§1). Did NOT implement Hackathon execution (§32 — later phase).
+- ALL FOUR PORTALS NOW LIVE: Student (Phase 2-4), Industry (Phase 5), Academia (Phase 6), Institution (Phase 7).
+- STOP AFTER PHASE 7.

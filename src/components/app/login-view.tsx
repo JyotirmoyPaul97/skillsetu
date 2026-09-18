@@ -35,7 +35,7 @@ export function LoginView() {
         navigate("/industry/dashboard");
       } else if (which === "academia") {
         navigate("/academia/dashboard");
-      } else {
+      } else if (which === "institution") { navigate("/institution/dashboard"); } else {
         navigate("/");
       }
     }, 600);
@@ -142,7 +142,7 @@ export function LoginView() {
               const Icon = r.icon;
               const active = loading === r.key;
               const disabled = loading !== null;
-              const phase2 = r.key === "student" || r.key === "industry" || r.key === "academia";
+              const phase2 = r.key === "student" || r.key === "industry" || r.key === "academia" || r.key === "institution";
               return (
                 <button
                   key={r.key}
