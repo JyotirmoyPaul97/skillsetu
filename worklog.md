@@ -157,3 +157,62 @@ Stage Summary:
 - Auth: cookie sessions, role-based registration with dynamic fields, role-based routing to the right portal
 - Lint clean; no runtime errors; responsive (mobile drawer + desktop sidebar)
 - Demo logins (password "skillsetu"): aarav@iitm.ac.in | talent@technova.com | meena@iitm.ac.in | admin@iitm.ac.in
+
+---
+Task ID: P1-1
+Agent: orchestrator (main)
+Task: Phase 1 — SKILL SETU design system + public landing page (no dashboards)
+
+Work Log:
+- Read master specification (upload/Pasted Content_1789697085921.txt, 4026 lines). Phase 1 scope = design system + landing (master spec sections 1–7). Auth & portals deferred to Phase 2.
+- Established SKILL SETU master design tokens in src/app/globals.css:
+  * Brand palette (named --ss-* hex): navy #0F2547 (primary), blue #2563EB, teal #0D9488, orange #EA580C, plus slate ink/neutral surfaces
+  * Portal identity mapping from master palette: student=teal, industry=orange, academia=blue, institution=navy
+  * shadcn :root tokens remapped (--primary=navy, --ring=blue, --accent=blue tint, etc.) so all existing shadcn components inherit the SKILL SETU look
+  * Soft elevation shadows (--shadow-soft/-lift/-pop), radius 0.75rem, dark mode tokens
+  * Custom utilities: bg-dot-grid, bg-navy-gradient, text-gradient-nbt (navy→blue→teal), text-gradient-light (teal→blue→white), glow-conic, pulse-ring, float-y, dash-flow, loop-rotate, scroll-slim, shadow-soft/-lift/-pop
+- Updated layout.tsx: SKILL SETU metadata (title/description/keywords/OG), Geist font with display:swap
+- Refined Button (src/components/ui/button.tsx): added SKILL SETU variants — navy/blue/teal/orange accent + default; rounded-lg, shadow-soft, hover-lift, active translate-y-px; sizes sm/default/lg/xl/icon
+- Built SKILL SETU design-system primitives (src/components/ui/ss.tsx): SsCard (tone: flat/soft/lift/pop), SsBadge (tones: navy/blue/teal/orange/neutral/outline + student/industry/academia/institution portal tones), SsEyebrow, SsSectionHeading, SsSection (light/tint/navy), SsStat (KPI tile), SsSkillBar (progress w/ target marker)
+- Updated theme.ts portal colors to the master palette (teal/orange/blue/navy); updated LogoMark satellite colors + navy gradient bg
+- Built src/lib/phase1-store.ts (Zustand): gate state (login/get-started/portal-*) + mobileNav
+- Built src/components/site/phase-gate.tsx: Phase 2 announcement modal with portal-specific icon/accent/message, Escape-to-close, body scroll lock, gradient top strip, "Back to landing" CTA
+- Rebuilt landing components per master spec:
+  * header.tsx (spec §3): logo + center nav (How It Works/Portals/About) + Login/Get Started (navy btn); scroll-aware bg; mobile drawer
+  * hero.tsx (spec §3): AI-POWERED SKILL INTELLIGENCE eyebrow + "From Skill Claims to Skill Evidence." gradient headline + subtitle + 2 CTAs (Explore→gate, How It Works→scroll) + workspace photo with NAVY overlay + "Evidence, not claims" strip
+  * skill-layer.tsx (spec §4): "SKILL INTELLIGENCE LAYER" eyebrow + mock-engine card (status dot + title + dots header), dot-grid diagram with central "SKILL SETU INTELLIGENCE ENGINE" navy node (conic glow) + 4 themed satellites (teal/orange/blue/navy) with animated dashed connectors + bottom flow strip (Skills→Evidence→Intelligence→Opportunity→Feedback→Growth) + portal legend chips
+  * portals.tsx (spec §5): "One Ecosystem. Four Perspectives." 4-col grid; each card: icon (portal-tinted), number 01-04, title, description, 4 themed tags, "Enter X Portal"→gate, hover accent bar
+  * closed-loop.tsx (spec §6): "Connected by Evidence." with 7 pill nodes (Student→Evidence→Skill Intelligence→Industry Opportunity→Feedback→Skill Passport→Institutional Insight) + arrows + curved dashed "Loops back to Student" return arrow (desktop) / vertical stack (mobile) + secondary statement
+  * why-skillsetu.tsx (spec §7): "Not Just a Portal. A Skill Intelligence Layer." gradient heading + 3 feature cards (Evidence Over Claims/teal-shield, Role-Specific Readiness/blue-target, Continuous Feedback/orange-trending) + CTA "Build Skills. Create Evidence. Find Opportunity." (Get Started→gate, Explore the Portals→scroll)
+  * footer.tsx: logo + tagline + description + "SIH 2026 · Problem Statement 44" + 3 link columns (Ecosystem/Portals/Account) + copyright bar; sticky (mt-auto)
+- Rewrote src/app/page.tsx to render ONLY the Phase 1 landing (Header→Hero→SkillLayer→Portals→ClosedLoop→Why→Footer + PhaseGate). No dashboards, no auth, no app-shell.
+- Deleted unused cta.tsx (CTA folded into Why section per spec §7)
+- Ran `bun run lint` — clean (0 errors)
+- Verified end-to-end with agent-browser:
+  * Desktop 1440px: hero (navy overlay + gradient headline + 2 CTAs), skill-intelligence-layer card (central engine node + 4 themed satellites + dashed connectors), 4 portal cards (teal/orange/blue/navy), closed loop (7 nodes + return arrow + "Loops back to Student"), why (3 cards + CTA), footer (logo + 3 columns + copyright + SIH label)
+  * Nav anchors: "How It Works"→#how-it-works ✓, "Portals"→#portals ✓, "About"→#about ✓ (all scrolled correctly, verified via getBoundingClientRect)
+  * Login button → PhaseGate modal ("Login to SKILL SETU" + "Phase 2 · Portals & Auth" badge) ✓
+  * Enter Student Portal → portal-specific PhaseGate (teal grad-cap icon, "Student dashboards arrive in Phase 2") ✓
+  * Mobile 390px: hamburger drawer opens (nav links + Login/Get Started), hero stacks (buttons vertical), workspace bg visible
+  * Sticky footer at bottom (mt-auto in flex-col wrapper) ✓
+  * No console/runtime errors; page returns 200
+
+Stage Summary:
+- Phase 1 COMPLETE: design system + public landing page live at / (dev :3000), per master spec
+- Master palette applied throughout: deep navy + blue + teal + white + subtle orange (NOT the earlier violet/rose)
+- 4 portals themed: Student=teal, Industry=orange, Academia=blue, Institution=navy
+- PhaseGate modal cleanly defers auth/portals to Phase 2 (all CTAs functional, just gated)
+- No dashboards built/rendered in Phase 1 (per instruction)
+- Lint clean; no errors; responsive verified
+- Files created/modified:
+  * src/app/globals.css (design tokens + utilities)
+  * src/app/layout.tsx (metadata + font)
+  * src/app/page.tsx (Phase 1 landing only)
+  * src/components/ui/button.tsx (SKILL SETU variants)
+  * src/components/ui/ss.tsx (NEW — design-system primitives)
+  * src/components/site/theme.ts (portal colors → master palette)
+  * src/components/site/logo.tsx (navy gradient + master-palette satellites)
+  * src/components/site/phase-gate.tsx (NEW — Phase 2 gate modal)
+  * src/lib/phase1-store.ts (NEW — gate + mobileNav state)
+  * src/components/site/{header,hero,skill-layer,portals,closed-loop,why-skillsetu,footer}.tsx (rebuilt per master spec §3–7)
+- STOP after Phase 1 — dashboards/auth/app-shell deferred to Phase 2

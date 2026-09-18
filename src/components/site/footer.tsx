@@ -1,71 +1,64 @@
-import Link from "next/link";
-import { Logo } from "./logo";
+import { Logo, LogoMark } from "./logo";
 
-interface FooterLinkGroup {
-  title: string;
-  links: { label: string; href: string }[];
-}
-
-const GROUPS: FooterLinkGroup[] = [
+const GROUPS: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Ecosystem",
     links: [
       { label: "How It Works", href: "#how-it-works" },
       { label: "About", href: "#about" },
-      { label: "Closed Loop", href: "#closed-loop" },
+      { label: "Closed Loop", href: "#" },
     ],
   },
   {
     title: "Portals",
     links: [
-      { label: "Student", href: "#portal-student" },
-      { label: "Industry", href: "#portal-industry" },
-      { label: "Academia", href: "#portal-academia" },
-      { label: "Institution", href: "#portal-institution" },
+      { label: "Student", href: "#portals" },
+      { label: "Industry", href: "#portals" },
+      { label: "Academia", href: "#portals" },
+      { label: "Institution", href: "#portals" },
     ],
   },
   {
     title: "Account",
     links: [
-      { label: "Login", href: "#login" },
-      { label: "Privacy", href: "#privacy" },
-      { label: "Contact", href: "#contact" },
+      { label: "Login", href: "#" },
+      { label: "Privacy", href: "#" },
+      { label: "Contact", href: "#" },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-slate-200 bg-white">
+    <footer className="mt-auto border-t border-[var(--ss-border)] bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
           {/* Brand block */}
           <div className="col-span-2 lg:col-span-2">
-            <Logo size={36} />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-600">
-              From Skill Claims to Skill Evidence. AI-Powered Skill
-              Intelligence & Academia–Industry Ecosystem.
+            <Logo size={34} />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[var(--ss-muted)]">
+              From Skill Claims to Skill Evidence. AI-Powered Skill Intelligence
+              &amp; Academia–Industry Ecosystem.
             </p>
-            <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400">
+            <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--ss-faint)]">
               SIH 2026 · Problem Statement 44
             </p>
           </div>
 
-          {/* Link groups */}
           {GROUPS.map((g) => (
             <div key={g.title}>
-              <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--ss-muted)]">
                 {g.title}
               </h3>
               <ul className="mt-4 space-y-2.5">
                 {g.links.map((l) => (
                   <li key={l.label}>
-                    <Link
+                    <a
                       href={l.href}
-                      className="text-sm text-slate-600 transition-colors hover:text-slate-900"
+                      className="text-sm text-[var(--ss-ink-soft)] transition-colors hover:text-[var(--ss-blue-600)]"
                     >
                       {l.label}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -74,9 +67,9 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-[var(--ss-border)] pt-6 text-xs text-[var(--ss-muted)] sm:flex-row">
           <p>© 2026 SKILL SETU · Skill Intelligence Ecosystem</p>
-          <p className="text-slate-400">
+          <p className="text-[var(--ss-faint)]">
             Built for Smart India Hackathon · Problem Statement 44
           </p>
         </div>

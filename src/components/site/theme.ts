@@ -29,7 +29,7 @@ export const PORTALS: PortalTheme[] = [
     description:
       "Understand your skills, identify career gaps, take the right next action, and discover opportunities matched to your evidence.",
     tags: ["Skill Intelligence", "Career Readiness", "Skill Gap", "Opportunities"],
-    accent: "#0D9488", // teal-700
+    accent: "#0D9488", // teal (master palette)
     tint: "#CCFBF1", // teal-100
     borderTint: "rgba(13,148,136,0.18)",
     icon: "graduationCap",
@@ -42,9 +42,9 @@ export const PORTALS: PortalTheme[] = [
     description:
       "Discover evidence-backed talent, post opportunities, build project teams, and turn real-world feedback into stronger skill evidence.",
     tags: ["Talent Discovery", "Opportunity Management", "AI Team Builder", "Industry Feedback"],
-    accent: "#B45309", // amber-700
-    tint: "#FEF3C7", // amber-100
-    borderTint: "rgba(180,83,9,0.18)",
+    accent: "#EA580C", // orange (subtle accent — master palette)
+    tint: "#FED7AA", // orange-100
+    borderTint: "rgba(234,88,12,0.18)",
     icon: "factory",
   },
   {
@@ -55,9 +55,9 @@ export const PORTALS: PortalTheme[] = [
     description:
       "Connect faculty with industry opportunities, emerging skills, practical exposure, mentorship, and curriculum-alignment insights.",
     tags: ["Industry Opportunities", "Curriculum Alignment", "Collaboration", "Faculty Development"],
-    accent: "#BE123C", // rose-700
-    tint: "#FFE4E6", // rose-100
-    borderTint: "rgba(190,18,60,0.18)",
+    accent: "#2563EB", // blue (master palette)
+    tint: "#DBEAFE", // blue-100
+    borderTint: "rgba(37,99,235,0.18)",
     icon: "bookOpen",
   },
   {
@@ -68,9 +68,9 @@ export const PORTALS: PortalTheme[] = [
     description:
       "Turn student skill data into institutional intelligence for interventions, industry alignment, internship and placement readiness.",
     tags: ["Skill Intelligence", "Branch Analytics", "Placement Insights", "Industry Alignment"],
-    accent: "#6D28D9", // violet-700 (shifted from indigo toward violet per brand rules)
-    tint: "#EDE9FE", // violet-100
-    borderTint: "rgba(109,40,217,0.18)",
+    accent: "#0F2547", // deep navy (master palette)
+    tint: "#DBE7F5", // navy-tint
+    borderTint: "rgba(15,37,71,0.18)",
     icon: "building2",
   },
 ];

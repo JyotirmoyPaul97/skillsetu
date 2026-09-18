@@ -6,32 +6,33 @@ import { Toaster } from "@/components/ui/toaster";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "SKILL SETU — Academia-Industry Collaboration Portal",
+  title: "SKILL SETU — Skill Intelligence Ecosystem",
   description:
-    "A unified platform connecting students, industries, and academicians. AI-Powered Skill Intelligence: From Skill Claims to Skill Evidence.",
+    "From Skill Claims to Skill Evidence. AI-Powered Skill Intelligence & Academia–Industry Ecosystem connecting students, industry, academia and institutions.",
   keywords: [
     "SKILL SETU",
     "Skill Intelligence",
     "Academia-Industry Collaboration",
-    "Student Portal",
-    "Industry Portal",
-    "Academia Portal",
-    "Institution Portal",
+    "Skill Evidence",
+    "Role Readiness",
+    "Skill Passport",
     "SIH 2026",
   ],
   authors: [{ name: "SKILL SETU" }],
   openGraph: {
     title: "SKILL SETU — Skill Intelligence Ecosystem",
     description:
-      "AI-Powered Skill Intelligence & Academia–Industry Ecosystem. From Skill Claims to Skill Evidence.",
+      "From Skill Claims to Skill Evidence. AI-Powered Skill Intelligence & Academia–Industry Ecosystem.",
     siteName: "SKILL SETU",
     type: "website",
   },
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SKILL SETU — Skill Intelligence Ecosystem",
     description:
-      "AI-Powered Skill Intelligence & Academia–Industry Ecosystem.",
+      "From Skill Claims to Skill Evidence. AI-Powered Skill Intelligence & Academia–Industry Ecosystem.",
   },
 };
 

@@ -2,97 +2,72 @@
 
 import { motion } from "framer-motion";
 import {
-  GraduationCap,
-  Factory,
-  BookOpen,
-  Building2,
-  ArrowRight,
-  Layers,
+  GraduationCap, Factory, BookOpen, Building2, ArrowRight, Layers,
 } from "lucide-react";
 import { PORTALS, type PortalTheme } from "./theme";
+import { SsEyebrow, SsSectionHeading, SsBadge } from "@/components/ui/ss";
+import { usePhase1 } from "@/lib/phase1-store";
 import { cn } from "@/lib/utils";
-import { useApp } from "@/lib/store";
-import type { RegisterRole } from "@/lib/types";
 
-function PortalIcon({ theme }: { theme: PortalTheme }) {
-  const cls = "h-6 w-6";
-  switch (theme.icon) {
-    case "graduationCap":
-      return <GraduationCap className={cls} />;
-    case "factory":
-      return <Factory className={cls} />;
-    case "bookOpen":
-      return <BookOpen className={cls} />;
-    case "building2":
-      return <Building2 className={cls} />;
-  }
-}
+const ICON = { student: GraduationCap, industry: Factory, academia: BookOpen, institution: Building2 } as const;
 
 function PortalCard({ theme, idx }: { theme: PortalTheme; idx: number }) {
-  const { setView, setPendingRole } = useApp();
-  const enter = () => {
-    setPendingRole(theme.key.toUpperCase() as RegisterRole);
-    setView("register");
-  };
+  const { openGate } = usePhase1();
+  const Icon = ICON[theme.key];
+  const gate = `portal-${theme.key}` as "portal-student" | "portal-industry" | "portal-academia" | "portal-institution";
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.45, delay: idx * 0.08, ease: "easeOut" }}
-      className="group relative flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(15,23,42,0.22)]"
+      transition={{ duration: 0.45, delay: idx * 0.08 }}
+      className="group relative flex flex-col rounded-2xl border border-[var(--ss-border)] bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
     >
-      {/* Top: index + icon */}
+      {/* icon + index */}
       <div className="flex items-start justify-between">
         <span
-          className="flex h-11 w-11 items-center justify-center rounded-xl"
-          style={{
-            backgroundColor: theme.tint,
-            color: theme.accent,
-            border: `1px solid ${theme.borderTint}`,
-          }}
+          className="flex h-12 w-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105"
+          style={{ backgroundColor: theme.tint, color: theme.accent, border: `1px solid ${theme.borderTint}` }}
         >
-          <PortalIcon theme={theme} />
+          <Icon className="h-6 w-6" />
         </span>
-        <span className="text-xs font-light tracking-[0.2em] text-slate-300">
+        <span className="text-xs font-light tracking-[0.22em] text-[var(--ss-faint)]">
           {theme.index}
         </span>
       </div>
 
-      {/* Title + description */}
-      <h3 className="mt-5 text-lg font-bold text-slate-900">{theme.name}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">
+      {/* title + description */}
+      <h3 className="mt-5 text-lg font-bold text-[var(--ss-ink)]">{theme.name}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-[var(--ss-muted)]">
         {theme.description}
       </p>
 
-      {/* Tags */}
+      {/* tags */}
       <div className="mt-4 flex flex-wrap gap-1.5">
         {theme.tags.map((tag) => (
-          <span
+          <SsBadge
             key={tag}
-            className="rounded-full px-2.5 py-1 text-[11px] font-medium"
-            style={{
-              backgroundColor: theme.tint,
-              color: theme.accent,
-            }}
+            tone={theme.key as any}
+            className="text-[11px]"
           >
             {tag}
-          </span>
+          </SsBadge>
         ))}
       </div>
 
-      {/* Enter link */}
-      <div className="mt-6 flex-1" />
+      {/* enter CTA */}
+      <div className="flex-1" />
       <button
-        onClick={enter}
-        className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
+        onClick={() => openGate(gate)}
+        className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
         style={{ color: theme.accent }}
       >
         Enter {theme.short} Portal
         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
       </button>
 
-      {/* Bottom accent bar */}
+      {/* hover accent bar */}
       <span
         className="absolute inset-x-6 bottom-0 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-300 group-hover:scale-x-100"
         style={{ backgroundColor: theme.accent }}
@@ -107,23 +82,18 @@ export function Portals() {
       id="portals"
       className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
     >
-      {/* Heading block */}
       <div className="mx-auto max-w-2xl text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-600">
-          <Layers className="h-3.5 w-3.5 text-teal-600" />
-          Four Portals · One Ecosystem
-        </span>
-        <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
+        <SsEyebrow icon={Layers} tone="blue">Four Portals · One Ecosystem</SsEyebrow>
+        <SsSectionHeading className="mt-5">
           One Ecosystem.{" "}
-          <span className="text-gradient-it">Four Perspectives.</span>
-        </h2>
-        <p className="mt-4 text-base text-slate-600 sm:text-lg">
+          <span className="text-gradient-nbt">Four Perspectives.</span>
+        </SsSectionHeading>
+        <p className="mt-4 text-base text-[var(--ss-muted)] sm:text-lg">
           Every stakeholder sees the intelligence they need—while staying
           connected to the same skill ecosystem.
         </p>
       </div>
 
-      {/* Cards grid */}
       <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {PORTALS.map((p, i) => (
           <PortalCard key={p.key} theme={p} idx={i} />

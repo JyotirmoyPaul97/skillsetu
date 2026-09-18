@@ -43,73 +43,119 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ============================================================
+   SKILL SETU — Master Design Tokens
+   Palette per master spec: Deep navy · Blue · Teal · White/soft
+   neutral surfaces · Subtle orange accent.
+   ============================================================ */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* — Brand palette (named, hex, for inline + portal theming) — */
+  --ss-navy-950: #0a1628;   /* deepest navy — hero text, footer bg */
+  --ss-navy-900: #0f2547;   /* primary dark — buttons, headings */
+  --ss-navy-800: #1e3a5f;   /* navy raised */
+  --ss-navy-700: #2c5282;   /* navy hover */
+
+  --ss-blue-600: #2563eb;   /* primary interactive — links, active states */
+  --ss-blue-500: #3b82f6;
+  --ss-blue-100: #dbeafe;
+  --ss-blue-50:  #eff6ff;
+
+  --ss-teal-600: #0d9488;   /* evidence / success accent */
+  --ss-teal-500: #14b8a6;
+  --ss-teal-100: #ccfbf1;
+  --ss-teal-50:  #f0fdfa;
+
+  --ss-orange-600: #ea580c; /* subtle accent — industry, highlights */
+  --ss-orange-500: #f97316;
+  --ss-orange-100: #fed7aa;
+  --ss-orange-50:  #fff7ed;
+
+  /* — Ink + neutral surfaces (slate scale) — */
+  --ss-ink:         #0f172a; /* slate-900 body text */
+  --ss-ink-soft:   #334155; /* slate-700 */
+  --ss-muted:      #64748b; /* slate-500 */
+  --ss-faint:      #94a3b8; /* slate-400 */
+  --ss-line:       #cbd5e1; /* slate-300 */
+  --ss-border:     #e2e8f0; /* slate-200 */
+  --ss-surface:    #ffffff;
+  --ss-surface-2:  #f8fafc; /* slate-50 section bg */
+  --ss-surface-3:  #f1f5f9; /* slate-100 */
+
+  /* — Portal identity (mapped from the master palette) — */
+  --ss-portal-student:     #0d9488; /* teal */
+  --ss-portal-student-tint:#ccfbf1;
+  --ss-portal-industry:    #ea580c; /* orange */
+  --ss-portal-industry-tint:#fed7aa;
+  --ss-portal-academia:    #2563eb; /* blue */
+  --ss-portal-academia-tint:#dbeafe;
+  --ss-portal-institution: #0f2547; /* navy */
+  --ss-portal-institution-tint:#dbe7f5;
+
+  /* — shadcn token mapping → SKILL SETU identity — */
+  --radius: 0.75rem;        /* 12px — rounded cards/buttons */
+  --background: var(--ss-surface);
+  --foreground: var(--ss-ink);
+  --card: var(--ss-surface);
+  --card-foreground: var(--ss-ink);
+  --popover: var(--ss-surface);
+  --popover-foreground: var(--ss-ink);
+  --primary: var(--ss-navy-900);          /* primary = deep navy */
+  --primary-foreground: #ffffff;
+  --secondary: var(--ss-surface-3);
+  --secondary-foreground: var(--ss-ink);
+  --muted: var(--ss-surface-2);
+  --muted-foreground: var(--ss-muted);
+  --accent: var(--ss-blue-50);            /* accent = blue tint */
+  --accent-foreground: var(--ss-blue-600);
+  --destructive: #e11d48;
+  --border: var(--ss-border);
+  --input: var(--ss-border);
+  --ring: var(--ss-blue-600);             /* focus ring = blue */
+
+  /* — Chart palette (navy → blue → teal → orange → navy cycle) — */
+  --chart-1: var(--ss-navy-900);
+  --chart-2: var(--ss-blue-600);
+  --chart-3: var(--ss-teal-600);
+  --chart-4: var(--ss-orange-500);
+  --chart-5: var(--ss-navy-800);
+
+  /* — Sidebar — */
+  --sidebar: var(--ss-surface);
+  --sidebar-foreground: var(--ss-ink);
+  --sidebar-primary: var(--ss-navy-900);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--ss-surface-2);
+  --sidebar-accent-foreground: var(--ss-ink);
+  --sidebar-border: var(--ss-border);
+  --sidebar-ring: var(--ss-blue-600);
+
+  /* — Soft elevation (premium, not cyberpunk) — */
+  --shadow-soft: 0 1px 2px rgba(15, 37, 71, 0.04), 0 4px 16px rgba(15, 37, 71, 0.06);
+  --shadow-lift: 0 8px 24px -8px rgba(15, 37, 71, 0.16), 0 2px 6px rgba(15, 37, 71, 0.05);
+  --shadow-pop:  0 24px 60px -24px rgba(15, 37, 71, 0.28);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: var(--ss-navy-950);
+  --foreground: #f1f5f9;
+  --card: #0f2547;
+  --card-foreground: #f1f5f9;
+  --popover: var(--ss-navy-900);
+  --popover-foreground: #f1f5f9;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e3a5f;
+  --secondary-foreground: #f1f5f9;
+  --muted: #1e3a5f;
+  --muted-foreground: #94a3b8;
+  --accent: #1e3a5f;
+  --accent-foreground: #93c5fd;
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #3b82f6;
+  --sidebar: var(--ss-navy-900);
+  --sidebar-foreground: #f1f5f9;
 }
 
 @layer base {
@@ -118,57 +164,84 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Strong typographic hierarchy defaults */
+  h1, h2, h3, h4 {
+    @apply tracking-tight text-foreground;
+    text-wrap: balance;
   }
 }
 
-/* === SKILL SETU custom utilities === */
+/* ============================================================
+   SKILL SETU — Custom utilities
+   ============================================================ */
 
 /* Subtle dotted grid background for cards/diagrams */
 .bg-dot-grid {
-  background-image: radial-gradient(
-    circle,
-    oklch(0.85 0.012 240) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
   background-size: 22px 22px;
   background-position: -10px -10px;
 }
 
-/* Fine dotted grid for darker overlays */
+/* Fine dotted grid for dark overlays */
 .bg-dot-grid-dark {
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.16) 1px,
-    transparent 1px
-  );
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Gradient text helper (indigo → teal) */
-.text-gradient-it {
+/* SKILL SETU gradient text — navy → blue → teal (master palette) */
+.text-gradient-nbt {
   background-image: linear-gradient(
     90deg,
-    oklch(0.55 0.18 277) 0%,
-    oklch(0.62 0.16 240) 45%,
-    oklch(0.7 0.13 180) 100%
+    var(--ss-navy-900) 0%,
+    var(--ss-blue-600) 50%,
+    var(--ss-teal-600) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Animated conic glow used behind the central intelligence node */
+/* Reverse gradient for dark backgrounds (teal → blue → white) */
+.text-gradient-light {
+  background-image: linear-gradient(
+    90deg,
+    var(--ss-teal-500) 0%,
+    #60a5fa 50%,
+    #f1f5f9 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Legacy alias kept for any older refs */
+.text-gradient-it {
+  background-image: linear-gradient(90deg, var(--ss-blue-600), var(--ss-teal-600));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft navy surface gradient (for dark sections) */
+.bg-navy-gradient {
+  background-image: linear-gradient(135deg, var(--ss-navy-950) 0%, var(--ss-navy-900) 60%, var(--ss-navy-800) 100%);
+}
+
+/* Animated conic glow behind the intelligence engine node */
 .glow-conic {
   background: conic-gradient(
     from 0deg,
-    oklch(0.55 0.18 277 / 0.0),
-    oklch(0.55 0.18 277 / 0.45),
-    oklch(0.7 0.13 180 / 0.55),
-    oklch(0.55 0.18 277 / 0.0)
+    rgba(37, 99, 235, 0),
+    rgba(37, 99, 235, 0.35),
+    rgba(13, 148, 136, 0.45),
+    rgba(37, 99, 235, 0)
   );
-  animation: spin-slow 18s linear infinite;
+  animation: spin-slow 22s linear infinite;
 }
-
 @keyframes spin-slow {
   to {
     transform: rotate(360deg);
@@ -177,18 +250,9 @@
 
 /* Soft pulsing ring */
 @keyframes pulse-ring {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.55;
-  }
-  70% {
-    transform: scale(1.25);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(0.9);
-    opacity: 0;
-  }
+  0% { transform: scale(0.9); opacity: 0.55; }
+  70% { transform: scale(1.3); opacity: 0; }
+  100% { transform: scale(0.9); opacity: 0; }
 }
 .pulse-ring::after {
   content: "";
@@ -199,32 +263,33 @@
   animation: pulse-ring 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Slow float for diagram satellite nodes */
+/* Slow float for diagram satellites */
 @keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 .float-y {
   animation: float-y 6s ease-in-out infinite;
 }
 
-/* Marquee-ish dash flow on connector lines */
+/* Marquee dash flow on connector lines */
 @keyframes dash-flow {
-  to {
-    stroke-dashoffset: -24;
-  }
+  to { stroke-dashoffset: -24; }
 }
 .dash-flow {
   stroke-dasharray: 4 8;
   animation: dash-flow 1.2s linear infinite;
 }
 
-/* Thin custom scrollbar for any scrollable region */
+/* Continuous loop rotation for the closed-loop ring */
+@keyframes loop-rotate {
+  to { transform: rotate(360deg); }
+}
+.loop-rotate {
+  animation: loop-rotate 40s linear infinite;
+}
+
+/* Thin custom scrollbar */
 .scroll-slim::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -233,9 +298,14 @@
   background: transparent;
 }
 .scroll-slim::-webkit-scrollbar-thumb {
-  background: oklch(0.85 0.01 240);
+  background: var(--ss-line);
   border-radius: 9999px;
 }
 .scroll-slim::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.72 0.02 240);
+  background: var(--ss-faint);
 }
+
+/* Soft elevation helpers (master spec: soft shadows) */
+.shadow-soft { box-shadow: var(--shadow-soft); }
+.shadow-lift { box-shadow: var(--shadow-lift); }
+.shadow-pop  { box-shadow: var(--shadow-pop); }

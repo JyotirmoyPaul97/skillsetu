@@ -1,0 +1,4027 @@
+============================================================
+SKILL SETU — COMPLETE NEW PROTOTYPE BUILD SPECIFICATION
+============================================================
+
+YOU ARE BUILDING A COMPLETELY NEW SKILL SETU PROTOTYPE.
+
+PRODUCT:
+SKILL SETU
+
+PRIMARY TAGLINE:
+From Skill Claims to Skill Evidence.
+
+SUPPORTING POSITIONING:
+AI-Powered Skill Intelligence & Academia–Industry Ecosystem
+
+CORE PRINCIPLE:
+EVIDENCE, NOT CLAIMS.
+
+============================================================
+MASTER OBJECTIVE
+============================================================
+
+Create a new, polished, presentation-ready, highly interactive SKILL SETU prototype from scratch.
+
+This is NOT a redesign of a generic dashboard.
+
+This is NOT LinkedIn.
+
+This is NOT Naukri.
+
+This is NOT Unstop.
+
+This is NOT a collection of unrelated pages.
+
+This is a unified Academia–Industry Skill Intelligence ecosystem connecting:
+
+1. Students
+2. Industry
+3. Academia
+4. Institutions
+
+through a central:
+
+SKILL INTELLIGENCE ENGINE
+
+The main product loop is:
+
+INDUSTRY DEMAND
+→ ROLE REQUIREMENTS
+→ STUDENT EVIDENCE
+→ SKILL INTELLIGENCE
+→ ROLE READINESS
+→ SKILL GAP
+→ NEXT BEST ACTION
+→ OPPORTUNITY / HACKATHON / PROJECT
+→ REAL-WORLD EXPERIENCE
+→ EVALUATION / FEEDBACK
+→ NEW EVIDENCE
+→ UPDATED SKILL PASSPORT
+→ UPDATED ROLE READINESS
+→ INSTITUTIONAL INSIGHT
+
+============================================================
+1. BUILD PRINCIPLES
+============================================================
+
+The new prototype must be:
+
+Premium
+Modern
+Professional
+Responsive
+Fast
+Consistent
+Interactive
+Evaluator-friendly
+Demo-friendly
+
+Every visible button should have a meaningful interaction.
+
+Every major number should appear traceable to data.
+
+Every recommendation should have a "Why?" explanation.
+
+Every major workflow should have visible state changes.
+
+Do NOT make every screen look like a static mockup.
+
+Use realistic controlled DEMO DATA.
+
+Clearly distinguish:
+
+IMPLEMENTED
+PROTOTYPE / DEMO
+FUTURE INTEGRATION
+
+Do not claim fake live integrations.
+
+============================================================
+2. FRONTEND VISUAL IDENTITY
+============================================================
+
+Use a consistent SKILL SETU design language.
+
+Visual character:
+
+Premium SaaS
+Clean
+Academic + industry
+Intelligent
+Human-centered
+Professional
+Not futuristic cyberpunk
+
+Preferred palette:
+
+Deep navy
+Blue
+Teal
+White / soft neutral surfaces
+Subtle orange accent
+
+Use:
+
+Rounded cards
+Soft shadows
+Clear spacing
+Strong typography hierarchy
+Minimal but meaningful gradients
+Data visualization
+Progress indicators
+Chips
+Status badges
+Evidence indicators
+Expandable explanations
+Drawers
+Modals
+Timeline components
+
+Avoid:
+
+Excessive glassmorphism
+Neon cyberpunk
+Overly dark dashboards
+Huge empty spaces
+Generic admin-table appearance
+Clutter
+Unnecessary animations
+
+Animations should be subtle:
+
+fade
+slide
+scale
+progress
+hover
+state transitions
+
+============================================================
+3. PUBLIC LANDING PAGE
+============================================================
+
+Root URL must be the SKILL SETU marketing/product landing page.
+
+Header:
+
+LEFT:
+SKILL SETU
+Skill Intelligence Ecosystem
+
+CENTER:
+
+How It Works
+Portals
+About
+
+RIGHT:
+
+Login
+Get Started
+
+Mobile:
+
+SKILL SETU logo/brand
+Hamburger menu
+
+Hero:
+
+Small eyebrow:
+
+AI-POWERED SKILL INTELLIGENCE
+
+Main headline:
+
+From Skill Claims
+to Skill Evidence.
+
+Subtitle:
+
+Measure what students can actually demonstrate, understand what industry requires, and turn skill gaps into meaningful opportunities.
+
+Primary CTA:
+
+Explore the Ecosystem →
+
+Secondary CTA:
+
+How It Works
+
+Hero visual:
+
+Modern university / student workspace.
+
+Use:
+
+Laptop
+Books
+Notebook
+Coffee
+Greenery
+Campus atmosphere
+
+The hero image MUST contain:
+
+NO readable text
+NO logos
+NO watermarks
+NO fake UI text
+NO random letters
+NO readable book titles
+
+Use a subtle dark/neutral overlay to maintain text readability.
+
+============================================================
+4. LANDING PAGE — SKILL INTELLIGENCE LAYER
+============================================================
+
+Section heading:
+
+SKILL INTELLIGENCE LAYER
+
+Supporting message:
+
+One platform. Four portals. One connected ecosystem.
+
+Create a central visual ecosystem.
+
+CENTER NODE:
+
+SKILL SETU
+SKILL INTELLIGENCE ENGINE
+
+Around it:
+
+Student
+Industry
+Academia
+Institution
+
+Show connections rather than four disconnected dashboard cards.
+
+============================================================
+5. LANDING PAGE — FOUR PORTALS
+============================================================
+
+Section:
+
+One Ecosystem. Four Perspectives.
+
+STUDENT PORTAL
+
+Description:
+
+Understand your skills, identify career gaps, take the right next action, and discover opportunities matched to your evidence.
+
+Tags:
+
+Skill Intelligence
+Career Readiness
+Skill Gap
+Opportunities
+
+CTA:
+
+Enter Student Portal
+
+------------------------------------------------------------
+
+INDUSTRY PORTAL
+
+Description:
+
+Discover evidence-backed talent, post opportunities, build project teams, and turn real-world feedback into stronger skill evidence.
+
+Tags:
+
+Talent Discovery
+Opportunity Management
+AI Team Builder
+Industry Feedback
+
+CTA:
+
+Enter Industry Portal
+
+------------------------------------------------------------
+
+ACADEMIA PORTAL
+
+Description:
+
+Connect faculty with industry opportunities, emerging skills, practical exposure, mentorship, and curriculum-alignment insights.
+
+Tags:
+
+Industry Opportunities
+Curriculum Alignment
+Collaboration
+Faculty Development
+
+CTA:
+
+Enter Academia Portal
+
+------------------------------------------------------------
+
+INSTITUTION PORTAL
+
+Description:
+
+Turn student skill data into institutional intelligence for interventions, industry alignment, internship and placement readiness.
+
+Tags:
+
+Skill Intelligence
+Branch Analytics
+Placement Insights
+Industry Alignment
+
+CTA:
+
+Enter Institution Portal
+
+============================================================
+6. LANDING PAGE — CLOSED LOOP
+============================================================
+
+Heading:
+
+Connected by Evidence.
+
+Show horizontal/looped flow:
+
+Student
+→ Evidence
+→ Skill Intelligence
+→ Industry Opportunity
+→ Feedback
+→ Skill Passport
+→ Institutional Insight
+→ Student
+
+Supporting text:
+
+All four portals share one ecosystem—skills flow continuously from demonstration to intelligence to opportunity and back.
+
+Secondary statement:
+
+Every action in one portal strengthens the intelligence that powers the others—creating a continuously improving skill ecosystem.
+
+============================================================
+7. LANDING PAGE — WHY SKILL SETU
+============================================================
+
+Heading:
+
+Not Just a Portal. A Skill Intelligence Layer.
+
+Three cards:
+
+1.
+Evidence Over Claims
+
+Skills are supported by assessments, projects, certifications, internships and feedback—not self-reported claims.
+
+2.
+Role-Specific Readiness
+
+Students understand exactly what they need for their target career—mapped against role requirements.
+
+3.
+Continuous Feedback
+
+Real-world experiences continuously strengthen the student's skill profile.
+
+CTA:
+
+Build Skills. Create Evidence. Find Opportunity.
+
+============================================================
+8. LOGIN / AUTHENTICATION
+============================================================
+
+Create a clean authentication flow.
+
+Login
+
+Email
+Password
+
+Role selection only where appropriate:
+
+Student
+Industry
+Academia
+Institution
+
+Provide:
+
+Forgot Password
+Remember Me
+Demo Login
+
+Demo accounts:
+
+Student Demo
+Industry Demo
+Academia Demo
+Institution Demo
+
+After login, route to appropriate portal.
+
+============================================================
+9. GLOBAL APPLICATION SHELL
+============================================================
+
+Every portal must have:
+
+Top navigation
+Sidebar navigation
+Breadcrumbs where useful
+Notifications
+Profile menu
+Global search where relevant
+AI assistant access
+
+Responsive sidebar:
+
+Expanded
+Collapsed
+
+Use consistent navigation patterns.
+
+============================================================
+10. STUDENT PORTAL
+============================================================
+
+Navigation:
+
+Dashboard
+
+My Skills
+  Assessment
+  Technical
+  Soft Skills
+  Aptitude
+  Skill Gap
+
+Career & Opportunities
+  Jobs
+  Internships
+  Projects
+  Industry Learning
+
+Hackathons & Teams
+  Discover
+  My Hackathons
+  My Teams
+  Submissions
+  Mentorship
+
+Skill Passport
+  Verified Skills
+  Projects
+  Certifications
+  Internships
+  Hackathons
+  Resume
+
+Notifications
+
+============================================================
+11. STUDENT DASHBOARD
+============================================================
+
+Header:
+
+Good morning, [Student]
+
+Show:
+
+Target Role
+Role Readiness
+Top Skill Gap
+Next Best Action
+Best Opportunity Match
+Recent Evidence
+Upcoming Hackathons
+Applications
+
+Avoid unnecessary KPI clutter.
+
+Example:
+
+TARGET ROLE
+Data Scientist
+
+ROLE READINESS
+61%
+
+Click:
+
+View Calculation
+
+TOP SKILL GAP
+
+Machine Learning
+
+43 / 100
+
+NEXT BEST ACTION
+
+Build an End-to-End ML Project
+
+BEST OPPORTUNITY MATCH
+
+Data Science Internship
+
+91% Match
+
+Button:
+
+Apply Now
+
+============================================================
+12. STUDENT PROFILE
+============================================================
+
+Profile fields:
+
+Name
+Student ID
+Branch
+Year
+College
+Location
+Target Role
+Profile completion
+
+Profile background should be visually relevant.
+
+Allow profile background image.
+
+Do not hardcode one background for every profile.
+
+For demo profile:
+
+S042
+AI & Data Science
+Target:
+Data Scientist
+
+============================================================
+13. MY SKILLS
+============================================================
+
+Create skill dashboard.
+
+Show:
+
+Technical Skills
+Soft Skills
+Aptitude
+Evidence
+Competency
+Evidence Confidence
+
+Each skill card:
+
+Skill Name
+Competency
+Evidence Confidence
+Last Updated
+Evidence Count
+
+Example:
+
+Machine Learning
+
+43 / 100
+
+Evidence Confidence:
+Limited
+
+Last Updated:
+15 Sept 2026
+
+Evidence:
+1
+
+Clickable.
+
+============================================================
+14. TECHNICAL COMPETENCY PROFILE
+============================================================
+
+Clicking a technical skill opens:
+
+Competency Detail
+
+Show:
+
+Skill
+Competency
+Evidence Confidence
+Role Importance
+Contribution
+Last Updated
+
+Evidence drawer/modal MUST work.
+
+Example:
+
+Machine Learning
+
+Competency:
+43
+
+Role Importance:
+30%
+
+Contribution:
+12.90
+
+Evidence Sources:
+
+Technical Assessment
+15 Sept 2026
+
+Project:
+None
+
+Industry Feedback:
+None
+
+Faculty Feedback:
+None
+
+Button:
+
+View Evidence
+
+============================================================
+15. EVIDENCE VIEW
+============================================================
+
+When clicking Evidence:
+
+Open drawer/modal.
+
+Show:
+
+Evidence source
+Skill
+Date
+Time
+Score
+Status
+Verification
+Description
+Reference
+
+Statuses:
+
+Submitted
+Pending Evaluation
+Evaluated
+Verified
+
+IMPORTANT:
+
+Submitted ≠ Verified.
+
+Never automatically claim verification without a verification mechanism.
+
+============================================================
+16. EVIDENCE PIPELINE
+============================================================
+
+Create a visible evidence timeline.
+
+Example:
+
+15 Sept 2026
+09:30 AM
+Technical Assessment
+Machine Learning
+Score: 43
+
+16 Sept 2026
+05:10 PM
+Project Submitted
+Machine Learning
+Pending Evaluation
+
+17 Sept 2026
+08:40 PM
+Industry Evaluation
+Machine Learning
+Score: 72
+
+Filters:
+
+Today
+This Week
+This Month
+All
+
+Every event must show:
+
+WHAT
+WHEN
+SKILL
+SOURCE
+STATUS
+
+If daily practice exists:
+
+show actual date of the practice event.
+
+Do not create fake identical daily values.
+
+============================================================
+17. ROLE-BASED ASSESSMENT
+============================================================
+
+Click:
+
+Take Skill Assessment
+
+First:
+
+Select Target Role
+
+Roles:
+
+Data Scientist
+ML Engineer
+Software Engineer
+Full Stack Developer
+Cybersecurity Analyst
+DevOps Engineer
+Cloud Architect
+Embedded Systems Engineer
+Mechanical Design Engineer
+Power Systems Engineer
+Structural Engineer
+VLSI Design Engineer
+
+The assessment must change by role.
+
+Do NOT show the same generic skill set for every role.
+
+Assessment stages:
+
+Aptitude
+Technical
+Coding / Practical
+Behavioural / HR where appropriate
+
+Show:
+
+Duration
+Questions
+Progress
+Auto-save
+Submit
+
+After completion:
+
+Assessment Result
+Competency
+Evidence
+Readiness
+
+============================================================
+18. ROLE READINESS CONFIGURATION
+============================================================
+
+Use a centralized role configuration.
+
+Every role has:
+
+Skills
+Importance
+Competency
+Weighted Contribution
+Role Readiness
+
+Data Scientist:
+
+Python — 25%
+SQL — 15%
+Statistics — 20%
+Machine Learning — 30%
+Problem Solving — 10%
+
+ML Engineer:
+
+Python — 20%
+Machine Learning — 30%
+Deep Learning — 25%
+Mathematics & Statistics — 15%
+Problem Solving — 10%
+
+Software Engineer:
+
+Programming — 30%
+Data Structures & Algorithms — 25%
+Database Management — 15%
+Software Engineering — 20%
+Problem Solving — 10%
+
+Full Stack Developer:
+
+Frontend Development — 20%
+Backend Development — 20%
+Database Management — 15%
+API Integration — 15%
+Problem Solving — 30%
+
+Cybersecurity Analyst:
+
+Network Security — 25%
+Cybersecurity Fundamentals — 25%
+Threat Analysis — 20%
+Linux — 15%
+Problem Solving — 15%
+
+DevOps Engineer:
+
+Linux — 20%
+CI/CD — 25%
+Cloud Platforms — 20%
+Docker & Kubernetes — 25%
+Scripting — 10%
+
+Cloud Architect:
+
+Cloud Platforms — 30%
+Cloud Architecture — 30%
+Networking — 15%
+Security — 15%
+System Design — 10%
+
+Embedded Systems Engineer:
+
+C/C++ Programming — 25%
+Microcontrollers — 25%
+Embedded Systems — 25%
+Electronics Fundamentals — 15%
+Problem Solving — 10%
+
+Mechanical Design Engineer:
+
+CAD / 3D Modelling — 30%
+Engineering Drawing — 20%
+Material & Manufacturing — 20%
+Mechanical Analysis — 20%
+Problem Solving — 10%
+
+Power Systems Engineer:
+
+Power Systems — 30%
+Electrical Machines — 20%
+Power Electronics — 20%
+Electrical Protection — 15%
+Circuit Analysis — 15%
+
+Structural Engineer:
+
+Structural Analysis — 30%
+Structural Design — 25%
+Engineering Mechanics — 20%
+AutoCAD / Structural Software — 15%
+Problem Solving — 10%
+
+VLSI Design Engineer:
+
+Digital Electronics — 20%
+Verilog / HDL — 25%
+VLSI Design — 30%
+CMOS / Semiconductor Fundamentals — 15%
+Problem Solving — 10%
+
+============================================================
+19. READINESS CALCULATION
+============================================================
+
+Formula:
+
+Role Readiness =
+SUM(Student Competency × Role Importance)
+/
+SUM(Role Importance)
+
+Example Data Scientist:
+
+Python 82 × 25% = 20.50
+
+SQL 64 × 15% = 9.60
+
+Statistics 51 × 20% = 10.20
+
+Machine Learning 43 × 30% = 12.90
+
+Problem Solving 75 × 10% = 7.50
+
+Total:
+60.70%
+
+Displayed:
+61%
+
+The calculated value and displayed value must ALWAYS come from the SAME calculation.
+
+Never hardcode:
+
+Calculated:
+9
+
+Displayed:
+76.6
+
+============================================================
+20. "WHY IS MY READINESS X?" SYSTEM
+============================================================
+
+Every readiness score must have:
+
+Why is my readiness X?
+
+Open modal/drawer.
+
+Show:
+
+Role
+Current readiness
+Calculation
+Skill contributions
+Evidence considered
+Last calculation time
+
+This must be interactive.
+
+============================================================
+21. SKILL GAP ENGINE
+============================================================
+
+Show:
+
+Critical Skill Gaps
+
+Each gap:
+
+Skill
+Current competency
+Target / expected level
+Gap size
+Role importance
+Priority
+Evidence confidence
+
+Example:
+
+Machine Learning
+
+Current:
+43
+
+Role Importance:
+30%
+
+Priority:
+High
+
+Why?
+
+High role importance + comparatively low competency.
+
+============================================================
+22. NEXT BEST ACTION
+============================================================
+
+Every student should have:
+
+NEXT BEST ACTION
+
+Examples:
+
+Practice Machine Learning
+Build ML Project
+Join ML Hackathon
+Complete ML Course
+Seek Mentor
+Apply for Internship
+Retake Assessment
+
+Recommendation should depend on:
+
+Skill Gap
+Role Importance
+Evidence value
+Industry relevance
+Eligibility
+Effort
+
+Example:
+
+Build an End-to-End Machine Learning Project
+
+Why?
+
+✓ Addresses high-impact skill gap
+✓ Relevant to target role
+✓ Generates project evidence
+✓ Can be evaluated
+✓ Strengthens portfolio
+
+Do NOT promise:
+
+"Your score will increase by 8%."
+
+Use:
+
+Projected Impact:
+High
+
+============================================================
+23. CAREER & OPPORTUNITIES
+============================================================
+
+Tabs:
+
+Jobs
+Internships
+Projects
+Industry Learning
+
+============================================================
+24. JOBS & PLACEMENTS
+============================================================
+
+Job cards must contain:
+
+Job Title
+Company
+Location
+Mode
+Type
+Experience
+Compensation
+Deadline
+Required Skills
+Match
+
+Buttons:
+
+View Details
+Apply Now
+Save
+
+Job details:
+
+About Role
+Responsibilities
+Required Skills
+Preferred Qualifications
+Eligibility
+Compensation
+Location
+Your Match
+Why You Match
+Skill Gaps
+Evidence Considered
+
+Apply Now MUST update the application state.
+
+Application lifecycle:
+
+Applied
+Shortlisted
+Interview
+Selected
+Rejected
+Withdrawn
+
+============================================================
+25. BEST OPPORTUNITY MATCH
+============================================================
+
+Show:
+
+Best Opportunity Match
+
+Example:
+
+Data Science Intern
+
+91% Match
+
+Buttons:
+
+View Details
+Apply Now
+
+The Apply Now button must actually initiate/change application state.
+
+Explain:
+
+WHY MATCHED?
+
+✓ Python alignment
+✓ SQL alignment
+✓ Relevant ML evidence
+✓ Eligibility satisfied
+
+Potential gap:
+
+Statistics
+
+============================================================
+26. INTERNSHIPS
+============================================================
+
+Show:
+
+Company
+Role
+Skills
+Duration
+Location
+Stipend
+Eligibility
+Deadline
+Match
+
+Internship lifecycle:
+
+Discover
+Apply
+Shortlisted
+Selected
+In Progress
+Completed
+Feedback
+Skill Evidence Updated
+
+============================================================
+27. PROJECT OPPORTUNITIES
+============================================================
+
+Students can discover projects from industry.
+
+Show:
+
+Problem
+Required Skills
+Expected Outcome
+Duration
+Mentor
+Team Size
+Application deadline
+
+After completion:
+
+Project
+→ Evidence
+→ Skill Passport
+
+============================================================
+28. INDUSTRY LEARNING
+============================================================
+
+Programs:
+
+Training
+Workshop
+Certification
+Mentorship
+
+Connect each to:
+
+Relevant Skills
+Student Gaps
+Target Roles
+
+Example:
+
+Cloud Deployment Workshop
+
+Relevant gap:
+Cloud
+
+Target role:
+Cloud Architect
+
+============================================================
+29. HACKATHONS & TEAMS — MAJOR MODULE
+============================================================
+
+Hackathons are NOT a static event list.
+
+The SKILL SETU hackathon flow is:
+
+CHALLENGE
+→ REQUIRED SKILLS
+→ STUDENT FIT
+→ TEAM FORMATION
+→ SKILL COVERAGE
+→ BUILD
+→ MILESTONES
+→ MENTORSHIP
+→ SUBMISSION
+→ EVALUATION
+→ EVIDENCE
+→ SKILL PASSPORT
+→ ROLE READINESS
+→ INDUSTRY OPPORTUNITY
+
+============================================================
+30. STUDENT HACKATHON DISCOVERY
+============================================================
+
+Navigation:
+
+Hackathons & Teams
+
+Tabs:
+
+Discover
+My Hackathons
+My Teams
+My Submissions
+Mentorship
+
+Hackathon card:
+
+Name
+Organizer
+Domain
+Mode
+Deadline
+Dates
+Team Size
+Eligibility
+Required Skills
+
+Actions:
+
+View Details
+Register
+Find Team
+Save
+
+============================================================
+31. HACKATHON DETAILS
+============================================================
+
+Sections:
+
+Overview
+Problem Statements
+Required Skills
+Eligibility
+Team Rules
+Timeline
+Evaluation
+Resources
+Mentors
+
+Show:
+
+Team size
+Example:
+
+2–4 members
+
+Do not assume all events use the same range.
+
+============================================================
+32. HACKATHON TEAM SIZE
+============================================================
+
+Team size is configurable PER HACKATHON.
+
+Fields:
+
+Minimum Team Size
+Maximum Team Size
+Solo Allowed
+
+Optional:
+
+Cross College
+Cross Year
+Cross Department
+Maximum Teams Per Participant
+
+Examples:
+
+1–4
+2–4
+3–5
+4–6
+
+The interface must dynamically display the configured rule.
+
+============================================================
+33. REGISTRATION
+============================================================
+
+Student can:
+
+Register
+Cancel
+
+System checks:
+
+Deadline
+Eligibility
+Duplicate registration
+Team rules
+
+Show useful errors.
+
+============================================================
+34. TEAM CREATION
+============================================================
+
+Student actions:
+
+Create Team
+Join Team
+Invite Member
+Request to Join
+Accept Request
+Reject Request
+Leave Team
+
+Team shows:
+
+Team Name
+Leader
+Members
+Team Size
+Open Roles
+Required Skills
+Coverage
+Missing Skills
+
+============================================================
+35. TEAM ROLES
+============================================================
+
+Allow:
+
+ML Engineer
+Backend Developer
+Frontend Developer
+UI/UX
+Cloud Engineer
+Researcher
+Product
+
+Each open role can specify skills.
+
+============================================================
+36. AI TEAM MATCHING
+============================================================
+
+Create:
+
+FIND TEAM
+
+Recommendation based on:
+
+Verified skills
+Competency
+Evidence confidence
+Projects
+Target role
+Domain
+Availability
+Required team role
+Skill complementarity
+
+Example:
+
+RECOMMENDED TEAM
+
+AI Innovators
+
+3 / 4
+
+You provide:
+
+Python
+Machine Learning
+NLP
+
+Existing team:
+
+Frontend
+Backend
+UI/UX
+
+Missing:
+
+Cloud
+
+Team Coverage:
+
+86%
+
+Then show:
+
+WHY THIS TEAM?
+
+Your skills complement the team's existing capabilities.
+
+Do NOT randomly generate the team.
+
+============================================================
+37. TEAM COVERAGE
+============================================================
+
+Calculate:
+
+Covered required capabilities
++
+Partial capabilities
++
+Missing capabilities
+
+Example:
+
+Python ✓
+ML ✓
+Frontend ✓
+Backend ✓
+Cloud ✕
+
+Display:
+
+Team Coverage:
+calculated %
+
+Click:
+
+Why is coverage X%?
+
+Show the skills behind the calculation.
+
+Adding/removing a member must recalculate coverage.
+
+============================================================
+38. TEAM DASHBOARD
+============================================================
+
+Show:
+
+Hackathon
+Problem
+Team
+Members
+Roles
+Coverage
+Missing Skills
+Milestones
+Submission
+Mentor
+Evaluation
+
+============================================================
+39. HACKATHON WORKSPACE
+============================================================
+
+Sections:
+
+Overview
+Problem Statement
+Team
+Skills
+Milestones
+Tasks
+Resources
+Mentor
+Submission
+Evaluation
+Activity
+
+============================================================
+40. MILESTONES
+============================================================
+
+Default milestone examples:
+
+Problem Understanding
+Ideation
+Architecture
+Prototype
+Testing
+Final Submission
+
+Statuses:
+
+Not Started
+In Progress
+Completed
+Overdue
+
+Show:
+
+deadline
+owner
+deliverable
+
+============================================================
+41. TASKS
+============================================================
+
+Task:
+
+Title
+Description
+Assigned Member
+Priority
+Deadline
+Status
+
+Statuses:
+
+Todo
+In Progress
+Blocked
+Done
+
+============================================================
+42. MENTORSHIP
+============================================================
+
+Mentor categories:
+
+AI/ML
+Technical
+Product
+Cloud
+Cybersecurity
+Domain
+Career
+
+Mentor profile:
+
+Name
+Expertise
+Availability
+Bio
+
+Student/team can:
+
+View
+Request Session
+Book
+Cancel
+Reschedule
+Add Notes
+Feedback
+
+============================================================
+43. HACKATHON SUBMISSION
+============================================================
+
+Fields:
+
+Project Title
+Description
+Problem Solved
+Approach
+Tech Stack
+GitHub
+Live Demo
+Architecture Diagram
+Demo Video
+Presentation/PDF
+Technical Documentation
+Team Contributions
+
+Statuses:
+
+Draft
+Submitted
+Under Review
+Evaluated
+Finalist
+Rejected
+
+Support:
+
+Save Draft
+Submit
+
+============================================================
+44. GITHUB
+============================================================
+
+Allow:
+
+GitHub URL
+
+Optional:
+
+GitLab
+Bitbucket
+
+Validate URL.
+
+Show:
+
+Repository Submitted
+
+Do NOT claim automatic skill verification from GitHub.
+
+============================================================
+45. TEAM CONTRIBUTION
+============================================================
+
+Each student records:
+
+Role
+Contribution
+Technologies
+Modules
+
+Example:
+
+S042
+
+ML Engineer
+
+Contribution:
+Model development and evaluation
+
+Skills demonstrated:
+
+Python
+Machine Learning
+Statistics
+
+============================================================
+46. HACKATHON EVALUATION
+============================================================
+
+Default criteria:
+
+Innovation — 20%
+Technical Implementation — 30%
+Problem Solving — 20%
+Feasibility — 10%
+UI/UX — 10%
+Impact — 10%
+
+Evaluator enters score:
+
+0–100
+
+Calculate:
+
+Score × Weight
+
+Then sum all contributions.
+
+Display:
+
+Criterion
+Score
+Weight
+Contribution
+Total
+
+============================================================
+47. EVALUATION EXPLANATION
+============================================================
+
+Button:
+
+Why this score?
+
+Show:
+
+Innovation
+82 × 20%
+
+Technical
+88 × 30%
+
+etc.
+
+The weighted calculation must be reproducible.
+
+============================================================
+48. INDUSTRY HACKATHON PORTAL
+============================================================
+
+Navigation:
+
+Challenges & Hackathons
+
+Sections:
+
+Dashboard
+Create Challenge
+Manage Challenges
+Registrations
+Teams
+Submissions
+Evaluation
+Mentors
+Talent Discovery
+Analytics
+
+============================================================
+49. INDUSTRY CREATE HACKATHON
+============================================================
+
+Wizard:
+
+Basic Information
+Dates
+Team Rules
+Eligibility
+Tracks
+Problem Statements
+Required Skills
+Evaluation
+Resources
+Publish
+
+Team configuration:
+
+Minimum Team Size
+Maximum Team Size
+Solo Allowed
+
+============================================================
+50. INDUSTRY TALENT DISCOVERY
+============================================================
+
+Industry can discover students based on:
+
+Role
+Skill
+Competency
+Evidence Confidence
+Project
+Hackathon
+Availability
+
+Candidate card:
+
+Name
+Target Role
+Readiness
+Relevant Skills
+Evidence
+Projects
+Hackathons
+Feedback
+
+Button:
+
+View Candidate
+
+============================================================
+51. INDUSTRY CANDIDATE PROFILE
+============================================================
+
+Show:
+
+Candidate Summary
+Role Readiness
+Verified Skills
+Evidence
+Projects
+Hackathons
+Coding Evidence
+Internships
+Certifications
+Education
+Industry Feedback
+Availability
+Resume
+
+Actions:
+
+Shortlist
+Invite to Interview
+Invite to Internship
+Offer Project
+Mentorship
+
+Each must create appropriate state.
+
+============================================================
+52. INDUSTRY FEEDBACK
+============================================================
+
+Industry can choose:
+
+Internship
+Project
+Hackathon
+
+Then student.
+
+Feedback categories:
+
+Technical
+Problem Solving
+Communication
+Teamwork
+Leadership
+Professionalism
+
+Example:
+
+Machine Learning:
+72
+
+Problem Solving:
+81
+
+Communication:
+76
+
+Teamwork:
+84
+
+Feedback creates an evidence event.
+
+============================================================
+53. HACKATHON → INDUSTRY OPPORTUNITY
+============================================================
+
+After evaluating a project, industry can:
+
+Invite to Internship
+Invite to Interview
+Offer Project
+Offer Mentorship
+
+Example notification:
+
+An industry evaluator has invited you to explore a Data Science Internship.
+
+This must be represented as actual state.
+
+============================================================
+54. STUDENT SKILL PASSPORT
+============================================================
+
+Sections:
+
+Verified Skills
+Projects
+Hackathons
+Certifications
+Internships
+Industry Feedback
+Faculty Feedback
+Achievements
+Resume
+
+Project card:
+
+Project
+Hackathon
+Problem
+Role
+Contribution
+Technology
+GitHub
+Live Demo
+Evaluation
+Feedback
+Evidence Status
+
+============================================================
+55. SKILL PASSPORT — GIT LINK
+============================================================
+
+Under Projects:
+
+Add GitHub Repository
+
+Fields:
+
+GitHub URL
+Live Demo URL
+Project Date
+Role
+Contribution
+
+Status:
+
+Submitted
+Pending Verification
+Verified
+
+GitHub does not equal automatic verification.
+
+============================================================
+56. RESUME BUILDER
+============================================================
+
+Build resume from actual Skill Passport information.
+
+Sections:
+
+Summary
+Education
+Skills
+Projects
+Internships
+Hackathons
+Certifications
+Achievements
+
+Target job/role.
+
+Show:
+
+Resume Alignment Score
+
+NOT:
+
+Guaranteed ATS score
+
+Never invent experience.
+
+============================================================
+57. ACADEMIA PORTAL
+============================================================
+
+Navigation:
+
+Dashboard
+Curriculum Alignment
+Industry & Faculty Opportunities
+Collaboration
+Mentorship
+Workshops
+Faculty Development
+
+============================================================
+58. ACADEMIA OPPORTUNITIES
+============================================================
+
+Faculty opportunities:
+
+Faculty Internship
+Industrial Training
+FDP
+Consultancy
+Research Collaboration
+Mentorship
+Guest Lecture
+Workshop
+
+Each opportunity:
+
+Organization
+Role
+Skills
+Duration
+Eligibility
+Deadline
+Description
+
+============================================================
+59. CURRICULUM ALIGNMENT
+============================================================
+
+Show:
+
+Emerging Skill
+Industry Demand
+Current Curriculum Coverage
+Gap
+Suggested Enrichment
+Applicable Roles
+
+Example:
+
+Cloud Computing
+
+Skills:
+
+Cloud Architecture
+Deployment
+Containers
+Cloud Security
+
+Roles:
+
+Cloud Architect
+DevOps Engineer
+
+Do NOT claim automatic syllabus modification.
+
+Use:
+
+Recommended for Faculty Review.
+
+============================================================
+60. INSTITUTION PORTAL
+============================================================
+
+Navigation:
+
+Dashboard
+Skill Intelligence
+Branch Analytics
+Placement Insights
+Internship Insights
+Industry Alignment
+Hackathon Analytics
+Interventions
+
+============================================================
+61. INSTITUTION DASHBOARD
+============================================================
+
+Show:
+
+Branch Skill Gaps
+Demand vs Supply
+Placement Readiness
+Internship Participation
+Hackathon Participation
+Emerging Skills
+Industry Collaboration
+
+============================================================
+62. DEMAND VS SUPPLY
+============================================================
+
+Example controlled demo values:
+
+Python:
+Demand 92
+Supply 78
+
+SQL:
+Demand 88
+Supply 51
+
+Cloud:
+Demand 82
+Supply 27
+
+Machine Learning:
+Demand 90
+Supply 39
+
+Clearly label controlled/demo values.
+
+============================================================
+63. BRANCH × SKILL HEATMAP
+============================================================
+
+Rows:
+
+Branches
+
+Columns:
+
+Skills
+
+Use color intensity based on actual demo data.
+
+============================================================
+64. INSTITUTION INTERVENTION ENGINE
+============================================================
+
+Institution should be able to see:
+
+Gap
+Evidence
+Demand
+Suggested Intervention
+
+Possible interventions:
+
+Industry Workshop
+Bootcamp
+Faculty Mentorship
+Project-Based Learning
+Hackathon
+Certification
+Curriculum Enrichment
+
+Every intervention should connect to a skill gap.
+
+============================================================
+65. INDUSTRY–ACADEMIA COLLABORATION
+============================================================
+
+Support:
+
+Mentorship
+Workshop
+Guest Lecture
+Live Project
+Innovation Challenge
+Research Collaboration
+Faculty Training
+
+Track:
+
+Upcoming
+Active
+Completed
+
+============================================================
+66. CONTEXTUAL AI ASSISTANT
+============================================================
+
+Provide a floating AI assistant.
+
+Student assistant:
+
+Why is my readiness low?
+What should I do next?
+Which internship fits me?
+What evidence is missing?
+
+Industry:
+
+Why was this candidate recommended?
+Which candidates fit this challenge?
+What skills are missing from this team?
+
+Academia:
+
+What skills are emerging?
+Where does curriculum alignment need attention?
+Which industry opportunities are relevant?
+
+Institution:
+
+Which branches have the largest skill gaps?
+What interventions are suggested?
+What skills are increasingly demanded?
+
+AI answers MUST use available application data.
+
+Do not invent facts.
+
+============================================================
+67. AI / RULE SEPARATION
+============================================================
+
+CORE PRINCIPLE:
+
+RULES CALCULATE.
+AI EXPLAINS & ENRICHES.
+
+Deterministic logic calculates:
+
+Readiness
+Skill gaps
+Evaluation score
+Eligibility
+Team size
+Team coverage
+Application state
+Basic matching
+
+AI may provide:
+
+Explanation
+Summary
+Career guidance
+Skill extraction
+Natural language recommendations
+Contextual assistance
+
+Never allow AI to invent scores, certificates, projects, feedback, companies or verification.
+
+============================================================
+68. ROLE-BASED AI EXPLANATION
+============================================================
+
+For every major score:
+
+WHY?
+
+For every recommendation:
+
+WHY?
+
+For every match:
+
+WHY?
+
+For every team:
+
+WHY?
+
+For every gap:
+
+WHY?
+
+Every explanation must reference actual underlying data.
+
+============================================================
+69. NOTIFICATIONS
+============================================================
+
+Global notification system.
+
+Student:
+
+Assessment Completed
+Skill Gap Detected
+Next Best Action
+Opportunity Match
+Application Update
+Team Invite
+Join Request
+Mentor Session
+Submission Reminder
+Evaluation Result
+Feedback Received
+Evidence Added
+Skill Passport Updated
+Industry Invitation
+
+Industry:
+
+New Applicant
+Submission Received
+Evaluation Reminder
+Mentor Request
+Candidate Interest
+
+Academia:
+
+Faculty Opportunity
+Mentor Request
+Workshop
+Research Collaboration
+
+Institution:
+
+Hackathon Activity
+Skill Gap Alert
+Industry Collaboration
+Placement Insight
+
+Notifications should respond to real workflow events.
+
+============================================================
+70. SEARCH
+============================================================
+
+Global or contextual search.
+
+Student searches:
+
+Jobs
+Internships
+Projects
+Hackathons
+Skills
+
+Industry searches:
+
+Candidates
+Skills
+Projects
+Challenges
+
+Academia searches:
+
+Opportunities
+Skills
+Projects
+
+Institution searches:
+
+Skills
+Branches
+Industry demand
+
+============================================================
+71. EMPTY STATES
+============================================================
+
+NEVER show useless empty cards.
+
+Examples:
+
+No Evidence Yet
+
+Complete an assessment, project or experience to generate evidence.
+
+No Team Yet
+
+Create a team or find one matched to your skills.
+
+No Applications Yet
+
+Explore matched opportunities.
+
+No Feedback Yet
+
+Complete an experience to receive feedback.
+
+============================================================
+72. STATUS SYSTEM
+============================================================
+
+Use badges:
+
+IMPLEMENTED
+PROTOTYPE
+DEMO DATA
+FUTURE INTEGRATION
+
+Do not imply future functionality already exists.
+
+Potential future integrations:
+
+Coding platforms
+University ERP
+LMS
+ATS
+External certification providers
+External event APIs
+
+============================================================
+73. DEMO DATA
+============================================================
+
+Use realistic synthetic data.
+
+Main student:
+
+S042
+
+Branch:
+AI & Data Science
+
+Target:
+Data Scientist
+
+Initial competencies:
+
+Python:
+82
+
+SQL:
+64
+
+Statistics:
+51
+
+Machine Learning:
+43
+
+Problem Solving:
+75
+
+Role Readiness:
+
+60.70%
+
+Display:
+
+61%
+
+IMPORTANT:
+Calculate this through the readiness engine.
+
+Do not hardcode only the displayed result.
+
+============================================================
+74. S042 FULL DEMO JOURNEY
+============================================================
+
+The entire prototype must support this narrative.
+
+STEP 1
+
+S042 logs in.
+
+STEP 2
+
+Target role:
+
+Data Scientist
+
+STEP 3
+
+Assessment result:
+
+Python 82
+SQL 64
+Statistics 51
+Machine Learning 43
+Problem Solving 75
+
+STEP 4
+
+Click:
+
+Why is my readiness 61%?
+
+Show calculation.
+
+STEP 5
+
+Click:
+
+Machine Learning
+
+Show:
+
+43
+30% importance
+evidence
+evidence confidence
+
+STEP 6
+
+Show:
+
+Critical Skill Gap
+
+Machine Learning
+
+STEP 7
+
+Show:
+
+Next Best Action
+
+Build ML Project
+
+STEP 8
+
+Open:
+
+Hackathons & Teams
+
+STEP 9
+
+Show:
+
+Recommended Hackathon
+
+AI Innovation Challenge
+
+STEP 10
+
+Open:
+
+Challenge Intelligence
+
+Required:
+
+Python
+Machine Learning
+SQL
+Cloud
+
+STEP 11
+
+Find Team.
+
+Recommended team:
+
+AI Innovators
+
+STEP 12
+
+Show:
+
+You provide:
+
+Python
+ML
+NLP
+
+Team has:
+
+Frontend
+Backend
+UI/UX
+
+Missing:
+
+Cloud
+
+Coverage:
+
+calculated
+
+STEP 13
+
+Join team.
+
+STEP 14
+
+Open Team Workspace.
+
+STEP 15
+
+Complete milestones.
+
+STEP 16
+
+Submit:
+
+GitHub
+Live Demo
+Architecture
+Description
+Contribution
+
+STEP 17
+
+Industry opens submission.
+
+STEP 18
+
+Industry evaluates.
+
+STEP 19
+
+Industry provides feedback.
+
+STEP 20
+
+Feedback becomes evidence.
+
+STEP 21
+
+Student opens Skill Passport.
+
+STEP 22
+
+Project appears.
+
+STEP 23
+
+Evidence appears.
+
+STEP 24
+
+Readiness recalculates if the application's evidence policy permits it.
+
+STEP 25
+
+Student clicks:
+
+Why did my readiness change?
+
+Show the new evidence/calculation.
+
+STEP 26
+
+Industry opens the candidate.
+
+Same evidence is visible according to permissions.
+
+STEP 27
+
+Industry sends opportunity invitation.
+
+STEP 28
+
+Student receives notification.
+
+STEP 29
+
+Institution sees aggregate outcome.
+
+THIS IS THE PRIMARY DEMO.
+
+============================================================
+75. FOUR PORTALS MUST SHARE DATA
+============================================================
+
+The following must conceptually be ONE record:
+
+Student S042
+
+Student Portal:
+Skills
+Evidence
+Readiness
+Passport
+
+Industry:
+Candidate
+Projects
+Evidence
+Feedback
+
+Academia:
+Student progress
+Skill gaps
+Mentorship
+
+Institution:
+Aggregated skill insight
+
+A project submitted by S042 should NOT require manually adding a second project to the Industry portal.
+
+The same record must appear in different portal views.
+
+============================================================
+76. EXPLORE THE ECOSYSTEM
+============================================================
+
+Landing CTA:
+
+Explore the Ecosystem
+
+Should take the user into a clear four-portal selector:
+
+Student
+Industry
+Academia
+Institution
+
+Each portal has:
+
+Purpose
+Key capabilities
+Enter Portal
+
+============================================================
+77. ABOUT / HOW IT WORKS
+============================================================
+
+How It Works section:
+
+1.
+Industry Defines Demand
+
+2.
+Students Generate Evidence
+
+3.
+Skill Intelligence Analyses Evidence
+
+4.
+Skill Gaps Become Actions
+
+5.
+Students Enter Opportunities
+
+6.
+Real-World Feedback Creates New Evidence
+
+7.
+Skill Passport Evolves
+
+8.
+Institution Gains Intelligence
+
+============================================================
+78. PROFILE / AVATAR
+============================================================
+
+Use realistic initials or controlled demo avatar.
+
+Do not use random broken profile images.
+
+For S042:
+
+Profile background should have a polished academic/technology environment.
+
+============================================================
+79. TABLES / CARDS
+============================================================
+
+Use cards for:
+
+Opportunities
+Hackathons
+Skills
+Evidence
+Teams
+Projects
+
+Use tables where comparison is more important:
+
+Candidate search
+Applications
+Evaluation
+Institution analytics
+Team members
+
+Responsive mobile/tablet behavior is mandatory.
+
+============================================================
+80. INTERACTION REQUIREMENT
+============================================================
+
+Every interaction should visibly change state.
+
+Examples:
+
+Apply Now:
+Applied
+
+Join Team:
+Joined
+
+Invite:
+Pending
+
+Milestone:
+Completed
+
+Submit:
+Submitted
+
+Evaluate:
+Evaluated
+
+Feedback:
+Added
+
+Evidence:
+Created
+
+Skill Passport:
+Updated
+
+Notification:
+Generated
+
+Do not allow buttons that do nothing.
+
+============================================================
+81. LOADING / SUCCESS / ERROR
+============================================================
+
+For every major action:
+
+Loading state
+Success state
+Error state
+
+Examples:
+
+Submitting...
+Saved
+Submission complete
+
+Finding teams...
+Recommendations ready
+
+Calculating readiness...
+Updated
+
+Sending invitation...
+Invitation sent
+
+============================================================
+82. ACCESS CONTROL
+============================================================
+
+Student:
+
+Own information
+
+Industry:
+
+Authorized candidate information
+
+Academia:
+
+Authorized academic information
+
+Institution:
+
+Authorized aggregate information
+
+Admin:
+
+System management
+
+Do not expose private data indiscriminately.
+
+============================================================
+83. AUDIT TRAIL
+============================================================
+
+Record major events:
+
+Assessment submitted
+Evidence created
+Project submitted
+Team created
+Member joined
+Submission created
+Evaluation submitted
+Feedback created
+Opportunity applied
+Invitation sent
+Skill Passport updated
+
+Display activity where useful.
+
+============================================================
+84. SECURITY
+============================================================
+
+Do not expose API secrets.
+
+Validate forms.
+
+Validate URLs.
+
+Validate team size server-side if backend exists.
+
+Validate role permissions.
+
+Never expose assessment answer keys.
+
+============================================================
+85. FUTURE INTEGRATIONS
+============================================================
+
+Use adapter-ready architecture where possible.
+
+Potential future integrations:
+
+GitHub API
+LeetCode
+HackerRank
+Codeforces
+University ERP
+LMS
+ATS
+Certification providers
+External opportunity providers
+
+But:
+
+DO NOT say these are integrated unless they actually are.
+
+Use:
+
+Integration-ready
+
+when appropriate.
+
+============================================================
+86. HACKATHON DIFFERENTIATION
+============================================================
+
+Do NOT make Hackathons look like another event platform.
+
+Traditional:
+
+Event
+→ Registration
+→ Team
+→ Submission
+→ Winner
+
+SKILL SETU:
+
+Problem
+→ Skills
+→ Skill Fit
+→ Team Intelligence
+→ Build
+→ Milestones
+→ Mentorship
+→ Submission
+→ Evaluation
+→ Evidence
+→ Skill Passport
+→ Readiness
+→ Industry Opportunity
+
+This must be visually visible.
+
+============================================================
+87. INDUSTRY DIFFERENTIATION
+============================================================
+
+Do NOT make Industry look like Naukri.
+
+Industry workflow:
+
+DEFINE DEMAND
+→ POST CHALLENGE
+→ DEFINE REQUIRED SKILLS
+→ DISCOVER EVIDENCE
+→ FORM TEAM
+→ EVALUATE
+→ GIVE FEEDBACK
+→ DISCOVER TALENT
+
+============================================================
+88. STUDENT DIFFERENTIATION
+============================================================
+
+Student experience:
+
+CLAIM
+→ ASSESS
+→ DEMONSTRATE
+→ GET EVIDENCE
+→ UNDERSTAND GAP
+→ TAKE ACTION
+→ BUILD
+→ APPLY
+→ GET FEEDBACK
+→ UPDATE PASSPORT
+
+============================================================
+89. ACADEMIA DIFFERENTIATION
+============================================================
+
+Academia experience:
+
+INDUSTRY SIGNALS
+→ EMERGING SKILLS
+→ CURRICULUM ALIGNMENT
+→ FACULTY EXPOSURE
+→ MENTORSHIP
+→ PROJECTS
+→ FEEDBACK
+
+============================================================
+90. INSTITUTION DIFFERENTIATION
+============================================================
+
+Institution experience:
+
+STUDENT EVIDENCE
+→ AGGREGATION
+→ BRANCH SKILL GAP
+→ DEMAND VS SUPPLY
+→ INTERVENTION
+→ OUTCOME
+
+============================================================
+91. "WHY?" COMPONENT
+============================================================
+
+Build one reusable component:
+
+WhyThisResult
+
+It can display:
+
+Inputs
+Calculation
+Evidence
+Weight
+Timestamp
+Explanation
+
+Use everywhere.
+
+============================================================
+92. SCORE TYPES
+============================================================
+
+Every major score should be labeled correctly:
+
+Calculated
+
+Estimated
+
+Projected
+
+Recommended
+
+Submitted
+
+Evaluated
+
+Verified
+
+Demo
+
+Do not create false certainty.
+
+============================================================
+93. SCORE INTEGRITY
+============================================================
+
+No contradictory score values.
+
+No manually typed readiness.
+
+No manually typed team coverage.
+
+No manually typed evaluation totals.
+
+No unexplained match percentages.
+
+All major numerical values need a source/calculation.
+
+============================================================
+94. DAILY EVIDENCE
+============================================================
+
+If a student practices daily:
+
+Show:
+
+Date
+Skill
+Practice activity
+Duration where available
+Evidence generated
+Timestamp
+
+Example:
+
+17 Sept 2026
+Machine Learning Practice
+45 minutes
+Practice Evidence
+
+18 Sept 2026
+Machine Learning Practice
+60 minutes
+Practice Evidence
+
+Do not create identical repeated fake records.
+
+============================================================
+95. CODING EVIDENCE
+============================================================
+
+Coding platform information should be treated as evidence, not automatic competency.
+
+Possible source:
+
+LeetCode
+HackerRank
+Codeforces
+
+Display:
+
+Platform
+Problem activity
+Rating where available
+Date
+Evidence status
+
+Do not equate platform rating directly with final skill score.
+
+============================================================
+96. SOFT SKILLS
+============================================================
+
+Include:
+
+Communication
+Teamwork
+Leadership
+Problem Solving
+Adaptability
+Presentation
+Professionalism
+
+Evidence may come from:
+
+Assessment
+Faculty
+Mentor
+Industry
+Hackathon evaluation
+
+============================================================
+97. APTITUDE
+============================================================
+
+Categories:
+
+Quantitative
+Logical
+Verbal
+Analytical
+
+Results feed into student intelligence where appropriate.
+
+============================================================
+98. APPLICATION TRACKER
+============================================================
+
+Applications page:
+
+Opportunity
+Company
+Applied Date
+Status
+Next Action
+Deadline
+
+Timeline:
+
+Applied
+Shortlisted
+Interview
+Selected
+
+============================================================
+99. DOCUMENT VAULT
+============================================================
+
+Store/display:
+
+Resume
+Certificates
+Internship Report
+Academic Records
+
+Visibility:
+
+Private
+Shared
+
+Do not invent documents.
+
+============================================================
+100. CERTIFICATION
+============================================================
+
+Certification record:
+
+Title
+Issuer
+Date
+Credential
+Verification Status
+
+Statuses:
+
+Uploaded
+Pending Verification
+Verified
+
+Do not claim blockchain unless actually implemented.
+
+============================================================
+101. INSTITUTIONAL INTERVENTION
+============================================================
+
+When repeated student gaps appear:
+
+Show:
+
+Skill:
+Machine Learning
+
+Affected cohort:
+AI & Data Science
+
+Industry signal:
+High demand
+
+Suggested intervention:
+
+Industry Workshop
+Project-Based Learning
+Hackathon
+Mentor Program
+
+This is a recommendation based on available demo data.
+
+============================================================
+102. ANALYTICS
+============================================================
+
+Student analytics:
+
+Readiness trend
+Evidence timeline
+Skill development
+
+Industry:
+
+Demand
+Candidate pool
+Challenge submissions
+Talent pipeline
+
+Academia:
+
+Emerging skills
+Curriculum gaps
+Industry opportunities
+
+Institution:
+
+Branch gaps
+Demand/supply
+Participation
+Placement readiness
+Interventions
+
+============================================================
+103. ROLE READINESS DEMO VALUES
+============================================================
+
+Use these controlled values:
+
+Data Scientist:
+60.70 → 61%
+
+ML Engineer:
+56.45 → 56%
+
+Software Engineer:
+71.10 → 71%
+
+Full Stack Developer:
+74.00 → 74%
+
+Cybersecurity Analyst:
+63.55 → 64%
+
+DevOps Engineer:
+56.75 → 57%
+
+Cloud Architect:
+55.70 → 56%
+
+Embedded Systems Engineer:
+63.00 → 63%
+
+Mechanical Design Engineer:
+65.70 → 66%
+
+Power Systems Engineer:
+58.80 → 59%
+
+Structural Engineer:
+60.95 → 61%
+
+VLSI Design Engineer:
+57.85 → 58%
+
+These are DEMONSTRATION values for controlled sample data.
+
+============================================================
+104. IMPORTANT FULL STACK CORRECTION
+============================================================
+
+If demonstrating:
+
+Full Stack Developer:
+
+Frontend:
+85 × 20%
+Backend:
+72 × 20%
+Database:
+68 × 15%
+API:
+60 × 15%
+Problem Solving:
+78 × 30%
+
+Total:
+
+74.00%
+
+Display:
+
+74%
+
+Do not display 73%.
+
+============================================================
+105. DEMO HACKATHONS
+============================================================
+
+Create controlled demo hackathons:
+
+AI Innovation Challenge
+Team size:
+2–4
+
+Cybersecurity Sprint
+Team size:
+1–4
+
+Smart Campus Buildathon
+Team size:
+3–5
+
+Each needs:
+
+Problem statements
+Required skills
+Eligibility
+Timeline
+Evaluation criteria
+Resources
+
+============================================================
+106. DEMO TEAM
+============================================================
+
+Team:
+
+AI Innovators
+
+3 / 4 members
+
+Open:
+
+ML Engineer
+
+Student S042 recommended.
+
+Team coverage should be calculated from member skill data.
+
+============================================================
+107. UI DETAILS — ASSESSMENT
+============================================================
+
+Remove meaningless empty square boxes.
+
+Replace with purposeful assessment cards:
+
+Aptitude
+Technical
+Coding / Practical
+
+Each:
+
+Status
+Duration
+Questions
+Start / Continue
+
+============================================================
+108. UI DETAILS — ARJUN SHARMA
+============================================================
+
+Where Arjun Sharma appears in demonstration:
+
+Use a premium university/technology background.
+
+Preserve:
+
+profile details
+skills
+role
+readiness
+
+Do not distort the user information.
+
+============================================================
+109. UI DETAILS — TECHNICAL EVIDENCE
+============================================================
+
+Clicking Evidence must ALWAYS open actual evidence detail.
+
+No dead links.
+
+No placeholder modal.
+
+============================================================
+110. UI DETAILS — JOBS
+============================================================
+
+Every job card must contain enough information to understand:
+
+what the role is
+what the student needs
+why the student matches
+what gap remains
+how to apply
+
+============================================================
+111. UI DETAILS — HACKATHON
+============================================================
+
+Provide:
+
+How many team members allowed?
+What skills are needed?
+How does team selection work?
+Which team roles are open?
+Why was this student recommended?
+
+============================================================
+112. UI DETAILS — PROJECT GITHUB
+============================================================
+
+Under:
+
+Skill Passport → Projects
+
+add:
+
+GitHub Repository
+
+Live Demo
+
+Role
+
+Contribution
+
+Verification
+
+============================================================
+113. RESPONSIVE DESIGN
+============================================================
+
+Desktop:
+
+Full sidebar
+Large data cards
+Charts
+
+Tablet:
+
+Collapsible sidebar
+Grid adaptation
+
+Mobile:
+
+Bottom/slide navigation where appropriate
+Stacked cards
+Touch-friendly buttons
+
+============================================================
+114. COMPONENT SYSTEM
+============================================================
+
+Create reusable components:
+
+PortalShell
+Sidebar
+TopBar
+ProfileMenu
+NotificationBell
+SkillCard
+EvidenceCard
+EvidenceDrawer
+ReadinessCard
+ReadinessExplanation
+SkillGapCard
+NextBestAction
+OpportunityCard
+OpportunityDetail
+MatchExplanation
+HackathonCard
+HackathonDetail
+TeamCard
+TeamCoverage
+TeamMatch
+TeamWorkspace
+MilestoneCard
+SubmissionForm
+EvaluationPanel
+EvaluationBreakdown
+FeedbackForm
+SkillPassportCard
+Timeline
+StatusBadge
+AIChat
+EmptyState
+ErrorState
+LoadingState
+ConfirmDialog
+
+============================================================
+115. ROUTING
+============================================================
+
+Create clean route structure.
+
+Public:
+
+/
+/how-it-works
+/about
+
+Auth:
+
+/login
+
+Student:
+
+/student
+/student/skills
+/student/assessment
+/student/skill-gap
+/student/opportunities
+/student/jobs
+/student/internships
+/student/projects
+/student/hackathons
+/student/teams
+/student/submissions
+/student/skill-passport
+/student/resume
+/student/notifications
+
+Industry:
+
+/industry
+/industry/opportunities
+/industry/hackathons
+/industry/challenges
+/industry/teams
+/industry/submissions
+/industry/evaluation
+/industry/talent
+/industry/feedback
+/industry/analytics
+
+Academia:
+
+/academia
+/academia/opportunities
+/academia/curriculum
+/academia/collaboration
+/academia/mentorship
+/academia/faculty-development
+
+Institution:
+
+/institution
+/institution/analytics
+/institution/skills
+/institution/placements
+/institution/internships
+/institution/hackathons
+/institution/interventions
+/institution/industry-alignment
+
+Adapt route conventions to the chosen framework.
+
+============================================================
+116. DATA ARCHITECTURE
+============================================================
+
+Even for this prototype, keep one conceptual source of truth.
+
+Entities:
+
+User
+Student
+Industry
+Faculty
+Institution
+
+Skill
+Role
+RoleSkill
+
+Assessment
+AssessmentAttempt
+
+Competency
+Evidence
+EvidenceEvent
+
+Opportunity
+OpportunitySkill
+Application
+
+Hackathon
+ProblemStatement
+HackathonSkill
+Registration
+
+Team
+TeamMember
+TeamRole
+
+Milestone
+Submission
+Evaluation
+EvaluationCriterion
+Feedback
+
+Mentor
+MentorSession
+
+SkillPassport
+Project
+Certification
+Internship
+
+Notification
+AuditEvent
+
+============================================================
+117. IMPORTANT SHARED RELATIONSHIPS
+============================================================
+
+Student
+→ Skills
+→ Evidence
+→ Competency
+→ Role Readiness
+
+Student
+→ Projects
+→ Hackathons
+→ Teams
+→ Applications
+
+Hackathon
+→ Problem
+→ Skills
+→ Teams
+→ Submission
+→ Evaluation
+→ Evidence
+
+Evaluation
+→ Feedback
+→ Evidence
+
+Evidence
+→ Skill Passport
+
+Skill Passport
+→ Student profile
+
+Industry
+→ Opportunity
+→ Hackathon
+→ Evaluation
+→ Feedback
+→ Talent Discovery
+
+Institution
+→ Aggregated student/skill/hackathon data
+
+============================================================
+118. DATA FLOW
+============================================================
+
+Central relationship:
+
+Industry Demand
+→ Skill Requirements
+
+Student Evidence
+→ Competency
+
+Competency + Role Requirements
+→ Readiness
+
+Readiness
+→ Skill Gaps
+
+Skill Gaps
+→ Next Best Action
+
+Action
+→ Project / Hackathon / Learning
+
+Experience
+→ Feedback
+
+Feedback
+→ Evidence
+
+Evidence
+→ Skill Passport
+
+Skill Passport
+→ Updated Intelligence
+
+============================================================
+119. FINAL QUALITY REQUIREMENT
+============================================================
+
+The prototype must feel like one connected product.
+
+A user should never wonder:
+
+"Why does this page exist?"
+
+Every screen must belong to the central story:
+
+Skills
+Evidence
+Intelligence
+Action
+Opportunity
+Feedback
+Growth
+
+============================================================
+120. BUILD STRATEGY
+============================================================
+
+BUILD THE NEW PROJECT IN THIS ORDER:
+
+PHASE 1
+Design system
+
+PHASE 2
+Landing page
+
+PHASE 3
+Authentication
+
+PHASE 4
+Portal shell
+
+PHASE 5
+Student portal
+
+PHASE 6
+Role readiness
+
+PHASE 7
+Evidence
+
+PHASE 8
+Skill gap + Next Best Action
+
+PHASE 9
+Opportunities
+
+PHASE 10
+Industry portal
+
+PHASE 11
+Academia
+
+PHASE 12
+Institution
+
+PHASE 13
+Hackathons
+
+PHASE 14
+Team Intelligence
+
+PHASE 15
+Submission + Evaluation
+
+PHASE 16
+Feedback
+
+PHASE 17
+Skill Passport
+
+PHASE 18
+Notifications
+
+PHASE 19
+Cross-portal data synchronization
+
+PHASE 20
+Final demo journey
+
+PHASE 21
+Quality assurance
+
+============================================================
+121. DO NOT DO
+============================================================
+
+DO NOT:
+
+rebuild randomly
+create disconnected pages
+copy Unstop
+copy Naukri
+copy LinkedIn
+use random fake AI
+hardcode all scores
+use generic skills for every role
+create a different student database per portal
+pretend demo data is real
+pretend GitHub verifies skills
+pretend future APIs are integrated
+claim guaranteed employability
+claim guaranteed score improvement
+invent certificates
+invent placements
+invent industry feedback
+invent companies
+invent real-world outcomes
+
+============================================================
+122. DEFINITION OF DONE
+============================================================
+
+The new prototype is NOT finished merely because all routes exist.
+
+It is finished when:
+
+✓ Landing page works
+✓ Four portals work
+✓ Student dashboard works
+✓ Role selection works
+✓ Assessment flow works
+✓ Role-specific skills work
+✓ Readiness calculates correctly
+✓ Readiness explanation works
+✓ Skill gaps work
+✓ Next Best Action works
+✓ Opportunity matching works
+✓ Apply Now works
+✓ Hackathon discovery works
+✓ Team size is configurable
+✓ Registration works
+✓ Team creation works
+✓ Team matching works
+✓ Team coverage calculates
+✓ Team workspace works
+✓ Milestones work
+✓ Submission works
+✓ Evaluation works
+✓ Evaluation calculations work
+✓ Feedback works
+✓ Evidence works
+✓ Skill Passport works
+✓ Industry sees student evidence
+✓ Academia sees relevant intelligence
+✓ Institution sees aggregate intelligence
+✓ Notifications work
+✓ Responsive design works
+✓ No major dead buttons
+✓ No contradictory scores
+✓ No unexplained recommendations
+✓ No fake integrations presented as live
+
+============================================================
+123. FINAL JUDGE EXPERIENCE
+============================================================
+
+A judge should be able to watch this:
+
+INDUSTRY:
+Needs a Data Scientist.
+
+↓ 
+
+SKILL SETU:
+Shows required skills.
+
+↓
+
+STUDENT S042:
+Completes role assessment.
+
+↓
+
+SYSTEM:
+Calculates 61% readiness.
+
+↓
+
+SYSTEM:
+Identifies Machine Learning gap.
+
+↓
+
+SYSTEM:
+Recommends ML project.
+
+↓
+
+STUDENT:
+Joins ML hackathon/team.
+
+↓
+
+TEAM:
+Skill coverage is calculated.
+
+↓
+
+STUDENT:
+Builds project.
+
+↓
+
+SUBMISSION:
+GitHub + demo + architecture.
+
+↓
+
+INDUSTRY:
+Evaluates project.
+
+↓
+
+FEEDBACK:
+Creates new evidence.
+
+↓
+
+SKILL PASSPORT:
+Updates.
+
+↓
+
+READINESS:
+Recalculates when supported by evidence policy.
+
+↓
+
+INDUSTRY:
+Sees evidence-backed candidate.
+
+↓
+
+INSTITUTION:
+Sees aggregated skill intelligence.
+
+============================================================
+124. CORE PRODUCT STATEMENT
+============================================================
+
+The final prototype must communicate:
+
+SKILL SETU doesn't merely connect students to jobs.
+
+It creates the intelligence layer that connects:
+
+WHAT INDUSTRY NEEDS
+
+with
+
+WHAT STUDENTS CAN DEMONSTRATE
+
+and then converts the gap into:
+
+WHAT THE STUDENT SHOULD DO NEXT
+
+and finally turns the resulting experience into:
+
+NEW EVIDENCE.
+
+============================================================
+125. FINAL TAGLINE
+============================================================
+
+SKILL SETU
+
+FROM SKILL CLAIMS
+TO SKILL EVIDENCE.
+
+Secondary statement:
+
+BUILD SKILLS.
+CREATE EVIDENCE.
+FIND OPPORTUNITY.
+
+Final ecosystem statement:
+
+EVIDENCE → INTELLIGENCE → ACTION → OPPORTUNITY → FEEDBACK → GROWTH
+
+============================================================
+FINAL INSTRUCTION
+============================================================
+
+BUILD THIS AS A NEW, CLEAN, COHESIVE SKILL SETU PROTOTYPE.
+
+DO NOT OMIT ANY FEATURE SPECIFIED ABOVE.
+
+DO NOT IMPLEMENT ONLY THE VISUAL SHELL.
+
+Every major workflow should have real state within the prototype.
+
+Keep the entire product visually consistent.
+
+Keep the four portals connected.
+
+Keep all intelligence centered around evidence.
+
+Make the hackathon module part of the career/skill intelligence loop.
+
+Make the S042 student journey the main demonstration path.
+
+MAKE THE PRODUCT LOOK LIKE ONE REAL ECOSYSTEM, NOT 100 SEPARATE SCREENS.
+
+BE PRECISE.
+BE CONSISTENT.
+BE FUNCTIONAL.
+DO NOT INVENT.
+DO NOT FAKE.
+============================================================

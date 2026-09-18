@@ -18,7 +18,7 @@ export function LogoMark({ className, size = 36 }: { className?: string; size?: 
   return (
     <span
       className={cn(
-        "relative inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-slate-900 to-slate-700 shadow-sm ring-1 ring-black/5",
+        "relative inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-[#0F2547] to-[#1E3A5F] shadow-xs ring-1 ring-black/5",
         className,
       )}
       style={{ width: size, height: size }}
@@ -39,11 +39,11 @@ export function LogoMark({ className, size = 36 }: { className?: string; size?: 
           strokeLinecap="round"
           opacity="0.55"
         />
-        {/* satellites */}
+        {/* satellites — master palette (teal/orange/blue/navy) */}
         <circle cx="5" cy="5" r="2.1" fill="#14B8A6" />
-        <circle cx="19" cy="5" r="2.1" fill="#F59E0B" />
-        <circle cx="5" cy="19" r="2.1" fill="#F43F5E" />
-        <circle cx="19" cy="19" r="2.1" fill="#8B5CF6" />
+        <circle cx="19" cy="5" r="2.1" fill="#EA580C" />
+        <circle cx="5" cy="19" r="2.1" fill="#2563EB" />
+        <circle cx="19" cy="19" r="2.1" fill="#1E3A5F" />
         {/* centre */}
         <circle cx="12" cy="12" r="3.2" fill="white" />
         <circle cx="12" cy="12" r="1.4" fill="#0F172A" />
