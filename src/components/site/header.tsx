@@ -6,6 +6,7 @@ import { Menu, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
+import { useApp } from "@/lib/store";
 
 const NAV_LINKS = [
   { label: "How It Works", href: "#how-it-works" },
@@ -14,6 +15,7 @@ const NAV_LINKS = [
 ];
 
 export function Header() {
+  const { setView } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -57,8 +59,8 @@ export function Header() {
 
         <div className="hidden items-center gap-2 md:flex">
           <Button
-            asChild
             variant="ghost"
+            onClick={() => setView("login")}
             className={cn(
               "h-9 px-3 text-sm font-medium",
               scrolled
@@ -66,16 +68,14 @@ export function Header() {
                 : "text-slate-800 hover:bg-white/40",
             )}
           >
-            <Link href="#login">Login</Link>
+            Login
           </Button>
           <Button
-            asChild
+            onClick={() => setView("register")}
             className="h-9 gap-1.5 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md"
           >
-            <Link href="#get-started">
-              <Sparkles className="h-3.5 w-3.5" />
-              Get Started
-            </Link>
+            <Sparkles className="h-3.5 w-3.5" />
+            Get Started
           </Button>
         </div>
 
@@ -112,22 +112,18 @@ export function Header() {
             ))}
             <div className="mt-2 flex items-center gap-2">
               <Button
-                asChild
                 variant="outline"
+                onClick={() => { setOpen(false); setView("login"); }}
                 className="h-9 flex-1 text-sm font-medium"
               >
-                <Link href="#login" onClick={() => setOpen(false)}>
-                  Login
-                </Link>
+                Login
               </Button>
               <Button
-                asChild
+                onClick={() => { setOpen(false); setView("register"); }}
                 className="h-9 flex-1 gap-1.5 bg-slate-900 text-sm font-semibold text-white hover:bg-slate-800"
               >
-                <Link href="#get-started" onClick={() => setOpen(false)}>
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Get Started
-                </Link>
+                <Sparkles className="h-3.5 w-3.5" />
+                Get Started
               </Button>
             </div>
           </nav>

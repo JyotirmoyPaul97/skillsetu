@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// SKILL SETU — Academia-Industry Collaboration Portal
+// Comprehensive schema for the four-portal skill intelligence ecosystem.
 
 generator client {
   provider = "prisma-client-js"
@@ -13,20 +10,323 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─── Auth & Users ────────────────────────────────────────────────
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role
+  avatarColor  String   @default("#0D9488")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions        Session[]
+  studentProfile  StudentProfile?
+  industryProfile IndustryProfile?
+  academiaProfile AcademiaProfile?
+  // Institution admins don't need a separate profile row; they reference Institution via institutionId.
+
+  // Relations authored by this user
+  evidenceGiven    Feedback[]   @relation("feedback_from")
+  feedbackReceived Feedback[]   @relation("feedback_to")
+  evidenceAuthored SkillEvidence[] // student-authored evidence (studentId)
+  opportunities    Opportunity[]
+  applications     Application[]
+  teamBuilds       TeamBuildRequest[]
+  curriculumGaps   CurriculumAlignment[]
+
+  @@map("users")
 }
 
-model Post {
+enum Role {
+  STUDENT
+  INDUSTRY
+  ACADEMIA
+  INSTITUTION
+  ADMIN
+}
+
+model Session {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ─── Per-role profiles ────────────────────────────────────────────
+
+model StudentProfile {
+  userId        String   @id
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rollNo        String
+  branch        String
+  year          Int
+  cgpa          Float
+  bio           String   @default("")
+  targetRole    String   @default("")
+  institutionId String?
+  institution   Institution? @relation(fields: [institutionId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("student_profiles")
+}
+
+model IndustryProfile {
+  userId      String   @id
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName String
+  industry    String   @default("Technology")
+  website     String   @default("")
+  location    String   @default("")
+  size        String   @default("51-200")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("industry_profiles")
+}
+
+model AcademiaProfile {
+  userId         String   @id
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department     String
+  designation    String
+  institutionId  String?
+  institution    Institution? @relation(fields: [institutionId], references: [id])
+  researchAreas  String   @default("")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("academia_profiles")
+}
+
+// ─── Institutions ────────────────────────────────────────────────
+
+model Institution {
+  id        String   @id @default(cuid())
+  name      String
+  code      String   @unique
+  location  String
+  type      String   @default("Engineering")
+  createdAt DateTime @default(now())
+
+  students      StudentProfile[]
+  faculty       AcademiaProfile[]
+  branchStats   BranchAnalytics[]
+  placements    PlacementRecord[]
+  curriculum    CurriculumAlignment[]
+
+  @@map("institutions")
+}
+
+// ─── Skills & Evidence ───────────────────────────────────────────
+
+model Skill {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String   @default("Technical")
+  description String   @default("")
+  createdAt    DateTime @default(now())
+
+  evidence      SkillEvidence[]
+  targetRoles   TargetRoleSkill[]
+  curriculumGaps CurriculumAlignment[]
+
+  @@map("skills")
+}
+
+enum EvidenceType {
+  ASSESSMENT
+  PROJECT
+  CERTIFICATION
+  INTERNSHIP
+  FEEDBACK
+  COURSEWORK
+}
+
+model SkillEvidence {
+  id          String       @id @default(cuid())
+  studentId   String
+  student     User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  skillId     String
+  skill       Skill        @relation(fields: [skillId], references: [id])
+  type        EvidenceType
+  title       String
+  description String       @default("")
+  score       Int          @default(75)   // 0-100 proficiency
+  verified    Boolean      @default(false)
+  provider    String       @default("")    // who assessed/issued
+  createdAt   DateTime     @default(now())
+
+  @@index([studentId])
+  @@index([skillId])
+  @@map("skill_evidence")
+}
+
+model TargetRoleSkill {
+  id        String  @id @default(cuid())
+  roleName  String
+  skillId   String
+  skill     Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  weight    Float   @default(1.0) // importance 0-1
+  targetLevel Int   @default(80) // expected proficiency 0-100
+
+  @@unique([roleName, skillId])
+  @@index([roleName])
+  @@map("target_role_skills")
+}
+
+// ─── Industry opportunities & applications ───────────────────────
+
+enum OpportunityType {
+  INTERNSHIP
+  FULL_TIME
+  PROJECT
+  MENTORSHIP
+  HACKATHON
+}
+
+enum OpportunityStatus {
+  DRAFT
+  OPEN
+  CLOSED
+}
+
+model Opportunity {
+  id             String           @id @default(cuid())
+  industryId     String
+  industry       User             @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  title          String
+  description    String
+  type           OpportunityType
+  requiredSkills String           @default("[]") // JSON array of {skillId, name, weight, minLevel}
+  location       String           @default("Remote")
+  stipend        String           @default("")
+  deadline       String           @default("")
+  openings       Int              @default(1)
+  status         OpportunityStatus @default(OPEN)
+  createdAt      DateTime         @default(now())
+
+  applications   Application[]
+  feedback       Feedback[]
+
+  @@index([industryId])
+  @@map("opportunities")
+}
+
+enum ApplicationStatus {
+  PENDING
+  SHORTLISTED
+  SELECTED
+  REJECTED
+  WITHDRAWN
+}
+
+model Application {
+  id            String           @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity      @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  studentId     String
+  student       User             @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  status        ApplicationStatus @default(PENDING)
+  matchScore    Int              @default(0) // 0-100 AI/computed
+  coverNote     String           @default("")
+  createdAt     DateTime         @default(now())
+
+  @@unique([opportunityId, studentId])
+  @@index([studentId])
+  @@map("applications")
+}
+
+model TeamBuildRequest {
+  id           String   @id @default(cuid())
+  industryId   String
+  industry     User     @relation(fields: [industryId], references: [id], onDelete: Cascade)
+  projectName  String
+  description  String   @default("")
+  requiredRoles String  @default("[]") // JSON array of {role, count, requiredSkills}
+  result       String   @default("")   // JSON array of matched student IDs
+  createdAt    DateTime @default(now())
+
+  @@map("team_build_requests")
+}
+
+// ─── Feedback loop ───────────────────────────────────────────────
+
+model Feedback {
+  id           String      @id @default(cuid())
+  fromUserId   String
+  fromUser     User        @relation("feedback_from", fields: [fromUserId], references: [id], onDelete: Cascade)
+  toStudentId  String
+  toStudent    User        @relation("feedback_to", fields: [toStudentId], references: [id], onDelete: Cascade)
+  opportunityId String?
+  opportunity  Opportunity? @relation(fields: [opportunityId], references: [id])
+  rating       Int         @default(5) // 1-5
+  comment      String      @default("")
+  createdAt    DateTime    @default(now())
+
+  @@index([toStudentId])
+  @@map("feedback")
+}
+
+// ─── Academia: curriculum alignment ───────────────────────────────
+
+model CurriculumAlignment {
+  id              String       @id @default(cuid())
+  academiaId      String
+  academia        User         @relation(fields: [academiaId], references: [id], onDelete: Cascade)
+  institutionId   String?
+  institution     Institution? @relation(fields: [institutionId], references: [id])
+  branch          String
+  skillId         String
+  skill           Skill        @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  currentLevel    Int          @default(50) // avg cohort proficiency 0-100
+  targetLevel     Int          @default(80)
+  gap             Int          @default(30)
+  recommendation  String      @default("")
+  createdAt       DateTime     @default(now())
+
+  @@unique([academiaId, branch, skillId])
+  @@map("curriculum_alignment")
+}
+
+// ─── Institution analytics ───────────────────────────────────────
+
+model BranchAnalytics {
+  id              String       @id @default(cuid())
+  institutionId   String
+  institution     Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  branch          String
+  academicYear    String
+  avgSkillScore   Float        @default(60)
+  placementRate   Float        @default(0)
+  internshipRate  Float        @default(0)
+  studentCount    Int          @default(0)
+  createdAt       DateTime     @default(now())
+
+  @@unique([institutionId, branch, academicYear])
+  @@map("branch_analytics")
+}
+
+model PlacementRecord {
+  id              String       @id @default(cuid())
+  institutionId   String
+  institution     Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  branch          String
+  academicYear    String
+  totalStudents   Int           @default(0)
+  placed          Int           @default(0)
+  avgPackage      Float         @default(0)
+  topRecruiters   String        @default("[]") // JSON array of names
+  createdAt       DateTime     @default(now())
+
+  @@unique([institutionId, branch, academicYear])
+  @@map("placement_records")
 }

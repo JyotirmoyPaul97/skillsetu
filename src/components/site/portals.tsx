@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -12,6 +11,8 @@ import {
 } from "lucide-react";
 import { PORTALS, type PortalTheme } from "./theme";
 import { cn } from "@/lib/utils";
+import { useApp } from "@/lib/store";
+import type { RegisterRole } from "@/lib/types";
 
 function PortalIcon({ theme }: { theme: PortalTheme }) {
   const cls = "h-6 w-6";
@@ -28,6 +29,11 @@ function PortalIcon({ theme }: { theme: PortalTheme }) {
 }
 
 function PortalCard({ theme, idx }: { theme: PortalTheme; idx: number }) {
+  const { setView, setPendingRole } = useApp();
+  const enter = () => {
+    setPendingRole(theme.key.toUpperCase() as RegisterRole);
+    setView("register");
+  };
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
@@ -77,14 +83,14 @@ function PortalCard({ theme, idx }: { theme: PortalTheme; idx: number }) {
 
       {/* Enter link */}
       <div className="mt-6 flex-1" />
-      <Link
-        href={`#portal-${theme.key}`}
+      <button
+        onClick={enter}
         className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
         style={{ color: theme.accent }}
       >
         Enter {theme.short} Portal
         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-      </Link>
+      </button>
 
       {/* Bottom accent bar */}
       <span

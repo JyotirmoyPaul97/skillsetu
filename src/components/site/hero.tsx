@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sparkles, ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useApp } from "@/lib/store";
 
 export function Hero() {
+  const { setView } = useApp();
   return (
     <section
       id="hero"
@@ -85,23 +86,21 @@ export function Hero() {
           className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
           <Button
-            asChild
+            onClick={() => setView("register")}
             className="h-11 gap-2 rounded-xl bg-slate-900 px-6 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition-all hover:bg-slate-800 hover:shadow-xl"
           >
-            <Link href="#portals">
-              Explore the Ecosystem
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            Explore the Ecosystem
+            <ArrowRight className="h-4 w-4" />
           </Button>
           <Button
             asChild
             variant="outline"
             className="h-11 gap-2 rounded-xl border-slate-300 bg-white/80 px-6 text-sm font-semibold text-slate-800 shadow-sm backdrop-blur hover:bg-white"
           >
-            <Link href="#how-it-works">
+            <a href="#how-it-works">
               <Play className="h-4 w-4 text-teal-600" />
               How It Works
-            </Link>
+            </a>
           </Button>
         </motion.div>
 

@@ -1,11 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useApp } from "@/lib/store";
 
 export function CtaSection() {
+  const { setView } = useApp();
   return (
     <section
       id="get-started"
@@ -41,23 +42,19 @@ export function CtaSection() {
 
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button
-            asChild
+            onClick={() => setView("register")}
             className="h-11 gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-slate-900 shadow-lg transition-all hover:bg-slate-100 hover:shadow-xl"
           >
-            <Link href="#portals">
-              Explore the Ecosystem
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            Explore the Ecosystem
+            <ArrowRight className="h-4 w-4" />
           </Button>
           <Button
-            asChild
+            onClick={() => setView("register")}
             variant="outline"
             className="h-11 gap-2 rounded-xl border-white/25 bg-white/5 px-6 text-sm font-semibold text-white backdrop-blur hover:bg-white/10"
           >
-            <Link href="#get-started">
-              <Sparkles className="h-4 w-4 text-teal-300" />
-              Get Started
-            </Link>
+            <Sparkles className="h-4 w-4 text-teal-300" />
+            Get Started
           </Button>
         </div>
       </motion.div>
