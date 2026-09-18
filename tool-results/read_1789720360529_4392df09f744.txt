@@ -1,0 +1,374 @@
+     1→"use client";
+     2→
+     3→import { useState, useMemo } from "react";
+     4→import { motion } from "framer-motion";
+     5→import {
+     6→  LayoutDashboard, Target, PlusCircle, Briefcase, Users, Building2, MapPin,
+     7→  Clock, Award, TrendingUp, AlertTriangle, Sparkles, CheckCircle2, ChevronRight,
+     8→  ArrowRight, FileText, Bookmark, X, Search,
+     9→} from "lucide-react";
+    10→import { useRouter } from "@/lib/router";
+    11→import { useIndustry, IndustryService, useIndustryStore } from "@/lib/industry";
+    12→import { useCareerStore } from "@/lib/career";
+    13→import { DEMO_COMPANY, DEMO_INDUSTRY_USER } from "@/lib/industry/candidates";
+    14→import { calculateOpportunityMatch, checkOpportunityEligibility } from "@/lib/career/matching";
+    15→import { ALL_ROLES } from "@/lib/intelligence/role-config";
+    16→import { SKILL_NAMES, skillName } from "@/lib/intelligence/demo-data";
+    17→import { SKILL_IDS } from "@/lib/intelligence/role-config";
+    18→import type { Candidate, DemandConfig, DemandSkill } from "@/lib/industry/industry-model";
+    19→import type { Opportunity, MatchResult, ApplicationStatus } from "@/lib/career/opportunity-model";
+    20→import type { SkillImportance } from "@/lib/industry/industry-model";
+    21→import {
+    22→  DashHeader, Modal, Drawer, DemoBadge, CalcBadge, MatchBadge, EmptyState, Field, SsStat,
+    23→} from "@/components/app/student-parts";
+    24→import { SsCard, SsBadge } from "@/components/ui/ss";
+    25→import { Button } from "@/components/ui/button";
+    26→import { cn } from "@/lib/utils";
+    27→
+    28→export function IndustryCore({ section }: { section: string }) {
+    29→  if (section === "dashboard") return <IndustryDashboard />;
+    30→  if (section === "demand") return <DemandIntelligence />;
+    31→  if (section === "post") return <PostOpportunity />;
+    32→  if (section === "management") return <OpportunityManagement />;
+    33→  if (section === "talent") return <TalentDiscovery />;
+    34→  return <IndustryDashboard />;
+    35→}
+    36→
+    37→// ─── Industry Dashboard (§4, §5) ───────────────────────────────
+    38→function IndustryDashboard() {
+    39→  const { navigate } = useRouter();
+    40→  const ind = useIndustry();
+    41→  const opps = ind.opportunities.filter((o) => o.status === "Published");
+    42→  const apps = ind.applications;
+    43→  const shortlisted = ind.shortlistedIds.length;
+    44→  const pendingEval = ind.feedback.filter((f) => f.status === "Submitted").length;
+    45→  const talentMatches = ind.candidates.reduce((sum, c) => {
+    46→    const best = Object.values(ind.candidateMatches[c.studentId] ?? {}).sort((a, b) => b.matchScore - a.matchScore)[0];
+    47→    return sum + (best && best.matchScore >= 60 ? 1 : 0);
+    48→  }, 0);
+    49→  return (
+    50→    <div className="space-y-6">
+    51→      <DashHeader title={`Good morning, ${DEMO_INDUSTRY_USER.name.split(" ")[0]}`} subtitle={`${DEMO_COMPANY.companyName} · ${DEMO_INDUSTRY_USER.role}`} icon={LayoutDashboard} accent="#EA580C" action={<DemoBadge />} />
+    52→      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+    53→        <SsStat label="Active Opps" value={opps.length} icon={Briefcase} tone="orange" />
+    54→        <SsStat label="Applicants" value={apps.length} icon={Users} tone="blue" />
+    55→        <SsStat label="Shortlisted" value={shortlisted} icon={Bookmark} tone="navy" />
+    56→        <SsStat label="Challenges" value={ind.challenges.length} icon={Award} tone="teal" />
+    57→        <SsStat label="Pending Eval" value={pendingEval} icon={AlertTriangle} tone="orange" />
+    58→        <SsStat label="Talent Matches" value={talentMatches} icon={Sparkles} tone="blue" />
+    59→      </div>
+    60→      {/* Core message (§79) */}
+    61→      <SsCard tone="soft" className="p-5">
+    62→        <div className="flex flex-wrap items-center gap-3 text-sm">
+    63→          <span className="font-bold text-[var(--ss-ink)]">Industry Intelligence:</span>
+    64→          {["Define Demand", "Discover Evidence", "Match Talent", "Create Opportunity", "Evaluate", "Give Feedback"].map((s, i, arr) => (
+    65→            <span key={s} className="flex items-center gap-2">
+    66→              <span className="text-[var(--ss-orange-600)]">{s}</span>
+    67→              {i < arr.length - 1 && <ArrowRight className="h-3 w-3 text-[var(--ss-faint)]" />}
+    68→            </span>
+    69→          ))}
+    70→        </div>
+    71→      </SsCard>
+    72→      {/* Quick actions */}
+    73→      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    74→        <QuickAction icon={Target} label="Define Demand" desc="Set role requirements" onClick={() => navigate("/industry/demand")} />
+    75→        <QuickAction icon={PlusCircle} label="Post Opportunity" desc="Create job/internship/project" onClick={() => navigate("/industry/post")} />
+    76→        <QuickAction icon={Users} label="Discover Talent" desc="Search evidence-backed candidates" onClick={() => navigate("/industry/talent")} />
+    77→        <QuickAction icon={Briefcase} label="Manage Opportunities" desc="Review applicants" onClick={() => navigate("/industry/management")} />
+    78→      </div>
+    79→      {/* Recent applicants */}
+    80→      <SsCard tone="soft" className="p-5">
+    81→        <h2 className="mb-3 text-sm font-bold text-[var(--ss-ink)]">Recent Applicants</h2>
+    82→        {apps.length === 0 ? <p className="text-sm text-[var(--ss-muted)]">No applications yet.</p> : (
+    83→          <div className="space-y-2">{apps.slice(0, 5).map((a) => {
+    84→            const c = ind.candidates.find((c) => c.studentId === a.studentId);
+    85→            const o = ind.opportunities.find((o) => o.id === a.opportunityId);
+    86→            return <div key={a.id} className="flex items-center justify-between rounded-lg border border-[var(--ss-border)] p-2.5"><div><p className="text-sm font-semibold text-[var(--ss-ink)]">{c?.name ?? a.studentId}</p><p className="text-[10px] text-[var(--ss-muted)]">{o?.title} · {a.appliedAt.slice(0, 10)}</p></div><SsBadge tone="blue" className="text-[10px]">{a.status.replace("_", " ")}</SsBadge></div>;
+    87→          })}</div>
+    88→        )}
+    89→      </SsCard>
+    90→    </div>
+    91→  );
+    92→}
+    93→
+    94→function QuickAction({ icon: Icon, label, desc, onClick }: { icon: any; label: string; desc: string; onClick: () => void }) {
+    95→  return <button onClick={onClick} className="flex items-center gap-3 rounded-xl border border-[var(--ss-border)] bg-white p-4 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"><span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--ss-orange-50)] text-[var(--ss-orange-600)]"><Icon className="h-5 w-5" /></span><div><p className="text-sm font-bold text-[var(--ss-ink)]">{label}</p><p className="text-[10px] text-[var(--ss-muted)]">{desc}</p></div></button>;
+    96→}
+    97→
+    98→// ─── Demand Intelligence (§6, §7, §8, §9) ───────────────────────
+    99→function DemandIntelligence() {
+   100→  const { demandConfigs, createDemand, updateDemand } = useIndustryStore();
+   101→  const [showForm, setShowForm] = useState(false);
+   102→  return (
+   103→    <div className="space-y-6">
+   104→      <DashHeader title="Demand Intelligence" subtitle="Define role requirements using centralized skills" icon={Target} accent="#EA580C" action={<Button variant="orange" size="sm" className="h-8 gap-1.5" onClick={() => setShowForm(true)}><PlusCircle className="h-3.5 w-3.5" /> Define Role Demand</Button>} />
+   105→      {demandConfigs.length === 0 ? <EmptyState icon={Target} title="No demand configs" hint="Create a role demand to define required skills." /> : (
+   106→        <div className="grid gap-3 sm:grid-cols-2">{demandConfigs.map((d) => <DemandCard key={d.id} config={d} />)}</div>
+   107→      )}
+   108→      {showForm && <DemandForm onClose={() => setShowForm(false)} />}
+   109→    </div>
+   110→  );
+   111→}
+   112→
+   113→function DemandCard({ config }: { config: DemandConfig }) {
+   114→  return (
+   115→    <SsCard tone="soft" className="p-5">
+   116→      <div className="flex items-center justify-between"><h3 className="text-sm font-bold text-[var(--ss-ink)]">{config.roleName}</h3><SsBadge tone="orange" className="text-[10px]">{config.opportunityType}</SsBadge></div>
+   117→      <div className="mt-3 space-y-1.5">{config.skills.map((s) => (
+   118→        <div key={s.skillId} className="flex items-center justify-between text-xs">
+   119→          <span className="text-[var(--ss-ink-soft)]">{s.skillName}</span>
+   120→          <span className="flex items-center gap-1.5"><SsBadge tone={s.importance === "Critical" || s.importance === "High" ? "orange" : "blue"} className="text-[9px]">{s.importance}</SsBadge><span className="text-[var(--ss-muted)]">≥ {s.requiredLevel}</span></span>
+   121→        </div>
+   122→      ))}</div>
+   123→    </SsCard>
+   124→  );
+   125→}
+   126→
+   127→function DemandForm({ onClose }: { onClose: () => void }) {
+   128→  const { createDemand } = useIndustryStore();
+   129→  const [roleId, setRoleId] = useState("data-scientist");
+   130→  const [skills, setSkills] = useState<DemandSkill[]>([]);
+   131→  const [oppType, setOppType] = useState("INTERNSHIP" as any);
+   132→  const role = ALL_ROLES.find((r) => r.roleId === roleId)!;
+   133→
+   134→  const addSkill = (skillId: string) => {
+   135→    if (skills.some((s) => s.skillId === skillId)) return;
+   136→    setSkills([...skills, { skillId, skillName: SKILL_NAMES[skillId] ?? skillId, importance: "High", requiredLevel: 70 }]);
+   137→  };
+   138→  const updateSkill = (i: number, updates: Partial<DemandSkill>) => setSkills(skills.map((s, j) => j === i ? { ...s, ...updates } : s));
+   139→
+   140→  const submit = () => {
+   141→    createDemand({ roleId, roleName: role.roleName, skills, opportunityType: oppType, eligibility: { yearMin: 2 } });
+   142→    onClose();
+   143→  };
+   144→
+   145→  return (
+   146→    <Modal open onClose={onClose} title="Define Role Demand" subtitle="Skills use centralized SKILL SETU records" size="lg">
+   147→      <div className="space-y-4">
+   148→        <div className="space-y-1"><label className="text-[11px] font-semibold text-[var(--ss-ink-soft)]">Role</label><select value={roleId} onChange={(e) => { setRoleId(e.target.value); setSkills([]); }} className="h-9 w-full rounded-md border border-[var(--ss-border)] bg-white px-2.5 text-sm">{ALL_ROLES.map((r) => <option key={r.roleId} value={r.roleId}>{r.roleName}</option>)}</select></div>
+   149→        <div><label className="text-[11px] font-semibold text-[var(--ss-ink-soft)]">Opportunity Type</label><select value={oppType} onChange={(e) => setOppType(e.target.value)} className="mt-1 h-9 w-full rounded-md border border-[var(--ss-border)] bg-white px-2.5 text-sm"><option value="JOB">Job</option><option value="INTERNSHIP">Internship</option><option value="PROJECT">Project</option><option value="APPRENTICESHIP">Apprenticeship</option></select></div>
+   150→        <div><label className="text-[11px] font-semibold text-[var(--ss-ink-soft)]">Required Skills (from centralized skill records)</label><div className="mt-2 flex flex-wrap gap-1.5">{role.skills.map((s) => <button key={s.skillId} onClick={() => addSkill(s.skillId)} className="rounded-full border border-[var(--ss-border)] px-2.5 py-0.5 text-[11px] text-[var(--ss-ink-soft)] hover:bg-[var(--ss-surface-2)]">+ {s.skillName}</button>)}</div></div>
+   151→        {skills.length > 0 && <div className="space-y-2">{skills.map((s, i) => (
+   152→          <div key={s.skillId} className="flex items-center gap-2 rounded-lg bg-[var(--ss-surface-2)] p-2.5">
+   153→            <span className="flex-1 text-sm font-medium text-[var(--ss-ink)]">{s.skillName}</span>
+   154→            <select value={s.importance} onChange={(e) => updateSkill(i, { importance: e.target.value as SkillImportance })} className="h-8 rounded-md border border-[var(--ss-border)] bg-white px-2 text-xs"><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+   155→            <input type="number" min={0} max={100} value={s.requiredLevel} onChange={(e) => updateSkill(i, { requiredLevel: Number(e.target.value) })} className="h-8 w-14 rounded-md border border-[var(--ss-border)] bg-white px-2 text-xs" />
+   156→            <button onClick={() => setSkills(skills.filter((_, j) => j !== i))} className="rounded-md p-1 text-[var(--ss-faint)]"><X className="h-3.5 w-3.5" /></button>
+   157→          </div>
+   158→        ))}</div>}
+   159→        <div className="flex gap-2"><Button variant="outline" className="flex-1" onClick={onClose}>Cancel</Button><Button variant="orange" className="flex-1" onClick={submit} disabled={skills.length === 0}>Save Demand Config</Button></div>
+   160→      </div>
+   161→    </Modal>
+   162→  );
+   163→}
+   164→
+   165→// ─── Post Opportunity (§10, §11, §12) ───────────────────────────
+   166→function PostOpportunity() {
+   167→  const { navigate } = useRouter();
+   168→  const { addOpportunity } = useCareerStore();
+   169→  const [form, setForm] = useState({ title: "", type: "INTERNSHIP" as any, company: DEMO_COMPANY.companyName, location: DEMO_COMPANY.location, mode: "Hybrid", description: "", duration: "", compensationType: "Stipend", compensationAmount: "", deadline: "2026-12-31", roleId: "data-scientist" });
+   170→  const [reqSkills, setReqSkills] = useState<string[]>([]);
+   171→  const role = ALL_ROLES.find((r) => r.roleId === form.roleId)!;
+   172→
+   173→  const submit = () => {
+   174→    const now = new Date().toISOString();
+   175→    addOpportunity({
+   176→      id: "opp-" + Math.random().toString(36).slice(2, 9),
+   177→      title: form.title || "Untitled Opportunity",
+   178→      company: form.company, organizationType: "Industry", description: form.description,
+   179→      type: form.type, location: form.location, mode: form.mode as any, duration: form.duration,
+   180→      compensationType: form.compensationType as any, compensationAmount: form.compensationAmount,
+   181→      applicationDeadline: form.deadline, requiredSkills: reqSkills.map((sid) => ({ skillId: sid, skillName: SKILL_NAMES[sid] ?? sid, importance: 1, requiredLevel: 60 })),
+   182→      targetRoles: [form.roleId], eligibilityRules: { yearMin: 2 }, responsibilities: [], qualifications: [],
+   183→      benefits: [], status: "Published", createdAt: now, updatedAt: now,
+   184→    });
+   185→    navigate("/industry/management");
+   186→  };
+   187→
+   188→  return (
+   189→    <div className="space-y-6">
+   190→      <DashHeader title="Post Opportunity" subtitle="Uses the Phase 4 Opportunity model — shared with Student Portal" icon={PlusCircle} accent="#EA580C" />
+   191→      <SsCard tone="soft" className="p-5 space-y-4">
+   192→        <div className="grid gap-3 sm:grid-cols-2">
+   193→          <Field2 label="Title" value={form.title} onChange={(v) => setForm({ ...form, title: v })} />
+   194→          <div className="space-y-1"><label className="text-[11px] font-semibold">Type</label><select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} className="h-9 w-full rounded-md border border-[var(--ss-border)] bg-white px-2.5 text-sm"><option value="JOB">Job</option><option value="INTERNSHIP">Internship</option><option value="PROJECT">Project</option><option value="APPRENTICESHIP">Apprenticeship</option></select></div>
+   195→          <Field2 label="Company" value={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+   196→          <Field2 label="Location" value={form.location} onChange={(v) => setForm({ ...form, location: v })} />
+   197→          <div className="space-y-1"><label className="text-[11px] font-semibold">Mode</label><select value={form.mode} onChange={(e) => setForm({ ...form, mode: e.target.value })} className="h-9 w-full rounded-md border border-[var(--ss-border)] bg-white px-2.5 text-sm"><option>On-site</option><option>Hybrid</option><option>Remote</option></select></div>
+   198→          <Field2 label="Duration" value={form.duration} onChange={(v) => setForm({ ...form, duration: v })} />
+   199→          <Field2 label="Compensation" value={form.compensationAmount} onChange={(v) => setForm({ ...form, compensationAmount: v })} />
+   200→          <Field2 label="Deadline (YYYY-MM-DD)" value={form.deadline} onChange={(v) => setForm({ ...form, deadline: v })} />
+   201→          <div className="space-y-1"><label className="text-[11px] font-semibold">Target Role</label><select value={form.roleId} onChange={(e) => { setForm({ ...form, roleId: e.target.value }); setReqSkills([]); }} className="h-9 w-full rounded-md border border-[var(--ss-border)] bg-white px-2.5 text-sm">{ALL_ROLES.map((r) => <option key={r.roleId} value={r.roleId}>{r.roleName}</option>)}</select></div>
+   202→        </div>
+   203→        <div className="space-y-1"><label className="text-[11px] font-semibold">Description</label><textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} className="w-full rounded-md border border-[var(--ss-border)] p-2 text-sm" /></div>
+   204→        <div><label className="text-[11px] font-semibold">Required Skills (centralized)</label><div className="mt-2 flex flex-wrap gap-1.5">{role.skills.map((s) => <button key={s.skillId} onClick={() => setReqSkills(reqSkills.includes(s.skillId) ? reqSkills.filter((x) => x !== s.skillId) : [...reqSkills, s.skillId])} className={cn("rounded-full border px-2.5 py-0.5 text-[11px]", reqSkills.includes(s.skillId) ? "border-[var(--ss-orange-600)] bg-[var(--ss-orange-50)] text-[var(--ss-orange-600)]" : "border-[var(--ss-border)] text-[var(--ss-ink-soft)]")}>{s.skillName}</button>)}</div></div>
+   205→        <div className="flex gap-2"><Button variant="outline" onClick={() => navigate("/industry/management")}>Cancel</Button><Button variant="orange" onClick={submit} disabled={!form.title}>Publish Opportunity</Button></div>
+   206→      </SsCard>
+   207→    </div>
+   208→  );
+   209→}
+   210→
+   211→function Field2({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+   212→  return <div className="space-y-1"><label className="text-[11px] font-semibold text-[var(--ss-ink-soft)]">{label}</label><input value={value} onChange={(e) => onChange(e.target.value)} className="h-9 w-full rounded-md border border-[var(--ss-border)] bg-white px-2.5 text-sm" /></div>;
+   213→}
+   214→
+   215→// ─── Opportunity Management (§13, §14) ──────────────────────────
+   216→function OpportunityManagement() {
+   217→  const ind = useIndustry();
+   218→  const [tab, setTab] = useState("active");
+   219→  const opps = ind.opportunities.filter((o) => tab === "active" ? o.status === "Published" : tab === "drafts" ? o.status === "Draft" : o.status === "Closed");
+   220→  const [manageOpp, setManageOpp] = useState<Opportunity | null>(null);
+   221→  return (
+   222→    <div className="space-y-6">
+   223→      <DashHeader title="Opportunity Management" subtitle="Manage your opportunities & applicants" icon={Briefcase} accent="#EA580C" />
+   224→      <div className="flex gap-1.5">{["active", "drafts", "closed"].map((t) => <button key={t} onClick={() => setTab(t)} className={cn("rounded-full px-3 py-1 text-xs font-semibold capitalize", tab === t ? "bg-[var(--ss-orange-600)] text-white" : "bg-[var(--ss-surface-3)] text-[var(--ss-ink-soft)]")}>{t}</button>)}</div>
+   225→      {opps.length === 0 ? <EmptyState icon={Briefcase} title="No opportunities" hint="Create an opportunity to start building your talent pipeline." /> : (
+   226→        <div className="space-y-2.5">{opps.map((o) => {
+   227→          const apps = ind.applications.filter((a) => a.opportunityId === o.id);
+   228→          return <SsCard key={o.id} tone="soft" className="p-4"><div className="flex flex-wrap items-center justify-between gap-2"><div><p className="text-sm font-bold text-[var(--ss-ink)]">{o.title}</p><p className="text-[10px] text-[var(--ss-muted)]">{o.company} · {o.type} · Deadline: {o.applicationDeadline}</p></div><div className="flex items-center gap-2"><SsBadge tone="blue" className="text-[10px]">{apps.length} applicants</SsBadge><Button variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => setManageOpp(o)}>Manage Applicants</Button></div></div></SsCard>;
+   229→        })}</div>
+   230→      )}
+   231→      <ManageApplicants opp={manageOpp} open={!!manageOpp} onClose={() => setManageOpp(null)} />
+   232→    </div>
+   233→  );
+   234→}
+   235→
+   236→function ManageApplicants({ opp, open, onClose }: { opp: Opportunity | null; open: boolean; onClose: () => void }) {
+   237→  const { navigate } = useRouter();
+   238→  const ind = useIndustry();
+   239→  const { updateApplicationStatus } = useCareerStore();
+   240→  if (!opp) return null;
+   241→  const apps = ind.applications.filter((a) => a.opportunityId === opp.id);
+   242→  return (
+   243→    <Drawer open={open} onClose={onClose} title={`Applicants — ${opp.title}`} subtitle={`${apps.length} applications`}>
+   244→      <div className="space-y-3">
+   245→        {apps.length === 0 ? <p className="text-sm text-[var(--ss-muted)]">No applications yet.</p> : apps.map((a) => {
+   246→          const c = ind.candidates.find((c) => c.studentId === a.studentId);
+   247→          const match = ind.candidateMatches[a.studentId]?.[opp.id];
+   248→          return (
+   249→            <div key={a.id} className="rounded-lg border border-[var(--ss-border)] p-3">
+   250→              <div className="flex items-center justify-between">
+   251→                <div><p className="text-sm font-semibold text-[var(--ss-ink)]">{c?.name ?? a.studentId}</p><p className="text-[10px] text-[var(--ss-muted)]">{c?.targetRole} · Readiness {c?.roleReadiness}%</p></div>
+   252→                {match && <MatchBadge score={match.matchScore} />}
+   253→              </div>
+   254→              <div className="mt-2 flex items-center gap-2">
+   255→                <select value={a.status} onChange={(e) => updateApplicationStatus(a.id, e.target.value as ApplicationStatus)} className="h-8 rounded-md border border-[var(--ss-border)] bg-white px-2 text-xs">
+   256→                  <option value="APPLIED">Applied</option><option value="UNDER_REVIEW">Under Review</option><option value="SHORTLISTED">Shortlisted</option><option value="INTERVIEW">Interview</option><option value="SELECTED">Selected</option><option value="REJECTED">Rejected</option>
+   257→                </select>
+   258→                <button onClick={() => navigate(`/industry/talent`)} className="text-[11px] font-semibold text-[var(--ss-blue-600)] hover:underline">View Candidate</button>
+   259→              </div>
+   260→            </div>
+   261→          );
+   262→        })}
+   263→      </div>
+   264→    </Drawer>
+   265→  );
+   266→}
+   267→
+   268→// ─── Talent Discovery (§15, §16, §17, §18, §19, §20, §21) ───────
+   269→function TalentDiscovery() {
+   270→  const ind = useIndustry();
+   271→  const [search, setSearch] = useState("");
+   272→  const [roleFilter, setRoleFilter] = useState("");
+   273→  const [selected, setSelected] = useState<Candidate | null>(null);
+   274→  const [whyMatch, setWhyMatch] = useState<{ candidate: Candidate; match: MatchResult } | null>(null);
+   275→
+   276→  const filtered = ind.candidates.filter((c) => {
+   277→    if (search && !c.name.toLowerCase().includes(search.toLowerCase()) && !c.targetRole.toLowerCase().includes(search.toLowerCase())) return false;
+   278→    if (roleFilter && c.roleId !== roleFilter) return false;
+   279→    return true;
+   280→  });
+   281→
+   282→  return (
+   283→    <div className="space-y-6">
+   284→      <DashHeader title="Talent Discovery" subtitle="Evidence-backed candidates — same data as Student Portal" icon={Users} accent="#EA580C" action={<DemoBadge />} />
+   285→      <SsCard tone="flat" className="flex flex-wrap items-center gap-2 p-3">
+   286→        <div className="flex flex-1 items-center gap-2 rounded-lg border border-[var(--ss-border)] bg-white px-3 py-1.5"><Search className="h-4 w-4 text-[var(--ss-faint)]" /><input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search name, role…" className="flex-1 bg-transparent text-sm outline-none" /></div>
+   287→        <select value={roleFilter} onChange={(e) => setRoleFilter(e.target.value)} className="h-9 rounded-lg border border-[var(--ss-border)] bg-white px-2.5 text-sm"><option value="">All roles</option>{ALL_ROLES.map((r) => <option key={r.roleId} value={r.roleId}>{r.roleName}</option>)}</select>
+   288→      </SsCard>
+   289→      {filtered.length === 0 ? <EmptyState icon={Users} title="No candidates match these filters" /> : (
+   290→        <div className="grid gap-3 md:grid-cols-2">{filtered.map((c) => {
+   291→          const bestOpp = ind.publishedOpps.map((o) => ({ o, m: ind.candidateMatches[c.studentId]?.[o.id] })).sort((a, b) => (b.m?.matchScore ?? 0) - (a.m?.matchScore ?? 0))[0];
+   292→          return <CandidateCard key={c.studentId} candidate={c} match={bestOpp?.m} onView={() => setSelected(c)} onWhy={() => bestOpp && setWhyMatch({ candidate: c, match: bestOpp.m })} />;
+   293→        })}</div>
+   294→      )}
+   295→      <CandidateProfileDrawer candidate={selected} open={!!selected} onClose={() => setSelected(null)} onWhy={(c, m) => { setSelected(null); setWhyMatch({ candidate: c, match: m }); }} />
+   296→      <WhyMatchModal data={whyMatch} open={!!whyMatch} onClose={() => setWhyMatch(null)} />
+   297→    </div>
+   298→  );
+   299→}
+   300→
+   301→function CandidateCard({ candidate: c, match, onView, onWhy }: { candidate: Candidate; match?: MatchResult; onView: () => void; onWhy: () => void }) {
+   302→  const topSkills = Object.values(c.competencies).sort((a, b) => b.competencyScore - a.competencyScore).slice(0, 3);
+   303→  return (
+   304→    <SsCard tone="lift" className="p-4">
+   305→      <div className="flex items-start justify-between gap-2">
+   306→        <div className="flex items-center gap-2.5">
+   307→          <span className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white" style={{ backgroundColor: c.avatarColor }}>{c.name.slice(0, 1)}</span>
+   308→          <div><p className="text-sm font-bold text-[var(--ss-ink)]">{c.name}</p><p className="text-[10px] text-[var(--ss-muted)]">{c.branch} · Y{c.year} · {c.college}</p></div>
+   309→        </div>
+   310→        {match && <MatchBadge score={match.matchScore} />}
+   311→      </div>
+   312→      <div className="mt-2 flex items-center gap-3 text-[10px] text-[var(--ss-muted)]"><span>Target: <b className="text-[var(--ss-ink-soft)]">{c.targetRole}</b></span><span>Readiness: <b className="text-[var(--ss-ink-soft)]">{c.roleReadiness}%</b></span><span>Evidence: <b className="text-[var(--ss-ink-soft)]">{c.evidence.length}</b></span></div>
+   313→      <div className="mt-2 flex flex-wrap gap-1">{topSkills.map((s) => <span key={s.skillId} className="rounded-full bg-[var(--ss-surface-3)] px-1.5 py-0.5 text-[9px] font-medium text-[var(--ss-muted)]">{s.skillName} {s.competencyScore}</span>)}</div>
+   314→      <div className="mt-3 flex gap-1.5"><Button variant="outline" size="sm" className="h-8 flex-1 text-[11px]" onClick={onView}>View Candidate</Button>{match && <button onClick={onWhy} className="text-[10px] font-semibold text-[var(--ss-blue-600)] hover:underline">Why?</button>}</div>
+   315→    </SsCard>
+   316→  );
+   317→}
+   318→
+   319→function CandidateProfileDrawer({ candidate: c, open, onClose, onWhy }: { candidate: Candidate | null; open: boolean; onClose: () => void; onWhy: (c: Candidate, m: MatchResult) => void }) {
+   320→  const ind = useIndustry();
+   321→  const { shortlist, invite } = useIndustryStore();
+   322→  if (!c) return null;
+   323→  const bestOpp = ind.publishedOpps.map((o) => ({ o, m: ind.candidateMatches[c.studentId]?.[o.id] })).sort((a, b) => (b.m?.matchScore ?? 0) - (a.m?.matchScore ?? 0))[0];
+   324→  const comps = Object.values(c.competencies).sort((a, b) => b.competencyScore - a.competencyScore);
+   325→  return (
+   326→    <Drawer open={open} onClose={onClose} title={`${c.name} — Candidate Intelligence`} subtitle={`${c.targetRole} · Readiness ${c.roleReadiness}%`}>
+   327→      <div className="space-y-4">
+   328→        <DemoBadge />
+   329→        <div className="grid grid-cols-2 gap-2 text-xs">
+   330→          <Field label="Branch" value={c.branch} /><Field label="Year" value={`Year ${c.year}`} />
+   331→          <Field label="College" value={c.college} /><Field label="CGPA" value={String(c.cgpa)} />
+   332→          <Field label="Target Role" value={c.targetRole} /><Field label="Location" value={c.location} />
+   333→        </div>
+   334→        {bestOpp?.m && <div className="rounded-lg border border-[var(--ss-blue-600)]/30 bg-[var(--ss-blue-50)] p-3"><div className="flex items-center justify-between"><span className="text-xs font-semibold text-[var(--ss-blue-600)]">Best match: {bestOpp.o.title}</span><MatchBadge score={bestOpp.m.matchScore} /></div></div>}
+   335→        <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[var(--ss-faint)]">Relevant Skills</p><div className="mt-1 space-y-1">{comps.map((s) => <div key={s.skillId} className="flex items-center justify-between text-xs"><span className="text-[var(--ss-ink-soft)]">{s.skillName}</span><span className="flex items-center gap-1.5"><span className="font-bold text-[var(--ss-ink)]">{s.competencyScore}</span><SsBadge tone="neutral" className="text-[9px]">{s.evidenceConfidence}</SsBadge></span></div>)}</div></div>
+   336→        <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[var(--ss-faint)]">Evidence ({c.evidence.length})</p><div className="mt-1 space-y-1">{c.evidence.slice(0, 4).map((e) => <div key={e.evidenceId} className="flex items-center justify-between text-[11px]"><span className="text-[var(--ss-ink-soft)]">{e.sourceTitle} · {e.skillName}</span><SsBadge tone={e.status === "Evaluated" ? "teal" : "neutral"} className="text-[9px]">{e.status}</SsBadge></div>)}</div></div>
+   337→        {bestOpp?.m && <button onClick={() => onWhy(c, bestOpp.m)} className="w-full rounded-lg border border-[var(--ss-blue-600)]/30 bg-[var(--ss-blue-50)] py-2 text-xs font-semibold text-[var(--ss-blue-600)] hover:bg-[var(--ss-blue-100)]">Why this candidate? →</button>}
+   338→        <div className="flex flex-wrap gap-2">
+   339→          <Button variant="orange" size="sm" className="h-8 gap-1.5 text-[11px]" onClick={() => shortlist(c.studentId, c.name, bestOpp?.o.id)}><Bookmark className="h-3 w-3" /> Shortlist</Button>
+   340→          <Button variant="outline" size="sm" className="h-8 gap-1.5 text-[11px]" onClick={() => invite({ studentId: c.studentId, studentName: c.name, opportunityId: bestOpp?.o.id, opportunityTitle: bestOpp?.o.title, type: "Interview", message: "You are invited to interview." })}>Invite to Interview</Button>
+   341→          <Button variant="outline" size="sm" className="h-8 gap-1.5 text-[11px]" onClick={() => invite({ studentId: c.studentId, studentName: c.name, type: "Internship", message: "Internship invitation." })}>Invite to Internship</Button>
+   342→          <Button variant="outline" size="sm" className="h-8 gap-1.5 text-[11px]" onClick={() => invite({ studentId: c.studentId, studentName: c.name, type: "Project", message: "Project offer." })}>Offer Project</Button>
+   343→        </div>
+   344→      </div>
+   345→    </Drawer>
+   346→  );
+   347→}
+   348→
+   349→function WhyMatchModal({ data, open, onClose }: { data: { candidate: Candidate; match: MatchResult } | null; open: boolean; onClose: () => void }) {
+   350→  if (!data) return null;
+   351→  const { candidate: c, match: m } = data;
+   352→  return (
+   353→    <Modal open={open} onClose={onClose} title={`Why this candidate? — ${c.name}`} subtitle={`${m.matchScore}% match`} size="md">
+   354→      <div className="space-y-3">
+   355→        <DemoBadge />
+   356→        <div className="rounded-lg border border-[var(--ss-border)] bg-[var(--ss-surface-2)] p-3 space-y-2 text-xs">
+   357→          <div className="flex justify-between"><span>Skill Alignment (40%)</span><b>{m.skillAlignment}</b></div>
+   358→          <div className="flex justify-between"><span>Role Alignment (20%)</span><b>{m.roleAlignment}</b></div>
+   359→          <div className="flex justify-between"><span>Evidence Strength (15%)</span><b>{m.evidenceStrength}</b></div>
+   360→          <div className="flex justify-between"><span>Eligibility (10%)</span><b>{m.eligibility}</b></div>
+   361→          <div className="flex justify-between"><span>Experience (10%)</span><b>{m.experienceAlignment}</b></div>
+   362→          <div className="flex justify-between"><span>Availability (5%)</span><b>{m.availability}</b></div>
+   363→          <div className="border-t border-[var(--ss-line)] pt-2 flex justify-between"><b>Final Match</b><span className="text-lg font-extrabold text-[var(--ss-blue-600)]">{m.matchScore}%</span></div>
+   364→        </div>
+   365→        <div className="grid grid-cols-2 gap-2">
+   366→          <div><p className="text-[10px] font-semibold uppercase text-[var(--ss-teal-600)]">Strong</p>{m.matchedSkills.map((s) => <p key={s} className="text-xs">✓ {s}</p>)}</div>
+   367→          <div><p className="text-[10px] font-semibold uppercase text-[var(--ss-orange-600)]">Gaps</p>{m.missingSkills.map((s) => <p key={s} className="text-xs">• {s}</p>)}</div>
+   368→        </div>
+   369→        <p className="text-[10px] text-[var(--ss-muted)]">Same Phase 4 matching engine — no second formula. Score is identical to what the student sees.</p>
+   370→      </div>
+   371→    </Modal>
+   372→  );
+   373→}
+   374→

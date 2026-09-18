@@ -24,24 +24,32 @@ const IndustryExtra = dynamic(() => import("./industry-extra").then((m) => m.Ind
 interface NavLeaf { label: string; route: string; icon: LucideIcon }
 const NAV: NavLeaf[] = [
   { label: "Dashboard", route: "/industry/dashboard", icon: LayoutDashboard },
-  { label: "Demand Intelligence", route: "/industry/demand", icon: Target },
-  { label: "Post Opportunity", route: "/industry/post", icon: PlusCircle },
+  { label: "Demand Pulse", route: "/industry/demand", icon: Target },
+  { label: "Create Opportunity", route: "/industry/post", icon: PlusCircle },
   { label: "Opportunity Management", route: "/industry/management", icon: Briefcase },
-  { label: "Talent Discovery", route: "/industry/talent", icon: Users },
+  { label: "Discover Talent", route: "/industry/talent", icon: Users },
   { label: "Challenges & Hackathons", route: "/industry/challenges", icon: Trophy },
   { label: "Team Builder", route: "/industry/team-builder", icon: Boxes },
   { label: "Learning Hub", route: "/industry/learning", icon: BookOpen },
-  { label: "Feedback", route: "/industry/feedback", icon: MessageSquare },
+  { label: "Feedback Center", route: "/industry/feedback", icon: MessageSquare },
   { label: "Analytics", route: "/industry/analytics", icon: BarChart3 },
   { label: "Notifications", route: "/industry/notifications", icon: Bell },
   { label: "Profile", route: "/industry/profile", icon: User },
 ];
 
 const BREADCRUMBS: Record<string, string> = {
-  dashboard: "Dashboard", demand: "Demand Intelligence", post: "Post Opportunity",
-  management: "Opportunity Management", talent: "Talent Discovery", challenges: "Challenges & Hackathons",
-  "team-builder": "Team Builder", learning: "Learning Hub", feedback: "Feedback",
-  analytics: "Analytics", notifications: "Notifications", profile: "Profile",
+  dashboard: "Dashboard",
+  demand: "Demand Pulse",
+  post: "Create Opportunity",
+  management: "Opportunity Management",
+  talent: "Discover Talent",
+  challenges: "Challenges & Hackathons",
+  "team-builder": "Team Builder",
+  learning: "Learning Hub",
+  feedback: "Feedback Center",
+  analytics: "Analytics",
+  notifications: "Notifications",
+  profile: "Profile",
 };
 
 export function IndustryShell() {
@@ -71,7 +79,7 @@ export function IndustryShell() {
           </button>
         </div>
         <div className="border-b border-[var(--ss-border)] px-4 py-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--ss-faint)]">Industry Portal</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--ss-faint)]">Talent Intelligence</p>
           {!collapsed && <p className="mt-1 text-sm font-bold text-[var(--ss-orange-600)]">{DEMO_COMPANY.companyName}</p>}
         </div>
         <nav className="scroll-slim flex-1 overflow-y-auto px-2 py-3">
@@ -104,7 +112,7 @@ export function IndustryShell() {
             <div className="absolute inset-0 bg-[#0a1628]/55 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
             <motion.div initial={{ x: -300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ type: "spring", damping: 28, stiffness: 280 }} className="absolute left-0 top-0 flex h-full w-72 flex-col bg-white">
               <div className="flex h-16 items-center justify-between border-b border-[var(--ss-border)] px-3">
-                <div className="flex items-center gap-2"><LogoMark size={30} /><span className="text-xs font-extrabold tracking-[0.14em]">Industry Portal</span></div>
+                <div className="flex items-center gap-2"><LogoMark size={30} /><span className="text-xs font-extrabold tracking-[0.14em]">Talent Intelligence</span></div>
                 <button onClick={() => setMobileOpen(false)} className="rounded-lg p-1.5 text-[var(--ss-faint)]"><X className="h-4 w-4" /></button>
               </div>
               <nav className="flex-1 overflow-y-auto px-2 py-3">

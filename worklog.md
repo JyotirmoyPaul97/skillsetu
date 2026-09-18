@@ -665,3 +665,218 @@ Stage Summary:
 - Submission system (Draft → Final, GitHub + Live Demo, team contributions w/ skills demonstrated).
 - GitHub ≠ verified (clearly noted).
 - STOP AFTER PHASE 8.
+
+---
+Task ID: 9-0
+Agent: orchestrator (main)
+Task: Phase 9 prep — restart dev server, scaffold shared primitives + aggregators for three-portal differentiation
+
+Work Log:
+- Restarted Next.js dev server (port 3000 was down per URGENT diagnostic) — back to HTTP 200 in ~5s
+- Read existing portal shells (industry/academia/institution-shell.tsx) + 3 service files to plan Phase 9
+- Created `src/components/ui/ss-intelligence.tsx` — NEW shared intelligence primitives (no conflict with subagents):
+  SsDemandBadge, SsPriorityPill, SsCoverageBar (supply-vs-demand), SsPipeline (workflow stages),
+  SsAlignmentChain (vertical demand→skill→curriculum→competency→evidence→status),
+  SsHeatmap (branch×skill matrix), SsAlertPill, SsWhyFactor + SsWhyModal (explainability),
+  SsDataSourceLabel (honest labels: platform/demo/curriculum/prototype/future),
+  SsIntelligenceAssistant (AI explains — collapsible Q&A panel, rules-driven answers),
+  SsMatrixCellDetail (slide-in panel for matrix cell drilldown), SsWorkflowBanner
+- Created `src/lib/intelligence/aggregators.ts` — NEW derived aggregators (no conflict):
+  IndustryAggregator: getDemandPulse, getWhatWeNeed, getTalentSupply,
+    getOpportunityIntelligence, getTeamBuilderCoverage, getIndustryIntelligenceSummary
+  AcademiaAggregator: getIndustryAskingFor, getStudentsDemonstrating,
+    getAcademicAlignmentGaps, getAlignmentChain(skillId), getCourseSkillMatrix,
+    getAcademiaActionCenter, getMentorMatches
+  InstitutionAggregator: getAlerts, getNextActions, getOutcomeMonitoring(interventionId),
+    getHackathonIntelligence, getInternshipIntelligence, getPlacementIntelligence
+  useAggregators() hook (subscribes to all underlying stores for reactivity)
+- All aggregators REUSE shared Phase 3-8 stores — NO duplicate models (§62, §80)
+- Fixed bugs in aggregators: DEMO_FACULTY is single profile (not array) → use faculty.skills;
+  Intervention uses skillId/skillName (singular, not targetSkills array);
+  replaced dynamic require() with proper useHackathonStore import
+- Lint clean. Dev server healthy.
+
+Stage Summary:
+- Shared foundation ready for 3 parallel portal subagents (Industry / Academia / Institution).
+- Subagents will import from `@/components/ui/ss-intelligence` and `@/lib/intelligence/aggregators`
+  (both NEW files — zero risk of file conflicts).
+- Each subagent rebuilds ONLY its own portal files (shell + core + extra).
+- Existing features preserved (§"Do NOT remove existing features").
+- Student Portal + Phase 1 landing page NOT touched (§"Do NOT redesign Student Portal").
+
+---
+Task ID: 6-a
+Agent: full-stack-developer (Institution Portal)
+Task: Phase 9 Institution Portal rebuild — Executive Skill Intelligence Command Center
+
+Work Log:
+- Read worklog.md (Phases 1-9) + Task 9-0 entry listing shared primitives + aggregators.
+- Read shared `src/components/ui/ss-intelligence.tsx` (all 13 exported primitives) and
+  `src/lib/intelligence/aggregators.ts` (InstitutionAggregator: getAlerts, getNextActions,
+  getOutcomeMonitoring, getHackathonIntelligence, getInternshipIntelligence,
+  getPlacementIntelligence + useAggregators() hook + IntelligenceAlert type).
+- Read existing institution lib (model/store/service/index), role-config, demo-data,
+  candidates, career store, academia store, ss.tsx design system, student-parts primitives.
+- Rebuilt `institution-shell.tsx`:
+  * NAV reorganised into three groups (Intelligence / Action Center / Operations)
+    with labels reflecting new identity: Command Center / Demand vs Supply /
+    Branch Intelligence / Action Center / Placement Intelligence /
+    Internship Intelligence / Industry Alignment / Hackathon Intelligence /
+    Collaborations / Reports / Notifications / Profile.
+  * Topbar breadcrumb shows section name + SsWorkflowBanner tone=navy
+    (Student Evidence → Skill Intelligence → Demand vs Supply → Gap → Priority →
+    Intervention → Outcome).
+- Rebuilt `institution-core.tsx` (Dashboard + Skills + Branches):
+  * Hero header "Institution Skill Intelligence" + tagline subtitle.
+  * §38 Institution at a glance — 6 high-value tiles (critical gaps, demand signals,
+    students needing intervention, collaborations, practical-exposure gaps,
+    opportunity participation). NO generic totals.
+  * §39 Where we stand — role readiness aggregation + 4 stat tiles
+    (avg role readiness, evidence coverage, practical exposure, industry engagement).
+  * §40 What industry needs — top skills with SsDemandBadge + SsDataSourceLabel platform.
+  * §41 What our students demonstrate — supply column with avg competency +
+    verified-evidence counts + confidence label (High/Moderate/Limited).
+  * §42 Demand vs supply — SsCoverageBar per skill (demand=track, supply=fill,
+    required marker). DEMO DATA label on coverage bars (using aggregator counts).
+  * §43 Top institutional skill gaps — sorted table with Skill/Demand/Supply/Gap/
+    Affected programs (departments)/Affected students/Roles/SsPriorityPill.
+  * §44 Branch × skill heatmap — SsHeatmap + SsMatrixCellDetail slide-in showing
+    Department, Skill, Avg competency, Affected students, Industry demand, Gap,
+    Role relevance, Opportunities, Supply + suggested intervention action.
+  * §53 Intelligence alerts — InstitutionAggregator.getAlerts() rendered with
+    SsAlertPill (critical/warning/info/emerging tones) + Why? affordance via SsWhyModal.
+  * §54 What should the institution do next? — InstitutionAggregator.getNextActions()
+    rendered as numbered cards with rank + priority pill + reason + suggested action.
+  * §59 SsIntelligenceAssistant tone=navy with 5 suggested questions
+    (biggest gaps / departments needing attention / industry demand / suggested
+    intervention / what changed). Answers are deterministic, derived from aggregators.
+  * §55 Executive filters — Academic Year / Department / Program / Year / Skill / Role /
+    Date Range. Department + Skill + Role filters FUNCTIONAL (apply to heatmap +
+    demand/supply views via useInstitutionStore().filters).
+  * Skills page (§42): full demand/supply table with SsCoverageBar per row + Why? modal
+    explaining demand, supply, gap, role relevance.
+  * Branches page (§44): SsHeatmap + drill-in + per-cell intervention suggestions
+    (Critical→Industry Workshop / High→Live Project / Medium→Bootcamp / Low→Certification).
+- Rebuilt `institution-extra.tsx` (Interventions + Placements + Internships + Alignment +
+  Hackathons + Collaborations + Reports + Notifications + Profile):
+  * §45 Interventions page → "INSTITUTION ACTION CENTER". Tabs:
+    Recommended / Proposed / Active / Completed. Each intervention shows Skill,
+    Department, Problem (reason), Recommended Action (type), Owner, Timeline
+    (start-end), Status.
+  * §46 Why this intervention? affordance → SsWhyModal with factors: industry demand
+    (High/Medium), average competency (number), practical evidence (Limited/Strong),
+    affected students (count), relevant roles, available industry support (Yes/No).
+    All factors derived from real intervention + demand/supply data.
+  * §47 Intervention Types legend/filter chips: Industry Workshop / Bootcamp /
+    Mentor Program / Live Project / Hackathon / Certification / Faculty Training /
+    Curriculum Enrichment.
+  * §48 Outcome Monitoring — for Active/Completed interventions, render a
+    Before → Intervention → Participation → Evidence → Observed Change pipeline via
+    SsPipeline + before/after evidence counts from
+    InstitutionAggregator.getOutcomeMonitoring(interventionId). Clear note:
+    "We do not claim placement % increases — only evidence-based outcomes."
+  * §49 Placements page → InstitutionAggregator.getPlacementIntelligence().
+    Funnel (Target Roles → Applicants → Shortlisted → Interviews → Selected) via
+    SsPipeline. Then "Which skills are common among selected candidates?" list with
+    avg competency — only shown when selected candidates > 0 (transparent note when 0).
+  * §50 Internships page → InstitutionAggregator.getInternshipIntelligence().
+    Participation / Selection / Completion / Feedback / Evidence Generated +
+    SsDataSourceLabel platform + SsPipeline pipeline.
+  * §26-§27 Alignment page → light restyle using SsCoverageBar for demand vs supply
+    per skill. Reuses AcademiaService.getCurriculumAlignment() (no duplicate engine).
+  * §52 Hackathons page → InstitutionAggregator.getHackathonIntelligence().
+    Participation / Departments / Teams / Projects / Skills Demonstrated /
+    Industry Challenges (labelled DEMO DATA when store flag absent) /
+    Evidence Generated. Purely aggregates from hackathon store — no duplicate logic.
+  * §51 Collaborations page → InstitutionService.getCollaborationInsights().
+    Active/Scheduled/Proposed/Completed counts + partnerships by type +
+    collaboration records list from useAcademiaStore().collaborations.
+  * Reports page — kept existing report builder, every section now has
+    SsDataSourceLabel platform.
+  * Notifications + Profile pages — kept as-is (with SsDataSourceLabel where relevant).
+- Imported ALL new shared primitives from `@/components/ui/ss-intelligence` and
+  `@/lib/intelligence/aggregators`. Did NOT modify shared files.
+- REUSED: DEMO_CANDIDATES (Phase 5), useCareerStore (Phase 4), useAcademiaStore
+  (Phase 6), useInstitutionStore + InstitutionService + useInstitution (Phase 7),
+  AcademiaService (Phase 6), SKILL_NAMES + ALL_ROLES (Phase 3),
+  SsCard/SsBadge/SsStat from ss.tsx, DashHeader/Modal/EmptyState/Field from student-parts.
+  NO duplicate skill/student/evidence/opportunity/readiness models.
+- Used NAVY accent throughout (--ss-navy-900 #0F2547, --ss-navy-50 #DBE7F5 tint).
+  No indigo/blue as primary.
+- Verified: `bunx eslint src/components/app/institution/` → exit code 0 (clean).
+  `bunx tsc --noEmit -p tsconfig.json | grep institution` → ZERO errors.
+  (Note: lint and dev.log do show errors in academia-shell.tsx and industry-core.tsx
+  — those belong to the parallel academia/industry subagents and I did NOT touch them
+  per spec §"Do NOT redesign other portals".)
+
+Stage Summary:
+- Phase 9 Institution Portal rebuild COMPLETE — Executive Skill Intelligence Command Center.
+- 3 files modified (working set ONLY):
+  * institution-shell.tsx — NAV regrouped, breadcrumbs renamed, SsWorkflowBanner added.
+  * institution-core.tsx — Dashboard follows §63 6-step hierarchy (Where we stand /
+    What industry needs / What students demonstrate / Where the gap is / Who is affected /
+    What to do / What changed). Skills page = Demand vs Supply with SsCoverageBar.
+    Branches page = SsHeatmap + SsMatrixCellDetail + per-cell intervention suggestions.
+  * institution-extra.tsx — Interventions → INSTITUTION ACTION CENTER with
+    Recommended/Proposed/Active/Completed tabs + Why? modals + Outcome Monitoring
+    pipeline. Placements/Internships/Hackathons use aggregator methods.
+    Alignment uses SsCoverageBar. Collaborations/Reports/Notifications/Profile
+    preserved with SsDataSourceLabel.
+- Visual language: SsCoverageBar (demand vs supply), SsHeatmap (branch × skill),
+  SsPriorityPill (intervention priority), SsAlertPill (intelligence alerts),
+  SsPipeline (workflow + outcome monitoring). NO generic pie/3D.
+- Explainability: every major insight has a Why? affordance — SsWhyModal or inline
+  SsWhyFactor-style factor list (§67).
+- Data honesty: SsDataSourceLabel on every major section (§56) — platform / demo /
+  curriculum / prototype / future. No fake ATS/ERP/LMS claims.
+- All client components start with `"use client";`. Strict TypeScript. ES6+ imports.
+  shadcn/ui primitives preferred. No new dependencies added.
+- No Phase 9 spec sections unimplemented (§36-§56 all addressed; §57-§60 AI questions
+  addressed via SsIntelligenceAssistant with deterministic answers; §63 information
+  hierarchy followed; §64 single design system; §65 no generic totals;
+  §66 no decorative pie/3D; §67 explainability; §69 data honesty; §77 responsive
+  via flex/grid + mobile drawer preserved from existing shell).
+
+---
+Task ID: 4-a
+Agent: full-stack-developer (Industry Portal)
+Task: Phase 9 Industry Portal rebuild — Talent Intelligence Workspace
+
+Work Log:
+- Read worklog (Task 9-0 entry confirmed shared primitives + aggregators available)
+- Read new shared files: `src/components/ui/ss-intelligence.tsx` (SsDemandBadge, SsCoverageBar, SsPipeline, SsWhyModal, SsWhyFactor, SsAlertPill, SsDataSourceLabel, SsIntelligenceAssistant, SsWorkflowBanner, SsMatrixCellDetail, SsAlignmentChain, SsHeatmap, SsPriorityPill) and `src/lib/intelligence/aggregators.ts` (IndustryAggregator with getDemandPulse, getWhatWeNeed, getTalentSupply, getOpportunityIntelligence, getTeamBuilderCoverage, getIndustryIntelligenceSummary; useAggregators hook)
+- Read existing industry files (industry-service, industry-store, industry-model, candidates, industry-shell, industry-core, industry-extra) — noted existing features to preserve (challenges, team-builder, feedback, analytics, notifications, profile)
+- Rebuilt `industry-shell.tsx`:
+  * NAV relabelled: "Demand Intelligence" → "Demand Pulse", "Post Opportunity" → "Create Opportunity", "Talent Discovery" → "Discover Talent", "Feedback" → "Feedback Center"
+  * Sidebar sub-header "Industry Portal" → "Talent Intelligence" to reflect new product identity
+  * Breadcrumbs updated accordingly; mobile drawer label updated; all existing UI (sidebar collapse, mobile drawer, profile dropdown, notifications bell) preserved
+- Rebuilt `industry-core.tsx` (~1000 lines, modular sub-components):
+  * **IndustryDashboard** (Phase 9 §63 hierarchy): dark navy hero header with SsWorkflowBanner (Define → Set → Discover → Compare → Shortlist → Interview → Engage), contextual chips (Organization/Opportunity/Role Focus/Date Range), then 5 numbered sections in spec order: (1) WHAT WE NEED — uses IndustryAggregator.getWhatWeNeed() — top demanded roles with critical skills + required levels + View Role Demand CTA + insufficient coverage alert; (2) WHO CAN DEMONSTRATE IT — uses IndustryAggregator.getTalentSupply() filtered to inDemand — supply level pill, SsCoverageBar demand-vs-supply, demonstratedBy count; (3) WHY THEY MATCH — top candidates with MatchBadge + readiness; (4) WHAT IS MISSING — uses summary.whatIsMissing with SsAlertPill warning tone; (5) WHAT SHOULD WE DO — uses summary.whatShouldWeDo with action chips (Create Internship / Create Project / Create Challenge / Offer Workshop / Find Mentor); SsIntelligenceAssistant (orange tone) with 4 questions and deterministic answers; SsDataSourceLabel source="platform" / source="demo" labels
+  * **DemandIntelligence** (§10): SsPipeline at top with 8 stages (Create Role Demand → Define Skills → Set Required Levels → Discover Talent → Compare Evidence → Shortlist → Interview → Engage), Demand Pulse by Skill panel using IndustryAggregator.getDemandPulse() with SsDemandBadge + SsCoverageBar + insufficient coverage alert, existing role demand configs with new visual language; preserved DemandForm modal
+  * **CreateOpportunity** (§11, §12): problem-first textarea at top ("What problem are you hiring/engaging for?"), then form (Title/Type/Company/Location/Mode/Duration/Compensation/Deadline/Target Role), required skills with Importance + Required Level, then LIVE Expected Talent Availability panel using IndustryAggregator.getOpportunityIntelligence(requiredSkills) — per-skill SsCoverageBar, overall coverage %, SsAlertPill warning when coverage < 25%, suggestion text
+  * **OpportunityManagement** (§13): kept existing list + applicant drawer; restyled with SsDemandBadge-style cards, shows opportunity problem snippet, per-opp coverage badge, SsDataSourceLabel source="platform"
+  * **TalentDiscovery** (§6–§9): rebuilt — DISCOVER EVIDENCE-BACKED TALENT header, SsWorkflowBanner, search + role/skill filters + min competency slider + evidence-only/available-only filter chips; candidate cards (§7) show Student ID, Name, target role, role readiness %, strong skills (teal), gap skills (orange), evidence count, availability, with View Evidence + Why Match? actions; WhyMatchModal uses SsWhyModal + SsWhyFactor with factors (Role Alignment / per-skill status / Evidence Strength / Eligibility / Availability); Evidence-first candidate detail drawer (§9) leads with "Can this person demonstrate the required skills?" panel, skill evidence list, evidence records, breakdown by Projects/Hackathons/Industry Feedback/Certifications/Internships; résumé shown LAST with note "leads with evidence, not claims"
+- Rebuilt `industry-extra.tsx` (~600 lines, modular):
+  * **ChallengesPage** (§13): prominent Create Challenge button, SsPipeline (Problem → Skills → Eligibility → Team → Evaluation → Talent Discovery), challenge cards now show "X candidates meet requirements" using DEMO_CANDIDATES; preserved ChallengeForm with role-anchored skill picker
+  * **TeamBuilderPage** (§14): rebuilt as BUILD A TEAM — visual cue that it's distinct from single hiring (orange callout), team size + roles multi-select + additional skills + availability; "Find Team" calls IndustryAggregator.getTeamBuilderCoverage wrapped in safeTeamBuilderCoverage() (try/catch fallback that uses role.skills + COMPETENCY_TARGET_THRESHOLD since role.weightedSkills is undefined on the actual RoleConfig type); shows Skill Coverage table, Missing Capability list (SsAlertPill critical), Candidate Fit list sorted by matchCount descending
+  * **FeedbackCenter** (§15, §16): rebuilt as tabbed (Pending Evaluation / Active Experiences / Completed Experiences / Feedback History); SsWorkflowBanner (Evaluate → Score Rubric → Submit → Evidence Created); FeedbackForm includes full rubric (Technical / Problem Solving / Communication / Teamwork / Leadership / Professionalism sliders 1-5) + Adaptability in state for type completeness; ConfirmEvidenceModal after submission shows "Potential evidence created: [skill list]" with explicit note "not automatically verified" (§16)
+  * **AnalyticsPage** (§65): removed generic KPIs (Total Users/Revenue/Activity); replaced with Avg Talent Coverage, Skill Demand (count of distinct demanded skills), Evidence-Backed Candidates ratio; Skill Demand vs Talent Supply via SsCoverageBar; Application Funnel; Talent Supply Levels — all derived from IndustryAggregator
+  * **LearningHubPage**: kept, restyled with SsBadge for type
+  * **NotificationsPage**: kept, light restyle (orange tint for unread)
+  * **ProfilePage**: kept, audit log section now has SsDataSourceLabel source="platform"
+- Lint clean (EXIT 0) — initial JSX closing-tag bug (SsBadge opened, span closed) fixed
+- TypeScript check on industry files clean (used `as unknown as Array<{...}>` cast for whatWeNeed since aggregator's inferred type collapsed criticalSkills to a single object due to dynamic map/spread; safeTeamBuilderCoverage wraps getTeamBuilderCoverage in try/catch with manual fallback because role.weightedSkills doesn't exist on RoleConfig type — only role.skills)
+- Dev.log: only errors shown are from `academia-shell.tsx` (another agent's WIP — syntax error at line 37, NOT my files); industry files produce zero compile errors
+- Dev server: was down at verification time (port 3000 unreachable) due to academia-shell.tsx syntax error blocking Next.js compilation of page.tsx — orchestrator will need to resolve academia-side fix before server can restart; my industry files will compile cleanly once unblocked
+
+Stage Summary:
+- Industry portal rebuilt as Talent Intelligence Workspace with unique Phase 9 identity
+- All existing features preserved (challenges, team-builder, feedback, analytics, notifications, profile, demand configs, opportunity management) — just reorganized per new hierarchy
+- 3 files modified: `industry-shell.tsx` (NAV labels + breadcrumbs), `industry-core.tsx` (dashboard/demand/post/management/talent — full Phase 9 rebuild), `industry-extra.tsx` (challenges/team-builder/feedback/analytics/learning/notifications/profile — full rebuild of feedback + team-builder + challenges + analytics; learning/notifications/profile lightly restyled)
+- Industry accent color = ORANGE per globals.css (no indigo/blue primary)
+- Used shared primitives from both `ss.tsx` (SsCard, SsBadge, SsStat) and `ss-intelligence.tsx` (SsDemandBadge, SsCoverageBar, SsPipeline, SsWorkflowBanner, SsWhyModal, SsWhyFactor, SsAlertPill, SsDataSourceLabel, SsIntelligenceAssistant)
+- Used shared aggregators from `@/lib/intelligence/aggregators` (IndustryAggregator.* + useAggregators hook)
+- All numbers come from aggregators/services — no fabricated statistics
+- Every major insight has WHY affordance (SsWhyModal for candidate matches, SsWhyFactor inline factors, SsIntelligenceAssistant Q&A panel)
+- SsDataSourceLabel "DEMO DATA" / "Based on platform data" labels throughout
+- Lint clean (EXIT 0), TypeScript clean for industry files

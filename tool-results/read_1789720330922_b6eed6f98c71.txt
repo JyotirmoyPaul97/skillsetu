@@ -1,0 +1,683 @@
+     1→/**
+     2→ * SKILL SETU — Phase 9 Intelligence Aggregators.
+     3→ *
+     4→ * New derived aggregators that surface intelligence specifically for the
+     5→ * differentiated portal experiences in Phase 9 (Demand Pulse, Talent Supply,
+     6→ * Opportunity Intelligence, Team Builder, Institution Alerts, Next Actions,
+     7→ * Intervention Lifecycle, Outcome Monitoring).
+     8→ *
+     9→ * These REUSE the shared Phase 3/4/5/6/7 stores — NO duplicate engines,
+    10→ * NO duplicate student/skill/opportunity models (master spec §62, §80).
+    11→ *
+    12→ * Rules calculate (§60). AI explains (future — §57–§59).
+    13→ */
+    14→
+    15→import { useCareerStore } from "@/lib/career/store";
+    16→import { DEMO_CANDIDATES } from "@/lib/industry/candidates";
+    17→import { useIndustryStore } from "@/lib/industry/industry-store";
+    18→import { useAcademiaStore } from "@/lib/academia/academia-store";
+    19→import { AcademiaService } from "@/lib/academia/academia-service";
+    20→import { useInstitutionStore } from "@/lib/institution/institution-store";
+    21→import { useHackathonStore } from "@/lib/hackathon/hackathon-store";
+    22→import { ALL_ROLES } from "@/lib/intelligence/role-config";
+    23→import { SKILL_NAMES } from "@/lib/intelligence/demo-data";
+    24→import type { Opportunity } from "@/lib/career/opportunity-model";
+    25→import type { Candidate } from "@/lib/industry";
+    26→import type { EvidenceRecord } from "@/lib/intelligence/types";
+    27→
+    28→// ============================================================
+    29→// INDUSTRY AGGREGATORS
+    30→// ============================================================
+    31→
+    32→export type DemandLevel = "High" | "Medium" | "Low";
+    33→export type SupplyLevel = "Strong" | "Moderate" | "Limited" | "Low Evidence" | "None";
+    34→
+    35→export interface DemandPulseSkill {
+    36→  skillId: string;
+    37→  skillName: string;
+    38→  demandLevel: DemandLevel;
+    39→  opportunityCount: number;
+    40→  requiredRoleLevels: { roleId: string; roleName: string; requiredLevel: number }[];
+    41→  openRoles: number;
+    42→  openChallenges: number;
+    43→  talentCoverage: number; // 0–100, computed from candidates
+    44→  insufficientCoverage: boolean;
+    45→}
+    46→
+    47→export const IndustryAggregator = {
+    48→  // §3 Demand Pulse — derived from published opportunities + candidate supply
+    49→  getDemandPulse: (): DemandPulseSkill[] => {
+    50→    const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
+    51→    const candidates = DEMO_CANDIDATES;
+    52→    const challenges = useIndustryStore.getState().challenges;
+    53→
+    54→    const map = new Map<string, DemandPulseSkill>();
+    55→    for (const o of opps) {
+    56→      for (const rs of o.requiredSkills) {
+    57→        const e = map.get(rs.skillId) ?? {
+    58→          skillId: rs.skillId,
+    59→          skillName: SKILL_NAMES[rs.skillId] ?? rs.skillId,
+    60→          demandLevel: "Low" as DemandLevel,
+    61→          opportunityCount: 0,
+    62→          requiredRoleLevels: [] as { roleId: string; roleName: string; requiredLevel: number }[],
+    63→          openRoles: new Set<string>(),
+    64→          openChallenges: 0,
+    65→          talentCoverage: 0,
+    66→          insufficientCoverage: false,
+    67→        };
+    68→        e.opportunityCount++;
+    69→        o.targetRoles.forEach((r) => (e.openRoles as Set<string>).add(r));
+    70→        e.requiredRoleLevels.push({
+    71→          roleId: o.targetRoles[0] ?? "—",
+    72→          roleName: ALL_ROLES.find((role) => role.roleId === o.targetRoles[0])?.roleName ?? "—",
+    73→          requiredLevel: rs.requiredLevel,
+    74→        });
+    75→        map.set(rs.skillId, e);
+    76→      }
+    77→    }
+    78→    for (const ch of challenges) {
+    79→      for (const s of ch.requiredSkills) {
+    80→        const e = map.get(s.skillId);
+    81→        if (e) e.openChallenges++;
+    82→      }
+    83→    }
+    84→
+    85→    const result: DemandPulseSkill[] = [];
+    86→    for (const [, e] of map) {
+    87→      e.openRoles = (e.openRoles as Set<string>).size;
+    88→      e.demandLevel = e.opportunityCount >= 3 ? "High" : e.opportunityCount >= 2 ? "Medium" : "Low";
+    89→      // supply: average competency among candidates who have this skill
+    90→      const scores = candidates
+    91→        .map((c) => c.competencies[e.skillId]?.competencyScore)
+    92→        .filter((s): s is number => typeof s === "number");
+    93→      e.talentCoverage = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+    94→      e.insufficientCoverage = e.talentCoverage < 60;
+    95→      result.push(e);
+    96→    }
+    97→    return result.sort((a, b) => b.opportunityCount - a.opportunityCount);
+    98→  },
+    99→
+   100→  // §4 What We Need — top demanded role + its critical skills + required levels
+   101→  getWhatWeNeed: () => {
+   102→    const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
+   103→    const candidates = DEMO_CANDIDATES;
+   104→    const roleMap = new Map<string, { roleId: string; roleName: string; criticalSkills: Map<string, { skillId: string; skillName: string; requiredLevel: number; importance: string }[]>; opportunityCount: number }>();
+   105→
+   106→    for (const o of opps) {
+   107→      const roleId = o.targetRoles[0] ?? "—";
+   108→      const role = ALL_ROLES.find((r) => r.roleId === roleId);
+   109→      const e = roleMap.get(roleId) ?? {
+   110→        roleId,
+   111→        roleName: role?.roleName ?? roleId,
+   112→        criticalSkills: new Map<string, { skillId: string; skillName: string; requiredLevel: number; importance: string }>(),
+   113→        opportunityCount: 0,
+   114→      };
+   115→      e.opportunityCount++;
+   116→      for (const rs of o.requiredSkills) {
+   117→        e.criticalSkills.set(rs.skillId, {
+   118→          skillId: rs.skillId,
+   119→          skillName: SKILL_NAMES[rs.skillId] ?? rs.skillId,
+   120→          requiredLevel: rs.requiredLevel,
+   121→          importance: rs.importance,
+   122→        });
+   123→      }
+   124→      roleMap.set(roleId, e);
+   125→    }
+   126→
+   127→    return [...roleMap.values()]
+   128→      .map((r) => {
+   129→        const skills = [...r.criticalSkills.values()];
+   130→        // Compute talent availability for each critical skill
+   131→        const skillAvailability = skills.map((s) => {
+   132→          const matchingCandidates = candidates.filter((c) => (c.competencies[s.skillId]?.competencyScore ?? 0) >= s.requiredLevel).length;
+   133→          return { ...s, availableCandidates: matchingCandidates, totalCandidatesConsidered: candidates.length };
+   134→        });
+   135→        const overallAvailability = skillAvailability.reduce((sum, s) => sum + s.availableCandidates, 0);
+   136→        return {
+   137→          roleId: r.roleId,
+   138→          roleName: r.roleName,
+   139→          opportunityCount: r.opportunityCount,
+   140→          criticalSkills: skillAvailability,
+   141→          overallAvailability,
+   142→          insufficient: overallAvailability < skills.length,
+   143→        };
+   144→      })
+   145→      .sort((a, b) => b.opportunityCount - a.opportunityCount);
+   146→  },
+   147→
+   148→  // §5 Talent Supply — what the talent pool can demonstrate per skill
+   149→  getTalentSupply: () => {
+   150→    const candidates = DEMO_CANDIDATES;
+   151→    const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
+   152→    const demandedSkillIds = new Set<string>();
+   153→    for (const o of opps) for (const rs of o.requiredSkills) demandedSkillIds.add(rs.skillId);
+   154→
+   155→    const supplyMap = new Map<string, { skillId: string; skillName: string; scores: number[]; roles: Set<string> }>();
+   156→    for (const c of candidates) {
+   157→      for (const [, comp] of Object.entries(c.competencies)) {
+   158→        const e = supplyMap.get(comp.skillId) ?? { skillId: comp.skillId, skillName: SKILL_NAMES[comp.skillId] ?? comp.skillId, scores: [], roles: new Set<string>() };
+   159→        e.scores.push(comp.competencyScore);
+   160→        e.roles.add(c.targetRole);
+   161→        supplyMap.set(comp.skillId, e);
+   162→      }
+   163→    }
+   164→
+   165→    const supply = [...supplyMap.entries()].map(([skillId, e]) => {
+   166→      const avg = e.scores.length > 0 ? Math.round(e.scores.reduce((a, b) => a + b, 0) / e.scores.length) : 0;
+   167→      const supplyLevel: SupplyLevel = avg >= 70 ? "Strong" : avg >= 50 ? "Moderate" : avg >= 30 ? "Limited" : avg > 0 ? "Low Evidence" : "None";
+   168→      return {
+   169→        skillId,
+   170→        skillName: e.skillName,
+   171→        avgCompetency: avg,
+   172→        supplyLevel,
+   173→        demonstratedBy: e.scores.length,
+   174→        targetRoles: [...e.roles],
+   175→        inDemand: demandedSkillIds.has(skillId),
+   176→      };
+   177→    });
+   178→    return supply.sort((a, b) => (a.inDemand === b.inDemand ? b.avgCompetency - a.avgCompetency : a.inDemand ? -1 : 1));
+   179→  },
+   180→
+   181→  // §12 Opportunity Intelligence — projected talent availability before publishing
+   182→  getOpportunityIntelligence: (requiredSkills: { skillId: string; requiredLevel: number }[]) => {
+   183→    const candidates = DEMO_CANDIDATES;
+   184→    const perSkill = requiredSkills.map((rs) => {
+   185→      const matching = candidates.filter((c) => (c.competencies[rs.skillId]?.competencyScore ?? 0) >= rs.requiredLevel);
+   186→      const coverage = candidates.length > 0 ? Math.round((matching.length / candidates.length) * 100) : 0;
+   187→      return {
+   188→        skillId: rs.skillId,
+   189→        skillName: SKILL_NAMES[rs.skillId] ?? rs.skillId,
+   190→        requiredLevel: rs.requiredLevel,
+   191→        matchingCandidates: matching.length,
+   192→        totalCandidates: candidates.length,
+   193→        coverage,
+   194→        limited: matching.length < 2,
+   195→      };
+   196→    });
+   197→    const overallCoverage = perSkill.length > 0 ? Math.round(perSkill.reduce((a, b) => a + b.coverage, 0) / perSkill.length) : 0;
+   198→    const suggestion =
+   199→      overallCoverage >= 50 ? "Proceed with publishing — sufficient talent availability."
+   200→      : overallCoverage >= 25 ? "Consider also creating a project or challenge pipeline to widen the funnel."
+   201→      : "Talent availability is limited. Consider a project, challenge, or training pipeline before publishing.";
+   202→    return { perSkill, overallCoverage, suggestion, limited: overallCoverage < 25 };
+   203→  },
+   204→
+   205→  // §14 Team Builder — skill coverage for a multi-role team spec
+   206→  getTeamBuilderCoverage: (teamSpec: { roleIds: string[] }) => {
+   207→    const candidates = DEMO_CANDIDATES;
+   208→    const requiredSkills = new Map<string, { skillId: string; skillName: string; requiredLevel: number; sourceRole: string }>();
+   209→    for (const roleId of teamSpec.roleIds) {
+   210→      const role = ALL_ROLES.find((r) => r.roleId === roleId);
+   211→      if (!role) continue;
+   212→      for (const ws of role.weightedSkills) {
+   213→        const e = requiredSkills.get(ws.skillId) ?? { skillId: ws.skillId, skillName: SKILL_NAMES[ws.skillId] ?? ws.skillId, requiredLevel: 0, sourceRole: roleId };
+   214→        e.requiredLevel = Math.max(e.requiredLevel, ws.requiredLevel);
+   215→        requiredSkills.set(ws.skillId, e);
+   216→      }
+   217→    }
+   218→    const requiredList = [...requiredSkills.values()];
+   219→    const coverage = requiredList.map((rs) => {
+   220→      const candidatesWith = candidates.filter((c) => (c.competencies[rs.skillId]?.competencyScore ?? 0) >= rs.requiredLevel);
+   221→      return { ...rs, availableCandidates: candidatesWith.length, covered: candidatesWith.length > 0 };
+   222→    });
+   223→    const missing = coverage.filter((c) => !c.covered);
+   224→    return {
+   225→      requiredSkills: coverage,
+   226→      coveragePercent: requiredList.length > 0 ? Math.round((coverage.length - missing.length) / requiredList.length * 100) : 0,
+   227→      missing,
+   228→      candidateFits: candidates.map((c) => ({
+   229→        candidate: c,
+   230→        matchCount: coverage.filter((cs) => (c.competencies[cs.skillId]?.competencyScore ?? 0) >= cs.requiredLevel).length,
+   231→      })).sort((a, b) => b.matchCount - a.matchCount),
+   232→    };
+   233→  },
+   234→
+   235→  // §17 Intelligence Summary — answers dashboard questions
+   236→  getIndustryIntelligenceSummary: () => {
+   237→    const demandPulse = IndustryAggregator.getDemandPulse();
+   238→    const whatWeNeed = IndustryAggregator.getWhatWeNeed();
+   239→    const talentSupply = IndustryAggregator.getTalentSupply();
+   240→    const missing = demandPulse.filter((d) => d.insufficientCoverage);
+   241→    return {
+   242→      whatWeNeed: whatWeNeed.slice(0, 3),
+   243→      whoCanDemonstrate: talentSupply.filter((s) => s.inDemand).slice(0, 4),
+   244→      whyTheyMatch: DEMO_CANDIDATES.slice(0, 3).map((c) => ({ candidate: c, roleReadiness: c.roleReadiness })),
+   245→      whatIsMissing: missing.slice(0, 3),
+   246→      whatShouldWeDo: missing.slice(0, 3).map((m) => ({
+   247→        skill: m.skillName,
+   248→        suggestion: m.openChallenges > 0 ? "Host a focused challenge to surface more candidates" : "Create internship or project pipeline for this skill",
+   249→      })),
+   250→    };
+   251→  },
+   252→};
+   253→
+   254→// ============================================================
+   255→// ACADEMIA AGGREGATORS (additional to existing AcademiaService)
+   256→// ============================================================
+   257→
+   258→export const AcademiaAggregator = {
+   259→  // §21 Industry Is Asking For — derived from opportunities
+   260→  getIndustryAskingFor: () => {
+   261→    const signals = AcademiaService.getIndustrySignals();
+   262→    const challenges = useIndustryStore.getState().challenges;
+   263→    return signals.slice(0, 6).map((s) => ({
+   264→      ...s,
+   265→      challengeCount: challenges.filter((c) => c.requiredSkills.some((rs) => rs.skillId === s.skillId)).length,
+   266→    }));
+   267→  },
+   268→
+   269→  // §22 Our Students Are Demonstrating — cohort evidence confidence
+   270→  getStudentsDemonstrating: () => {
+   271→    const candidates = DEMO_CANDIDATES;
+   272→    const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
+   273→    const demandedSkillIds = new Set<string>();
+   274→    for (const o of opps) for (const rs of o.requiredSkills) demandedSkillIds.add(rs.skillId);
+   275→
+   276→    const map = new Map<string, { skillId: string; skillName: string; scores: number[]; evidenceCount: number; verifiedCount: number }>();
+   277→    for (const c of candidates) {
+   278→      for (const [, comp] of Object.entries(c.competencies)) {
+   279→        const e = map.get(comp.skillId) ?? { skillId: comp.skillId, skillName: SKILL_NAMES[comp.skillId] ?? comp.skillId, scores: [], evidenceCount: 0, verifiedCount: 0 };
+   280→        e.scores.push(comp.competencyScore);
+   281→        e.evidenceCount += c.evidence.filter((ev) => ev.skillId === comp.skillId).length;
+   282→        e.verifiedCount += c.evidence.filter((ev) => ev.skillId === comp.skillId && ev.status === "Verified").length;
+   283→        map.set(comp.skillId, e);
+   284→      }
+   285→    }
+   286→    return [...map.values()]
+   287→      .filter((m) => demandedSkillIds.has(m.skillId))
+   288→      .map((m) => {
+   289→        const avg = m.scores.length > 0 ? Math.round(m.scores.reduce((a, b) => a + b, 0) / m.scores.length) : 0;
+   290→        const evidenceConfidence = m.verifiedCount > 0 ? "High" : m.evidenceCount > 0 ? "Moderate" : "Low";
+   291→        const practicalExposure = m.verifiedCount >= 2 ? "Strong" : m.verifiedCount >= 1 ? "Moderate" : m.evidenceCount > 0 ? "Limited" : "None";
+   292→        return {
+   293→          skillId: m.skillId,
+   294→          skillName: m.skillName,
+   295→          avgCompetency: avg,
+   296→          evidenceCount: m.evidenceCount,
+   297→          verifiedCount: m.verifiedCount,
+   298→          evidenceConfidence: evidenceConfidence as "High" | "Moderate" | "Low",
+   299→          practicalExposure: practicalExposure as "Strong" | "Moderate" | "Limited" | "None",
+   300→        };
+   301→      })
+   302→      .sort((a, b) => b.avgCompetency - a.avgCompetency);
+   303→  },
+   304→
+   305→  // §23 Where Is The Gap — centerpiece alignment gaps
+   306→  getAcademicAlignmentGaps: () => {
+   307→    const alignment = AcademiaService.getCurriculumAlignment();
+   308→    return alignment
+   309→      .filter((a) => a.alignment !== "Aligned")
+   310→      .sort((a, b) => {
+   311→        const rank = (x: string) => (x === "Gap" ? 0 : 1);
+   312→        return rank(a.alignment) - rank(b.alignment);
+   313→      });
+   314→  },
+   315→
+   316→  // §24 Alignment Chain — for a single skill: demand → skill → coverage → competency → evidence → status
+   317→  getAlignmentChain: (skillId: string) => {
+   318→    const signals = AcademiaService.getIndustrySignals();
+   319→    const alignment = AcademiaService.getCurriculumAlignment();
+   320→    const sig = signals.find((s) => s.skillId === skillId);
+   321→    const al = alignment.find((a) => a.skillId === skillId);
+   322→    if (!sig || !al) return null;
+   323→    return [
+   324→      { label: "Industry Demand", value: `${sig.demandLevel} · ${sig.opportunityCount} opportunities`, tone: "demand" as const },
+   325→      { label: "Skill", value: sig.skillName, tone: "skill" as const },
+   326→      { label: "Curriculum Coverage", value: al.curriculumCoverage, tone: "coverage" as const },
+   327→      { label: "Student Competency", value: `${al.studentAvgCompetency} avg`, tone: "competency" as const },
+   328→      { label: "Practical Evidence", value: al.practicalEvidence, tone: "evidence" as const },
+   329→      { label: "Alignment Status", value: al.alignment, tone: "status" as const },
+   330→    ];
+   331→  },
+   332→
+   333→  // §25 Course × Skill Matrix — for matrix visualization
+   334→  getCourseSkillMatrix: () => {
+   335→    const curriculum = AcademiaService.getCurriculum();
+   336→    const courses = AcademiaService.getCourses();
+   337→    const signals = AcademiaService.getIndustrySignals();
+   338→    const skillIds = [...new Set(curriculum.map((c) => c.skillId))];
+   339→    const matrix = curriculum.reduce((acc, c) => {
+   340→      acc[`${c.courseId}`] = acc[`${c.courseId}`] ?? {};
+   341→      acc[`${c.courseId}`][c.skillId] = {
+   342→        coverage: c.coverage,
+   343→        demand: signals.find((s) => s.skillId === c.skillId)?.demandLevel ?? "Low",
+   344→        hours: c.hours,
+   345→      };
+   346→      return acc;
+   347→    }, {} as Record<string, Record<string, { coverage: string; demand: string; hours: number }>>);
+   348→    return {
+   349→      courseRows: courses,
+   350→      skillCols: skillIds.map((id) => ({ id, name: SKILL_NAMES[id] ?? id })),
+   351→      matrix,
+   352→    };
+   353→  },
+   354→
+   355→  // §27 Action Center — recommended actions
+   356→  getAcademiaActionCenter: () => {
+   357→    const alignment = AcademiaService.getCurriculumAlignment();
+   358→    return alignment
+   359→      .filter((a) => a.alignment !== "Aligned")
+   360→      .map((a) => ({
+   361→        skillId: a.skillId,
+   362→        skillName: a.skillName,
+   363→        demand: a.industryDemand,
+   364→        gap: a.alignment === "Gap" ? "High" : "Medium",
+   365→        affectedCohort: a.targetRoles.join(", "),
+   366→        expectedOutcome: a.suggestedEnrichment.join(", "),
+   367→        recommendedActions: a.suggestedEnrichment,
+   368→      }));
+   369→  },
+   370→
+   371→  // §31 Mentor Matching — student gap × faculty expertise (DEMO_FACULTY is a single profile)
+   372→  getMentorMatches: () => {
+   373→    const candidates = DEMO_CANDIDATES;
+   374→    const faculty = AcademiaService.getFaculty();
+   375→    const matches: { student: Candidate; gapSkills: string[]; faculty: typeof faculty | null; reason: string }[] = [];
+   376→    for (const c of candidates) {
+   377→      // Find skills where student is below target (gap)
+   378→      const role = ALL_ROLES.find((r) => r.roleId === c.roleId);
+   379→      if (!role) continue;
+   380→      const gapSkills = role.weightedSkills
+   381→        .filter((ws) => (c.competencies[ws.skillId]?.competencyScore ?? 0) < ws.requiredLevel)
+   382→        .map((ws) => ws.skillId);
+   383→      if (gapSkills.length === 0) continue;
+   384→      // Match to faculty with expertise in any gap skill (by skill ID via faculty.skills)
+   385→      const facultyHasExpertise = faculty.skills.some((fs) => gapSkills.includes(fs.skillId));
+   386→      const matchedSkillNames = faculty.skills
+   387→        .filter((fs) => gapSkills.includes(fs.skillId))
+   388→        .map((fs) => fs.skillName);
+   389→      matches.push({
+   390→        student: c,
+   391→        gapSkills: gapSkills.map((id) => SKILL_NAMES[id] ?? id),
+   392→        faculty: facultyHasExpertise ? faculty : null,
+   393→        reason: facultyHasExpertise
+   394→          ? `Faculty ${faculty.name} has expertise in ${matchedSkillNames.join(", ")}.`
+   395→          : `No faculty expertise currently mapped for ${gapSkills.map((id) => SKILL_NAMES[id] ?? id).join(", ")}.`,
+   396→      });
+   397→    }
+   398→    return matches;
+   399→  },
+   400→};
+   401→
+   402→// ============================================================
+   403→// INSTITUTION AGGREGATORS (additional to existing InstitutionService)
+   404→// ============================================================
+   405→
+   406→export type AlertTone = "critical" | "warning" | "info" | "emerging";
+   407→
+   408→export interface IntelligenceAlert {
+   409→  id: string;
+   410→  tone: AlertTone;
+   411→  category: "Critical Skill Gap" | "Emerging Skill" | "Low Practical Exposure" | "New Industry Demand" | "Low Evidence Confidence" | "Upcoming Intervention";
+   412→  what: string;
+   413→  why: string;
+   414→  suggestedAction: string;
+   415→  affectedItems: number;
+   416→}
+   417→
+   418→export const InstitutionAggregator = {
+   419→  // §53 Intelligence Alerts — derived from demand-supply, gaps, practical exposure
+   420→  getAlerts: (): IntelligenceAlert[] => {
+   421→    const ds = useInstitutionStore.getState();
+   422→    const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
+   423→    const candidates = DEMO_CANDIDATES;
+   424→    const alignments = AcademiaService.getCurriculumAlignment();
+   425→    const alerts: IntelligenceAlert[] = [];
+   426→
+   427→    // Critical Skill Gap — demand-supply gap >= 30
+   428→    for (const a of alignments) {
+   429→      if (a.alignment === "Gap") {
+   430→        alerts.push({
+   431→          id: `alert-gap-${a.skillId}`,
+   432→          tone: "critical",
+   433→          category: "Critical Skill Gap",
+   434→          what: `${a.skillName} — supply ${a.studentAvgCompetency} vs demand ${a.demandCount} opportunities`,
+   435→          why: `Industry demand: ${a.industryDemand}. Curriculum coverage: ${a.curriculumCoverage}. Practical evidence: ${a.practicalEvidence}.`,
+   436→          suggestedAction: `Consider intervention: ${a.suggestedEnrichment.join(", ")}`,
+   437→          affectedItems: a.targetRoles.length,
+   438→        });
+   439→      }
+   440→    }
+   441→
+   442→    // Emerging Skill — high demand but not in curriculum
+   443→    for (const a of alignments) {
+   444→      if (a.industryDemand === "High" && (a.curriculumCoverage === "Not Covered" || a.curriculumCoverage === "Introductory")) {
+   445→        alerts.push({
+   446→          id: `alert-emerging-${a.skillId}`,
+   447→          tone: "emerging",
+   448→          category: "Emerging Skill",
+   449→          what: `${a.skillName} — emerging industry demand not yet in curriculum`,
+   450→          why: `Demand: High (${a.demandCount} opportunities). Current coverage: ${a.curriculumCoverage}.`,
+   451→          suggestedAction: "Consider curriculum enrichment and faculty development.",
+   452→          affectedItems: a.targetRoles.length,
+   453→        });
+   454→      }
+   455→    }
+   456→
+   457→    // Low Practical Exposure — curriculum strong but evidence low
+   458→    for (const a of alignments) {
+   459→      if ((a.curriculumCoverage === "Strong" || a.curriculumCoverage === "Moderate") && (a.practicalEvidence === "Limited" || a.practicalEvidence === "None")) {
+   460→        alerts.push({
+   461→          id: `alert-practical-${a.skillId}`,
+   462→          tone: "warning",
+   463→          category: "Low Practical Exposure",
+   464→          what: `${a.skillName} — theory covered, but practical evidence is ${a.practicalEvidence.toLowerCase()}`,
+   465→          why: `Curriculum: ${a.curriculumCoverage}. Student competency: ${a.studentAvgCompetency}. Verified evidence: limited.`,
+   466→          suggestedAction: "Introduce industry project, workshop, or hackathon exposure.",
+   467→          affectedItems: a.targetRoles.length,
+   468→        });
+   469→      }
+   470→    }
+   471→
+   472→    // Low Evidence Confidence — many candidates, few verified evidence
+   473→    const evidenceBySkill = new Map<string, { total: number; verified: number }>();
+   474→    for (const c of candidates) {
+   475→      for (const ev of c.evidence) {
+   476→        const e = evidenceBySkill.get(ev.skillId) ?? { total: 0, verified: 0 };
+   477→        e.total++; if (ev.status === "Verified") e.verified++;
+   478→        evidenceBySkill.set(ev.skillId, e);
+   479→      }
+   480→    }
+   481→    for (const [skillId, e] of evidenceBySkill) {
+   482→      if (e.total >= 2 && e.verified === 0) {
+   483→        alerts.push({
+   484→          id: `alert-confidence-${skillId}`,
+   485→          tone: "info",
+   486→          category: "Low Evidence Confidence",
+   487→          what: `${SKILL_NAMES[skillId] ?? skillId} — ${e.total} evidence records, 0 verified`,
+   488→          why: "Evidence has been submitted but not yet verified by industry or faculty.",
+   489→          suggestedAction: "Engage industry or faculty to verify outstanding evidence.",
+   490→          affectedItems: e.total,
+   491→        });
+   492→      }
+   493→    }
+   494→
+   495→    // Upcoming Intervention — interventions in Proposed/Recommended state
+   496→    for (const inv of ds.interventions) {
+   497→      if (inv.status === "Proposed" || inv.status === "Recommended") {
+   498→        alerts.push({
+   499→          id: `alert-intervention-${inv.id}`,
+   500→          tone: "info",
+   501→          category: "Upcoming Intervention",
+   502→          what: `${inv.type} for ${inv.skillName} — ${inv.status}`,
+   503→          why: `Targets: ${inv.skillName}. Affected: ${inv.affectedStudents} student(s). Department: ${inv.department}.`,
+   504→          suggestedAction: "Review and approve the intervention to begin execution.",
+   505→          affectedItems: inv.affectedStudents,
+   506→        });
+   507→      }
+   508→    }
+   509→
+   510→    return alerts.slice(0, 12);
+   511→  },
+   512→
+   513→  // §54 What Should The Institution Do Next — prioritized recommendations
+   514→  getNextActions: () => {
+   515→    const interventions = useInstitutionStore.getState().interventions;
+   516→    const cohortInterventions = ((): { skillName: string; suggestedAction: string; priority: string; affectedStudents: number; targetRoles: string[] }[] => {
+   517→      // Reuse logic from InstitutionService.getCohortInterventions indirectly
+   518→      const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
+   519→      const candidates = DEMO_CANDIDATES;
+   520→      const demandMap = new Map<string, { count: number; roles: Set<string> }>();
+   521→      for (const o of opps) for (const rs of o.requiredSkills) {
+   522→        const e = demandMap.get(rs.skillId) ?? { count: 0, roles: new Set<string>() };
+   523→        e.count++; o.targetRoles.forEach((r) => e.roles.add(r));
+   524→        demandMap.set(rs.skillId, e);
+   525→      }
+   526→      const supplyMap = new Map<string, number[]>();
+   527→      for (const c of candidates) for (const [, comp] of Object.entries(c.competencies)) {
+   528→        const arr = supplyMap.get(comp.skillId) ?? [];
+   529→        arr.push(comp.competencyScore); supplyMap.set(comp.skillId, arr);
+   530→      }
+   531→      const out = [];
+   532→      for (const [skillId, { count, roles }] of demandMap) {
+   533→        const supply = supplyMap.get(skillId);
+   534→        const supplyScore = supply ? Math.round(supply.reduce((a, b) => a + b, 0) / supply.length) : 0;
+   535→        const demandScore = Math.min(100, count * 20);
+   536→        const gap = demandScore - supplyScore;
+   537→        if (gap <= 0) continue;
+   538→        const priority = gap >= 40 ? "Critical" : gap >= 25 ? "High" : gap >= 10 ? "Medium" : "Low";
+   539→        out.push({
+   540→          skillName: SKILL_NAMES[skillId] ?? skillId,
+   541→          suggestedAction: priority === "Critical" ? "Industry Workshop" : priority === "High" ? "Live Project" : priority === "Medium" ? "Bootcamp" : "Certification",
+   542→          priority,
+   543→          affectedStudents: supply?.length ?? 0,
+   544→          targetRoles: [...roles],
+   545→        });
+   546→      }
+   547→      return out.sort((a, b) => (a.priority === "Critical" ? 0 : a.priority === "High" ? 1 : 2) - (b.priority === "Critical" ? 0 : b.priority === "High" ? 1 : 2));
+   548→    })();
+   549→
+   550→    return cohortInterventions.slice(0, 5).map((ci, idx) => ({
+   551→      rank: idx + 1,
+   552→      title: `${ci.suggestedAction} for ${ci.skillName}`,
+   553→      reason: `${ci.skillName} gap is ${ci.priority.toLowerCase()}. ${ci.affectedStudents} student(s) currently below target. Relevant roles: ${ci.targetRoles.slice(0, 3).join(", ")}.`,
+   554→      suggestedAction: ci.suggestedAction,
+   555→      skillName: ci.skillName,
+   556→      priority: ci.priority,
+   557→    }));
+   558→  },
+   559→
+   560→  // §48 Outcome Monitoring — before/after for a given intervention (using evidence as proxy)
+   561→  getOutcomeMonitoring: (interventionId: string) => {
+   562→    const interventions = useInstitutionStore.getState().interventions;
+   563→    const inv = interventions.find((i) => i.id === interventionId);
+   564→    if (!inv) return null;
+   565→    const candidates = DEMO_CANDIDATES;
+   566→    // Intervention targets a single skillId (per model)
+   567→    const targetSkillId = inv.skillId;
+   568→    const startDate = inv.startDate ?? inv.createdAt;
+   569→    const beforeEvidence = candidates.flatMap((c) => c.evidence.filter((e) => e.skillId === targetSkillId && e.createdAt < startDate));
+   570→    const afterEvidence = candidates.flatMap((c) => c.evidence.filter((e) => e.skillId === targetSkillId && e.createdAt >= startDate));
+   571→    return {
+   572→      intervention: inv,
+   573→      before: {
+   574→        evidenceCount: beforeEvidence.length,
+   575→        verifiedCount: beforeEvidence.filter((e) => e.status === "Verified").length,
+   576→      },
+   577→      after: {
+   578→        evidenceCount: afterEvidence.length,
+   579→        verifiedCount: afterEvidence.filter((e) => e.status === "Verified").length,
+   580→      },
+   581→      observedChange: afterEvidence.length - beforeEvidence.length,
+   582→      newEvidenceGenerated: afterEvidence.length,
+   583→    };
+   584→  },
+   585→
+   586→  // §52 Hackathon Intelligence — derived from hackathon store
+   587→  getHackathonIntelligence: () => {
+   588→    const hs = useHackathonStore.getState();
+   589→    const hackathonIds = new Set(hs.registrations.map((r) => r.hackathonId));
+   590→    const skillsDemonstrated = new Set<string>();
+   591→    // Derive skills from team problemStatementId (best-effort — exact mapping varies)
+   592→    for (const team of hs.teams) {
+   593→      // teams have a `problemStatementId` field; we don't have skill list per team in store,
+   594→      // so we use the role competencies of team members (DEMO_CANDIDATES) as a proxy
+   595→      for (const m of team.members ?? []) {
+   596→        const cand = DEMO_CANDIDATES.find((c) => c.studentId === m.studentId);
+   597→        if (cand) for (const [, comp] of Object.entries(cand.competencies)) skillsDemonstrated.add(comp.skillId);
+   598→      }
+   599→    }
+   600→    return {
+   601→      participation: hs.registrations.length,
+   602→      hackathonCount: hackathonIds.size,
+   603→      teams: hs.teams.length,
+   604→      projects: hs.submissions.length,
+   605→      skillsDemonstrated: [...skillsDemonstrated].map((id) => SKILL_NAMES[id] ?? id),
+   606→      industryChallenges: 0, // not currently flagged in store — labelled DEMO DATA in UI
+   607→      evidenceGenerated: hs.evaluations.length,
+   608→    };
+   609→  },
+   610→
+   611→  // §50 Internship Intelligence — derived from career applications
+   612→  getInternshipIntelligence: () => {
+   613→    const apps = useCareerStore.getState().applications;
+   614→    const internshipApps = apps.filter((a) => {
+   615→      const opp = useCareerStore.getState().opportunities.find((o) => o.id === a.opportunityId);
+   616→      return opp?.type === "Internship";
+   617→    });
+   618→    const feedbackCount = DEMO_CANDIDATES.flatMap((c) => c.evidence.filter((e) => e.sourceType === "Internship")).length;
+   619→    return {
+   620→      participation: internshipApps.length,
+   621→      selection: internshipApps.filter((a) => ["SHORTLISTED", "INTERVIEW", "SELECTED"].includes(a.status)).length,
+   622→      completion: internshipApps.filter((a) => a.status === "SELECTED").length,
+   623→      feedback: feedbackCount,
+   624→      evidenceGenerated: feedbackCount,
+   625→    };
+   626→  },
+   627→
+   628→  // §49 Placement Intelligence — common skills among selected candidates
+   629→  getPlacementIntelligence: () => {
+   630→    const apps = useCareerStore.getState().applications;
+   631→    const opps = useCareerStore.getState().opportunities;
+   632→    const selectedCandidates = apps.filter((a) => a.status === "SELECTED").map((a) => a.studentId);
+   633→    const candidates = DEMO_CANDIDATES.filter((c) => selectedCandidates.includes(c.studentId));
+   634→    if (candidates.length === 0) {
+   635→      return {
+   636→        targetRoles: [] as string[],
+   637→        applicants: apps.length,
+   638→        shortlisted: apps.filter((a) => a.status === "SHORTLISTED").length,
+   639→        interviews: apps.filter((a) => a.status === "INTERVIEW").length,
+   640→        selected: selectedCandidates.length,
+   641→        commonSkillsAmongSelected: [] as { skill: string; avgScore: number }[],
+   642→      };
+   643→    }
+   644→    const skillScores = new Map<string, number[]>();
+   645→    for (const c of candidates) for (const [, comp] of Object.entries(c.competencies)) {
+   646→      const arr = skillScores.get(comp.skillId) ?? [];
+   647→      arr.push(comp.competencyScore);
+   648→      skillScores.set(comp.skillId, arr);
+   649→    }
+   650→    const commonSkills = [...skillScores.entries()]
+   651→      .map(([id, scores]) => ({ skill: SKILL_NAMES[id] ?? id, avgScore: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) }))
+   652→      .sort((a, b) => b.avgScore - a.avgScore)
+   653→      .slice(0, 5);
+   654→    const targetRoles = [...new Set(candidates.map((c) => c.targetRole))];
+   655→    return {
+   656→      targetRoles,
+   657→      applicants: apps.length,
+   658→      shortlisted: apps.filter((a) => a.status === "SHORTLISTED").length,
+   659→      interviews: apps.filter((a) => a.status === "INTERVIEW").length,
+   660→      selected: selectedCandidates.length,
+   661→      commonSkillsAmongSelected: commonSkills,
+   662→    };
+   663→  },
+   664→};
+   665→
+   666→// Convenience hook that returns all aggregators reactively
+   667→export function useAggregators() {
+   668→  // Subscribe to all underlying stores so this hook recomputes when any changes
+   669→  const _opps = useCareerStore((s) => s.opportunities);
+   670→  const _apps = useCareerStore((s) => s.applications);
+   671→  const _demand = useIndustryStore((s) => s.demandConfigs);
+   672→  const _feedback = useIndustryStore((s) => s.feedback);
+   673→  const _challenges = useIndustryStore((s) => s.challenges);
+   674→  const _collabs = useAcademiaStore((s) => s.collaborations);
+   675→  const _interventions = useInstitutionStore((s) => s.interventions);
+   676→
+   677→  return {
+   678→    Industry: IndustryAggregator,
+   679→    Academia: AcademiaAggregator,
+   680→    Institution: InstitutionAggregator,
+   681→  };
+   682→}
+   683→

@@ -1,0 +1,1959 @@
+============================================================
+SKILL SETU — PHASE 9
+THREE-PORTAL DIFFERENTIATION & INTELLIGENCE UPGRADE
+============================================================
+
+IMPORTANT CONTEXT:
+
+The STUDENT PORTAL is already good and should remain visually
+and structurally stable.
+
+The current problem is:
+
+INDUSTRY
+ACADEMIA
+INSTITUTION
+
+feel like generic dashboards.
+
+DO NOT solve this by simply adding more cards, charts or KPIs.
+
+Instead, give each portal a UNIQUE PRODUCT PURPOSE,
+UNIQUE WORKFLOW, UNIQUE INFORMATION HIERARCHY and
+UNIQUE INTELLIGENCE EXPERIENCE.
+
+============================================================
+MASTER PRINCIPLE
+============================================================
+
+All four portals belong to one ecosystem.
+
+BUT:
+
+They must NOT look or behave like the same dashboard
+with different labels.
+
+Use the following product identities:
+
+STUDENT
+=
+CAREER & SKILL INTELLIGENCE
+
+INDUSTRY
+=
+TALENT + DEMAND INTELLIGENCE
+
+ACADEMIA
+=
+INDUSTRY–CURRICULUM + FACULTY COLLABORATION INTELLIGENCE
+
+INSTITUTION
+=
+INSTITUTIONAL SKILL INTELLIGENCE + DECISION SUPPORT
+
+============================================================
+DO NOT BREAK
+============================================================
+
+Do NOT redesign the Student Portal.
+
+Do NOT redesign Phase 1 landing page.
+
+Do NOT create a second design system.
+
+Do NOT create duplicate skill/readiness/opportunity models.
+
+Do NOT replace existing shared data.
+
+Do NOT remove existing features.
+
+Upgrade only:
+
+Industry
+Academia
+Institution
+
+============================================================
+PART A — INDUSTRY PORTAL
+============================================================
+
+============================================================
+1. INDUSTRY CORE IDENTITY
+============================================================
+
+Industry should NOT feel like:
+
+Naukri
+LinkedIn
+Generic ATS
+Generic admin panel
+
+Industry should feel like:
+
+TALENT INTELLIGENCE WORKSPACE
+
+Primary statement:
+
+DEFINE DEMAND.
+DISCOVER EVIDENCE.
+BUILD TEAMS.
+CREATE OPPORTUNITY.
+EVALUATE TALENT.
+
+============================================================
+2. INDUSTRY HERO / DASHBOARD HEADER
+============================================================
+
+Replace generic dashboard introduction with:
+
+INDUSTRY TALENT INTELLIGENCE
+
+Subtitle:
+
+Turn skill requirements into evidence-backed talent discovery.
+
+Top contextual controls:
+
+Organization
+Opportunity
+Role
+Date Range
+
+============================================================
+3. INDUSTRY "DEMAND PULSE"
+============================================================
+
+The first major dashboard section should be:
+
+DEMAND PULSE
+
+Show:
+
+Top demanded skills
+Required role levels
+Open roles
+Open challenges
+Skills with insufficient talent coverage
+
+Example:
+
+Machine Learning
+HIGH DEMAND
+
+Python
+HIGH DEMAND
+
+Cloud Deployment
+EMERGING
+
+Do not use arbitrary numbers.
+
+Use current platform/demo opportunity data.
+
+============================================================
+4. "WHAT WE NEED" PANEL
+============================================================
+
+Create:
+
+WHAT WE NEED
+
+Example:
+
+Data Scientist
+
+Critical skills:
+
+Machine Learning
+Python
+SQL
+
+Required level:
+
+ML 70
+Python 70
+SQL 60
+
+Button:
+
+View Role Demand
+
+This should be much more prominent than a generic "Post Job" card.
+
+============================================================
+5. TALENT SUPPLY PANEL
+============================================================
+
+Next section:
+
+WHAT THE TALENT POOL CAN DEMONSTRATE
+
+Example:
+
+Python
+Strong supply
+
+SQL
+Moderate supply
+
+Machine Learning
+Limited supply
+
+Cloud
+Low evidence
+
+This compares:
+
+Industry demand
+vs
+student evidence
+
+Use the existing Skill Intelligence data.
+
+============================================================
+6. TALENT DISCOVERY — CENTRAL INDUSTRY FEATURE
+============================================================
+
+Industry dashboard should immediately offer:
+
+DISCOVER EVIDENCE-BACKED TALENT
+
+Search:
+
+Role
+Skill
+Competency
+Evidence Confidence
+Availability
+
+Filters:
+
+Target Role
+Skill
+Minimum Competency
+Evidence Status
+Project
+Hackathon
+Internship
+Branch
+Year
+
+============================================================
+7. TALENT DISCOVERY CARD
+============================================================
+
+Candidate card should emphasize:
+
+Candidate
+Target Role
+Readiness
+Relevant Skill
+Evidence
+Projects
+Experience
+Availability
+
+NOT just:
+
+Name
+Email
+Resume
+
+Example:
+
+S042
+
+Data Scientist
+
+Role Readiness:
+61%
+
+Strong:
+Python
+SQL
+
+Gap:
+Machine Learning
+
+Evidence:
+Assessment
+Project
+
+Actions:
+
+View Evidence
+Why Match?
+Shortlist
+Invite
+
+============================================================
+8. WHY THIS CANDIDATE
+============================================================
+
+Make this a central interaction.
+
+Click:
+
+WHY THIS CANDIDATE?
+
+Show:
+
+Role Alignment
+Skill Alignment
+Evidence
+Project Relevance
+Eligibility
+Availability
+
+Example:
+
+✓ Data Scientist target role
+✓ Python competency 82
+✓ SQL competency 64
+✓ Relevant evidence
+⚠ Machine Learning below required level
+
+This must use existing matching logic.
+
+============================================================
+9. EVIDENCE-FIRST CANDIDATE VIEW
+============================================================
+
+Candidate page should lead with:
+
+CAN THIS PERSON DEMONSTRATE THE REQUIRED SKILLS?
+
+Then:
+
+Role Readiness
+
+Skill Evidence
+
+Projects
+
+Hackathons
+
+Industry Feedback
+
+Certifications
+
+Internships
+
+Resume
+
+Do not make Resume the primary artifact.
+
+This reinforces:
+
+EVIDENCE, NOT CLAIMS.
+
+============================================================
+10. DEMAND → CANDIDATE WORKFLOW
+============================================================
+
+Industry workflow:
+
+Create Role Demand
+→ Define Skills
+→ Set Required Levels
+→ Discover Talent
+→ Compare Evidence
+→ Shortlist
+→ Interview
+→ Engage
+
+Make this visible as a progress workflow.
+
+============================================================
+11. OPPORTUNITY CREATION
+============================================================
+
+Do not make:
+
+"Post Job"
+
+the dominant experience.
+
+Use:
+
+CREATE OPPORTUNITY
+
+Types:
+
+Job
+Internship
+Project
+Apprenticeship
+
+Start with:
+
+What problem are you hiring/engaging for?
+
+Then:
+
+Target Role
+Required Skills
+Importance
+Required Levels
+Eligibility
+Opportunity Details
+
+============================================================
+12. OPPORTUNITY INTELLIGENCE
+============================================================
+
+Before publishing show:
+
+EXPECTED TALENT AVAILABILITY
+
+Example:
+
+Required:
+
+Machine Learning ≥70
+
+Current platform talent:
+
+Limited
+
+Suggested:
+
+Consider a project / challenge / training pipeline.
+
+This connects demand to supply.
+
+============================================================
+13. INDUSTRY CHALLENGE ENTRY
+============================================================
+
+Create prominent:
+
+CREATE CHALLENGE
+
+Instead of hiding Hackathons under a menu.
+
+Challenge flow:
+
+Problem
+→ Skills
+→ Eligibility
+→ Team
+→ Evaluation
+→ Talent Discovery
+
+============================================================
+14. INDUSTRY TEAM BUILDER
+============================================================
+
+Show a unique panel:
+
+BUILD A TEAM
+
+Input:
+
+Team Size
+Roles
+Required Skills
+Availability
+
+Example:
+
+4 members
+
+ML Engineer
+Backend
+Frontend
+UI/UX
+
+Button:
+
+Find Team
+
+Explain:
+
+Skill Coverage
+Missing Capability
+Candidate Fit
+
+This is distinct from normal hiring.
+
+============================================================
+15. INDUSTRY FEEDBACK CENTER
+============================================================
+
+Create:
+
+FEEDBACK CENTER
+
+Sections:
+
+Pending Evaluation
+Active Experiences
+Completed Experiences
+Feedback History
+
+When evaluating:
+
+Student
+Project
+Internship
+Hackathon
+
+show:
+
+Technical
+Problem Solving
+Communication
+Teamwork
+Leadership
+Professionalism
+
+============================================================
+16. FEEDBACK → EVIDENCE
+============================================================
+
+After submission:
+
+show confirmation:
+
+FEEDBACK SUBMITTED
+
+Potential evidence created:
+
+Machine Learning
+Problem Solving
+Teamwork
+
+Do not automatically mark everything verified.
+
+============================================================
+17. INDUSTRY INTELLIGENCE SUMMARY
+============================================================
+
+The dashboard should answer in order:
+
+WHAT DO WE NEED?
+
+WHAT TALENT EXISTS?
+
+WHY IS TALENT A MATCH?
+
+WHAT IS MISSING?
+
+WHAT SHOULD WE DO?
+
+Possible action:
+
+Create Internship
+Create Project
+Create Challenge
+Offer Workshop
+Find Mentor
+
+============================================================
+18. INDUSTRY VISUAL LANGUAGE
+============================================================
+
+Industry colors/presentation can be slightly more enterprise:
+
+Deep navy
+Blue
+Teal
+Orange accent
+
+Use:
+
+Demand badges
+Evidence indicators
+Skill-match bars
+Talent coverage
+Pipeline stages
+
+Avoid generic KPI grids.
+
+============================================================
+PART B — ACADEMIA PORTAL
+============================================================
+
+============================================================
+19. ACADEMIA CORE IDENTITY
+============================================================
+
+Academia should NOT look like:
+
+Student ERP
+Faculty admin
+Generic education dashboard
+
+Academia should feel like:
+
+INDUSTRY–ACADEMIC ALIGNMENT WORKSPACE
+
+Primary statement:
+
+UNDERSTAND DEMAND.
+ALIGN LEARNING.
+ENABLE PRACTICAL EXPOSURE.
+CONNECT FACULTY.
+
+============================================================
+20. ACADEMIA HERO / DASHBOARD
+============================================================
+
+Header:
+
+ACADEMIC ALIGNMENT INTELLIGENCE
+
+Subtitle:
+
+Turn industry signals into curriculum alignment, faculty development and practical exposure.
+
+============================================================
+21. "INDUSTRY IS ASKING FOR" PANEL
+============================================================
+
+Prominent:
+
+INDUSTRY IS ASKING FOR
+
+Show skills:
+
+Machine Learning
+Cloud
+SQL
+Cybersecurity
+
+Each:
+
+Demand
+Roles
+Opportunities
+Challenges
+
+This comes from Industry data.
+
+============================================================
+22. "OUR STUDENTS ARE DEMONSTRATING" PANEL
+============================================================
+
+Show:
+
+Skill
+Average Competency
+Evidence Confidence
+Practical Exposure
+
+This comes from Student Skill Intelligence.
+
+============================================================
+23. "WHERE IS THE GAP?" PANEL
+============================================================
+
+Then:
+
+ACADEMIC ALIGNMENT GAPS
+
+Example:
+
+Machine Learning
+
+Industry Demand:
+High
+
+Curriculum:
+Moderate
+
+Practical Evidence:
+Low
+
+Status:
+
+Needs Attention
+
+This should be the centerpiece of the Academia experience.
+
+============================================================
+24. CURRICULUM ALIGNMENT VISUAL
+============================================================
+
+Create a clear chain:
+
+INDUSTRY DEMAND
+↓
+SKILL
+↓
+CURRICULUM COVERAGE
+↓
+STUDENT COMPETENCY
+↓
+PRACTICAL EVIDENCE
+↓
+ALIGNMENT STATUS
+
+This is more meaningful than generic charts.
+
+============================================================
+25. CURRICULUM MATRIX
+============================================================
+
+Create:
+
+COURSE × SKILL
+
+Show:
+
+Not Covered
+Introductory
+Moderate
+Strong
+
+Click a cell.
+
+Show:
+
+Course
+Skill
+Industry Demand
+Student Competency
+Practical Evidence
+Recommended Action
+
+============================================================
+26. PRACTICAL EXPOSURE
+============================================================
+
+Create unique section:
+
+PRACTICAL EXPOSURE GAP
+
+Differentiate:
+
+THEORY
+vs
+PRACTICE
+
+Example:
+
+Machine Learning
+
+Curriculum:
+Strong
+
+Student Evidence:
+Limited
+
+Practical Exposure:
+Low
+
+Recommended:
+
+Industry Project
+Hackathon
+Workshop
+Mentorship
+
+============================================================
+27. ACADEMIA ACTION CENTER
+============================================================
+
+Create:
+
+WHAT SHOULD WE DO NEXT?
+
+Examples:
+
+Industry ML Workshop
+Faculty FDP
+Live Project
+Mentorship
+Hackathon
+Curriculum Enrichment
+
+Each:
+
+Skill
+Demand
+Gap
+Affected cohort
+Expected outcome
+
+============================================================
+28. WHY THIS ACTION?
+============================================================
+
+Click:
+
+WHY?
+
+Show:
+
+Industry demand
+Curriculum coverage
+Student gap
+Practical exposure
+
+============================================================
+29. FACULTY INTELLIGENCE
+============================================================
+
+Create:
+
+FACULTY DEVELOPMENT
+
+Show:
+
+My Expertise
+Industry Opportunities
+FDP
+Industrial Training
+Research
+Consultancy
+Mentorship
+
+Do not make these simple announcement cards.
+
+Each should have:
+
+Skill relevance
+Industry relevance
+Eligibility
+Availability
+
+============================================================
+30. FACULTY OPPORTUNITY RECOMMENDATION
+============================================================
+
+Example:
+
+RECOMMENDED FOR YOU
+
+Industry AI Workshop
+
+Why:
+
+✓ Matches faculty expertise
+✓ Relevant to current industry demand
+✓ Student-facing practical opportunity
+
+============================================================
+31. MENTOR MATCHING
+============================================================
+
+Academia should have:
+
+FIND A MENTOR
+
+Match:
+
+Student Gap
+Faculty Expertise
+Target Role
+Availability
+
+Example:
+
+Student gap:
+Machine Learning
+
+Faculty expertise:
+Machine Learning
+
+Recommended:
+
+Mentor
+
+============================================================
+32. COLLABORATION HUB
+============================================================
+
+Make:
+
+INDUSTRY ↔ ACADEMIA
+
+a primary section.
+
+Types:
+
+Workshop
+Guest Lecture
+Live Project
+Mentorship
+Innovation Challenge
+Research
+Faculty Training
+
+Show lifecycle:
+
+Proposed
+Approved
+Scheduled
+Active
+Completed
+
+============================================================
+33. COLLABORATION DETAIL
+============================================================
+
+Show:
+
+Industry
+Topic
+Skills
+Roles
+Participants
+Faculty
+Date
+Expected Outcome
+Status
+
+============================================================
+34. ACADEMIA FEEDBACK
+============================================================
+
+After project/workshop:
+
+Faculty can provide:
+
+Technical
+Communication
+Teamwork
+Problem Solving
+Presentation
+
+This can produce evidence.
+
+============================================================
+35. ACADEMIA VISUAL LANGUAGE
+============================================================
+
+Academia should feel:
+
+Academic
+Collaborative
+Forward-looking
+Industry-connected
+
+Use:
+
+alignment diagrams
+curriculum matrices
+industry signal cards
+faculty opportunity cards
+collaboration timelines
+
+Avoid generic admin tables.
+
+============================================================
+PART C — INSTITUTION PORTAL
+============================================================
+
+============================================================
+36. INSTITUTION CORE IDENTITY
+============================================================
+
+Institution must feel like:
+
+EXECUTIVE SKILL INTELLIGENCE COMMAND CENTER
+
+Primary question:
+
+WHERE ARE WE?
+WHAT DOES INDUSTRY NEED?
+WHERE IS THE GAP?
+WHAT SHOULD WE DO?
+
+============================================================
+37. INSTITUTION HERO
+============================================================
+
+Header:
+
+INSTITUTION SKILL INTELLIGENCE
+
+Subtitle:
+
+Turn student evidence and industry signals into institution-level decisions.
+
+============================================================
+38. EXECUTIVE SUMMARY
+============================================================
+
+First section:
+
+INSTITUTION AT A GLANCE
+
+Show only high-value information:
+
+Critical Skill Gaps
+Industry Demand Signals
+Students Needing Intervention
+Industry Collaboration
+Practical Exposure
+Opportunity Participation
+
+============================================================
+39. "WHERE WE STAND"
+============================================================
+
+Show:
+
+Average Role Readiness
+Evidence Coverage
+Practical Exposure
+Industry Engagement
+
+Do not use a generic "Overall Performance Score."
+
+============================================================
+40. "WHAT INDUSTRY NEEDS"
+============================================================
+
+Show:
+
+Top skills
+Top roles
+Demand level
+Required competency
+Opportunity volume
+
+Source:
+
+Industry data
+
+============================================================
+41. "WHAT OUR STUDENTS DEMONSTRATE"
+============================================================
+
+Show:
+
+Skill
+Average Competency
+Evidence Confidence
+Verified Evidence
+
+Source:
+
+Student Skill Intelligence
+
+============================================================
+42. DEMAND VS SUPPLY
+============================================================
+
+Create an executive visual:
+
+INDUSTRY DEMAND
+vs
+STUDENT SUPPLY
+
+Example demo values:
+
+Python:
+92 demand
+78 supply
+
+SQL:
+88 demand
+51 supply
+
+Cloud:
+82 demand
+27 supply
+
+Machine Learning:
+90 demand
+39 supply
+
+Clearly mark:
+
+DEMO DATA
+
+============================================================
+43. "WHERE IS THE GAP?"
+============================================================
+
+Create:
+
+TOP INSTITUTIONAL SKILL GAPS
+
+For each:
+
+Skill
+Demand
+Supply
+Gap
+Affected Programs
+Affected Students
+Role Relevance
+Priority
+
+============================================================
+44. BRANCH × SKILL INTELLIGENCE
+============================================================
+
+Heatmap:
+
+Departments
+×
+Skills
+
+Click cell.
+
+Show:
+
+Department
+Skill
+Average Competency
+Evidence
+Industry Demand
+Gap
+Intervention
+
+============================================================
+45. INTERVENTION CENTER
+============================================================
+
+Create:
+
+INSTITUTION ACTION CENTER
+
+Sections:
+
+Recommended
+Proposed
+Active
+Completed
+
+Each intervention:
+
+Skill
+Department
+Problem
+Recommended Action
+Owner
+Timeline
+Status
+
+============================================================
+46. WHY THIS INTERVENTION?
+============================================================
+
+Example:
+
+Recommended:
+
+Industry ML Workshop
+
+WHY?
+
+Industry demand:
+High
+
+Average competency:
+43
+
+Practical evidence:
+Limited
+
+Affected students:
+XX
+
+Relevant roles:
+Data Scientist
+ML Engineer
+
+Available industry support:
+Yes
+
+============================================================
+47. INTERVENTION TYPES
+============================================================
+
+Industry Workshop
+Bootcamp
+Mentor Program
+Live Project
+Hackathon
+Certification
+Faculty Training
+Curriculum Enrichment
+
+============================================================
+48. OUTCOME MONITORING
+============================================================
+
+After intervention:
+
+Before
+→ Intervention
+→ Participation
+→ Evidence
+→ Observed Change
+
+Do not claim:
+
+"Placement increased by 20%."
+
+Use:
+
+Observed Change
+Post-Activity Indicator
+New Evidence Generated
+
+============================================================
+49. INSTITUTION PLACEMENT INTELLIGENCE
+============================================================
+
+Do not create a generic placement table.
+
+Show:
+
+Target Roles
+Applicants
+Shortlisted
+Interviews
+Selected
+
+Then:
+
+Which skills are common among selected candidates?
+
+Only where actual data exists.
+
+============================================================
+50. INTERNSHIP INTELLIGENCE
+============================================================
+
+Show:
+
+Participation
+Selection
+Completion
+Feedback
+Evidence Generated
+
+============================================================
+51. INDUSTRY COLLABORATION
+============================================================
+
+Show:
+
+Active partnerships
+Challenges
+Workshops
+Projects
+Mentorship
+Faculty activities
+
+Use actual shared records.
+
+============================================================
+52. HACKATHON INTELLIGENCE
+============================================================
+
+Prepare an executive Hackathon section:
+
+Participation
+Departments
+Teams
+Projects
+Skills Demonstrated
+Industry Challenges
+Evidence Generated
+
+Do not build duplicate Hackathon logic.
+
+============================================================
+53. INSTITUTIONAL ALERTS
+============================================================
+
+Create:
+
+INTELLIGENCE ALERTS
+
+Examples:
+
+Critical Skill Gap
+Emerging Skill
+Low Practical Exposure
+New Industry Demand
+Low Evidence Confidence
+Upcoming Intervention
+
+Each alert:
+
+What?
+Why?
+What action is suggested?
+
+============================================================
+54. INSTITUTION NEXT ACTION
+============================================================
+
+Create a prominent:
+
+WHAT SHOULD THE INSTITUTION DO NEXT?
+
+Example:
+
+1.
+Launch ML Industry Workshop
+
+2.
+Increase Cloud Project Exposure
+
+3.
+Create Faculty–Industry Mentorship
+
+These recommendations must be based on platform data/demo data.
+
+============================================================
+55. EXECUTIVE FILTERS
+============================================================
+
+Allow:
+
+Academic Year
+Department
+Program
+Year
+Skill
+Role
+Date Range
+
+All relevant visualizations must respond.
+
+============================================================
+56. DATA SOURCE LABELS
+============================================================
+
+Every major institutional insight should show:
+
+Based on platform data
+
+or:
+
+DEMO DATA
+
+or:
+
+Based on current curriculum mappings
+
+This is mandatory.
+
+============================================================
+57. AI ASSISTANT — INDUSTRY
+============================================================
+
+Questions:
+
+Why was this candidate recommended?
+
+Which skills are hardest to source?
+
+What does our talent pool lack?
+
+What should this challenge require?
+
+============================================================
+58. AI ASSISTANT — ACADEMIA
+============================================================
+
+Questions:
+
+Which skills need curriculum attention?
+
+Which industry workshops are relevant?
+
+Which students need mentorship?
+
+What practical exposure is missing?
+
+============================================================
+59. AI ASSISTANT — INSTITUTION
+============================================================
+
+Questions:
+
+What are the biggest institutional skill gaps?
+
+Which departments need attention?
+
+What does industry demand?
+
+What intervention is suggested?
+
+What changed recently?
+
+============================================================
+60. AI RULE
+============================================================
+
+RULES CALCULATE.
+
+AI EXPLAINS & ENRICHES.
+
+AI must not invent:
+
+student counts
+placements
+industry demand
+curriculum facts
+skills
+scores
+feedback
+
+============================================================
+61. CROSS-PORTAL DATA FLOW
+============================================================
+
+Verify this:
+
+INDUSTRY
+
+creates:
+
+Data Scientist requirement
+
+required:
+Python
+SQL
+Machine Learning
+
+↓
+
+ACADEMIA
+
+sees:
+
+Industry skill signal
+
+↓
+
+STUDENT
+
+sees:
+
+Relevant opportunity
+
+↓
+
+INSTITUTION
+
+sees:
+
+Demand vs supply
+
+This must use shared data.
+
+============================================================
+62. CROSS-PORTAL FEEDBACK FLOW
+============================================================
+
+Verify:
+
+Student completes project
+
+↓
+
+Industry evaluates
+
+↓
+
+Feedback created
+
+↓
+
+Evidence created
+
+↓
+
+Student Passport
+
+↓
+
+Student Intelligence
+
+↓
+
+Academia view
+
+↓
+
+Institution aggregate
+
+This must use shared records.
+
+============================================================
+63. PORTAL-SPECIFIC DASHBOARD STRUCTURE
+============================================================
+
+STUDENT:
+
+MY READINESS
+MY GAPS
+MY NEXT ACTION
+MY OPPORTUNITIES
+MY EVIDENCE
+
+INDUSTRY:
+
+WHAT WE NEED
+WHO CAN DEMONSTRATE IT
+WHY THEY MATCH
+WHAT IS MISSING
+WHAT SHOULD WE DO
+
+ACADEMIA:
+
+WHAT INDUSTRY NEEDS
+WHAT STUDENTS DEMONSTRATE
+WHERE CURRICULUM IS ALIGNED
+WHERE PRACTICAL EXPOSURE IS MISSING
+WHAT COLLABORATION CAN HELP
+
+INSTITUTION:
+
+WHERE WE STAND
+WHAT INDUSTRY NEEDS
+WHERE THE GAP IS
+WHO IS AFFECTED
+WHAT INTERVENTION SHOULD WE CONSIDER
+WHAT HAS CHANGED
+
+============================================================
+64. VISUAL DIFFERENTIATION
+============================================================
+
+Do not make all dashboards identical.
+
+STUDENT:
+Personal / action-oriented
+
+INDUSTRY:
+Talent / demand / hiring oriented
+
+ACADEMIA:
+Alignment / collaboration / learning oriented
+
+INSTITUTION:
+Executive / analytical / decision-oriented
+
+All still use the same SKILL SETU design system.
+
+============================================================
+65. REMOVE GENERIC DASHBOARD PATTERNS
+============================================================
+
+Replace generic:
+
+"Total Users"
+"Total Revenue"
+"Total Activity"
+"Performance"
+"Statistics"
+
+with domain-specific intelligence.
+
+Example Industry:
+
+Talent Coverage
+Skill Demand
+Evidence-Backed Candidates
+
+Academia:
+
+Curriculum Alignment
+Practical Exposure
+Industry Signals
+
+Institution:
+
+Skill Gap
+Demand/Supply
+Intervention Priority
+
+============================================================
+66. DO NOT OVERLOAD WITH CHARTS
+============================================================
+
+Use charts only when they answer a question.
+
+Useful:
+
+Demand vs Supply
+Skill heatmap
+Readiness trend
+Application funnel
+Curriculum alignment
+
+Avoid:
+
+decorative pie charts
+unnecessary 3D charts
+random percentages
+
+============================================================
+67. EXPLAINABILITY
+============================================================
+
+Every major insight:
+
+WHY?
+
+Every recommendation:
+
+WHY?
+
+Every gap:
+
+WHY?
+
+Every candidate:
+
+WHY?
+
+Every intervention:
+
+WHY?
+
+Use actual data.
+
+============================================================
+68. DEMO SCENARIO
+============================================================
+
+Industry:
+
+Data Scientist demand
+
+Skills:
+
+Python
+SQL
+Machine Learning
+Statistics
+
+↓
+
+Academia:
+
+Machine Learning demand:
+High
+
+Curriculum:
+Moderate
+
+Practical Evidence:
+Low
+
+↓
+
+Institution:
+
+Machine Learning:
+High-priority gap
+
+↓
+
+Institution recommendation:
+
+Industry ML Workshop
+
+↓
+
+Student:
+
+S042
+
+ML competency:
+43
+
+↓
+
+Student recommendation:
+
+Build ML Project
+
+↓
+
+Industry:
+
+S042 becomes candidate
+
+↓
+
+Industry evaluates work
+
+↓
+
+Feedback becomes evidence
+
+↓
+
+Student Skill Passport updates
+
+↓
+
+Institution sees aggregate evidence.
+
+This demonstrates the four portals as one ecosystem.
+
+============================================================
+69. STATUS / DATA HONESTY
+============================================================
+
+Clearly label:
+
+IMPLEMENTED
+DEMO DATA
+PROTOTYPE
+FUTURE INTEGRATION
+
+Do NOT claim live integrations with:
+
+ATS
+University ERP
+LMS
+External Job Platforms
+External Coding Platforms
+External Hackathon Platforms
+
+unless actually implemented.
+
+============================================================
+70. SECURITY
+============================================================
+
+Respect existing RBAC.
+
+Industry:
+Authorized talent/opportunity data
+
+Academia:
+Authorized academic data
+
+Institution:
+Authorized aggregate data
+
+Do not expose private student documents.
+
+============================================================
+71. TESTING — INDUSTRY
+============================================================
+
+Test:
+
+Demand creation
+Opportunity creation
+Candidate discovery
+Candidate matching
+Why candidate
+Shortlisting
+Invitation
+Feedback
+
+============================================================
+72. TESTING — ACADEMIA
+============================================================
+
+Test:
+
+Industry signal
+Curriculum alignment
+Practical exposure
+Faculty opportunity
+Mentor recommendation
+Collaboration
+Intervention recommendation
+
+============================================================
+73. TESTING — INSTITUTION
+============================================================
+
+Test:
+
+Demand
+Supply
+Gap
+Branch heatmap
+Intervention
+Collaboration
+Placement
+Internship
+Hackathon aggregation
+
+============================================================
+74. CROSS-PORTAL TEST
+============================================================
+
+Perform:
+
+Industry creates ML opportunity
+
+↓
+
+Academia sees ML demand
+
+↓
+
+Student sees opportunity
+
+↓
+
+Institution sees demand/supply
+
+No duplicate record creation.
+
+============================================================
+75. FEEDBACK TEST
+============================================================
+
+Student project
+
+↓
+
+Industry evaluation
+
+↓
+
+Feedback
+
+↓
+
+Evidence
+
+↓
+
+Student Passport
+
+↓
+
+Academia / Institution aggregate
+
+All from the same underlying data.
+
+============================================================
+76. PERFORMANCE
+============================================================
+
+Do not make every dashboard call every possible endpoint.
+
+Load data according to page needs.
+
+Reuse cached/shared data where appropriate.
+
+============================================================
+77. RESPONSIVE
+============================================================
+
+All three portals:
+
+Desktop
+Tablet
+Mobile
+
+Preserve the different information hierarchy across devices.
+
+============================================================
+78. FINAL QUALITY BAR
+============================================================
+
+After implementation, ask:
+
+Does Industry feel like a talent intelligence product?
+
+Does Academia feel like an industry-alignment product?
+
+Does Institution feel like an executive decision-support product?
+
+If any answer is NO:
+
+continue improving the information hierarchy.
+
+Do not simply add more features.
+
+============================================================
+79. DEFINITION OF DONE
+============================================================
+
+Phase 9 is complete only when:
+
+INDUSTRY:
+
+✓ Distinct identity
+✓ Demand Intelligence
+✓ Evidence-first Talent Discovery
+✓ Why Candidate
+✓ Opportunity creation
+✓ Skill requirement definition
+✓ Team Builder entry
+✓ Feedback Center
+✓ Industry recommendations
+✓ Industry-specific analytics
+
+ACADEMIA:
+
+✓ Distinct identity
+✓ Industry Skill Signals
+✓ Curriculum Alignment
+✓ Practical Exposure
+✓ Faculty Opportunities
+✓ Mentorship
+✓ Collaboration Hub
+✓ Faculty Development
+✓ Intervention recommendations
+✓ Academia-specific analytics
+
+INSTITUTION:
+
+✓ Distinct identity
+✓ Executive Skill Intelligence
+✓ Demand vs Supply
+✓ Branch × Skill
+✓ Institutional Gaps
+✓ Intervention Center
+✓ Placement Intelligence
+✓ Internship Intelligence
+✓ Collaboration Intelligence
+✓ Hackathon Intelligence
+✓ Executive alerts
+✓ Decision support
+
+ALL:
+
+✓ Shared data
+✓ Shared skills
+✓ Shared evidence
+✓ Shared opportunities
+✓ Shared feedback
+✓ Shared notifications
+✓ Explainability
+✓ RBAC
+✓ Honest status labels
+✓ No duplicate engines
+✓ No fake statistics
+
+============================================================
+80. FINAL PRODUCT POSITIONING
+============================================================
+
+The four portals must now communicate:
+
+STUDENT:
+"I know what I can demonstrate."
+
+INDUSTRY:
+"I know what capability I need and who can demonstrate it."
+
+ACADEMIA:
+"I know what skills are changing and how learning/practical exposure can respond."
+
+INSTITUTION:
+"I know where the capability gaps are and what intervention I should consider."
+
+SKILL SETU:
+"ONE INTELLIGENCE LAYER CONNECTS ALL FOUR."
+
+============================================================
+END PHASE 9
+============================================================

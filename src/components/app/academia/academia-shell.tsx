@@ -26,21 +26,28 @@ const NAV: NavLeaf[] = [
   { label: "Dashboard", route: "/academia/dashboard", icon: LayoutDashboard },
   { label: "Skill Intelligence", route: "/academia/skills", icon: BarChart3 },
   { label: "Curriculum Alignment", route: "/academia/curriculum", icon: BookOpen },
-  { label: "Faculty Opportunities", route: "/academia/opportunities", icon: Briefcase },
-  { label: "Collaboration", route: "/academia/collaboration", icon: Users },
-  { label: "Mentorship", route: "/academia/mentorship", icon: GraduationCap },
+  { label: "Faculty Development", route: "/academia/opportunities", icon: Briefcase },
+  { label: "Industry ↔ Academia", route: "/academia/collaboration", icon: Users },
+  { label: "Find a Mentor", route: "/academia/mentorship", icon: GraduationCap },
   { label: "Workshops", route: "/academia/workshops", icon: Trophy },
-  { label: "Faculty Development", route: "/academia/fdp", icon: FileText },
+  { label: "FDP & Training", route: "/academia/fdp", icon: FileText },
   { label: "Live Projects", route: "/academia/projects", icon: Briefcase },
   { label: "Notifications", route: "/academia/notifications", icon: Bell },
   { label: "Profile", route: "/academia/profile", icon: User },
 ];
 
 const BREADCRUMBS: Record<string, string> = {
-  dashboard: "Dashboard", skills: "Skill Intelligence", curriculum: "Curriculum Alignment",
-  opportunities: "Faculty Opportunities", collaboration: "Collaboration", mentorship: "Mentorship",
-  workshops: "Workshops", fdp: "Faculty Development", projects: "Live Projects",
-  notifications: "Notifications", profile: "Profile",
+  dashboard: "Academic Alignment Intelligence",
+  skills: "Skill Intelligence",
+  curriculum: "Curriculum Alignment",
+  opportunities: "Faculty Development",
+  collaboration: "Industry ↔ Academia",
+  mentorship: "Find a Mentor",
+  workshops: "Workshops",
+  fdp: "FDP & Training",
+  projects: "Live Projects",
+  notifications: "Notifications",
+  profile: "Profile",
 };
 
 export function AcademiaShell() {
@@ -70,7 +77,12 @@ export function AcademiaShell() {
         </div>
         <div className="border-b border-[var(--ss-border)] px-4 py-3">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--ss-faint)]">Academia Portal</p>
-          {!collapsed && <p className="mt-1 text-sm font-bold text-[var(--ss-blue-600)]">{DEMO_FACULTY.department}</p>}
+          {!collapsed && (
+            <>
+              <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--ss-blue-600)]">Industry–Academic Alignment</p>
+              <p className="mt-0.5 text-[10px] text-[var(--ss-muted)]">{DEMO_FACULTY.department}</p>
+            </>
+          )}
         </div>
         <nav className="scroll-slim flex-1 overflow-y-auto px-2 py-3">
           {NAV.map((item) => {
@@ -99,7 +111,7 @@ export function AcademiaShell() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 lg:hidden">
             <div className="absolute inset-0 bg-[#0a1628]/55 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
             <motion.div initial={{ x: -300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ type: "spring", damping: 28, stiffness: 280 }} className="absolute left-0 top-0 flex h-full w-72 flex-col bg-white">
-              <div className="flex h-16 items-center justify-between border-b border-[var(--ss-border)] px-3"><div className="flex items-center gap-2"><LogoMark size={30} /><span className="text-xs font-extrabold">Academia Portal</span></div><button onClick={() => setMobileOpen(false)} className="rounded-lg p-1.5 text-[var(--ss-faint)]"><X className="h-4 w-4" /></button></div>
+              <div className="flex h-16 items-center justify-between border-b border-[var(--ss-border)] px-3"><div className="flex items-center gap-2"><LogoMark size={30} /><div><p className="text-xs font-extrabold">Academia Portal</p><p className="text-[9px] uppercase tracking-[0.12em] text-[var(--ss-blue-600)]">Industry–Academic Alignment</p></div></div><button onClick={() => setMobileOpen(false)} className="rounded-lg p-1.5 text-[var(--ss-faint)]"><X className="h-4 w-4" /></button></div>
               <nav className="flex-1 overflow-y-auto px-2 py-3">{NAV.map((item) => { const active = isActive(section, item.route); const Icon = item.icon; return (
                 <button key={item.route} onClick={() => { navigate(item.route); setMobileOpen(false); }} className={cn("mb-0.5 flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium", active ? "bg-[var(--ss-blue-50)] text-[var(--ss-blue-600)]" : "text-[var(--ss-ink-soft)] hover:bg-[var(--ss-surface-2)]")}>
                   <Icon className="h-4 w-4" /> {item.label}
