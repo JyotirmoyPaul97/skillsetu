@@ -32,8 +32,10 @@ export function LoginView() {
       if (which === "student") {
         setRole("Data Scientist");
         navigate("/app/dashboard");
+      } else if (which === "industry") {
+        navigate("/industry/dashboard");
       } else {
-        // Other portals arrive in later phases — show a notice via the gate.
+        // Academia & Institution arrive in later phases.
         navigate("/");
       }
     }, 600);
@@ -133,14 +135,14 @@ export function LoginView() {
           </div>
 
           <p className="text-[11px] text-[var(--ss-muted)]">
-            Pick a role to enter the portal. Only the <b>Student Portal</b> is available in Phase 2.
+            Pick a role to enter the portal. <b>Student</b> and <b>Industry</b> portals are available.
           </p>
           <div className="mt-3 grid grid-cols-2 gap-2">
             {DEMO_ROLES.map((r) => {
               const Icon = r.icon;
               const active = loading === r.key;
               const disabled = loading !== null;
-              const phase2 = r.key === "student";
+              const phase2 = r.key === "student" || r.key === "industry";
               return (
                 <button
                   key={r.key}
@@ -157,7 +159,7 @@ export function LoginView() {
                   </span>
                   <div className="min-w-0">
                     <p className="text-xs font-bold text-[var(--ss-ink)]">{r.label} Demo</p>
-                    <p className="truncate text-[9px] text-[var(--ss-faint)]">{phase2 ? "Phase 2 ✓" : "Later phase"}</p>
+                    <p className="truncate text-[9px] text-[var(--ss-faint)]">{phase2 ? "Available" : "Later phase"}</p>
                   </div>
                 </button>
               );

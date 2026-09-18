@@ -11,13 +11,16 @@ import { ClosedLoop } from "@/components/site/closed-loop";
 import { WhySkillSetu } from "@/components/site/why-skillsetu";
 import { Footer } from "@/components/site/footer";
 
-// Code-split the authenticated app + login so the landing bundle stays light
-// (avoids pulling the whole student portal into the initial compile).
+// Code-split the authenticated portals + login so the landing bundle stays light.
 const LoginView = dynamic(() => import("@/components/app/login-view").then((m) => m.LoginView), {
   ssr: false,
   loading: () => <FullPageLoader />,
 });
 const AppShell = dynamic(() => import("@/components/app/app-shell").then((m) => m.AppShell), {
+  ssr: false,
+  loading: () => <FullPageLoader />,
+});
+const IndustryShell = dynamic(() => import("@/components/app/industry/industry-shell").then((m) => m.IndustryShell), {
   ssr: false,
   loading: () => <FullPageLoader />,
 });
@@ -37,7 +40,7 @@ export default function Home() {
   const { route } = useRouter();
 
   useEffect(() => {
-    if (route.startsWith("/app")) window.scrollTo(0, 0);
+    if (route.startsWith("/app") || route.startsWith("/industry")) window.scrollTo(0, 0);
   }, [route]);
 
   if (route === "/login") {
@@ -46,6 +49,10 @@ export default function Home() {
 
   if (route.startsWith("/app")) {
     return <AppShell />;
+  }
+
+  if (route.startsWith("/industry")) {
+    return <IndustryShell />;
   }
 
   // Phase 1 landing (unchanged)

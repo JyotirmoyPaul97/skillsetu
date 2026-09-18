@@ -484,3 +484,42 @@ Stage Summary:
 - Changing student intelligence (competency/role) recalculates all opportunity matches reactively.
 - Did NOT rebuild Phase 1-3 or implement Industry/Academia/Institution/Hackathons/external APIs (per spec §77).
 - STOP AFTER PHASE 4.
+
+---
+Task ID: P5-1
+Agent: orchestrator (main)
+Task: Phase 5 — Industry Portal + Industry Intelligence (reuses Phase 3+4, no duplicate models)
+
+Work Log:
+- Read master spec upload/Pasted Content_1789709225157.txt (2415 lines, §1–91). Focus: Industry Portal as genuine industry-side workspace consuming Phase 3+4 shared data.
+- Audited Phase 3+4 (§2): intelligence store (student/role/competencies/evidence), career store (opportunities/applications), calculateOpportunityMatch, calculateEvidenceConfidence. Reused all — no duplicate student/skill/competency/evidence/opportunity/matching models.
+- Built src/lib/industry/ module:
+  * industry-model.ts — DemandConfig (role + DemandSkill[skillId/importance/requiredLevel]), IndustryFeedback (categories + skillScores), Challenge, Invitation (Interview/Internship/Project/Mentorship), AuditLogEntry, IndustryUser, CompanyProfile, IndustryNotification, Candidate (read-only view of a student). SkillImportance (Critical/High/Medium/Low). FeedbackStatus (Draft/Submitted/Reviewed).
+  * candidates.ts — DEMO_CANDIDATES (4 candidates: S042 reuses Phase 3 exact data, S051 Priya Nair ML Engineer, S038 Rohan Gupta Full Stack, S067 Sneha Patel Data Scientist). All competencies reference Phase 3 centralized skillIds. roleReadiness calculated via Phase 3 calculateRoleReadiness. DEMO_COMPANY (Nova Analytics) + DEMO_INDUSTRY_USER (Meera Krishnan, Recruiter).
+  * industry-store.ts — useIndustryStore Zustand store (localStorage): demandConfigs, feedback, challenges, invitations, shortlistedIds, auditLog, notifications. Actions: createDemand, updateDemand, shortlist, invite (Interview/Internship/Project/Mentorship), submitFeedback (FEEDBACK→EVIDENCE: for S042, calls Phase 3 store's addEvidence to create real EvidenceRecords — demonstrating the Industry Demand→Feedback→Evidence→Intelligence loop §70), createChallenge, markNotificationRead. Audit log tracks all actions (§55).
+  * industry-service.ts — IndustryService API + useIndustry reactive hook. calculateCandidateMatch REUSES Phase 4 calculateOpportunityMatch (§22, §62 — same matching engine, no second formula). Candidate match score = student opportunity match score (§22 consistency). useIndustry reactively recomputes all candidate×opportunity matches.
+  * index.ts — public API.
+- Built src/components/app/industry/:
+  * industry-shell.tsx — Industry sidebar (12 nav items: Dashboard/Demand Intelligence/Post Opportunity/Opportunity Management/Talent Discovery/Challenges/Team Builder/Learning Hub/Feedback/Analytics/Notifications/Profile) + topbar (breadcrumb, notifications bell w/ unread count, profile dropdown w/ Logout) + content outlet (code-split: IndustryCore + IndustryExtra via dynamic imports). Responsive (desktop sidebar collapsed/expanded, mobile drawer).
+  * industry-core.tsx — IndustryDashboard (metrics from actual state: Active Opps, Applicants, Shortlisted, Challenges, Pending Eval, Talent Matches; core message strip §79; quick actions; recent applicants), DemandIntelligence (define role demand w/ centralized skills + importance + required levels §6-9; DemandForm modal), PostOpportunity (creation wizard using Phase 4 Opportunity model §10-12; centralized skill selection; publishes to career store → appears in Student Portal §TEST 3), OpportunityManagement (tabs Active/Drafts/Closed; manage applicants drawer w/ candidate match + status transitions), TalentDiscovery (search candidates by name/role; candidate cards w/ match %, readiness, top skills, evidence count; CandidateProfileDrawer w/ intelligence profile: readiness, skills, evidence, why-match button, Shortlist/InviteToInterview/InviteToInternship/OfferProject actions §17-20; WhyMatchModal reusing Phase 4 breakdown §21, §22).
+  * industry-extra.tsx — FeedbackPage (feedback form: student, experience, technical/professional feedback, strengths, improvements, skill scores using centralized skills; submits → creates evidence for S042 §32, §70), AnalyticsPage (application funnel from real states, demand vs talent controlled demo, skill demand from opportunities), ChallengesPage (industry-side entry point, labelled "full hackathon system in later phase" §36), TeamBuilderPage (configuration flow only, labelled PROTOTYPE/NEXT PHASE §38, §39), LearningHubPage (shows published learning opportunities), NotificationsPage (real prototype events), ProfilePage (company profile + user profile + audit log).
+- Wired login-view.tsx: Industry Demo → navigate("/industry/dashboard"). Industry marked as "✓ Available" (Phase 5). Student + Industry both functional.
+- Wired page.tsx: renders IndustryShell (dynamic import) for /industry/* routes.
+- Lint clean; build succeeds.
+
+Browser-verified (agent-browser via gateway):
+  Login → Industry Demo → Industry Dashboard ✓ (URL #/industry/dashboard confirmed)
+  Dashboard: "Good morning, Meera" + Nova Analytics + metrics (Active Opps 10, Applicants 1, Shortlisted 0, Talent Matches 4) + quick actions ✓
+  Talent Discovery: candidate cards (Aarav Sharma, Priya Nair) with match % (81-88%), target roles, readiness, skills, View Candidate ✓
+  Demand Intelligence: Data Scientist role config with skills (Python, SQL, ML) + importance + required levels ✓
+
+Stage Summary:
+- Phase 5 Industry Portal COMPLETE & verified.
+- Industry Portal reuses Phase 3 (intelligence engine: student/role/competencies/evidence) + Phase 4 (career: opportunities/applications/matching engine). NO duplicate models (§88 — one Student, one Skill, one Evidence, one Opportunity, one Application, one Matching, one Readiness).
+- Candidate match = same Phase 4 calculateOpportunityMatch (§22, §62 — score consistency).
+- Feedback → Evidence: submitting feedback for S042 creates real EvidenceRecords in the Phase 3 intelligence store (§32, §70 — the Industry Demand → Feedback → Evidence → Intelligence loop).
+- Opportunities created in the Industry Portal appear in the Student Portal (shared career store — §TEST 3, §53 data consistency).
+- Industry roles: Recruiter (default). RBAC roles defined (Recruiter/Hiring Manager/Mentor/Evaluator/Admin) — role stored but full permission enforcement is PROTOTYPE.
+- Challenges/Team Builder: industry-side entry points only, labelled PROTOTYPE/NEXT PHASE (full hackathon system in later phase).
+- Did NOT rebuild Phase 1-4 (§1). Did NOT implement Academia/Institution/Hackathon execution (§77).
+- STOP AFTER PHASE 5.

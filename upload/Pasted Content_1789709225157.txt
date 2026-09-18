@@ -1,0 +1,2415 @@
+============================================================
+SKILL SETU — PHASE 5
+INDUSTRY PORTAL + INDUSTRY INTELLIGENCE
+============================================================
+
+PHASE 1:
+Design System + Landing Page — COMPLETE
+
+PHASE 2:
+Application Shell + Student Portal — COMPLETE
+
+PHASE 3:
+Skill Intelligence Engine — COMPLETE
+
+PHASE 4:
+Career & Opportunity Intelligence — COMPLETE
+
+NOW IMPLEMENT:
+
+PHASE 5 — INDUSTRY PORTAL + INDUSTRY INTELLIGENCE
+
+============================================================
+CRITICAL OBJECTIVE
+============================================================
+
+Build the INDUSTRY PORTAL as a genuine industry-side intelligence workspace.
+
+Industry must be able to:
+
+DEFINE DEMAND
+→ CREATE OPPORTUNITY
+→ DEFINE REQUIRED SKILLS
+→ DISCOVER EVIDENCE-BACKED TALENT
+→ UNDERSTAND WHY CANDIDATES MATCH
+→ SHORTLIST / INVITE
+→ CREATE PROJECTS / CHALLENGES
+→ REVIEW STUDENT WORK
+→ GIVE FEEDBACK
+→ GENERATE NEW SKILL EVIDENCE
+
+The Industry Portal must consume the SAME underlying data as:
+
+Student Portal
+Skill Intelligence Engine
+Career & Opportunity Engine
+
+DO NOT create a second:
+
+student database
+skill database
+competency system
+readiness system
+matching engine
+
+Reuse Phase 3 + Phase 4 services.
+
+============================================================
+1. DO NOT BREAK EXISTING PHASES
+============================================================
+
+Do NOT redesign:
+
+Landing Page
+Application Shell
+Student Portal
+Skill Intelligence UI
+Career & Opportunity UI
+
+Do not modify Phase 3 calculation logic unless required for compatibility.
+
+Do not create a duplicate opportunity engine.
+
+Do not create a duplicate matching formula.
+
+Do not create a duplicate evidence model.
+
+============================================================
+2. FIRST AUDIT PHASE 3 + PHASE 4
+============================================================
+
+Before implementing:
+
+Inspect:
+
+Student model
+Skill model
+Role model
+Competency model
+Evidence model
+Role Readiness service
+Skill Gap service
+Next Best Action service
+Opportunity model
+Opportunity matching service
+Application model
+Notification system
+Profile system
+
+Identify how Industry should consume them.
+
+Reuse existing services.
+
+============================================================
+3. INDUSTRY PORTAL NAVIGATION
+============================================================
+
+Industry navigation:
+
+Dashboard
+
+Demand Intelligence
+
+Post Opportunity
+Opportunity Management
+
+Talent Discovery
+
+Challenges & Hackathons
+
+Team Builder
+
+Learning Hub
+
+Feedback
+
+Analytics
+
+Notifications
+
+Profile
+
+============================================================
+4. INDUSTRY DASHBOARD
+============================================================
+
+Create:
+
+INDUSTRY INTELLIGENCE DASHBOARD
+
+Header:
+
+Good morning, [Industry User]
+
+Show organization:
+
+Nova Analytics
+
+or another clearly labeled DEMO ORGANIZATION.
+
+Main sections:
+
+1.
+Skill Demand
+
+2.
+Open Opportunities
+
+3.
+Candidate Matches
+
+4.
+Applications
+
+5.
+Challenges
+
+6.
+Evaluation Queue
+
+7.
+Feedback Pending
+
+8.
+Talent Insights
+
+============================================================
+5. TOP DASHBOARD METRICS
+============================================================
+
+Useful cards:
+
+Active Opportunities
+New Applicants
+Shortlisted Candidates
+Open Challenges
+Pending Evaluations
+Potential Talent Matches
+
+Avoid excessive KPI cards.
+
+All values should come from actual demo/application state where possible.
+
+============================================================
+6. DEMAND INTELLIGENCE
+============================================================
+
+This is one of the most important Industry features.
+
+Create:
+
+DEMAND INTELLIGENCE
+
+Industry should be able to define:
+
+Role
+Skills
+Importance
+Required Level
+Preferred Level
+Eligibility
+Experience
+
+Example:
+
+Data Scientist
+
+Python:
+Importance HIGH
+Required Level:
+70
+
+SQL:
+Importance HIGH
+Required Level:
+60
+
+Machine Learning:
+Importance HIGH
+Required Level:
+70
+
+Statistics:
+Importance MEDIUM
+Required Level:
+60
+
+Problem Solving:
+Importance MEDIUM
+Required Level:
+65
+
+These must use the CENTRALIZED SKILL records.
+
+============================================================
+7. DEMAND CREATION WORKFLOW
+============================================================
+
+Create:
+
+DEFINE ROLE DEMAND
+
+Steps:
+
+1. Role
+2. Skills
+3. Skill Importance
+4. Required Levels
+5. Preferred Skills
+6. Eligibility
+7. Opportunity Type
+8. Publish
+
+Do not make role requirements free-form only.
+
+Skills must map to SKILL SETU's centralized skill system.
+
+============================================================
+8. REQUIRED SKILL IMPORTANCE
+============================================================
+
+Allow industry to classify:
+
+Critical
+High
+Medium
+Low
+
+or equivalent numerical importance.
+
+Store actual importance.
+
+Use it later in:
+
+Candidate matching
+Opportunity matching
+Talent discovery
+Challenge matching
+
+============================================================
+9. ROLE REQUIREMENT EXPLANATION
+============================================================
+
+For each role show:
+
+Why is this skill required?
+
+Example:
+
+Machine Learning
+
+Importance:
+High
+
+Required for:
+Data Scientist
+
+Use:
+
+Role Requirement
+
+not unsupported claims about the entire industry unless supported by actual data.
+
+============================================================
+10. POST OPPORTUNITY
+============================================================
+
+Industry can create:
+
+Job
+Internship
+Project
+Apprenticeship
+
+Use the existing Phase 4 Opportunity model.
+
+Do NOT create another opportunity model.
+
+Fields:
+
+Title
+Type
+Description
+Company
+Location
+Mode
+Duration
+Compensation
+
+Application Deadline
+
+Target Role
+
+Required Skills
+Preferred Skills
+
+Required Skill Levels
+
+Eligibility
+
+Responsibilities
+
+Qualifications
+
+Benefits
+
+Status
+
+============================================================
+11. OPPORTUNITY CREATION WIZARD
+============================================================
+
+STEP 1:
+
+Basic Information
+
+STEP 2:
+
+Role
+
+STEP 3:
+
+Required Skills
+
+STEP 4:
+
+Skill Importance / Level
+
+STEP 5:
+
+Eligibility
+
+STEP 6:
+
+Description
+
+STEP 7:
+
+Preview
+
+STEP 8:
+
+Publish
+
+Statuses:
+
+Draft
+Published
+Closed
+Archived
+
+============================================================
+12. OPPORTUNITY PREVIEW
+============================================================
+
+Before publishing show:
+
+Opportunity title
+Role
+Type
+Location
+Compensation
+Deadline
+Required Skills
+Eligibility
+
+Button:
+
+Publish Opportunity
+
+============================================================
+13. OPPORTUNITY MANAGEMENT
+============================================================
+
+Industry:
+
+Opportunity Management
+
+Tabs:
+
+Active
+Drafts
+Closed
+
+Each opportunity:
+
+Applications
+Shortlisted
+Selected
+Views where available
+Deadline
+Status
+
+Actions:
+
+Edit
+View
+Close
+Manage Applicants
+
+============================================================
+14. OPPORTUNITY APPLICATIONS
+============================================================
+
+Industry can view applicants.
+
+Applicant table/card:
+
+Student
+Target Role
+Role Readiness
+Relevant Skills
+Evidence
+Match
+Application Date
+Status
+
+Statuses:
+
+Applied
+Under Review
+Shortlisted
+Interview
+Selected
+Rejected
+
+Do not manually type candidate scores.
+
+Read them from the shared student intelligence.
+
+============================================================
+15. TALENT DISCOVERY
+============================================================
+
+Create:
+
+TALENT DISCOVERY
+
+Industry can search candidates using:
+
+Target Role
+Skill
+Competency
+Evidence Confidence
+Role Readiness
+Project
+Hackathon
+Internship
+Availability
+
+Filters:
+
+Branch
+Year
+Role
+Skill
+Minimum competency
+Minimum readiness
+Evidence status
+
+Only use information permitted by the user's privacy/visibility settings.
+
+============================================================
+16. TALENT SEARCH
+============================================================
+
+Search:
+
+Name
+Student ID where authorized
+Role
+Skill
+Project
+Technology
+
+Do not expose private data indiscriminately.
+
+============================================================
+17. CANDIDATE CARD
+============================================================
+
+Candidate card:
+
+Name
+Branch
+Year
+Target Role
+Role Readiness
+Top Skills
+Evidence Count
+Relevant Projects
+Relevant Hackathons
+Match
+
+Button:
+
+View Candidate
+
+============================================================
+18. CANDIDATE PROFILE
+============================================================
+
+Create:
+
+Candidate Intelligence Profile
+
+Sections:
+
+Candidate Summary
+Target Role
+Role Readiness
+Technical Skills
+Soft Skills
+Evidence
+Projects
+Hackathons
+Internships
+Certifications
+Education
+Feedback
+Resume
+Availability
+
+Actions:
+
+Shortlist
+Invite to Interview
+Invite to Internship
+Offer Project
+Request Mentorship
+
+============================================================
+19. CANDIDATE INTELLIGENCE
+============================================================
+
+Display:
+
+Target Role:
+Data Scientist
+
+Role Readiness:
+61%
+
+Relevant Skills:
+
+Python
+82
+
+SQL
+64
+
+Machine Learning
+43
+
+Statistics
+51
+
+Problem Solving
+75
+
+Evidence:
+
+Technical Assessment
+Project Evidence where available
+Hackathon Evidence where available
+Industry Feedback where available
+
+Do not invent evidence.
+
+============================================================
+20. WHY THIS CANDIDATE?
+============================================================
+
+Every candidate recommendation must support:
+
+WHY THIS CANDIDATE?
+
+Show actual factors:
+
+Role Alignment
+Skill Alignment
+Evidence
+Relevant Projects
+Eligibility
+Availability
+
+Example:
+
+✓ Target role aligns
+✓ Python competency matches
+✓ SQL competency matches
+✓ Relevant project evidence
+✓ Eligible for internship
+
+Potential gap:
+
+Machine Learning
+
+Do not say:
+
+"AI selected this candidate."
+
+Explain what data caused the recommendation.
+
+============================================================
+21. MATCH EXPLANATION
+============================================================
+
+Reuse the Phase 4 matching engine.
+
+DO NOT create a second matching formula.
+
+When viewing a candidate against an opportunity:
+
+show:
+
+Match Score
+Skill Alignment
+Role Alignment
+Evidence Strength
+Eligibility
+Experience
+Availability where implemented
+
+Button:
+
+Why this Match?
+
+============================================================
+22. MATCH SCORE CONSISTENCY
+============================================================
+
+IMPORTANT:
+
+Industry candidate match must equal the same match logic used by Student opportunity matching.
+
+If Student sees:
+
+91% Match
+
+Industry should not see:
+
+76% Match
+
+unless the two views are explicitly using different defined contexts.
+
+Prefer the SAME match object.
+
+============================================================
+23. CANDIDATE SKILL BREAKDOWN
+============================================================
+
+Against a particular role/opportunity:
+
+Required:
+
+Python:
+70
+
+Student:
+82
+
+Strong Match
+
+Required:
+
+SQL:
+60
+
+Student:
+64
+
+Match
+
+Required:
+
+ML:
+70
+
+Student:
+43
+
+Gap
+
+Show:
+
+Strong Match
+Match
+Partial
+Gap
+
+============================================================
+24. CANDIDATE EVIDENCE INSPECTION
+============================================================
+
+Industry can click:
+
+Evidence
+
+Open drawer.
+
+Show:
+
+Skill
+Source
+Score
+Date
+Verification
+Status
+Description
+
+Example:
+
+Machine Learning
+
+Source:
+Technical Assessment
+
+Score:
+43
+
+Date:
+15 Sept 2026
+
+Status:
+Evaluated
+
+Do not expose evidence not authorized for Industry.
+
+============================================================
+25. VERIFICATION
+============================================================
+
+Respect:
+
+Submitted
+Pending Evaluation
+Evaluated
+Verified
+
+Do NOT label a student skill Verified just because:
+
+- they claim it
+- they uploaded a certificate
+- they submitted GitHub
+- they joined a hackathon
+
+Verification must have a defined status.
+
+============================================================
+26. INDUSTRY SHORTLIST
+============================================================
+
+Industry can:
+
+Shortlist
+
+This changes candidate/application state.
+
+Student should later be able to see:
+
+Application:
+Shortlisted
+
+if the application is connected to the opportunity.
+
+============================================================
+27. INTERVIEW INVITATION
+============================================================
+
+Industry can:
+
+Invite to Interview
+
+Create invitation:
+
+Candidate
+Opportunity
+Date if available
+Message
+Status
+
+Student receives notification.
+
+Statuses:
+
+Pending
+Accepted
+Declined
+Completed
+
+If scheduling is not implemented fully, use a controlled prototype state and label it appropriately.
+
+============================================================
+28. INTERNSHIP INVITATION
+============================================================
+
+Industry can:
+
+Invite to Internship
+
+This should create a proper opportunity/application/invitation relationship.
+
+Do not simply change a dashboard card.
+
+============================================================
+29. PROJECT OFFER
+============================================================
+
+Industry can:
+
+Offer Project
+
+Connect to an existing Project Opportunity record where possible.
+
+Student can:
+
+View
+Accept
+Decline
+
+============================================================
+30. FEEDBACK SYSTEM
+============================================================
+
+Industry can give feedback for:
+
+Internship
+Project
+Hackathon
+
+Feedback categories:
+
+Technical
+Problem Solving
+Communication
+Teamwork
+Leadership
+Adaptability
+Professionalism
+
+Optional skill-specific scoring.
+
+============================================================
+31. FEEDBACK FORM
+============================================================
+
+Create:
+
+Industry Feedback
+
+Fields:
+
+Student
+Experience
+Technical Feedback
+Professional Feedback
+Strengths
+Areas for Improvement
+Skill Scores
+
+Example:
+
+Machine Learning:
+72
+
+Problem Solving:
+81
+
+Communication:
+76
+
+Teamwork:
+84
+
+============================================================
+32. FEEDBACK → EVIDENCE
+============================================================
+
+Feedback should be capable of creating new skill evidence.
+
+Flow:
+
+Industry Feedback
+→ Skill Evidence
+→ Evidence Timeline
+→ Skill Passport
+→ Intelligence
+
+Do not directly overwrite a score without creating the appropriate evidence record.
+
+============================================================
+33. FEEDBACK STATUS
+============================================================
+
+Feedback statuses:
+
+Draft
+Submitted
+Reviewed
+
+Evidence status remains separate:
+
+Submitted
+Evaluated
+Verified
+
+Do not merge feedback and evidence concepts.
+
+============================================================
+34. INDUSTRY LEARNING HUB
+============================================================
+
+Industry can publish:
+
+Training
+Workshop
+Certification
+Mentorship
+
+Use existing Industry Learning model from Phase 4 if available.
+
+Fields:
+
+Title
+Description
+Provider
+Skill
+Target Role
+Duration
+Eligibility
+Date
+Mode
+
+============================================================
+35. LEARNING → STUDENT GAP
+============================================================
+
+Show when appropriate:
+
+Students with gaps in:
+
+Machine Learning
+
+may see:
+
+ML Workshop
+
+Industry should be able to define:
+
+Relevant Skill
+Target Role
+
+Student recommendations can then use these.
+
+============================================================
+36. INDUSTRY CHALLENGES
+============================================================
+
+Create:
+
+Challenges & Hackathons
+
+For this phase create the INDUSTRY-SIDE entry point.
+
+Industry should be able to:
+
+Create Challenge
+Define Problem
+Define Skills
+Define Eligibility
+Define Team Rules
+View Participants
+View Submissions
+
+The detailed Hackathon execution system will be completed in the dedicated Hackathon phase.
+
+Do not rebuild the entire Hackathon system in this phase.
+
+============================================================
+37. CHALLENGE CREATION
+============================================================
+
+Basic Challenge:
+
+Title
+Description
+Domain
+Objective
+Expected Outcome
+
+Required Skills
+
+Preferred Skills
+
+Eligibility
+
+Mode
+
+Dates
+
+Team Size if already supported
+
+Evaluation Criteria
+
+Resources
+
+============================================================
+38. TEAM BUILDER ENTRY POINT
+============================================================
+
+Industry portal should include:
+
+AI Team Builder
+
+However:
+
+DO NOT create the full hackathon team engine in Phase 5.
+
+Create the Industry-side foundation only.
+
+Allow Industry to define:
+
+Required Team Size
+Required Roles
+Required Skills
+Availability preference
+
+Then display:
+
+Build Team
+
+This will connect to the dedicated Hackathon/Team Intelligence phase later.
+
+============================================================
+39. TEAM BUILDER PREVIEW
+============================================================
+
+Example:
+
+Required Team:
+
+4 members
+
+Roles:
+
+ML Engineer
+Backend Developer
+Frontend Developer
+UI/UX
+
+Required Skills:
+
+Machine Learning
+Python
+Backend
+Frontend
+UI/UX
+
+Button:
+
+Generate Team
+
+For this phase, only build the data/configuration flow if the full matching engine is not yet implemented.
+
+Clearly label:
+
+PROTOTYPE / NEXT PHASE
+
+if necessary.
+
+============================================================
+40. INDUSTRY ANALYTICS
+============================================================
+
+Create:
+
+Industry Analytics
+
+Sections:
+
+Talent Pipeline
+Skill Demand
+Opportunity Performance
+Application Funnel
+Challenge Performance
+Feedback Insights
+
+============================================================
+41. TALENT PIPELINE
+============================================================
+
+Show:
+
+Applicants
+Shortlisted
+Interview
+Selected
+
+Use actual application states.
+
+Do not fabricate conversion rates.
+
+============================================================
+42. SKILL DEMAND ANALYTICS
+============================================================
+
+Industry can view:
+
+Most Requested Skills
+Skill Importance
+Required Competency
+Target Roles
+
+Example:
+
+Data Scientist
+
+Python — High
+SQL — High
+Machine Learning — High
+Statistics — Medium
+
+Use actual opportunities.
+
+============================================================
+43. DEMAND VS TALENT
+============================================================
+
+Create:
+
+Demand vs Available Talent
+
+Example controlled demo:
+
+Python:
+Demand 92
+Student Supply 78
+
+SQL:
+Demand 88
+Student Supply 51
+
+Cloud:
+Demand 82
+Student Supply 27
+
+ML:
+Demand 90
+Student Supply 39
+
+These values are controlled demonstration data unless calculated from a larger actual dataset.
+
+Clearly label:
+
+DEMO DATA
+
+============================================================
+44. INDUSTRY SKILL GAP
+============================================================
+
+Industry can see:
+
+Demand:
+Machine Learning
+
+Available talent:
+lower than desired
+
+Potential action:
+
+Post project
+Create challenge
+Offer workshop
+Create internship
+
+Do not make unsupported claims from tiny datasets.
+
+============================================================
+45. OPPORTUNITY ANALYTICS
+============================================================
+
+Per opportunity:
+
+Views if implemented
+Applications
+Shortlisted
+Interview
+Selected
+Deadline
+Top skills among applicants
+
+Use actual application data where possible.
+
+============================================================
+46. APPLICATION FUNNEL
+============================================================
+
+Display:
+
+Applied
+↓
+Under Review
+↓
+Shortlisted
+↓
+Interview
+↓
+Selected
+
+Use real application states.
+
+============================================================
+47. CHALLENGE ANALYTICS
+============================================================
+
+Later-support:
+
+Participants
+Teams
+Submissions
+Evaluation
+Skills Demonstrated
+Talent Discovered
+
+Only display values supported by actual records.
+
+============================================================
+48. FEEDBACK INSIGHTS
+============================================================
+
+Aggregate feedback:
+
+Technical Strengths
+Common Gaps
+Professional Skill Trends
+
+Example:
+
+Common observed gap:
+Machine Learning validation
+
+Do not infer broad industry facts from one or two demo records.
+
+Use:
+
+Based on current demonstration data
+
+when appropriate.
+
+============================================================
+49. INDUSTRY RECOMMENDATIONS
+============================================================
+
+Industry should receive useful recommendations.
+
+Examples:
+
+"Your Data Scientist opening has relatively few candidates meeting the configured ML requirement."
+
+Suggested actions:
+
+Create ML Project
+Open Internship
+Create Challenge
+Offer Workshop
+
+Recommendations should be tied to actual platform data.
+
+============================================================
+50. WHY THIS RECOMMENDATION?
+============================================================
+
+Add:
+
+Why?
+
+Example:
+
+Current opportunity:
+Data Scientist
+
+Requirement:
+ML ≥ 70
+
+Candidate pool:
+few candidates meeting threshold
+
+Suggested:
+Launch project/challenge to generate practical evidence.
+
+Do not claim a statistically proven shortage unless the dataset supports it.
+
+============================================================
+51. COMPANY PROFILE
+============================================================
+
+Industry Profile:
+
+Company Name
+Logo
+Description
+Industry
+Website
+Location
+About
+Active Opportunities
+Challenges
+Mentors
+
+Demo company may be:
+
+Nova Analytics
+
+Clearly label demo data where appropriate.
+
+============================================================
+52. INDUSTRY USER PROFILE
+============================================================
+
+User profile:
+
+Name
+Role
+Organization
+Email
+Permissions
+
+Example:
+
+HR / Talent Acquisition
+Industry Intelligence
+
+============================================================
+53. RBAC
+============================================================
+
+Industry roles may include:
+
+Recruiter
+Hiring Manager
+Mentor
+Evaluator
+Admin
+
+Recruiter:
+
+Talent
+Applications
+Opportunities
+
+Hiring Manager:
+
+Candidates
+Interviews
+Shortlists
+
+Mentor:
+
+Mentorship
+Feedback
+
+Evaluator:
+
+Submissions
+Evaluation
+
+Admin:
+
+All organization-level functions
+
+Enforce permission boundaries.
+
+============================================================
+54. NOTIFICATIONS
+============================================================
+
+Industry notifications:
+
+New Applicant
+Candidate Match
+Application Update
+Interview Response
+Project Submission
+Hackathon Submission
+Evaluation Due
+Mentor Request
+Feedback Reminder
+Opportunity Deadline
+
+Notifications should reflect real records.
+
+============================================================
+55. AUDIT LOG
+============================================================
+
+Track:
+
+Opportunity Created
+Opportunity Updated
+Candidate Shortlisted
+Interview Invited
+Feedback Submitted
+Challenge Created
+Submission Evaluated
+Invitation Sent
+
+Include:
+
+Actor
+Timestamp
+Entity
+Action
+
+============================================================
+56. CANDIDATE PRIVACY
+============================================================
+
+Important.
+
+Industry should only see data that the candidate has made available or that the platform permits for the relevant workflow.
+
+Separate:
+
+Public Profile Information
+Recruitment Information
+Sensitive Information
+
+Do not expose unnecessary personal data.
+
+============================================================
+57. DOCUMENTS
+============================================================
+
+Candidate documents:
+
+Resume
+Certificates
+Portfolio
+
+Use existing Skill Passport records.
+
+Do not create duplicate resume/certificate models.
+
+============================================================
+58. RESUME
+============================================================
+
+Industry should view the student's actual Skill Passport-derived resume.
+
+Show:
+
+Education
+Skills
+Projects
+Internships
+Hackathons
+Certifications
+Achievements
+
+Do not invent experience.
+
+============================================================
+59. RESUME ALIGNMENT
+============================================================
+
+Against an opportunity show:
+
+Resume Alignment Score
+
+Explain:
+
+Skills covered
+Projects covered
+Role terminology
+Missing items
+
+Do not claim:
+
+"Guaranteed ATS score."
+
+============================================================
+60. AI ASSISTANT — INDUSTRY
+============================================================
+
+Create contextual Industry AI assistant.
+
+Useful questions:
+
+Why was this candidate recommended?
+
+Which candidate best matches this opportunity?
+
+What skills are missing from this candidate pool?
+
+Which skills are most demanded across our opportunities?
+
+What should we include in this challenge?
+
+Summarize this candidate's evidence.
+
+IMPORTANT:
+
+AI responses must be grounded in actual application data.
+
+AI must NOT invent:
+
+skills
+scores
+projects
+feedback
+certificates
+experience
+companies
+
+============================================================
+61. RULES VS AI
+============================================================
+
+RULES CALCULATE.
+
+AI EXPLAINS & ENRICHES.
+
+Rules calculate:
+
+Match
+Eligibility
+Skill alignment
+Application states
+Demand summaries
+Funnel counts
+
+AI:
+
+Explains
+Summarizes
+Assists
+Suggests text
+
+============================================================
+62. MATCHING CONSISTENCY
+============================================================
+
+Use the same Phase 4 Opportunity Matching Engine.
+
+Do not build:
+
+IndustryCandidateMatchingEngine
+
+as a separate conflicting system.
+
+Use:
+
+OpportunityMatchingService
+
+or equivalent shared service.
+
+============================================================
+63. TALENT DISCOVERY CONSISTENCY
+============================================================
+
+Candidate recommendation must be traceable to:
+
+Student
+Role
+Skill
+Competency
+Evidence
+Opportunity
+
+Never recommend a candidate from a manually typed score.
+
+============================================================
+64. STUDENT S042 DEMO
+============================================================
+
+Use existing S042 record if available.
+
+S042:
+
+AI & Data Science
+
+Target Role:
+
+Data Scientist
+
+Skills:
+
+Python:
+82
+
+SQL:
+64
+
+Statistics:
+51
+
+Machine Learning:
+43
+
+Problem Solving:
+75
+
+Role Readiness:
+
+61%
+
+Use the actual Phase 3 calculation.
+
+Do not create another S042.
+
+============================================================
+65. INDUSTRY DEMO OPPORTUNITY
+============================================================
+
+Create:
+
+Data Science Intern
+
+Company:
+
+Nova Analytics
+
+Location:
+
+Pune / Hybrid
+
+Duration:
+
+6 Months
+
+Compensation:
+
+Paid
+
+Target Role:
+
+Data Scientist
+
+Required:
+
+Python
+SQL
+Machine Learning
+Statistics
+
+Required levels:
+
+Python:
+70
+
+SQL:
+60
+
+Machine Learning:
+70
+
+Statistics:
+60
+
+Use DEMO DATA label.
+
+============================================================
+66. INDUSTRY CANDIDATE DEMO
+============================================================
+
+S042 should be discoverable for the above opportunity if eligibility and matching allow.
+
+Show:
+
+Target:
+Data Scientist
+
+Readiness:
+61%
+
+Skill Match:
+
+Python:
+Strong
+
+SQL:
+Match
+
+ML:
+Gap
+
+Statistics:
+Gap
+
+Why:
+
+Target role alignment
+Python evidence
+SQL evidence
+Relevant assessment/project evidence where actually available
+
+============================================================
+67. COMPLETE INDUSTRY DEMO
+============================================================
+
+Demo flow:
+
+Industry logs in.
+
+↓
+
+Dashboard
+
+↓
+
+Demand Intelligence
+
+↓
+
+Create Data Scientist requirement
+
+↓
+
+Define:
+
+Python
+SQL
+ML
+Statistics
+
+↓
+
+Post Data Science Internship
+
+↓
+
+Open Talent Discovery
+
+↓
+
+Search Data Scientist
+
+↓
+
+S042 appears
+
+↓
+
+Open Candidate
+
+↓
+
+View Readiness
+
+↓
+
+View Evidence
+
+↓
+
+View Why Match?
+
+↓
+
+Shortlist
+
+↓
+
+Invite to Interview
+
+↓
+
+Student receives notification
+
+↓
+
+Industry later evaluates student/project
+
+↓
+
+Feedback created
+
+↓
+
+Evidence updated
+
+This demonstrates:
+
+Industry Demand
+→ Talent Discovery
+→ Opportunity
+→ Feedback
+→ Evidence
+
+============================================================
+68. INDUSTRY → STUDENT DATA SHARING
+============================================================
+
+The same S042 record used by Student Portal must be shown in Industry Portal.
+
+If the student adds:
+
+Project
+Evidence
+Hackathon
+Certification
+Industry Feedback
+
+Industry should see the relevant permitted information automatically.
+
+Do NOT manually duplicate data.
+
+============================================================
+69. INDUSTRY → SKILL INTELLIGENCE
+============================================================
+
+When Industry defines a role:
+
+Role
+→ Skills
+→ Importance
+→ Required Level
+
+this should later become an input to the centralized intelligence system.
+
+Do not create a separate "industry skill database."
+
+============================================================
+70. INDUSTRY FEEDBACK → SKILL INTELLIGENCE
+============================================================
+
+Prepare the actual data relationship:
+
+Industry Feedback
+→ Evidence
+→ Student Skill
+→ Competency
+→ Readiness
+
+For this phase:
+
+implement feedback/evidence creation.
+
+Do not rewrite Phase 3 calculations.
+
+============================================================
+71. STATUS LABELS
+============================================================
+
+Use:
+
+IMPLEMENTED
+
+DEMO DATA
+
+PROTOTYPE
+
+FUTURE INTEGRATION
+
+Examples:
+
+External ATS:
+FUTURE INTEGRATION
+
+External coding platform:
+FUTURE INTEGRATION
+
+Controlled demo organization:
+DEMO DATA
+
+============================================================
+72. NO FAKE INTEGRATIONS
+============================================================
+
+Do NOT claim integration with:
+
+LinkedIn
+Naukri
+ATS platforms
+External job platforms
+University ERP
+LMS
+GitHub APIs
+
+unless actually implemented.
+
+============================================================
+73. DEADLINE HANDLING
+============================================================
+
+Opportunity status should use:
+
+Draft
+Published
+Closed
+
+Where appropriate derive availability from deadline.
+
+Show:
+
+Open
+Closing Soon
+Closed
+
+============================================================
+74. SEARCH / FILTER
+============================================================
+
+Industry Talent:
+
+Search
+Role
+Skill
+Competency
+Evidence
+Availability
+Branch
+Year
+
+Opportunities:
+
+Search
+Type
+Role
+Skill
+Location
+Mode
+Deadline
+Status
+
+Challenges:
+
+Domain
+Skill
+Date
+Status
+
+============================================================
+75. EMPTY STATES
+============================================================
+
+No Applicants:
+
+"No applications yet."
+
+No Candidates:
+
+"No candidates match these filters."
+
+No Opportunities:
+
+"Create an opportunity to start building your talent pipeline."
+
+No Feedback:
+
+"No feedback has been submitted yet."
+
+============================================================
+76. ERROR STATES
+============================================================
+
+Handle:
+
+Duplicate opportunity
+Invalid requirement
+Invalid deadline
+Candidate unavailable
+Permission denied
+Application already processed
+Feedback unavailable
+Invalid score
+
+Show human-readable errors.
+
+============================================================
+77. LOADING STATES
+============================================================
+
+Examples:
+
+Loading candidates...
+Calculating match...
+Checking eligibility...
+Loading evidence...
+Submitting feedback...
+Creating opportunity...
+
+============================================================
+78. INDUSTRY UI DESIGN
+============================================================
+
+Maintain Phase 1 + 2 design system.
+
+Industry portal should feel:
+
+Professional
+Enterprise
+Talent intelligence
+Data-driven
+Clean
+
+Do not make it feel like a generic admin panel.
+
+Use:
+
+candidate cards
+evidence panels
+skill chips
+match indicators
+explanation drawers
+demand heatmaps
+funnel charts
+status badges
+
+============================================================
+79. INDUSTRY PORTAL CORE MESSAGE
+============================================================
+
+The portal should visually communicate:
+
+DEFINE DEMAND
+→ DISCOVER EVIDENCE
+→ MATCH TALENT
+→ CREATE OPPORTUNITY
+→ EVALUATE
+→ GIVE FEEDBACK
+
+============================================================
+80. INDUSTRY VS TRADITIONAL JOB BOARD
+============================================================
+
+Traditional:
+
+POST JOB
+→ RECEIVE RESUMES
+→ FILTER
+
+SKILL SETU:
+
+DEFINE REQUIRED SKILLS
+→ UNDERSTAND TALENT SUPPLY
+→ DISCOVER EVIDENCE
+→ MATCH
+→ EXPLAIN WHY
+→ COLLABORATE
+→ EVALUATE
+→ FEEDBACK
+→ NEW EVIDENCE
+
+This differentiation should be visible in the dashboard.
+
+============================================================
+81. TESTING — DEMAND
+============================================================
+
+TEST 1:
+
+Create Data Scientist requirement.
+
+Expected:
+
+Skills saved.
+
+Importance saved.
+
+Required levels saved.
+
+TEST 2:
+
+Edit ML importance.
+
+Expected:
+
+Updated requirement.
+
+============================================================
+82. TESTING — OPPORTUNITY
+============================================================
+
+TEST 3:
+
+Create Data Science Internship.
+
+Expected:
+
+Opportunity appears in Phase 4 Student Opportunities.
+
+TEST 4:
+
+Change required skill.
+
+Expected:
+
+Student-facing opportunity detail changes because it is the same opportunity record.
+
+============================================================
+83. TESTING — TALENT
+============================================================
+
+TEST 5:
+
+Search Data Scientist.
+
+Expected:
+
+S042 appears if eligible.
+
+TEST 6:
+
+Open S042.
+
+Expected:
+
+Same competencies as Student Portal.
+
+TEST 7:
+
+Click Why Match?
+
+Expected:
+
+Same matching logic as Phase 4.
+
+============================================================
+84. TESTING — APPLICATION
+============================================================
+
+TEST 8:
+
+S042 applies.
+
+Expected:
+
+Industry sees Application:
+Applied
+
+TEST 9:
+
+Industry shortlists.
+
+Expected:
+
+Student sees:
+Shortlisted
+
+============================================================
+85. TESTING — FEEDBACK
+============================================================
+
+TEST 10:
+
+Industry submits feedback:
+
+ML:
+72
+Problem Solving:
+81
+
+Expected:
+
+Feedback stored.
+
+TEST 11:
+
+Expected:
+
+Evidence event created where configured.
+
+TEST 12:
+
+Student Skill Passport can later consume the evidence.
+
+============================================================
+86. TESTING — SHARED DATA
+============================================================
+
+TEST 13:
+
+Student adds project.
+
+Expected:
+
+Industry candidate profile reflects project where permitted.
+
+TEST 14:
+
+Industry feedback added.
+
+Expected:
+
+Student relevant evidence view reflects it.
+
+============================================================
+87. TESTING — RBAC
+============================================================
+
+TEST 15:
+
+Student attempts to access Industry admin route.
+
+Expected:
+
+Denied.
+
+TEST 16:
+
+Industry attempts unauthorized student private data.
+
+Expected:
+
+Denied / restricted.
+
+============================================================
+88. TESTING — NO DUPLICATE MODELS
+============================================================
+
+Verify:
+
+One Student model
+One Skill model
+One Evidence model
+One Opportunity model
+One Application model
+One Matching service
+One Readiness engine
+
+Avoid duplicate systems.
+
+============================================================
+89. FINAL INDUSTRY LIVE DEMO
+============================================================
+
+The preferred evaluator demonstration:
+
+INDUSTRY
+
+Data Scientist requirement:
+
+Python
+SQL
+Machine Learning
+Statistics
+
+↓
+
+POST INTERNSHIP
+
+↓
+
+TALENT DISCOVERY
+
+↓
+
+S042
+
+↓
+
+WHY THIS CANDIDATE?
+
+Role
+Skills
+Evidence
+Readiness
+
+↓
+
+SHORTLIST
+
+↓
+
+INVITE
+
+↓
+
+PROJECT / EXPERIENCE
+
+↓
+
+INDUSTRY FEEDBACK
+
+↓
+
+NEW EVIDENCE
+
+↓
+
+SKILL PASSPORT
+
+↓
+
+UPDATED INTELLIGENCE
+
+This creates the:
+
+INDUSTRY DEMAND → EVIDENCE → FEEDBACK LOOP
+
+============================================================
+90. DEFINITION OF DONE
+============================================================
+
+Phase 5 is COMPLETE only when:
+
+✓ Industry login works
+✓ Industry dashboard works
+✓ Demand Intelligence works
+✓ Industry can define role requirements
+✓ Required skills use centralized Skill records
+✓ Skill importance is stored
+✓ Required levels are stored
+✓ Industry can post Job
+✓ Industry can post Internship
+✓ Industry can post Project
+✓ Industry can post Apprenticeship
+✓ Opportunity uses Phase 4 model
+✓ Talent Discovery works
+✓ Candidate profile works
+✓ Candidate evidence works
+✓ Why Candidate works
+✓ Why Match works
+✓ Same Phase 4 matching logic is used
+✓ Industry can shortlist
+✓ Industry can invite
+✓ Student application state can be reflected
+✓ Industry feedback works
+✓ Feedback can create evidence
+✓ Skill Passport can consume evidence
+✓ Industry Learning works
+✓ Challenge entry point works
+✓ Analytics use actual records
+✓ Notifications work where implemented
+✓ RBAC works
+✓ No private data leaks
+✓ No duplicated skill/readiness systems
+✓ No fake integrations
+✓ No unexplained candidate scores
+✓ No major dead buttons
+
+============================================================
+91. FINAL REPORT
+============================================================
+
+After implementation provide:
+
+1. Industry routes
+2. Industry components
+3. Data models reused
+4. Data models created
+5. Services created
+6. APIs created/modified
+7. Demand Intelligence implementation
+8. Talent Discovery implementation
+9. Opportunity creation implementation
+10. Matching implementation
+11. Feedback implementation
+12. Evidence integration
+13. Analytics
+14. RBAC
+15. Tests performed
+16. Tests passed
+17. Tests failed
+18. Known limitations
+19. DEMO DATA vs IMPLEMENTED vs FUTURE INTEGRATION
+
+Be honest.
+
+Do not report a UI-only feature as fully implemented.
+
+============================================================
+END PHASE 5
+============================================================
