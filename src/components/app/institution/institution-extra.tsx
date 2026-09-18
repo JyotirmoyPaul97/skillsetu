@@ -40,8 +40,8 @@ export function InstitutionExtra({ section }: { section: string }) {
 // Interventions — INSTITUTION ACTION CENTER (§45–§48)
 // ──────────────────────────────────────────────────────────────────
 const INTERVENTION_TYPES: InterventionType[] = [
-  "Industry Workshop", "Bootcamp", "Mentor Program", "Live Project",
-  "Hackathon", "Certification", "Faculty Training", "Curriculum Enrichment",
+  "Industry Workshop", "Bootcamp", "Mentor Program", "Industry Project",
+  "Hackathon", "Certification", "Faculty Mentorship", "Curriculum Enrichment",
 ];
 
 const STATUS_TABS = [
@@ -205,13 +205,14 @@ function ActionCenterPage() {
 
 function buildWhyInterventionFactors(i: Intervention): { ok: "pass" | "warn" | "fail"; label: string; detail?: string }[] {
   const demand = (i.priority === "Critical" || i.priority === "High") ? "High" : "Medium";
-  const practical = i.avgCompetency !== undefined && i.avgCompetency < 50 ? "Limited" : "Strong";
+  // Intervention model doesn't track avgCompetency directly — use priority as a proxy for skill severity
+  const practical = i.priority === "Critical" || i.priority === "High" ? "Limited" : "Moderate";
   return [
     { ok: demand === "High" ? "warn" : "pass", label: `Industry demand: ${demand}`, detail: "Derived from current opportunity requirements." },
     { ok: i.affectedStudents > 5 ? "warn" : "pass", label: `Affected students: ${i.affectedStudents}`, detail: "Count of students with competency below target for this skill." },
-    { ok: practical === "Limited" ? "fail" : "pass", label: `Practical evidence: ${practical}`, detail: "Based on average cohort competency." },
+    { ok: practical === "Limited" ? "fail" : "pass", label: `Practical evidence: ${practical}`, detail: "Based on intervention priority as a proxy for cohort competency gap." },
     { ok: "pass", label: `Relevant roles: ${i.targetCohort || "—"}` },
-    { ok: "warn", label: `Available industry support: ${i.type === "Industry Workshop" || i.type === "Live Project" || i.type === "Mentor Program" ? "Yes" : "No"}`, detail: "Based on active collaborations and faculty opportunities of this type." },
+    { ok: "warn", label: `Available industry support: ${i.type === "Industry Workshop" || i.type === "Industry Project" || i.type === "Mentor Program" ? "Yes" : "No"}`, detail: "Based on active collaborations and faculty opportunities of this type." },
   ];
 }
 
@@ -375,8 +376,8 @@ function PlacementIntelligencePage() {
         <p className="mb-3 text-sm font-bold text-[var(--ss-ink)]">Placement funnel</p>
         <SsPipeline
           stages={funnel}
-          completedUntil={placement.selected > 0 ? 5 : placement.interview > 0 ? 4 : placement.shortlisted > 0 ? 3 : placement.applicants > 0 ? 2 : 1}
-          activeIndex={placement.selected > 0 ? 4 : placement.interview > 0 ? 3 : placement.shortlisted > 0 ? 2 : placement.applicants > 0 ? 1 : 0}
+          completedUntil={placement.selected > 0 ? 5 : placement.interviews > 0 ? 4 : placement.shortlisted > 0 ? 3 : placement.applicants > 0 ? 2 : 1}
+          activeIndex={placement.selected > 0 ? 4 : placement.interviews > 0 ? 3 : placement.shortlisted > 0 ? 2 : placement.applicants > 0 ? 1 : 0}
         />
         <div className="mt-3 grid grid-cols-2 gap-2 text-xs sm:grid-cols-5">
           <FunnelStat label="Target roles" value={placement.targetRoles.length} />

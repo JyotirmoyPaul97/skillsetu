@@ -51,7 +51,18 @@ export const IndustryAggregator = {
     const candidates = DEMO_CANDIDATES;
     const challenges = useIndustryStore.getState().challenges;
 
-    const map = new Map<string, DemandPulseSkill>();
+    type Acc = {
+      skillId: string;
+      skillName: string;
+      demandLevel: DemandLevel;
+      opportunityCount: number;
+      requiredRoleLevels: { roleId: string; roleName: string; requiredLevel: number }[];
+      openRolesSet: Set<string>;
+      openChallenges: number;
+      talentCoverage: number;
+      insufficientCoverage: boolean;
+    };
+    const map = new Map<string, Acc>();
     for (const o of opps) {
       for (const rs of o.requiredSkills) {
         const e = map.get(rs.skillId) ?? {
@@ -60,13 +71,13 @@ export const IndustryAggregator = {
           demandLevel: "Low" as DemandLevel,
           opportunityCount: 0,
           requiredRoleLevels: [] as { roleId: string; roleName: string; requiredLevel: number }[],
-          openRoles: new Set<string>(),
+          openRolesSet: new Set<string>(),
           openChallenges: 0,
           talentCoverage: 0,
           insufficientCoverage: false,
         };
         e.opportunityCount++;
-        o.targetRoles.forEach((r) => (e.openRoles as Set<string>).add(r));
+        o.targetRoles.forEach((r) => e.openRolesSet.add(r));
         e.requiredRoleLevels.push({
           roleId: o.targetRoles[0] ?? "—",
           roleName: ALL_ROLES.find((role) => role.roleId === o.targetRoles[0])?.roleName ?? "—",
@@ -84,15 +95,24 @@ export const IndustryAggregator = {
 
     const result: DemandPulseSkill[] = [];
     for (const [, e] of map) {
-      e.openRoles = (e.openRoles as Set<string>).size;
-      e.demandLevel = e.opportunityCount >= 3 ? "High" : e.opportunityCount >= 2 ? "Medium" : "Low";
+      const openRoles = e.openRolesSet.size;
+      const demandLevel: DemandLevel = e.opportunityCount >= 3 ? "High" : e.opportunityCount >= 2 ? "Medium" : "Low";
       // supply: average competency among candidates who have this skill
       const scores = candidates
         .map((c) => c.competencies[e.skillId]?.competencyScore)
         .filter((s): s is number => typeof s === "number");
-      e.talentCoverage = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-      e.insufficientCoverage = e.talentCoverage < 60;
-      result.push(e);
+      const talentCoverage = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+      result.push({
+        skillId: e.skillId,
+        skillName: e.skillName,
+        demandLevel,
+        opportunityCount: e.opportunityCount,
+        requiredRoleLevels: e.requiredRoleLevels,
+        openRoles,
+        openChallenges: e.openChallenges,
+        talentCoverage,
+        insufficientCoverage: talentCoverage < 60,
+      });
     }
     return result.sort((a, b) => b.opportunityCount - a.opportunityCount);
   },
@@ -101,7 +121,7 @@ export const IndustryAggregator = {
   getWhatWeNeed: () => {
     const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
     const candidates = DEMO_CANDIDATES;
-    const roleMap = new Map<string, { roleId: string; roleName: string; criticalSkills: Map<string, { skillId: string; skillName: string; requiredLevel: number; importance: string }[]>; opportunityCount: number }>();
+    const roleMap = new Map<string, { roleId: string; roleName: string; criticalSkills: Map<string, { skillId: string; skillName: string; requiredLevel: number; importance: number }>; opportunityCount: number }>();
 
     for (const o of opps) {
       const roleId = o.targetRoles[0] ?? "—";
@@ -109,7 +129,7 @@ export const IndustryAggregator = {
       const e = roleMap.get(roleId) ?? {
         roleId,
         roleName: role?.roleName ?? roleId,
-        criticalSkills: new Map<string, { skillId: string; skillName: string; requiredLevel: number; importance: string }>(),
+        criticalSkills: new Map<string, { skillId: string; skillName: string; requiredLevel: number; importance: number }>(),
         opportunityCount: 0,
       };
       e.opportunityCount++;
@@ -130,7 +150,7 @@ export const IndustryAggregator = {
         // Compute talent availability for each critical skill
         const skillAvailability = skills.map((s) => {
           const matchingCandidates = candidates.filter((c) => (c.competencies[s.skillId]?.competencyScore ?? 0) >= s.requiredLevel).length;
-          return { ...s, availableCandidates: matchingCandidates, totalCandidatesConsidered: candidates.length };
+          return { skillId: s.skillId, skillName: s.skillName, requiredLevel: s.requiredLevel, importance: s.importance, availableCandidates: matchingCandidates, totalCandidatesConsidered: candidates.length };
         });
         const overallAvailability = skillAvailability.reduce((sum, s) => sum + s.availableCandidates, 0);
         return {
@@ -209,9 +229,11 @@ export const IndustryAggregator = {
     for (const roleId of teamSpec.roleIds) {
       const role = ALL_ROLES.find((r) => r.roleId === roleId);
       if (!role) continue;
-      for (const ws of role.weightedSkills) {
-        const e = requiredSkills.get(ws.skillId) ?? { skillId: ws.skillId, skillName: SKILL_NAMES[ws.skillId] ?? ws.skillId, requiredLevel: 0, sourceRole: roleId };
-        e.requiredLevel = Math.max(e.requiredLevel, ws.requiredLevel);
+      for (const ws of role.skills) {
+        // RoleConfig has weight (0–1), not requiredLevel. Use 70 as the competency threshold
+        // (per §3 — COMPETENCY_TARGET_THRESHOLD = 70).
+        const e = requiredSkills.get(ws.skillId) ?? { skillId: ws.skillId, skillName: SKILL_NAMES[ws.skillId] ?? ws.skillId, requiredLevel: 70, sourceRole: roleId };
+        e.requiredLevel = Math.max(e.requiredLevel, 70);
         requiredSkills.set(ws.skillId, e);
       }
     }
@@ -341,10 +363,9 @@ export const AcademiaAggregator = {
       acc[`${c.courseId}`][c.skillId] = {
         coverage: c.coverage,
         demand: signals.find((s) => s.skillId === c.skillId)?.demandLevel ?? "Low",
-        hours: c.hours,
       };
       return acc;
-    }, {} as Record<string, Record<string, { coverage: string; demand: string; hours: number }>>);
+    }, {} as Record<string, Record<string, { coverage: string; demand: string }>>);
     return {
       courseRows: courses,
       skillCols: skillIds.map((id) => ({ id, name: SKILL_NAMES[id] ?? id })),
@@ -377,8 +398,8 @@ export const AcademiaAggregator = {
       // Find skills where student is below target (gap)
       const role = ALL_ROLES.find((r) => r.roleId === c.roleId);
       if (!role) continue;
-      const gapSkills = role.weightedSkills
-        .filter((ws) => (c.competencies[ws.skillId]?.competencyScore ?? 0) < ws.requiredLevel)
+      const gapSkills = role.skills
+        .filter((ws) => (c.competencies[ws.skillId]?.competencyScore ?? 0) < 70)
         .map((ws) => ws.skillId);
       if (gapSkills.length === 0) continue;
       // Match to faculty with expertise in any gap skill (by skill ID via faculty.skills)
@@ -512,9 +533,8 @@ export const InstitutionAggregator = {
 
   // §54 What Should The Institution Do Next — prioritized recommendations
   getNextActions: () => {
-    const interventions = useInstitutionStore.getState().interventions;
-    const cohortInterventions = ((): { skillName: string; suggestedAction: string; priority: string; affectedStudents: number; targetRoles: string[] }[] => {
-      // Reuse logic from InstitutionService.getCohortInterventions indirectly
+    const cohortInterventions: { skillName: string; suggestedAction: string; priority: string; affectedStudents: number; targetRoles: string[] }[] = [];
+    {
       const opps = useCareerStore.getState().opportunities.filter((o) => o.status === "Published");
       const candidates = DEMO_CANDIDATES;
       const demandMap = new Map<string, { count: number; roles: Set<string> }>();
@@ -528,7 +548,6 @@ export const InstitutionAggregator = {
         const arr = supplyMap.get(comp.skillId) ?? [];
         arr.push(comp.competencyScore); supplyMap.set(comp.skillId, arr);
       }
-      const out = [];
       for (const [skillId, { count, roles }] of demandMap) {
         const supply = supplyMap.get(skillId);
         const supplyScore = supply ? Math.round(supply.reduce((a, b) => a + b, 0) / supply.length) : 0;
@@ -536,16 +555,17 @@ export const InstitutionAggregator = {
         const gap = demandScore - supplyScore;
         if (gap <= 0) continue;
         const priority = gap >= 40 ? "Critical" : gap >= 25 ? "High" : gap >= 10 ? "Medium" : "Low";
-        out.push({
+        cohortInterventions.push({
           skillName: SKILL_NAMES[skillId] ?? skillId,
-          suggestedAction: priority === "Critical" ? "Industry Workshop" : priority === "High" ? "Live Project" : priority === "Medium" ? "Bootcamp" : "Certification",
+          suggestedAction: priority === "Critical" ? "Industry Workshop" : priority === "High" ? "Industry Project" : priority === "Medium" ? "Bootcamp" : "Certification",
           priority,
           affectedStudents: supply?.length ?? 0,
           targetRoles: [...roles],
         });
       }
-      return out.sort((a, b) => (a.priority === "Critical" ? 0 : a.priority === "High" ? 1 : 2) - (b.priority === "Critical" ? 0 : b.priority === "High" ? 1 : 2));
-    })();
+    }
+
+    cohortInterventions.sort((a, b) => (a.priority === "Critical" ? 0 : a.priority === "High" ? 1 : 2) - (b.priority === "Critical" ? 0 : b.priority === "High" ? 1 : 2));
 
     return cohortInterventions.slice(0, 5).map((ci, idx) => ({
       rank: idx + 1,
@@ -611,9 +631,10 @@ export const InstitutionAggregator = {
   // §50 Internship Intelligence — derived from career applications
   getInternshipIntelligence: () => {
     const apps = useCareerStore.getState().applications;
+    const opps = useCareerStore.getState().opportunities;
     const internshipApps = apps.filter((a) => {
-      const opp = useCareerStore.getState().opportunities.find((o) => o.id === a.opportunityId);
-      return opp?.type === "Internship";
+      const opp = opps.find((o) => o.id === a.opportunityId);
+      return opp?.type === "INTERNSHIP";
     });
     const feedbackCount = DEMO_CANDIDATES.flatMap((c) => c.evidence.filter((e) => e.sourceType === "Internship")).length;
     return {

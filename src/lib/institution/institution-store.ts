@@ -35,7 +35,7 @@ interface InstitutionState {
   interventions: Intervention[];
   alerts: InstitutionAlert[];
   notifications: InstitutionNotification[];
-  filters: { department: string; year: string; role: string; dateRange: string };
+  filters: { department: string; year: string; role: string; dateRange: string; skill: string };
 
   createIntervention: (i: Omit<Intervention, "id" | "createdAt" | "status">) => string;
   updateInterventionStatus: (id: string, status: InterventionStatus) => void;
@@ -56,7 +56,7 @@ export const useInstitutionStore = create<InstitutionState>()(
       interventions: [],
       alerts: DEMO_ALERTS,
       notifications: DEMO_NOTIFICATIONS,
-      filters: { department: "", year: "", role: "", dateRange: "all" },
+      filters: { department: "", year: "", role: "", dateRange: "all", skill: "" },
 
       createIntervention: (i) => {
         const id = uid("int");
@@ -77,7 +77,7 @@ export const useInstitutionStore = create<InstitutionState>()(
       markNotificationRead: (id) => set({ notifications: get().notifications.map((n) => n.id === id ? { ...n, read: true } : n) }),
       markAllNotificationsRead: () => set({ notifications: get().notifications.map((n) => ({ ...n, read: true })) }),
 
-      resetInstitution: () => set({ interventions: [], alerts: DEMO_ALERTS, notifications: DEMO_NOTIFICATIONS, filters: { department: "", year: "", role: "", dateRange: "all" } }),
+      resetInstitution: () => set({ interventions: [], alerts: DEMO_ALERTS, notifications: DEMO_NOTIFICATIONS, filters: { department: "", year: "", role: "", dateRange: "all", skill: "" } }),
     }),
     {
       name: "skillsetu-institution-v1",

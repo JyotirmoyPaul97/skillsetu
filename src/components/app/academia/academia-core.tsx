@@ -1069,8 +1069,8 @@ function CurriculumAlignmentPage() {
       const course = matrix.courseRows[y];
       const sk = matrix.skillCols[x];
       const entry = matrix.matrix[course.id]?.[sk.id];
-      const rank = entry ? coverageRank(entry.coverage) : 0;
-      cells[`${y}|${x}`] = { value: rank, label: entry ? coverageShort(entry.coverage) : undefined };
+      const rank = entry ? coverageRank(entry.coverage as CoverageLevel) : 0;
+      cells[`${y}|${x}`] = { value: rank, label: entry ? coverageShort(entry.coverage as CoverageLevel) : undefined };
     }
   }
 
@@ -1226,7 +1226,6 @@ function CurriculumAlignmentPage() {
           { label: "Course", value: `${cellDetailContent.course.name} (Sem ${cellDetailContent.course.semester}, ${cellDetailContent.course.department})` },
           { label: "Skill", value: cellDetailContent.sk.name },
           { label: "Curriculum coverage", value: cellDetailContent.entry?.coverage ?? "Not Covered" },
-          { label: "Allocated hours", value: cellDetailContent.entry ? `${cellDetailContent.entry.hours}h` : "—" },
           { label: "Industry demand", value: cellDetailContent.entry?.demand ?? "—" },
           { label: "Student competency (cohort avg)", value: cellDetailContent.alignmentRow ? `${cellDetailContent.alignmentRow.studentAvgCompetency}/100` : "—" },
           { label: "Practical evidence", value: cellDetailContent.alignmentRow?.practicalEvidence ?? "—" },
