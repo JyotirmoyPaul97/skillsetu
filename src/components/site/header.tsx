@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { useRouter } from "@/lib/router";
+import { SystemArchitectureBadge } from "./system-architecture-badge";
 
 const NAV_LINKS = [
   { label: "How It Works", href: "#how-it-works" },
@@ -59,7 +60,8 @@ export function Header() {
         </nav>
 
         {/* RIGHT: actions */}
-        <div className="hidden items-center gap-2 md:flex">
+        <div className="hidden items-center gap-2 md:flex relative">
+          <SystemArchitectureBadge />
           <Button
             variant="ghost"
             onClick={() => navigate("/login")}

@@ -8,6 +8,7 @@ import { Hero } from "@/components/site/hero";
 import { SkillLayerCard } from "@/components/site/skill-layer";
 import { Portals } from "@/components/site/portals";
 import { ClosedLoop } from "@/components/site/closed-loop";
+import { IntelligenceLoop } from "@/components/site/intelligence-loop";
 import { WhySkillSetu } from "@/components/site/why-skillsetu";
 import { Footer } from "@/components/site/footer";
 
@@ -80,6 +81,7 @@ export default function Home() {
         <SkillLayerCard />
         <Portals />
         <ClosedLoop />
+        <IntelligenceLoop />
         <WhySkillSetu />
       </main>
       <Footer />
