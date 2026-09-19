@@ -1,0 +1,3811 @@
+============================================================
+SKILL SETU — MASTER PRODUCTION BUILD
+COMPLETE BACKEND + DATABASE + API + INTELLIGENCE + UI/UX
++ SECURITY + TESTING + PERFORMANCE + DEMO HARDENING
+============================================================
+
+PROJECT
+SKILL SETU
+
+TAGLINE
+From Skill Claims to Skill Evidence.
+
+CORE POSITIONING
+AI-Powered Skill Intelligence & Academia–Industry Ecosystem
+
+LIVE APPLICATION
+https://skillseto.space-z.ai/
+
+============================================================
+0. MISSION
+============================================================
+
+Transform the EXISTING SKILL SETU prototype into a complete,
+functional, connected, secure, maintainable, minimalist,
+presentation-ready full-stack product.
+
+This is NOT a “make the frontend prettier” task.
+
+This is NOT a “create a few API endpoints” task.
+
+This is NOT a “add more features” task.
+
+This is a COMPLETE PRODUCT ENGINEERING PASS.
+
+The finished product must have:
+
+1. Real backend architecture
+2. Persistent database
+3. Real APIs
+4. Authentication
+5. Role-based authorization
+6. One shared source of truth
+7. One Skill Intelligence Engine
+8. Functional cross-portal state propagation
+9. Real business logic
+10. Proper validation
+11. Security controls
+12. Error handling
+13. Auditability
+14. File/document architecture
+15. Notifications architecture
+16. Search/filter/pagination where required
+17. Testing
+18. Seed/demo data
+19. Demo reset capability
+20. Minimalistic UI/UX
+21. Strong information hierarchy
+22. Responsive design
+23. Accessibility
+24. Performance optimization
+25. Production-like code quality
+26. SIH evaluator-friendly experience
+
+DO NOT build disconnected screens.
+
+DO NOT create fake APIs.
+
+DO NOT create multiple mock databases.
+
+DO NOT create duplicate business logic.
+
+DO NOT create separate Skill Intelligence systems for different portals.
+
+DO NOT over-engineer.
+
+DO NOT introduce microservices unless the existing application already requires them.
+
+PREFERRED ARCHITECTURE:
+
+ONE APPLICATION
++
+ONE DATABASE
++
+ONE API LAYER
++
+ONE SHARED INTELLIGENCE ENGINE
++
+FOUR ROLE-SPECIFIC EXPERIENCES
+
+Student
+Industry
+Academia
+Institution
+
+============================================================
+1. FIRST ACTION — COMPLETE CODEBASE AUDIT
+============================================================
+
+Before changing anything, inspect the ENTIRE existing project.
+
+Audit:
+
+- frontend framework
+- backend availability
+- routing
+- state management
+- data structures
+- mock data
+- API calls
+- database, if any
+- authentication
+- authorization
+- reusable components
+- design system
+- portal architecture
+- scoring logic
+- role readiness logic
+- evidence logic
+- opportunity matching
+- hackathon logic
+- feedback
+- Skill Passport
+- notifications
+- analytics
+- file/document handling
+- AI integrations
+- environment configuration
+- deployment configuration
+- existing tests
+- broken routes
+- console errors
+- dead components
+- duplicate components
+- hard-coded values
+
+Create an internal implementation map before modifying the system.
+
+DO NOT rewrite functioning sections just because another
+implementation exists.
+
+Reuse good existing work.
+
+Preserve working Student Portal functionality.
+
+Preserve existing SKILL SETU branding.
+
+============================================================
+2. NON-NEGOTIABLE PRODUCT PRINCIPLE
+============================================================
+
+Everything must reinforce:
+
+EVIDENCE, NOT CLAIMS.
+
+The core SKILL SETU loop is:
+
+INDUSTRY DEMAND
+        ↓
+ROLE REQUIREMENTS
+        ↓
+STUDENT EVIDENCE
+        ↓
+SKILL INTELLIGENCE
+        ↓
+COMPETENCY
+        ↓
+ROLE READINESS
+        ↓
+SKILL GAP
+        ↓
+NEXT BEST ACTION
+        ↓
+LEARNING / PROJECT / HACKATHON / INTERNSHIP
+        ↓
+NEW EVIDENCE
+        ↓
+EVALUATION / VERIFICATION
+        ↓
+INDUSTRY / FACULTY FEEDBACK
+        ↓
+UPDATED SKILL PROFILE
+        ↓
+SKILL PASSPORT
+        ↓
+OPPORTUNITY MATCHING
+        ↓
+ACADEMIA INSIGHT
+        ↓
+INSTITUTION INSIGHT
+        ↓
+CONTINUOUS GROWTH
+
+The system should make this loop technically real.
+
+============================================================
+3. PRODUCT ARCHITECTURE
+============================================================
+
+Use a modular monolith unless the current codebase has a strong
+reason for another architecture.
+
+Recommended conceptual architecture:
+
+FRONTEND
+↓
+API / CONTROLLER LAYER
+↓
+AUTHORIZATION
+↓
+APPLICATION / SERVICE LAYER
+↓
+DOMAIN / BUSINESS LOGIC
+↓
+DATABASE / ORM
+↓
+OPTIONAL INTEGRATIONS
+
+Recommended backend if a backend must be introduced:
+
+- TypeScript
+- Node.js
+- compatible backend framework
+- PostgreSQL
+- Prisma or equivalent ORM
+- Zod or equivalent validation
+- secure session/JWT architecture
+- bcrypt/argon2 password hashing
+
+BUT:
+
+FIRST inspect the existing stack.
+
+If another stack is already established and deployment-compatible,
+reuse it rather than forcing a rewrite.
+
+Do not add unnecessary infrastructure.
+
+No:
+
+- microservices
+- Kubernetes
+- service mesh
+- Kafka
+- multiple databases
+- complicated event brokers
+
+unless genuinely necessary.
+
+For this product:
+
+SIMPLICITY > INFRASTRUCTURE COMPLEXITY
+
+============================================================
+4. SINGLE SOURCE OF TRUTH
+============================================================
+
+This is one of the most important requirements.
+
+All major business data must come from the backend/database.
+
+Do not maintain independent frontend copies of:
+
+- student competency
+- role requirements
+- readiness
+- skill gaps
+- evidence
+- opportunities
+- applications
+- candidate matches
+- feedback
+- Skill Passport
+- hackathon state
+- institutional insights
+
+The backend is the source of truth.
+
+Frontend state may handle:
+
+- temporary UI state
+- filters
+- open/close state
+- form input
+- optimistic UI where safe
+- selected tabs
+- temporary interactions
+
+Business state belongs on the server.
+
+============================================================
+5. DOMAIN MODEL
+============================================================
+
+Create a clean relational domain model.
+
+CORE IDENTITY
+
+User
+Role
+Permission
+UserRole
+
+STUDENT
+
+StudentProfile
+StudentEducation
+StudentSkill
+StudentExperience
+StudentAvailability
+
+INDUSTRY
+
+IndustryProfile
+IndustryUser
+CompanyRole
+
+ACADEMIA
+
+AcademicianProfile
+Department
+FacultyOpportunity
+
+INSTITUTION
+
+InstitutionProfile
+Branch
+InstitutionUser
+
+SKILL INTELLIGENCE
+
+Skill
+SkillCategory
+Role
+RoleSkillRequirement
+Competency
+CompetencyHistory
+Evidence
+EvidenceSource
+EvidenceSkill
+EvidenceVerification
+SkillGap
+Recommendation
+ReadinessSnapshot
+
+ASSESSMENT
+
+Assessment
+AssessmentBlueprint
+AssessmentSection
+AssessmentQuestion
+AssessmentAttempt
+AssessmentResponse
+AssessmentResult
+
+OPPORTUNITY
+
+Opportunity
+OpportunitySkill
+OpportunityEligibility
+OpportunityApplication
+ApplicationStatusHistory
+OpportunityMatch
+
+LEARNING
+
+LearningResource
+LearningResourceSkill
+LearningProgress
+LearningRecommendation
+
+PROJECTS
+
+Project
+ProjectSkill
+ProjectEvidence
+
+CERTIFICATIONS
+
+Certification
+CertificationEvidence
+CertificationVerification
+
+INTERNSHIPS
+
+Internship
+InternshipProgress
+InternshipOutcome
+
+HACKATHONS
+
+Hackathon
+ProblemStatement
+HackathonEligibility
+HackathonTeam
+HackathonTeamMember
+HackathonSubmission
+HackathonMilestone
+HackathonMentor
+HackathonEvaluation
+
+FEEDBACK
+
+Feedback
+FeedbackSkill
+FeedbackEvidence
+
+PASSPORT
+
+SkillPassport
+SkillPassportEntry
+
+ACADEMIA
+
+Curriculum
+CurriculumSkill
+IndustrySkillSignal
+CurriculumAlignment
+Collaboration
+Workshop
+Mentorship
+FDP
+ResearchCollaboration
+
+INSTITUTION
+
+InstitutionInsight
+BranchSkillSnapshot
+DemandSupplySnapshot
+Intervention
+PlacementInsight
+InternshipInsight
+
+SYSTEM
+
+Notification
+AuditLog
+EventLog
+
+============================================================
+6. DATABASE DESIGN
+============================================================
+
+Use proper primary keys.
+
+Use foreign keys.
+
+Use indexes for frequently queried fields.
+
+Use timestamps.
+
+Prefer soft deletion where appropriate.
+
+Use enums/status values for state machines.
+
+Protect against duplicate records.
+
+Use transactions for multi-step updates where needed.
+
+Do not store the same business fact repeatedly.
+
+Examples:
+
+Role skill importance belongs to RoleSkillRequirement.
+
+Student evidence belongs to Evidence.
+
+Skills associated with evidence belong to EvidenceSkill.
+
+A readiness value should be computed from current data,
+and snapshots may be stored for historical analytics.
+
+Do not blindly store every derived metric as a separate
+editable value.
+
+DERIVED DATA MUST HAVE A CLEAR SOURCE.
+
+============================================================
+7. AUTHENTICATION
+============================================================
+
+Implement real authentication.
+
+Support:
+
+Student
+Industry
+Academician
+Institution
+Admin
+
+Required:
+
+- registration
+- login
+- logout
+- secure password hashing
+- protected routes
+- session/token management
+- authorization middleware
+- account status
+- validation
+- session expiry
+- secure password architecture
+- invalid login handling
+- unauthorized access handling
+
+Never trust:
+
+role
+user id
+institution id
+company id
+
+just because the browser sends them.
+
+Server must determine identity and permissions.
+
+Never expose:
+
+password hashes
+tokens
+secrets
+private keys
+AI API keys
+database credentials
+
+to the frontend.
+
+============================================================
+8. RBAC
+============================================================
+
+Implement real role-based access control.
+
+STUDENT
+
+Can manage:
+
+- own profile
+- own education
+- own assessment
+- own evidence
+- own projects
+- own certifications
+- own internships
+- own applications
+- own Skill Passport
+- own documents
+- own availability
+- own notifications
+
+Can view:
+
+- own readiness
+- own gaps
+- own recommendations
+- permitted opportunities
+- permitted feedback
+
+INDUSTRY
+
+Can:
+
+- manage organization
+- create roles
+- create opportunities
+- define skill requirements
+- set importance
+- define eligibility
+- search candidates
+- view permitted candidate evidence
+- shortlist
+- invite
+- evaluate
+- provide feedback
+- create challenges
+- create hackathons
+- manage teams
+- evaluate submissions
+
+ACADEMIA
+
+Can:
+
+- view industry skill signals
+- view curriculum alignment
+- manage faculty opportunities
+- manage mentorship
+- manage workshops
+- manage FDPs
+- collaborate with industry
+- view permitted academic insights
+
+INSTITUTION
+
+Can:
+
+- view branch intelligence
+- view skill gaps
+- view demand/supply
+- view placement insights
+- view internship insights
+- view intervention recommendations
+- view collaboration insights
+
+ADMIN
+
+Can manage:
+
+- taxonomy
+- role definitions
+- system configuration
+- moderation
+- users
+- permissions
+
+============================================================
+9. API ARCHITECTURE
+============================================================
+
+Create consistent APIs.
+
+Suggested groups:
+
+/api/auth
+/api/users
+/api/students
+/api/industry
+/api/academia
+/api/institution
+/api/skills
+/api/roles
+/api/assessments
+/api/evidence
+/api/readiness
+/api/skill-gaps
+/api/recommendations
+/api/opportunities
+/api/applications
+/api/hackathons
+/api/teams
+/api/submissions
+/api/feedback
+/api/passport
+/api/projects
+/api/certifications
+/api/internships
+/api/learning
+/api/notifications
+/api/analytics
+/api/events
+/api/admin
+
+Every endpoint must include:
+
+- authentication if required
+- authorization
+- input validation
+- correct status codes
+- error handling
+- consistent response structure
+- logging where appropriate
+
+Use:
+
+GET
+POST
+PATCH/PUT
+DELETE
+
+appropriately.
+
+Do not expose internal implementation details unnecessarily.
+
+============================================================
+10. API RESPONSE STANDARD
+============================================================
+
+Use a consistent structure.
+
+Success:
+
+{
+  data: ...,
+  meta: ...
+}
+
+Error:
+
+{
+  error: {
+    code: "...",
+    message: "...",
+    details: ...
+  }
+}
+
+Do not return raw database errors to users.
+
+============================================================
+11. SKILL INTELLIGENCE ENGINE
+============================================================
+
+Create ONE centralized Skill Intelligence service.
+
+All four portals must use it.
+
+Responsibilities:
+
+1. skill normalization
+2. evidence aggregation
+3. competency calculation
+4. evidence confidence
+5. role readiness
+6. skill gap analysis
+7. next best action
+8. opportunity matching
+9. explanation generation
+10. event generation
+11. historical snapshots
+
+Architecture concept:
+
+Student Data
++
+Industry Requirements
++
+Evidence
++
+Feedback
++
+Opportunities
++
+Role Configuration
+↓
+SKILL INTELLIGENCE ENGINE
+↓
+Competency
+Readiness
+Gap
+Recommendation
+Matching
+Explanation
+Insights
+
+============================================================
+12. COMPETENCY VS EVIDENCE CONFIDENCE
+============================================================
+
+Keep these separate.
+
+COMPETENCY
+
+Question:
+
+“How strongly does the evidence indicate the student can
+demonstrate this skill?”
+
+EVIDENCE CONFIDENCE
+
+Question:
+
+“How trustworthy, recent, diverse and verifiable is the evidence?”
+
+Example:
+
+Machine Learning
+
+Competency:
+43
+
+Evidence Confidence:
+72%
+
+Do not collapse both into one meaningless score.
+
+============================================================
+13. EVIDENCE SYSTEM
+============================================================
+
+Evidence sources may include:
+
+- assessment
+- coding practice
+- project
+- internship
+- certification
+- faculty feedback
+- industry feedback
+- hackathon evaluation
+- practical assessment
+- documented achievement
+
+Every evidence item should support:
+
+- ID
+- skill
+- source
+- description
+- date
+- time when available
+- owner
+- status
+- verification state
+- metadata
+- optional file/document
+- optional Git repository
+- optional live demo
+
+STATUS:
+
+Submitted
+Pending Review
+Evaluated
+Verified
+Rejected
+
+Submitted ≠ Verified.
+
+Never falsely mark evidence as verified.
+
+============================================================
+14. EVIDENCE PIPELINE
+============================================================
+
+Build a chronological evidence pipeline.
+
+Example:
+
+18 Sep 2026
+Customer Churn Prediction
+Machine Learning
+Project Evidence
+Submitted
+
+18 Sep 2026
+Project Evaluation
+Machine Learning
+Industry Feedback
+Verified
+
+Allow filtering:
+
+Today
+This Week
+This Month
+All
+
+Show:
+
+WHAT
+WHEN
+SKILL
+SOURCE
+STATUS
+
+Latest evidence appears first.
+
+============================================================
+15. ROLE READINESS ENGINE
+============================================================
+
+Use ONE shared formula.
+
+Readiness =
+
+Σ(Student Competency × Role Importance)
+÷
+Σ(Role Importance)
+
+All role importance values must come from the database.
+
+Do not hard-code final readiness percentages.
+
+Do not maintain separate formulas per portal.
+
+Do not show contradictory numbers.
+
+“Calculated” and “Displayed” must use the same result.
+
+============================================================
+16. ROLE CONFIGURATION
+============================================================
+
+Support the existing SKILL SETU role templates.
+
+Roles include:
+
+1. Data Scientist
+2. ML Engineer
+3. Software Engineer
+4. Full Stack Developer
+5. Cybersecurity Analyst
+6. DevOps Engineer
+7. Cloud Architect
+8. Embedded Systems Engineer
+9. Mechanical Design Engineer
+10. Power Systems Engineer
+11. Structural Engineer
+12. VLSI Design Engineer
+
+Maintain role-specific skills and weights.
+
+Examples:
+
+DATA SCIENTIST
+
+Python — 25%
+SQL — 15%
+Statistics — 20%
+Machine Learning — 30%
+Problem Solving — 10%
+
+ML ENGINEER
+
+Python — 20%
+Machine Learning — 30%
+Deep Learning — 25%
+Mathematics & Statistics — 15%
+Problem Solving — 10%
+
+SOFTWARE ENGINEER
+
+Programming — 30%
+DSA — 25%
+Database Management — 15%
+Software Engineering — 20%
+Problem Solving — 10%
+
+FULL STACK DEVELOPER
+
+Frontend — 20%
+Backend — 20%
+Database — 15%
+API Integration — 15%
+Problem Solving — 30%
+
+CYBERSECURITY ANALYST
+
+Network Security — 25%
+Cybersecurity Fundamentals — 25%
+Threat Analysis — 20%
+Linux — 15%
+Problem Solving — 15%
+
+DEVOPS ENGINEER
+
+Linux — 20%
+CI/CD — 25%
+Cloud Platforms — 20%
+Docker & Kubernetes — 25%
+Scripting — 10%
+
+CLOUD ARCHITECT
+
+Cloud Platforms — 30%
+Cloud Architecture — 30%
+Networking — 15%
+Security — 15%
+System Design — 10%
+
+EMBEDDED SYSTEMS ENGINEER
+
+C/C++ Programming — 25%
+Microcontrollers — 25%
+Embedded Systems — 25%
+Electronics Fundamentals — 15%
+Problem Solving — 10%
+
+MECHANICAL DESIGN ENGINEER
+
+CAD/3D Modelling — 30%
+Engineering Drawing — 20%
+Material & Manufacturing — 20%
+Mechanical Analysis — 20%
+Problem Solving — 10%
+
+POWER SYSTEMS ENGINEER
+
+Power Systems — 30%
+Electrical Machines — 20%
+Power Electronics — 20%
+Electrical Protection — 15%
+Circuit Analysis — 15%
+
+STRUCTURAL ENGINEER
+
+Structural Analysis — 30%
+Structural Design — 25%
+Engineering Mechanics — 20%
+AutoCAD/Structural Software — 15%
+Problem Solving — 10%
+
+VLSI DESIGN ENGINEER
+
+Digital Electronics — 20%
+Verilog/HDL — 25%
+VLSI Design — 30%
+CMOS/Semiconductor Fundamentals — 15%
+Problem Solving — 10%
+
+Do NOT replace these role-specific skill structures with generic
+skills across all roles.
+
+============================================================
+17. ROLE READINESS BASELINE DATA
+============================================================
+
+Use the existing demo readiness values as seed data.
+
+Data Scientist ≈ 61%
+ML Engineer ≈ 56%
+Software Engineer ≈ 71%
+Full Stack Developer = 74%
+Cybersecurity Analyst ≈ 64%
+DevOps Engineer ≈ 57%
+Cloud Architect ≈ 56%
+Embedded Systems Engineer = 63%
+Mechanical Design Engineer ≈ 66%
+Power Systems Engineer ≈ 59%
+Structural Engineer ≈ 61%
+VLSI Design Engineer ≈ 58%
+
+These are DEMO values derived from the seeded competency data.
+
+DO NOT convert them into hard-coded displayed values.
+
+Database values must be used to recalculate them.
+
+============================================================
+18. SKILL GAP ENGINE
+============================================================
+
+Calculate gaps from:
+
+- competency
+- role requirement
+- role importance
+- evidence confidence
+- optionally minimum threshold
+
+Each gap should answer:
+
+WHAT IS MISSING?
+HOW IMPORTANT IS IT?
+WHAT EVIDENCE EXISTS?
+WHAT SHOULD THE STUDENT DO?
+
+Example:
+
+Machine Learning
+Competency: 43
+Role Importance: 30%
+Priority: High
+
+Statistics
+Competency: 51
+Role Importance: 20%
+Priority: Moderate
+
+============================================================
+19. NEXT BEST ACTION ENGINE
+============================================================
+
+Recommendations must be actionable.
+
+Potential actions:
+
+- take assessment
+- practice coding
+- complete learning resource
+- build project
+- join hackathon
+- participate in internship
+- attend workshop
+- meet mentor
+- complete certification
+- improve missing evidence
+
+Recommendation should consider:
+
+- skill gap
+- role importance
+- evidence confidence
+- available actions
+- evidence generation potential
+- opportunity relevance
+- effort/time where available
+
+Every recommendation must show:
+
+ACTION
+WHY
+SKILL ADDRESSED
+ROLE RELEVANCE
+EVIDENCE GENERATED
+
+Do not promise exact future score increases.
+
+Use:
+
+Projected Impact
+Expected Impact
+Potential Impact
+
+before the action is completed.
+
+Only show:
+
+Verified Improvement
+
+after evidence is actually added/evaluated and the shared engine
+recalculates the result.
+
+============================================================
+20. OPPORTUNITY MATCHING
+============================================================
+
+Opportunity matching must be transparent.
+
+Inputs:
+
+- required skills
+- competency
+- evidence confidence
+- verified evidence
+- eligibility
+- experience
+- availability
+- target role
+- role alignment
+
+Output:
+
+Match / Alignment
+
+Plus:
+
+WHY THIS MATCH?
+
+✓ Python evidence
+✓ Relevant ML project
+✓ Target role aligned
+✓ Eligibility satisfied
+
+And:
+
+WHAT IS MISSING?
+
+⚠ Statistics evidence is limited
+
+Never claim:
+
+- guaranteed selection
+- guaranteed placement
+- guaranteed interview
+- guaranteed hiring
+
+============================================================
+21. ASSESSMENT ENGINE
+============================================================
+
+Build a real in-house SKILL SETU Assessment Engine.
+
+Do not depend on third-party assessment branding.
+
+Assessment flow:
+
+Target Role
+↓
+Aptitude
+↓
+Technical
+↓
+Coding / Practical
+↓
+Technical Evaluation
+↓
+Behavioural / HR
+↓
+Result
+↓
+Evidence
+↓
+Competency
+↓
+Skill Gap
+↓
+Role Readiness
+↓
+Next Best Action
+
+Features:
+
+- role selection
+- assessment blueprint
+- question bank
+- categories
+- timer
+- attempt tracking
+- autosave
+- answer validation
+- server-side scoring
+- result generation
+- history
+- reassessment
+- evidence generation
+
+IMPORTANT:
+
+Correct answers must not be exposed to the frontend.
+
+Timer must be server-authoritative.
+
+Scoring must be server-side.
+
+Assessment state must survive refresh/network interruption where practical.
+
+Prevent duplicate final submissions.
+
+============================================================
+22. SOFT SKILLS
+============================================================
+
+Support:
+
+Communication
+Teamwork
+Leadership
+Problem Solving
+Adaptability
+Presentation
+Professionalism
+
+Evidence can come from:
+
+- assessment
+- faculty feedback
+- team feedback
+- industry feedback
+- hackathon evaluation
+- internship feedback
+
+Do not represent subjective feedback as objective fact.
+
+Clearly indicate the source.
+
+============================================================
+23. CODING EVIDENCE
+============================================================
+
+Support external coding platform evidence conceptually.
+
+Examples:
+
+LeetCode
+HackerRank
+Codeforces
+
+IMPORTANT:
+
+Platform rating ≠ direct skill score.
+
+Treat platform data as evidence.
+
+Normalize evidence carefully.
+
+If live API integration is unavailable:
+
+Use DEMO DATA.
+
+Do not fake live synchronization.
+
+Create adapter architecture for future integration.
+
+============================================================
+24. PROJECT EVIDENCE
+============================================================
+
+Projects must support:
+
+- title
+- description
+- role
+- contribution
+- technologies
+- skills
+- GitHub repository
+- live demo
+- screenshots/documents
+- start/end date
+- evidence
+- verification
+- evaluation
+
+Project evidence can feed:
+
+Skill Intelligence
+Skill Passport
+Role Readiness
+Opportunity Matching
+
+Do not automatically verify a GitHub URL.
+
+============================================================
+25. INTERNSHIP LIFECYCLE
+============================================================
+
+Implement:
+
+Discover
+→ Apply
+→ Shortlisted
+→ Selected
+→ In Progress
+→ Completed
+→ Feedback
+→ Skill Evidence Updated
+
+Application history must be preserved.
+
+Student should always know:
+
+Current status
+Last update
+Next action
+
+============================================================
+26. JOB / PLACEMENT SYSTEM
+============================================================
+
+Opportunity types:
+
+Job
+Internship
+Project
+Apprenticeship
+
+Opportunity detail must include:
+
+- title
+- company
+- role
+- description
+- responsibilities
+- required skills
+- preferred qualifications
+- eligibility
+- duration
+- location
+- compensation
+- application deadline
+- match
+- why match
+
+Use:
+
+Apply Now
+View Details
+
+After applying:
+
+Application status must persist.
+
+============================================================
+27. HACKATHON SYSTEM
+============================================================
+
+Hackathons should be lightweight but functional.
+
+Support:
+
+- challenge discovery
+- problem statements
+- domains
+- deadlines
+- eligibility
+- team size
+- solo participation
+- team creation
+- join request
+- invite member
+- leave team
+- team roles
+- milestones
+- submission
+- mentor
+- evaluation
+
+Team size must be configurable per hackathon.
+
+Fields:
+
+minimum team size
+maximum team size
+solo allowed
+cross-college
+cross-year
+cross-department
+max teams per participant
+
+Do not copy another platform's UI or branding.
+
+The unique SKILL SETU angle is:
+
+Problem Statement
+→ Required Skills
+→ Team Formation
+→ Build
+→ Evaluate
+→ Evidence
+→ Skill Passport
+→ Readiness
+
+============================================================
+28. AI TEAM BUILDER
+============================================================
+
+Team recommendations should consider:
+
+- verified skills
+- competency
+- evidence confidence
+- required role
+- complementary skills
+- domain
+- availability
+- project requirements
+
+Show:
+
+WHY RECOMMENDED?
+
+Example:
+
+Strong frontend coverage
++
+ML capability
++
+Backend capability
+
+Do not use arbitrary team matching percentages.
+
+============================================================
+29. INDUSTRY FEEDBACK
+============================================================
+
+Industry can evaluate:
+
+Technical Skills
+Problem Solving
+Communication
+Teamwork
+Professionalism
+
+Feedback should support:
+
+- structured scores where appropriate
+- comments
+- skill tags
+- project/internship association
+- timestamp
+- evaluator
+- status
+
+After submission:
+
+Feedback
+→ Evidence
+→ Profile/competency where applicable
+→ Skill Passport
+→ Institution insight where aggregation applies
+
+============================================================
+30. SKILL PASSPORT
+============================================================
+
+Skill Passport should become a clean evidence portfolio.
+
+Sections:
+
+Verified Skills
+Projects
+Certifications
+Internships
+Achievements
+
+Each entry:
+
+Skill/Experience
+Evidence
+Date
+Source
+Verification status
+
+The passport must update from underlying evidence.
+
+Do not create duplicate manual records for the same evidence.
+
+============================================================
+31. ACADEMIA PORTAL
+============================================================
+
+The Academia portal MUST NOT look like a generic dashboard.
+
+Its core purpose:
+
+INDUSTRY SIGNAL
+→ CURRICULUM ALIGNMENT
+→ PRACTICAL EXPOSURE
+→ COLLABORATION
+
+Show:
+
+Industry Skill Signals
+
+Curriculum Alignment
+
+Practical Exposure Gaps
+
+Faculty Opportunities
+
+Mentorship
+
+Workshops
+
+FDPs
+
+Research Collaboration
+
+For curriculum:
+
+Do not claim automatic syllabus modification.
+
+Use:
+
+“Recommended for Faculty Review”
+
+============================================================
+32. INSTITUTION PORTAL
+============================================================
+
+Institution must answer:
+
+WHERE IS THE GAP?
+WHO IS AFFECTED?
+WHAT DOES INDUSTRY NEED?
+WHAT INTERVENTION SHOULD WE CONSIDER?
+WHAT CHANGED?
+
+Show:
+
+Branch
+Skill
+Industry Demand
+Student Evidence
+Gap
+Trend
+Intervention
+
+Do not fill this portal with:
+
+Total Students
+Total Users
+Total Jobs
+Total Certifications
+
+unless these directly support a decision.
+
+============================================================
+33. INDUSTRY PORTAL
+============================================================
+
+Industry must answer:
+
+WHAT DO WE NEED?
+WHO CAN DEMONSTRATE IT?
+WHY ARE THEY RECOMMENDED?
+WHAT SKILL GAPS REMAIN?
+WHAT HAPPENED AFTER THE ENGAGEMENT?
+
+Core areas:
+
+Demand
+Talent
+Opportunities
+Challenges
+Feedback
+
+Candidate profile should show:
+
+- readiness
+- verified skills
+- evidence
+- projects
+- certifications
+- internships
+- coding evidence
+- feedback
+- match
+- why matched
+
+============================================================
+34. UI/UX MASTER RULE
+============================================================
+
+REDUCE COMPLEXITY WITHOUT REDUCING CAPABILITY.
+
+This is critical.
+
+If a screen contains too much information:
+
+DO NOT delete useful backend capability.
+
+Instead:
+
+move details behind:
+View Details
+Why?
+Evidence
+Expand
+Drawer
+Modal
+Tab
+
+Use progressive disclosure.
+
+Primary screen = decision.
+
+Secondary layer = detail.
+
+============================================================
+35. NAVIGATION SIMPLIFICATION
+============================================================
+
+STUDENT
+
+Top-level:
+
+Overview
+My Skills
+Opportunities
+Skill Passport
+
+Within My Skills:
+
+Assessment
+Skill Gap
+Evidence
+
+Within Opportunities:
+
+Jobs
+Internships
+Projects
+Hackathons
+
+------------------------------------------------------------
+
+INDUSTRY
+
+Top-level:
+
+Overview
+Talent
+Opportunities
+Challenges
+Feedback
+
+------------------------------------------------------------
+
+ACADEMIA
+
+Top-level:
+
+Overview
+Alignment
+Opportunities
+Collaboration
+
+------------------------------------------------------------
+
+INSTITUTION
+
+Top-level:
+
+Overview
+Skill Intelligence
+Placements
+Collaboration
+
+Avoid 10+ top-level navigation items.
+
+============================================================
+36. STUDENT DASHBOARD
+============================================================
+
+Student homepage should answer four questions:
+
+WHERE AM I?
+
+Role Readiness
+
+WHAT IS MISSING?
+
+Top Skill Gap
+
+WHAT SHOULD I DO?
+
+Next Best Action
+
+WHAT CAN I APPLY FOR?
+
+Best Opportunity
+
+Example:
+
+Data Scientist
+61%
+
+Top Gap:
+Machine Learning
+
+Next Best Action:
+Build Applied ML Project
+
+Best Match:
+Data Science Internship
+
+Then:
+
+Recent Evidence
+
+No unnecessary metric overload.
+
+============================================================
+37. INDUSTRY DASHBOARD
+============================================================
+
+Answer:
+
+WHAT SKILLS DO WE NEED?
+
+Show:
+
+Demand
+
+WHO CAN DEMONSTRATE THEM?
+
+Top Talent
+
+WHAT IS MISSING?
+
+Skill gaps
+
+WHAT HAPPENED?
+
+Feedback / outcomes
+
+============================================================
+38. ACADEMIA DASHBOARD
+============================================================
+
+Answer:
+
+WHAT IS INDUSTRY ASKING FOR?
+
+WHAT ARE STUDENTS DEMONSTRATING?
+
+WHERE IS PRACTICAL EXPOSURE MISSING?
+
+WHAT COLLABORATION CAN HELP?
+
+============================================================
+39. INSTITUTION DASHBOARD
+============================================================
+
+Answer:
+
+WHERE IS OUR BIGGEST SKILL GAP?
+
+WHAT INDUSTRY NEEDS IT?
+
+WHICH BRANCH IS AFFECTED?
+
+WHAT INTERVENTION SHOULD WE CONSIDER?
+
+============================================================
+40. ONE PRIMARY CTA PER PAGE
+============================================================
+
+Do not create five competing buttons.
+
+Examples:
+
+Student:
+Take Assessment
+or
+View Skill Gap
+
+Industry:
+Discover Talent
+or
+Post Opportunity
+
+Academia:
+Review Alignment
+
+Institution:
+View Skill Gaps
+
+Secondary actions should be visually subordinate.
+
+============================================================
+41. MINIMALIST VISUAL SYSTEM
+============================================================
+
+Keep SKILL SETU identity.
+
+Design should feel:
+
+Premium
+Minimal
+Modern
+Calm
+Intelligent
+Professional
+
+Use:
+
+deep navy
+blue
+teal
+subtle accent
+
+Use neutral backgrounds.
+
+Typography must have a strong hierarchy.
+
+Avoid:
+
+- cyberpunk
+- excessive neon
+- giant gradients
+- excessive glassmorphism
+- huge shadows
+- too many cards
+- excessive rounded containers
+- excessive icons
+- visual clutter
+
+The product should look credible in front of an SIH evaluator.
+
+============================================================
+42. CARD DESIGN
+============================================================
+
+Prefer:
+
+Title
+Key value
+One-line explanation
+One action
+
+Avoid cards containing:
+
+6 metrics
+8 badges
+5 buttons
+nested cards
+charts with no purpose
+
+Every visual element must communicate something.
+
+============================================================
+43. CHART RULE
+============================================================
+
+Do not add charts merely because dashboards usually have charts.
+
+A chart must answer a question.
+
+Examples:
+
+Which skill has the largest gap?
+
+How is evidence changing?
+
+What does industry demand most?
+
+Which branch has the largest mismatch?
+
+If a chart does not answer a decision question:
+
+REMOVE IT.
+
+============================================================
+44. COLOR SEMANTICS
+============================================================
+
+Use a consistent meaning system.
+
+Positive:
+verified / improving / completed
+
+Attention:
+gap / pending / needs action
+
+Neutral:
+information / submitted
+
+Do not use random colors per component.
+
+============================================================
+45. LOADING / EMPTY / ERROR STATES
+============================================================
+
+Every important data screen needs:
+
+Loading state
+
+Empty state
+
+Error state
+
+Retry action
+
+Success state
+
+Examples:
+
+“No verified evidence yet.”
+
+“Complete an assessment to build your first competency profile.”
+
+Do not leave blank white areas.
+
+Do not fake content when data is unavailable.
+
+============================================================
+46. FORMS
+============================================================
+
+Make forms short.
+
+Group related fields.
+
+Use sensible defaults.
+
+Validate inline.
+
+Show clear errors.
+
+Do not create giant forms for simple actions.
+
+Use:
+
+Step 1
+Step 2
+Step 3
+
+when genuinely necessary.
+
+============================================================
+47. ACCESSIBILITY
+============================================================
+
+Implement:
+
+- semantic HTML
+- accessible labels
+- keyboard navigation
+- focus states
+- readable contrast
+- accessible dialogs
+- accessible dropdowns
+- descriptive buttons
+- form error messages
+- screen-reader-friendly structure
+
+Do not make accessibility an afterthought.
+
+============================================================
+48. RESPONSIVE DESIGN
+============================================================
+
+Desktop:
+Primary evaluator/demo experience
+
+Tablet:
+fully usable
+
+Mobile:
+simple, stacked, readable
+
+No:
+
+horizontal overflow
+broken tables
+overlapping modals
+cropped buttons
+
+============================================================
+49. PERFORMANCE
+============================================================
+
+Optimize intelligently.
+
+Use:
+
+- pagination
+- indexed database queries
+- API request consolidation
+- caching where useful
+- lazy loading
+- image optimization
+- component splitting where useful
+- debounced search
+- efficient rendering
+
+Do not prematurely over-optimize.
+
+Prioritize real bottlenecks.
+
+============================================================
+50. SEARCH / FILTER / SORT
+============================================================
+
+Where appropriate, support:
+
+search
+filter
+sort
+pagination
+
+Especially:
+
+Talent
+Opportunities
+Skills
+Evidence
+Hackathons
+Applications
+
+Filters should be meaningful.
+
+Do not create excessive filters.
+
+============================================================
+51. NOTIFICATION SYSTEM
+============================================================
+
+Create a unified notification model.
+
+Examples:
+
+Assessment completed
+
+New opportunity match
+
+Application status changed
+
+Evidence verified
+
+Industry feedback received
+
+Hackathon invitation
+
+Team request
+
+Mentor update
+
+Passport updated
+
+Institutional action/review
+
+Notifications must persist.
+
+Read/unread state must persist.
+
+============================================================
+52. DOCUMENT / FILE ARCHITECTURE
+============================================================
+
+Support:
+
+Resume
+Certificate
+Internship report
+Academic record
+Project document
+Git repository
+Demo link
+
+Store:
+
+metadata
+owner
+type
+visibility
+verification
+created date
+
+Visibility:
+
+Private
+Shared
+Institution-visible
+Industry-visible
+
+Private documents must not become public URLs.
+
+Use protected access.
+
+If cloud storage is not currently available:
+
+create a clean storage abstraction and demo/local implementation.
+
+Do not fake public storage security.
+
+============================================================
+53. SECURITY
+============================================================
+
+Implement professional security basics.
+
+Include:
+
+- secure authentication
+- password hashing
+- RBAC
+- server-side authorization
+- input validation
+- output sanitization where required
+- SQL injection protection
+- XSS protection
+- secure headers
+- CORS configuration
+- CSRF protection where applicable
+- rate limiting where appropriate
+- protected file access
+- secure cookies/tokens
+- secrets in environment variables
+- safe error messages
+- audit logs
+
+Never expose:
+
+passwords
+tokens
+secret keys
+database credentials
+
+Do not log sensitive data unnecessarily.
+
+============================================================
+54. AUDIT LOGGING
+============================================================
+
+Log important system events.
+
+Store:
+
+actor
+role
+action
+entity
+entity ID
+timestamp
+result
+
+Examples:
+
+Industry updated role requirement
+
+Student submitted evidence
+
+Evidence verified
+
+Opportunity created
+
+Application submitted
+
+Feedback submitted
+
+Skill Passport updated
+
+This improves traceability.
+
+============================================================
+55. DOMAIN EVENT SYSTEM
+============================================================
+
+Use a lightweight domain event architecture.
+
+Events:
+
+ROLE_REQUIREMENT_UPDATED
+ASSESSMENT_COMPLETED
+EVIDENCE_SUBMITTED
+EVIDENCE_EVALUATED
+EVIDENCE_VERIFIED
+COMPETENCY_UPDATED
+READINESS_RECALCULATED
+SKILL_GAP_UPDATED
+RECOMMENDATION_UPDATED
+OPPORTUNITY_MATCH_UPDATED
+APPLICATION_SUBMITTED
+APPLICATION_STATUS_CHANGED
+PROJECT_SUBMITTED
+PROJECT_EVALUATED
+FEEDBACK_SUBMITTED
+PASSPORT_UPDATED
+HACKATHON_TEAM_CREATED
+HACKATHON_SUBMISSION_CREATED
+
+A database event log/service abstraction is enough.
+
+Do not add a message broker unless necessary.
+
+============================================================
+56. CROSS-PORTAL STATE PROPAGATION
+============================================================
+
+THIS IS A HARD REQUIREMENT.
+
+ONE ACTION MUST BE ABLE TO AFFECT MULTIPLE PORTALS.
+
+EXAMPLE:
+
+Industry changes:
+
+Data Scientist
+Machine Learning importance
+
+↓
+Role requirements update
+
+↓
+Student role readiness context changes
+
+↓
+Skill gaps may change
+
+↓
+Opportunity matching updates
+
+Student submits:
+
+ML Project
+
+↓
+
+Evidence created
+
+↓
+
+Evidence evaluated
+
+↓
+
+Competency recalculates
+
+↓
+
+Readiness recalculates
+
+↓
+
+Skill gap recalculates
+
+↓
+
+Recommendation recalculates
+
+↓
+
+Opportunity matching recalculates
+
+↓
+
+Industry Talent profile updates
+
+↓
+
+Skill Passport updates
+
+↓
+
+Institution aggregate insight can update
+
+Industry submits feedback
+
+↓
+
+Feedback stored
+
+↓
+
+Student profile/evidence updated where rules allow
+
+↓
+
+Passport updated
+
+↓
+
+Institution/Academia aggregated intelligence can update
+
+Do not simulate this through independent frontend variables.
+
+============================================================
+57. WHY DID THIS CHANGE?
+============================================================
+
+Every major intelligence result should have an explanation.
+
+Examples:
+
+WHY DID READINESS CHANGE?
+
+“Machine Learning evidence was verified.
+Machine Learning has 30% importance for the Data Scientist role.
+The Role Readiness Engine recalculated the current score.”
+
+WHY DID MATCH CHANGE?
+
+“Verified ML project evidence now satisfies an important part
+of the opportunity's skill requirements.”
+
+WHY THIS NEXT BEST ACTION?
+
+“Machine Learning is a high-importance skill with a measurable
+gap, and the recommended project generates relevant evidence.”
+
+The user must be able to understand:
+
+NUMBER
+↓
+SOURCE
+↓
+LOGIC
+↓
+RESULT
+
+============================================================
+58. AI PRINCIPLE
+============================================================
+
+RULES CALCULATE.
+AI EXPLAINS & ENRICHES.
+
+Deterministic systems should calculate:
+
+- readiness
+- competency
+- role importance
+- eligibility
+- matching
+- state transitions
+
+AI may assist with:
+
+- explanations
+- summaries
+- recommendations
+- evidence interpretation
+- career guidance
+- candidate explanation
+- curriculum insight
+- feedback summaries
+
+Do not pretend AI is performing deterministic calculations.
+
+Do not call something “AI-powered” if the functionality is not
+actually implemented.
+
+============================================================
+59. AI SAFETY / RELIABILITY
+============================================================
+
+AI outputs must not silently overwrite authoritative data.
+
+Keep:
+
+source data
++
+calculated system result
++
+AI explanation
+
+separate.
+
+AI recommendations should be traceable to available evidence.
+
+Do not invent:
+
+skills
+certifications
+projects
+experience
+companies
+scores
+job eligibility
+achievements
+
+============================================================
+60. SYNTHETIC / DEMO DATA HONESTY
+============================================================
+
+Use demo data where necessary.
+
+Clearly label:
+
+Demo Data
+Synthetic Data
+Example Company
+Prototype Integration
+
+Do not claim:
+
+live API
+live job board
+live coding platform integration
+real company
+real selection result
+
+unless the integration actually works.
+
+============================================================
+61. PRIMARY DEMO STUDENT
+============================================================
+
+Seed:
+
+Student:
+S042
+
+Branch:
+AI & Data Science
+
+Target Role:
+Data Scientist
+
+Competency:
+
+Python: 82
+SQL: 64
+Statistics: 51
+Machine Learning: 43
+Problem Solving: 75
+
+Role weights:
+
+Python: 25%
+SQL: 15%
+Statistics: 20%
+Machine Learning: 30%
+Problem Solving: 10%
+
+Baseline readiness:
+≈ 61%
+
+Primary opportunity:
+
+Data Science Internship
+
+Company:
+Demo Analytics Labs
+
+Clearly mark as DEMO.
+
+============================================================
+62. EVALUATOR DEMO MODE
+============================================================
+
+Provide:
+
+Evaluator Demo
+
+The demo must support:
+
+Start Demo
+Generate Evidence
+Verify Evidence
+Submit Feedback
+Reset Demo
+
+Do not expose this as a developer/debug interface.
+
+It should feel like a controlled product demonstration.
+
+Canonical flow:
+
+Industry demand
+→ Student readiness
+→ Gap
+→ Next Best Action
+→ Project evidence
+→ Verification
+→ Updated readiness
+→ Updated match
+→ Industry talent profile
+→ Feedback
+→ Skill Passport
+→ Academia insight
+→ Institution insight
+
+============================================================
+63. DEMO EVENT TIMELINE
+============================================================
+
+Display:
+
+SKILL SETU ACTIVITY TIMELINE
+
+Example:
+
+18 Sep 2026
+Industry
+Updated Data Scientist requirements
+
+18 Sep 2026
+Student S042
+Completed assessment
+
+18 Sep 2026
+Skill Intelligence Engine
+Identified ML skill gap
+
+18 Sep 2026
+SKILL SETU
+Recommended ML project
+
+18 Sep 2026
+Student S042
+Submitted project evidence
+
+18 Sep 2026
+Industry
+Evaluated project
+
+18 Sep 2026
+Skill Intelligence Engine
+Recalculated readiness
+
+18 Sep 2026
+Industry
+Updated candidate alignment
+
+18 Sep 2026
+Industry
+Submitted feedback
+
+18 Sep 2026
+SKILL SETU
+Updated Skill Passport
+
+18 Sep 2026
+Institution
+Updated skill intelligence
+
+Events must be based on actual application state.
+
+============================================================
+64. DEMO RESET
+============================================================
+
+Reset must restore the original scenario.
+
+Reset:
+
+- evidence
+- competencies
+- readiness
+- gaps
+- recommendations
+- matches
+- feedback
+- passport
+- event timeline
+- demo application state
+- institution aggregate demo state
+
+The evaluator must be able to repeat the demo reliably.
+
+============================================================
+65. DATA INTEGRITY
+============================================================
+
+Add constraints where appropriate.
+
+Examples:
+
+- unique user email
+- unique role identifiers
+- valid foreign keys
+- valid status transitions
+- no negative scores
+- competencies within valid range
+- importance values valid
+- readiness within 0–100
+- evidence skill references must exist
+- only valid owners can edit private data
+
+Normalize data where necessary.
+
+Avoid inconsistent duplicated fields.
+
+============================================================
+66. STATE MACHINES
+============================================================
+
+Use explicit transitions.
+
+APPLICATION:
+
+Applied
+→ Shortlisted
+→ Interview
+→ Selected / Rejected
+
+EVIDENCE:
+
+Submitted
+→ Pending Review
+→ Evaluated
+→ Verified / Rejected
+
+INTERNSHIP:
+
+Applied
+→ Selected
+→ In Progress
+→ Completed
+→ Feedback
+→ Evidence Updated
+
+HACKATHON:
+
+Registration
+→ Team Formation
+→ Building
+→ Submitted
+→ Evaluated
+→ Completed
+
+Do not allow impossible transitions.
+
+============================================================
+67. TESTING STRATEGY
+============================================================
+
+Implement tests for:
+
+AUTH
+
+registration
+login
+logout
+invalid credentials
+unauthorized route
+wrong role
+
+RBAC
+
+student access
+industry access
+academia access
+institution access
+admin access
+
+SKILL ENGINE
+
+competency
+readiness
+gap
+importance
+recommendation
+matching
+
+ASSESSMENTS
+
+start
+submit
+score
+duplicate submission
+refresh recovery
+
+EVIDENCE
+
+submit
+evaluate
+verify
+reject
+
+OPPORTUNITIES
+
+create
+update
+apply
+status
+
+FEEDBACK
+
+submit
+validation
+propagation
+
+PASSPORT
+
+entry creation
+verification
+update
+
+HACKATHONS
+
+create
+team
+join
+invite
+submission
+evaluation
+
+CROSS-PORTAL
+
+industry requirement change
+→ readiness context
+
+new evidence
+→ competency
+→ readiness
+→ gap
+→ recommendation
+→ match
+
+feedback
+→ passport/profile
+
+institution
+→ updated aggregate insight
+
+============================================================
+68. INTEGRATION TEST — GOLDEN PATH
+============================================================
+
+Create one end-to-end test representing:
+
+Industry creates Data Scientist requirement
+
+↓
+
+S042 targets Data Scientist
+
+↓
+
+Assessment produces competencies
+
+↓
+
+Readiness calculated ≈61%
+
+↓
+
+ML skill gap identified
+
+↓
+
+Next Best Action generated
+
+↓
+
+S042 submits ML project evidence
+
+↓
+
+Evidence verified
+
+↓
+
+Competency recalculated
+
+↓
+
+Readiness recalculated
+
+↓
+
+Opportunity match recalculated
+
+↓
+
+Industry candidate record updated
+
+↓
+
+Industry feedback submitted
+
+↓
+
+Passport updated
+
+↓
+
+Institution insight updated
+
+This test must PASS.
+
+============================================================
+69. ERROR HANDLING
+============================================================
+
+Backend errors:
+
+validation
+authentication
+authorization
+not found
+conflict
+database
+external service
+invalid transition
+
+Frontend errors:
+
+loading
+empty
+error
+retry
+success
+permission denied
+session expired
+
+Never silently swallow important errors.
+
+Never leave broken UI after API failure.
+
+============================================================
+70. LOGGING / OBSERVABILITY
+============================================================
+
+Provide structured server logging.
+
+Include:
+
+- request failures
+- authentication events
+- important domain events
+- unexpected exceptions
+
+Do not log:
+
+passwords
+tokens
+private documents
+secrets
+
+============================================================
+71. ENVIRONMENT MANAGEMENT
+============================================================
+
+Use:
+
+.env
+
+and:
+
+.env.example
+
+Expected configuration may include:
+
+DATABASE_URL
+AUTH_SECRET
+AI_API_KEY
+STORAGE_CONFIG
+EMAIL_CONFIG
+
+Never commit secrets.
+
+Document:
+
+development
+test
+production/demo
+
+============================================================
+72. DATABASE MIGRATIONS
+============================================================
+
+Create clean migrations.
+
+The system should support:
+
+fresh database setup
+migration
+seed
+reset where appropriate
+
+Provide simple documented commands.
+
+Conceptually:
+
+db migrate
+db seed
+db reset
+
+Use the actual commands appropriate to the selected stack.
+
+============================================================
+73. SEED DATA
+============================================================
+
+Create a deterministic seed dataset.
+
+Seed:
+
+- users
+- roles
+- skills
+- role requirements
+- assessments
+- questions
+- students
+- competencies
+- evidence
+- projects
+- opportunities
+- applications
+- feedback
+- hackathons
+- teams
+- academia data
+- institution data
+- notifications
+
+Primary demo:
+
+S042
+
+Seed enough connected data so every portal does not appear empty.
+
+============================================================
+74. ADMIN / CONFIGURATION
+============================================================
+
+Where possible, avoid hard-coded configuration in code.
+
+Admin/configurable entities should include:
+
+- skills
+- roles
+- role requirements
+- weights
+- assessment blueprints
+- opportunity types
+- hackathon team rules
+- institution branches
+
+Important business configuration should not require code changes.
+
+============================================================
+75. PROFILE PRIVACY
+============================================================
+
+Students should control where appropriate:
+
+- evidence visibility
+- project visibility
+- resume visibility
+- contact visibility
+
+Industry should only see permitted candidate data.
+
+Academia should only see permitted academic/student data.
+
+Institution sees institution-authorized aggregated data.
+
+============================================================
+76. MINIMALIST UX AUDIT
+============================================================
+
+Inspect every existing page.
+
+For each page ask:
+
+1. What question does this page answer?
+2. What decision does it support?
+3. What is the primary action?
+4. What can be hidden behind details?
+5. What can be merged?
+6. What can be removed?
+7. Is any data duplicated elsewhere?
+
+Simplify aggressively.
+
+Do not remove actual backend capability.
+
+Remove presentation clutter.
+
+============================================================
+77. REMOVE GENERIC DASHBOARD PATTERNS
+============================================================
+
+Avoid meaningless cards such as:
+
+Total Users
+Total Students
+Total Jobs
+Total Applications
+Total Certificates
+
+unless they directly support a decision.
+
+The portal should feel intelligent rather than administrative.
+
+============================================================
+78. INFORMATION HIERARCHY
+============================================================
+
+Each screen should have:
+
+1. Primary answer
+2. Supporting evidence
+3. Optional explanation
+4. One primary action
+
+Example:
+
+Machine Learning
+43
+
+High Skill Gap
+
+Why?
+
+Evidence
+
+Next Best Action
+
+This is preferable to displaying every underlying metric at once.
+
+============================================================
+79. DESIGN CONSISTENCY
+============================================================
+
+Create/reuse a single design system.
+
+Standardize:
+
+- typography
+- spacing
+- colors
+- buttons
+- inputs
+- cards
+- tables
+- badges
+- modals
+- drawers
+- tabs
+- empty states
+- notifications
+- loading indicators
+
+Do not create slightly different versions of the same component.
+
+============================================================
+80. PAGE STRUCTURE
+============================================================
+
+Use:
+
+Page Header
+↓
+Primary Insight
+↓
+Supporting Evidence
+↓
+Primary Action
+↓
+Optional Details
+
+Avoid:
+
+Page title
++
+five KPI cards
++
+six charts
++
+eight cards
++
+large table
+
+unless genuinely necessary.
+
+============================================================
+81. UX COPY
+============================================================
+
+Use simple language.
+
+Prefer:
+
+Skill Gap
+Next Best Action
+Why This Match
+Evidence
+Verified
+Pending Review
+Role Readiness
+View Details
+
+Avoid:
+
+Competency Deficiency Detection Module
+AI-Based Recommendation Intelligence
+Cross-Portal Institutional Analytics
+
+The application should sound intelligent because it IS intelligent,
+not because it uses complicated words.
+
+============================================================
+82. SEARCH / DISCOVERY UX
+============================================================
+
+Student:
+
+Find opportunity
+
+Industry:
+
+Find talent
+
+Academia:
+
+Find industry signal
+
+Institution:
+
+Find institutional gap
+
+Do not make users navigate through unnecessary layers.
+
+============================================================
+83. MOBILE UX
+============================================================
+
+On mobile:
+
+- sidebar collapses
+- cards stack
+- tables become scrollable only when necessary
+- actions remain reachable
+- drawers become full-screen where appropriate
+- forms remain usable
+
+============================================================
+84. PRODUCT PERFORMANCE TARGET
+============================================================
+
+Prioritize:
+
+fast first load
+fast navigation
+responsive interactions
+minimal unnecessary requests
+efficient database queries
+small API payloads
+appropriate caching
+
+Do not make every action trigger the entire application reload.
+
+============================================================
+85. DEPENDENCY HYGIENE
+============================================================
+
+Audit dependencies.
+
+Remove unused dependencies.
+
+Avoid duplicate libraries for the same purpose.
+
+Use maintained packages compatible with the chosen stack.
+
+============================================================
+86. CODE QUALITY
+============================================================
+
+Use:
+
+- clear naming
+- modular services
+- reusable components
+- typed interfaces
+- validation schemas
+- meaningful error classes
+- small functions
+- clean separation of concerns
+
+Avoid:
+
+- giant components
+- duplicated logic
+- magic numbers
+- giant hard-coded JSON blobs
+- business logic inside UI components
+- database logic scattered through frontend code
+
+============================================================
+87. NO MAGIC NUMBERS
+============================================================
+
+Do not hard-code:
+
+readiness
+match
+competency
+role weights
+eligibility
+thresholds
+
+Move business rules into:
+
+configuration
+database
+services
+
+where appropriate.
+
+============================================================
+88. FEATURE PRIORITY
+============================================================
+
+CORE — MUST WORK
+
+1. Authentication
+2. RBAC
+3. Student profile
+4. Assessment
+5. Evidence
+6. Competency
+7. Role Readiness
+8. Skill Gap
+9. Next Best Action
+10. Opportunities
+11. Matching
+12. Applications
+13. Industry Talent Discovery
+14. Industry Feedback
+15. Skill Passport
+16. Academia alignment
+17. Institution intelligence
+18. Hackathons
+19. Cross-portal propagation
+20. Demo mode
+
+SECONDARY
+
+Learning
+Notifications
+Advanced analytics
+Document management
+External adapters
+
+Do not sacrifice core functionality to polish secondary features.
+
+============================================================
+89. GOLDEN UX PRINCIPLE
+============================================================
+
+Every important number must answer:
+
+WHY?
+
+Every important recommendation must answer:
+
+WHY THIS?
+
+Every evidence item must answer:
+
+WHAT EVIDENCE?
+
+Every change must answer:
+
+WHAT CAUSED IT?
+
+Every action must answer:
+
+WHAT HAPPENS NEXT?
+
+============================================================
+90. SIH EVALUATOR MODE
+============================================================
+
+The final product should allow an evaluator to understand:
+
+WHAT IS THE PROBLEM?
+
+Skill information is fragmented.
+
+WHAT IS SKILL SETU?
+
+An evidence-based Skill Intelligence layer.
+
+WHAT DOES IT DO?
+
+Demand
+→ Evidence
+→ Intelligence
+→ Readiness
+→ Gap
+→ Action
+→ Opportunity
+→ Feedback
+→ Updated evidence
+
+WHY IS THAT DIFFERENT?
+
+Because it connects the entire skill lifecycle instead of only
+listing jobs, courses, assessments or profiles.
+
+============================================================
+91. FINAL DEMONSTRATION
+============================================================
+
+The ideal evaluator journey:
+
+LANDING PAGE
+
+From Skill Claims
+to Skill Evidence.
+
+↓
+
+ENTER STUDENT
+
+S042
+
+↓
+
+TARGET ROLE
+
+Data Scientist
+
+↓
+
+SHOW:
+
+Readiness ≈61%
+
+↓
+
+SHOW:
+
+Machine Learning
+High Gap
+
+↓
+
+SHOW:
+
+Next Best Action
+Build ML Project
+
+↓
+
+GENERATE PROJECT EVIDENCE
+
+↓
+
+VERIFY
+
+↓
+
+SHOW:
+
+Evidence changed
+
+↓
+
+SHOW:
+
+Competency changed
+
+↓
+
+SHOW:
+
+Readiness recalculated
+
+↓
+
+SHOW:
+
+Skill Gap updated
+
+↓
+
+SHOW:
+
+Opportunity Match updated
+
+↓
+
+SWITCH TO INDUSTRY
+
+S042 appears with updated evidence.
+
+↓
+
+INDUSTRY SUBMITS FEEDBACK
+
+↓
+
+SWITCH TO STUDENT
+
+Skill Passport updates.
+
+↓
+
+SWITCH TO ACADEMIA
+
+Relevant industry skill signal appears.
+
+↓
+
+SWITCH TO INSTITUTION
+
+Relevant institutional insight updates.
+
+END.
+
+============================================================
+92. FINAL VISUAL SUMMARY
+============================================================
+
+Display somewhere in the product:
+
+INDUSTRY DEMAND
+↓
+STUDENT EVIDENCE
+↓
+SKILL INTELLIGENCE
+↓
+ROLE READINESS
+↓
+SKILL GAP
+↓
+NEXT BEST ACTION
+↓
+OPPORTUNITY
+↓
+NEW EVIDENCE
+↓
+FEEDBACK
+↓
+SKILL PASSPORT
+↓
+ACADEMIA + INSTITUTION INSIGHT
+
+Final message:
+
+“SKILL SETU does not just connect people.
+It creates the intelligence layer that makes those connections meaningful.”
+
+============================================================
+93. DEPLOYMENT READINESS
+============================================================
+
+Before completion verify:
+
+- build succeeds
+- production build succeeds
+- backend starts
+- database connects
+- migration works
+- seed works
+- authentication works
+- authorization works
+- APIs work
+- frontend talks to backend
+- no localhost-only assumptions
+- environment variables are documented
+- production URLs/config are configurable
+- no exposed secret keys
+- no broken routes
+- no critical console errors
+- no obvious security issue
+- no broken API call
+- no dead navigation
+
+============================================================
+94. FINAL SECURITY PASS
+============================================================
+
+Perform a final audit for:
+
+- authentication bypass
+- authorization bypass
+- IDOR
+- insecure direct file access
+- exposed secrets
+- unsafe API inputs
+- missing validation
+- unsafe error output
+- XSS
+- SQL injection
+- insecure CORS
+- weak session handling
+- unintended public data exposure
+
+Fix discovered issues.
+
+============================================================
+95. FINAL UX PASS
+============================================================
+
+Perform a fresh visual audit on EVERY PORTAL.
+
+Check:
+
+- alignment
+- spacing
+- typography
+- navigation
+- readability
+- hierarchy
+- button consistency
+- card consistency
+- modal behavior
+- drawer behavior
+- responsiveness
+- accessibility
+- empty states
+- loading states
+- errors
+- terminology
+
+Remove anything that feels:
+
+generic
+repetitive
+crowded
+decorative
+unnecessary
+confusing
+
+The application should feel:
+
+MINIMAL ON THE SURFACE
+INTELLIGENT UNDERNEATH
+
+============================================================
+96. FINAL FUNCTIONAL PASS
+============================================================
+
+Do NOT declare completion after writing code.
+
+Actually verify the application.
+
+Run:
+
+- build
+- tests
+- API checks
+- database checks
+- seed
+- authentication
+- major workflows
+- cross-portal propagation
+- responsive checks
+
+Fix issues found.
+
+Do another pass.
+
+============================================================
+97. DEFINITION OF DONE
+============================================================
+
+The system is NOT complete until:
+
+[ ] Backend exists and runs
+[ ] Database exists and persists data
+[ ] Migrations work
+[ ] Seed works
+[ ] Authentication works
+[ ] RBAC works
+[ ] API validation works
+[ ] Error handling works
+[ ] Audit log works
+[ ] Student works
+[ ] Industry works
+[ ] Academia works
+[ ] Institution works
+[ ] Assessment works
+[ ] Evidence works
+[ ] Competency works
+[ ] Role Readiness works
+[ ] Skill Gap works
+[ ] Next Best Action works
+[ ] Matching works
+[ ] Applications work
+[ ] Feedback works
+[ ] Skill Passport works
+[ ] Projects work
+[ ] Certifications work
+[ ] Internships work
+[ ] Hackathons work
+[ ] Teams work
+[ ] Academia alignment works
+[ ] Institution insight works
+[ ] Notifications work
+[ ] Cross-portal propagation works
+[ ] Demo mode works
+[ ] Reset works
+[ ] UI is minimalist
+[ ] Navigation is simplified
+[ ] Responsive design works
+[ ] Accessibility basics work
+[ ] Performance is reasonable
+[ ] Security pass completed
+[ ] Tests pass
+[ ] Production build succeeds
+[ ] No critical broken routes
+[ ] No critical console errors
+[ ] No exposed secrets
+[ ] Synthetic data is clearly identified
+
+============================================================
+98. IMPORTANT PRODUCT RESTRICTIONS
+============================================================
+
+DO NOT:
+
+- create another Skill Intelligence Engine
+- create duplicate student data
+- create disconnected portal databases
+- fake AI calculations
+- fake live integrations
+- fabricate evidence
+- fabricate verification
+- fabricate hiring outcomes
+- hard-code score changes
+- hard-code readiness values
+- claim external platform integration when unavailable
+- copy third-party UI
+- add social media features
+- add unnecessary gamification
+- add blockchain
+- add crypto
+- add meaningless leaderboards
+- create a generic ERP dashboard
+- add random charts
+- overload navigation
+- create 20 new screens just for completeness
+
+============================================================
+99. IMPORTANT IMPLEMENTATION PHILOSOPHY
+============================================================
+
+Do not interpret “complete backend” as:
+
+“Create as many endpoints and tables as possible.”
+
+Interpret it as:
+
+“Every important product capability has a reliable source of
+truth, business logic, authorization, persistence, API contract,
+error handling and user-visible outcome.”
+
+Do not interpret “enhance UI” as:
+
+“Add gradients, cards and animations.”
+
+Interpret it as:
+
+“Make the correct information appear at the correct moment,
+with minimal cognitive load.”
+
+Do not interpret “AI” as:
+
+“Put an AI badge everywhere.”
+
+Interpret it as:
+
+“Use AI where explanation, interpretation and enrichment provide
+real value, while deterministic rules remain responsible for
+authoritative calculations.”
+
+============================================================
+100. FINAL ARCHITECTURAL PRINCIPLE
+============================================================
+
+THE FINISHED SYSTEM MUST BE:
+
+ONE PRODUCT
+ONE DATABASE
+ONE SOURCE OF TRUTH
+ONE SKILL INTELLIGENCE ENGINE
+FOUR ROLE-SPECIFIC EXPERIENCES
+
+STUDENT
+Understand → Improve → Prove → Apply
+
+INDUSTRY
+Define → Discover → Evaluate → Feedback
+
+ACADEMIA
+Align → Collaborate → Mentor
+
+INSTITUTION
+Observe → Analyze → Intervene
+
+Everything is connected through:
+
+EVIDENCE.
+
+============================================================
+101. FINAL REPORT
+============================================================
+
+After implementation, provide a concise but complete engineering
+report containing:
+
+1. Existing architecture audited
+2. Final architecture
+3. Backend stack
+4. Database design
+5. Authentication
+6. RBAC
+7. API modules
+8. Skill Intelligence implementation
+9. Readiness calculation
+10. Skill Gap engine
+11. Next Best Action engine
+12. Matching engine
+13. Evidence architecture
+14. Assessment architecture
+15. Hackathon architecture
+16. Feedback architecture
+17. Skill Passport architecture
+18. Academia architecture
+19. Institution architecture
+20. Cross-portal state propagation
+21. Event system
+22. Audit logging
+23. Security
+24. Performance improvements
+25. UI/UX simplifications
+26. Features merged/removed
+27. Tests completed
+28. Seed/demo data
+29. Deployment setup
+30. Known limitations
+31. Demo/Synthetic functionality
+32. Future integrations
+
+============================================================
+102. FINAL COMMAND
+============================================================
+
+Do not stop at visual implementation.
+
+Do not stop after creating the backend skeleton.
+
+Do not stop after creating database models.
+
+Do not stop after connecting one portal.
+
+Complete the entire integrated product.
+
+When making implementation decisions:
+
+PRIORITIZE
+
+Correctness
+→ Reliability
+→ Simplicity
+→ Security
+→ Maintainability
+→ UX
+→ Visual polish
+
+The goal is NOT to make SKILL SETU look like it has 1000 features.
+
+The goal is to make the evaluator believe:
+
+“This system genuinely understands the relationship between
+industry demand, student capability, evidence, skill gaps,
+actions, opportunities and outcomes.”
+
+THE GOLD STANDARD:
+
+CHANGE
+→ PROPAGATION
+→ CALCULATION
+→ EXPLANATION
+→ ACTION
+→ EVIDENCE
+→ FEEDBACK
+→ UPDATED INTELLIGENCE
+
+Build that system.
+
+Then simplify everything the user sees.
+
+============================================================
+END OF MASTER BUILD PROMPT
+============================================================

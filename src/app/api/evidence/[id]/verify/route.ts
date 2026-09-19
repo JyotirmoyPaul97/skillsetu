@@ -14,6 +14,8 @@ import { canVerifyEvidence } from "@/lib/rbac";
 import { Role } from "@prisma/client";
 import { appendAudit } from "@/lib/audit";
 import { recordEvent } from "@/lib/event-log";
+import { appendAudit as appendAuditDb } from "@/lib/audit-db";
+import { appendEvent as appendEventDb } from "@/lib/event-log-db";
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -67,6 +69,26 @@ export async function PATCH(req: Request, ctx: RouteContext) {
       action: verified ? "verify" : "unverify",
       affectedEntity: `SkillEvidence:${id}`,
       explanation: `${auth.user.name} ${verified ? "verified" : "un-verified"} "${existing.title}" (provider: ${provider}).`,
+    });
+
+    // Phase 12: persistent DB-backed audit + event log
+    await appendAuditDb({
+      actorUserId: auth.user.id,
+      actorRole: auth.role,
+      action: verified ? "VERIFY_EVIDENCE" : "UNVERIFY_EVIDENCE",
+      entityType: "SkillEvidence",
+      entityId: id,
+      ipAddress: req.headers.get("x-forwarded-for") ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
+      metadata: { studentId: existing.studentId, skillId: existing.skillId, provider, verified },
+    });
+    await appendEventDb({
+      eventType: "EVIDENCE_VERIFIED",
+      actorType: auth.role === "INDUSTRY" ? "INDUSTRY_PORTAL" : auth.role === "ACADEMIA" ? "ACADEMIA_PORTAL" : "INSTITUTION_PORTAL",
+      action: `${auth.user.name} ${verified ? "verified" : "un-verified"} evidence "${existing.title}"`,
+      affectedEntity: `Student:${existing.studentId} · Skill:${existing.skillId}`,
+      affectedModules: ["Evidence Pipeline", "Skill Profile", "Role Readiness", "Skill Gap", "Opportunity Match"],
+      explanation: `Evidence ${verified ? "transitioned to Verified" : "transitioned to un-verified"}. Provider: ${provider || "unspecified"}. The Skill Intelligence Engine will recompute competency (verified evidence is a strong signal) + readiness + skill gaps + opportunity match automatically. The change is visible across all 4 portals via shared Zustand stores.`,
     });
 
     return ok({ evidence: updated });

@@ -330,3 +330,73 @@ model PlacementRecord {
   @@unique([institutionId, branch, academicYear])
   @@map("placement_records")
 }
+
+// ─── Phase 12: System Traceability (audit + events + snapshots) ────
+// Master spec §22 (audit logging), §21 (event system), §11 (historical snapshots).
+// These tables make SKILL SETU "Traceable like an enterprise application":
+// every mutating action is persisted to AuditLog, every state transition is
+// persisted to EventLog, and readiness is snapshotted for historical analytics.
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  actorUserId   String?  // null = anonymous (failed login attempt)
+  actorRole     String   @default("")  // STUDENT | INDUSTRY | ACADEMIA | INSTITUTION | ADMIN | SYSTEM
+  action        String   // e.g. "LOGIN", "CREATE_EVIDENCE", "VERIFY_EVIDENCE", "SUBMIT_FEEDBACK"
+  entityType    String   @default("")  // User | Evidence | Opportunity | Feedback | Session
+  entityId      String?  // the affected record's ID
+  ipAddress     String   @default("")  // best-effort client IP (X-Forwarded-For)
+  userAgent     String   @default("")
+  metadata      String   @default("{}") // JSON blob for extra context
+  createdAt     DateTime @default(now())
+
+  @@index([actorUserId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model EventLog {
+  id            String   @id @default(cuid())
+  eventType     String   // DEMAND_CHANGE | EVIDENCE_GENERATED | EVIDENCE_VERIFIED | READINESS_RECALCULATED | etc.
+  actorType     String   // STUDENT_PORTAL | INDUSTRY_PORTAL | ACADEMIA_PORTAL | INSTITUTION_PORTAL | SKILL_INTELLIGENCE_ENGINE | EVALUATOR
+  action        String   // human-readable action description
+  affectedEntity String  @default("")  // e.g. "S042 · Machine Learning"
+  affectedModules String  @default("[]") // JSON array of affected module names
+  explanation   String   @default("") // for "Why did this change?" (§19)
+  createdAt     DateTime @default(now())
+
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("event_logs")
+}
+
+model ReadinessSnapshot {
+  id            String   @id @default(cuid())
+  studentId     String   // User.id
+  roleId        String   // e.g. "data-scientist"
+  readiness     Float   // 0-100 — calculated at snapshot time
+  weightedSum   Float   // Σ(score × weight) — for audit/transparency
+  weightSum     Float   // Σ(weight) — for audit/transparency
+  skillBreakdown String  @default("[]") // JSON array of {skillId, skillName, score, weight, contribution}
+  trigger       String   @default("") // what caused this snapshot (e.g. "EVIDENCE_VERIFIED", "ROLE_CHANGE")
+  createdAt     DateTime @default(now())
+
+  @@index([studentId])
+  @@index([roleId])
+  @@index([createdAt])
+  @@map("readiness_snapshots")
+}
+
+model Notification {
+  id            String   @id @default(cuid())
+  userId        String   // recipient User.id
+  type          String   // e.g. "FEEDBACK_RECEIVED", "EVIDENCE_VERIFIED", "OPPORTUNITY_MATCH"
+  title         String
+  detail        String   @default("")
+  read          Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([read])
+  @@map("notifications")
+}

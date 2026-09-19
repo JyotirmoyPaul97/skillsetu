@@ -20,6 +20,8 @@ import { ok, err, requireAuth } from "@/lib/api-response";
 import { canGiveFeedback } from "@/lib/rbac";
 import { appendAudit } from "@/lib/audit";
 import { recordEvent } from "@/lib/event-log";
+import { appendAudit as appendAuditDb } from "@/lib/audit-db";
+import { appendEvent as appendEventDb } from "@/lib/event-log-db";
 
 export async function POST(req: Request) {
   try {
@@ -126,6 +128,26 @@ export async function POST(req: Request) {
         evidenceRows.length > 0
           ? `${auth.user.name} gave ${feedback.rating}/5 to ${student.name} and added ${evidenceRows.length} evidence row(s).`
           : `${auth.user.name} gave ${feedback.rating}/5 to ${student.name}.`,
+    });
+
+    // Phase 12: persistent DB-backed audit + event log (cross-portal feedback→evidence loop)
+    await appendAuditDb({
+      actorUserId: auth.user.id,
+      actorRole: auth.role,
+      action: "SUBMIT_FEEDBACK",
+      entityType: "Feedback",
+      entityId: feedback.id,
+      ipAddress: req.headers.get("x-forwarded-for") ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
+      metadata: { toStudentId: student.id, rating: feedback.rating, evidenceCreated: evidenceRows.length },
+    });
+    await appendEventDb({
+      eventType: "FEEDBACK_SUBMITTED",
+      actorType: auth.role === "INDUSTRY" ? "INDUSTRY_PORTAL" : "ACADEMIA_PORTAL",
+      action: `${auth.user.name} submitted feedback for ${student.name} (${feedback.rating}/5)`,
+      affectedEntity: `Student:${student.id} · ${evidenceRows.length > 0 ? `${evidenceRows.length} evidence row(s) created` : "no evidence rows"}`,
+      affectedModules: ["Industry Feedback", "Skill Profile", "Skill Passport", "Evidence Pipeline", "Academia Signal", "Institution Insights"],
+      explanation: `${auth.role} feedback for ${student.name}. Rating: ${feedback.rating}/5. ${evidenceRows.length > 0 ? `${evidenceRows.length} SkillEvidence row(s) created (type=FEEDBACK, verified=true) — cross-portal feedback→evidence loop per Phase 5 §32.` : "No skillScores provided — no evidence rows created."} The Skill Passport will display this feedback under the relevant project. Academia + Institution portals will see updated cohort signals.`,
     });
 
     return ok({ feedback, evidenceCreated: evidenceRows });

@@ -20,6 +20,8 @@ import { ok, err, requireAuth } from "@/lib/api-response";
 import { canCreateEvidenceFor } from "@/lib/rbac";
 import { appendAudit } from "@/lib/audit";
 import { recordEvent } from "@/lib/event-log";
+import { appendAudit as appendAuditDb } from "@/lib/audit-db";
+import { appendEvent as appendEventDb } from "@/lib/event-log-db";
 
 const VALID_TYPES = new Set<EvidenceType>([
   EvidenceType.ASSESSMENT,
@@ -111,6 +113,26 @@ export async function POST(req: Request) {
       action: "create",
       affectedEntity: `SkillEvidence:${evidence.id}`,
       explanation: `${auth.user.name} added ${evidence.type} evidence "${evidence.title}" (${evidence.score}/100) for ${evidence.student.name} on ${evidence.skill.name}.`,
+    });
+
+    // Phase 12: persistent DB-backed audit + event log (enterprise traceability)
+    await appendAuditDb({
+      actorUserId: auth.user.id,
+      actorRole: auth.role,
+      action: "CREATE_EVIDENCE",
+      entityType: "SkillEvidence",
+      entityId: evidence.id,
+      ipAddress: req.headers.get("x-forwarded-for") ?? "",
+      userAgent: req.headers.get("user-agent") ?? "",
+      metadata: { skillId: evidence.skillId, type: evidence.type, score: evidence.score, verified },
+    });
+    await appendEventDb({
+      eventType: "EVIDENCE_GENERATED",
+      actorType: auth.role === "STUDENT" ? "STUDENT_PORTAL" : auth.role === "INDUSTRY" ? "INDUSTRY_PORTAL" : "ACADEMIA_PORTAL",
+      action: `${auth.user.name} created ${evidence.type} evidence "${evidence.title}" for ${evidence.skill.name}`,
+      affectedEntity: `Student:${evidence.studentId} · Skill:${evidence.skill.name}`,
+      affectedModules: ["Skill Profile", "Evidence Pipeline", "Skill Passport"],
+      explanation: `Evidence record created (status: ${evidence.verified ? "Verified" : "Submitted"}). Score: ${evidence.score}/100. The Skill Intelligence Engine will recompute competency + readiness + skill gaps + opportunity match automatically via the shared Zustand stores.`,
     });
 
     return ok({ evidence });
